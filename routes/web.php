@@ -11,5 +11,5 @@ Route::get('/blank', function () {
 });
 
 Route::get('/Registration/Page', function () {
-    return view('Customer.dashboard');
+    return view('Customer.registration');
 });

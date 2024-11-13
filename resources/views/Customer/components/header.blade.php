@@ -37,7 +37,7 @@
         </div>
     </header>
 
-    <header class="navbar-expand-md">
+    {{-- <header class="navbar-expand-md">
         <div class="collapse navbar-collapse" id="navbar-menu">
             <div class="navbar">
                 <div class="container-xl">
@@ -140,4 +140,4 @@
                 </div>
             </div>
         </div>
-    </header>
+    </header> --}}
