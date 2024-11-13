@@ -14,7 +14,17 @@
     <link href="{{asset('./dist/css/tabler-payments.min.css?1692870487')}}" rel="stylesheet" />
     <link href="{{asset('./dist/css/tabler-vendors.min.css?1692870487')}}" rel="stylesheet" />
     <link href="{{asset('./dist/css/demo.min.css?1692870487')}}" rel="stylesheet" />
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+        <!-- Alertify CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+
+    <!-- Alertify Theme CSS (optional, for custom themes) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+
+    <!-- Alertify JS -->
+    <script src="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
 
     <style>
         @import url('https://rsms.me/inter/inter.css');
