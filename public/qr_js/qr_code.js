@@ -19,3 +19,22 @@ function GenerateQrCode() {
         },
     });
 }
+
+function GetGeneratedQr(){
+    $.ajax({
+        url: "/api/get-qr-code-generated", // Replace with your endpoint URL
+        type: "GET",
+        success: function (response) {
+            console.log(response)
+        },
+        error: function (xhr, status, error) {
+            // Handle error
+            console.error("Error fetching data:", error);
+        },
+    });
+}
+$(document).ready(function () {
+
+    GetGeneratedQr();
+
+});
