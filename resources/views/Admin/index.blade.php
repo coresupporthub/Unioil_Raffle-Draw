@@ -1,7 +1,7 @@
 @include('Admin.components.head', ['title' => 'UniOil Raffle Draw'])
 
 <body>
-    <script src="./dist/js/demo-theme.min.js?1692870487"></script>
+    <script src="{{asset('./dist/js/demo-theme.min.js?1692870487')}}"></script>
 
     <div class="page">
 
