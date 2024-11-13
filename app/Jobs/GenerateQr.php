@@ -13,7 +13,7 @@ use Endroid\QrCode\RoundBlockSizeMode;
 use Endroid\QrCode\Writer\PngWriter;
 use App\Models\QrCode;
 use App\Http\Services\Tools;
-use App\Events\QueueingStatus;
+
 class GenerateQr implements ShouldQueue
 {
     use Queueable;
@@ -75,6 +75,5 @@ class GenerateQr implements ShouldQueue
         $qrCodeModel->image = $fileName;
         $qrCodeModel->save();
 
-        event(new QueueingStatus());
     }
 }
