@@ -11,23 +11,41 @@
                     <div class="container m-5 p-7">
                         <form class="row g-3 needs-validation" novalidate>
                             <div class="col-md-4">
-                                <label for="validationCustom01" class="form-label">First name</label>
-                                <input type="text" class="form-control" id="validationCustom01" value="Mark"
+                                <label for="validationCustom01" class="form-label">FULL NAME</label>
+                                <input type="text" class="form-control" id="validationCustom01" value=""
                                     required>
                                 <div class="valid-feedback">
                                     Looks good!
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <label for="validationCustom02" class="form-label">Last name</label>
-                                <input type="text" class="form-control" id="validationCustom02" value="Otto"
+                                <label for="validationCustom02" class="form-label">AGE</label>
+                                <input type="text" class="form-control" id="validationCustom02" value=""
                                     required>
                                 <div class="valid-feedback">
                                     Looks good!
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <label for="validationCustomUsername" class="form-label">Username</label>
+                                <label for="validationCustom02" class="form-label">COMPLETE ADDRESS</label>
+                                <input type="text" class="form-control" id="validationCustom02" value=""
+                                    required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="validationCustom02" class="form-label">MOBILE NUMBER</label>
+                                <input type="text" class="form-control" id="validationCustom02" value=""
+                                    required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="validationCustomUsername" class="form-label">EMAIL ADDRESS</label>
                                 <div class="input-group has-validation">
                                     <span class="input-group-text" id="inputGroupPrepend">@</span>
                                     <input type="text" class="form-control" id="validationCustomUsername"
@@ -37,15 +55,26 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <label for="validationCustom03" class="form-label">City</label>
+
+
+                            <div class="col-md-4">
+                                <label for="validationCustom03" class="form-label">PRODUCT PURCHASED</label>
                                 <input type="text" class="form-control" id="validationCustom03" required>
                                 <div class="invalid-feedback">
                                     Please provide a valid city.
                                 </div>
                             </div>
+
+                            <div class="col-md-6">
+                                <label for="validationCustom03" class="form-label">STORE ALPHANUMERIC CODE</label>
+                                <input type="text" class="form-control" id="validationCustom03" required>
+                                <div class="invalid-feedback">
+                                    Please provide a valid city.
+                                </div>
+                            </div>
+
                             <div class="col-md-3">
-                                <label for="validationCustom04" class="form-label">State</label>
+                                <label for="validationCustom04" class="form-label">EMAIL ADDRESS</label>
                                 <select class="form-select" id="validationCustom04" required>
                                     <option selected disabled value="">Choose...</option>
                                     <option>...</option>
@@ -54,13 +83,7 @@
                                     Please select a valid state.
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <label for="validationCustom05" class="form-label">Zip</label>
-                                <input type="text" class="form-control" id="validationCustom05" required>
-                                <div class="invalid-feedback">
-                                    Please provide a valid zip.
-                                </div>
-                            </div>
+                          
                             <div class="col-12">
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="" id="invalidCheck"
