@@ -8,22 +8,22 @@
         @include('Admin.components.header')
 
         <div class="page-wrapper">
-           
+
             <!-- Page body -->
             <div class="page-body">
                 <div class="container-xl">
- 
 
 
-                    </div>
+
                 </div>
             </div>
-            
-           @include('Admin.components.footer')
         </div>
+
+        @include('Admin.components.footer')
+    </div>
     </div>
 
-@include('Admin.components.scripts')
+    @include('Admin.components.scripts')
 </body>
 
 </html>
