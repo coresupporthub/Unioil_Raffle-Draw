@@ -17,12 +17,14 @@
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown"
                         aria-label="Open user menu">
-                        <span class="avatar avatar-sm" style="background-image: url({{asset('admin_profile_image/unioil.png')}})"></span>
+                        <span class="avatar avatar-sm"
+                            style="background-image: url({{ asset('unioil_images/unioil.png') }})"></span>
                         <div class="d-none d-xl-block ps-2">
                             <div>Paweł Kuna</div>
                             <div class="mt-1 small text-secondary">UI Designer</div>
                         </div>
                     </a>
+
                     <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                         <a href="#" class="dropdown-item">Status</a>
                         <a href="./profile.html" class="dropdown-item">Profile</a>
@@ -32,7 +34,6 @@
                         <a href="./sign-in.html" class="dropdown-item">Logout</a>
                     </div>
                 </div>
-
             </div>
         </div>
     </header>
@@ -43,6 +44,7 @@
                 <div class="container-xl">
                     <ul class="navbar-nav">
                         <li class="nav-item {{ $active === 'dashboard' ? 'active' : '' }}">
+
                             <a class="nav-link" href="{{ route('index') }}">
                                 <span class="nav-link-icon d-md-none d-lg-inline-block">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
@@ -59,7 +61,7 @@
                                 </span>
                             </a>
                         </li>
-                        <li class="nav-item dropdown">
+                        {{-- <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
                                 data-bs-auto-close="outside" role="button" aria-expanded="false">
                                 <span class="nav-link-icon d-md-none d-lg-inline-block">
@@ -92,8 +94,9 @@
                                         </a>
                                     </div>
                                 </div>
-                        </li>
+                        </li> --}}
                         <li class="nav-item {{ $active === 'qrgenerator' ? 'active' : '' }}">
+
                             <a class="nav-link" href="{{ route('qrgenerator') }}">
                                 <span
                                     class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
@@ -120,30 +123,83 @@
                                     </svg>
                                 </span>
                                 <span class="nav-link-title">
-                                    QR Generator
+                                    QR Management
                                 </span>
                             </a>
                         </li>
 
-                    </ul>
-                    <div class="my-2 my-md-0 flex-grow-1 flex-md-grow-0 order-first order-md-last">
-                        <form action="./" method="get" autocomplete="off" novalidate>
-                            <div class="input-icon">
-                                <span class="input-icon-addon">
-                                    <!-- Download SVG icon from http://tabler-icons.io/i/search -->
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
-                                        height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                                        fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <li class="nav-item {{ $active === 'qrgenerator' ? 'active' : '' }}">
+
+                            <a class="nav-link" href="{{ route('qrgenerator') }}">
+                                <span
+                                    class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-ticket">
                                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
-                                        <path d="M21 21l-6 -6" />
+                                        <path d="M15 5l0 2" />
+                                        <path d="M15 11l0 2" />
+                                        <path d="M15 17l0 2" />
+                                        <path
+                                            d="M5 5h14a2 2 0 0 1 2 2v3a2 2 0 0 0 0 4v3a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-3a2 2 0 0 0 0 -4v-3a2 2 0 0 1 2 -2" />
                                     </svg>
                                 </span>
-                                <input type="text" value="" class="form-control" placeholder="Search…"
-                                    aria-label="Search in website">
-                            </div>
-                        </form>
-                    </div>
+                                <span class="nav-link-title">
+                                    Coupon Management
+                                </span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item {{ $active === 'qrgenerator' ? 'active' : '' }}">
+
+                            <a class="nav-link" href="{{ route('qrgenerator') }}">
+                                <span
+                                    class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-building-warehouse">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M3 21v-13l9 -4l9 4v13" />
+                                        <path d="M13 13h4v8h-10v-6h6" />
+                                        <path d="M13 21v-9a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v3" />
+                                    </svg>
+                                </span>
+                                <span class="nav-link-title">
+                                    Retail Outlets
+                                </span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item {{ $active === 'qrgenerator' ? 'active' : '' }}">
+
+                            <a class="nav-link" href="{{ route('qrgenerator') }}">
+                                <span
+                                    class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-businessplan">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M16 6m-5 0a5 3 0 1 0 10 0a5 3 0 1 0 -10 0" />
+                                        <path d="M11 6v4c0 1.657 2.239 3 5 3s5 -1.343 5 -3v-4" />
+                                        <path d="M11 10v4c0 1.657 2.239 3 5 3s5 -1.343 5 -3v-4" />
+                                        <path d="M11 14v4c0 1.657 2.239 3 5 3s5 -1.343 5 -3v-4" />
+                                        <path d="M7 9h-2.5a1.5 1.5 0 0 0 0 3h1a1.5 1.5 0 0 1 0 3h-2.5" />
+                                        <path d="M5 15v1m0 -8v1" />
+                                    </svg>
+                                </span>
+                                <span class="nav-link-title">
+                                    Customer Registrations
+                                </span>
+                            </a>
+                        </li>
+
+
+
+                    </ul>
+
                 </div>
             </div>
         </div>
