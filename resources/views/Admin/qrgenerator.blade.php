@@ -109,7 +109,7 @@
                         <div class="card-body">
 
                             <div id="table-default" class="table-responsive">
-                                <table class="table">
+                                <table class="table" id="generatedQrTable">
                                     <thead>
                                         <tr>
                                             <th><button class="table-sort" data-sort="sort-code">Code</button></th>
