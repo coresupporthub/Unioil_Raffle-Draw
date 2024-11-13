@@ -26,6 +26,11 @@ function GetGeneratedQr(){
         type: "GET",
         success: function (response) {
             console.log(response)
+
+            $("#generatedQrTable").DataTable({
+                data: data,
+            });
+
         },
         error: function (xhr, status, error) {
             // Handle error
