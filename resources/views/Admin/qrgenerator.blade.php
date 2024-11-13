@@ -134,7 +134,7 @@
                         </div>
                     </div>
                 </div>
-            </div>    
+            </div>
 
             <div class="modal modal-blur fade" id="modal-simple" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -177,6 +177,14 @@
 
         </div>
     </div>
+    @vite('resources/js/app.js')
+    <script>
+        setTimeout(() => {
+            window.Echo.channel('queueingstatus').listen('QueueingStatus', (e) => {
+                console.log(e);
+            });
+        }, 200);
+    </script>
 
     @include('Admin.components.scripts')
     <script src="{{asset('qr_js/qr_code.js')}}"></script>
