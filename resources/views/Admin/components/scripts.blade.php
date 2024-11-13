@@ -6,7 +6,8 @@
     <!-- Tabler Core -->
     <script src="{{asset('./dist/js/tabler.min.js?1692870487')}}" defer></script>
     <script src="{{asset('./dist/js/demo.min.js?1692870487')}}" defer></script>
-    <script>
+    
+    {{-- <script>
         // @formatter:off
         document.addEventListener("DOMContentLoaded", function() {
             window.ApexCharts && (new ApexCharts(document.getElementById('chart-revenue-bg'), {
@@ -821,4 +822,4 @@
             })).render();
         });
         // @formatter:on
-    </script>
+    </script> --}}
