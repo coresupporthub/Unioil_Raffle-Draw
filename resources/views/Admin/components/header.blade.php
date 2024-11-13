@@ -7,7 +7,7 @@
             </button>
             <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
                 <a href=".">
-                    <img src="./static/logo.svg" width="110" height="32" alt="Tabler"
+                    <img src="{{asset('unioil_images/unioil_logo.png')}}" width="110" height="32" alt="Unioil"
                         class="navbar-brand-image">
                 </a>
             </h1>
@@ -44,9 +44,9 @@
                 <div class="container-xl">
                     <ul class="navbar-nav">
                         <li class="nav-item active">
-                            <a class="nav-link" href="./">
+                            <a class="nav-link" href="{{route('index')}}">
                                 <span
-                                    class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
+                                    class="nav-link-icon d-md-none d-lg-inline-block">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                         stroke-linecap="round" stroke-linejoin="round">
@@ -65,7 +65,7 @@
                             <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
                                 data-bs-auto-close="outside" role="button" aria-expanded="false">
                                 <span
-                                    class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/package -->
+                                    class="nav-link-icon d-md-none d-lg-inline-block">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                         stroke-linecap="round" stroke-linejoin="round">
@@ -84,25 +84,20 @@
                             <div class="dropdown-menu">
                                 <div class="dropdown-menu-columns">
                                     <div class="dropdown-menu-column">
-                                        <a class="dropdown-item" href="./alerts.html">
-                                            Alerts
+                                        <a class="dropdown-item" href="#">
+                                            region 1
                                         </a>
-                                        <a class="dropdown-item" href="./accordion.html">
-                                            Accordion
+                                        <a class="dropdown-item" href="#">
+                                            region 2
                                         </a>
-                                        <div class="dropend">
-                                            <a class="dropdown-item dropdown-toggle" href="#sidebar-authentication"
-                                                data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button"
-                                                aria-expanded="false">
-                                                Authentication
-                                            </a>
-
-                                        </div>
+                                        <a class="dropdown-item" href="#">
+                                            region 3
+                                        </a>
                                     </div>
                                 </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="./form-elements.html">
+                            <a class="nav-link" href="{{route('qrgenerator')}}">
                                 <span
                                     class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
@@ -114,7 +109,7 @@
                                     </svg>
                                 </span>
                                 <span class="nav-link-title">
-                                    Form elements
+                                    QR Generator
                                 </span>
                             </a>
                         </li>
