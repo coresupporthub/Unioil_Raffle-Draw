@@ -27,22 +27,26 @@ class QueueingStatus implements ShouldBroadcast
 
         $q = QueueingStatusModel::where('status', 'inprogress')->first();
 
-        if($q->items + 1 != $q->total_items){
-            $q->update([
-                'items' => $q->items + 1,
-            ]);
+        if($q){
+            if($q->items + 1 != $q->total_items){
+                $q->update([
+                    'items' => $q->items + 1,
+                ]);
 
-            $status = 'inprogress';
-        }else{
-            $q->update([
-                'items' => $q->items + 1,
-                'status'=> 'done'
-            ]);
+                $status = 'inprogress';
+            }else{
+                $q->update([
+                    'items' => $q->items + 1,
+                    'status'=> 'done'
+                ]);
 
-            $status = 'done';
+                $status = 'done';
+            }
+
+            $items = $q->items + 1;
+            $progress = "$items/$q->total_items";
         }
-
-        return ['success'=> true, 'queue_id', $q->queue_id, 'status'=> $status];
+        return ['success'=> true, 'queue_id'=> $q->queue_id ?? null, 'status'=> $status ?? null, 'progress'=> $progress ?? null];
      }
 
     /**

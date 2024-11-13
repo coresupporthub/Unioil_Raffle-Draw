@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Jobs\GenerateQr;
 use App\Models\QrCode;
 use App\Models\QueueingStatusModel;
-use App\Models\QueueingStatus;
+use App\Events\QueueingStatus;
 
 class QrCodeController extends Controller
 {
@@ -29,6 +29,8 @@ class QrCodeController extends Controller
 
         for($i = 0; $i < $req->numberofqr; $i++){
             GenerateQr::dispatch($req->qrtype);
+
+            event(new QueueingStatus());
         }
 
 

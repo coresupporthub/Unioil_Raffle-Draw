@@ -47,14 +47,7 @@
                 </div>
             </div>
         </div>
-        @vite('resources/js/app.js')
-        <script>
-            setTimeout(() => {
-                window.Echo.channel('queueingstatus').listen('QueueingStatus', (e) => {
-                    console.log(e);
-                });
-            }, 200);
-        </script>
+      
         @include('Admin.components.footer')
     </div>
     </div>
