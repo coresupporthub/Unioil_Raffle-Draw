@@ -18,16 +18,31 @@ class QueueingStatus implements ShouldBroadcast
     /**
      * Create a new event instance.
      */
-    public $message;
-    public function __construct($message)
+    public function __construct()
     {
-        $this->message = $message;
+
     }
 
     public function broadcastWith():array{
 
-        
-        return ['success'=> true, 'message'=> $this->message];
+        $q = QueueingStatusModel::where('status', 'inprogress')->first();
+
+        if($q->items + 1 != $q->total_items){
+            $q->update([
+                'items' => $q->items + 1,
+            ]);
+
+            $status = 'inprogress';
+        }else{
+            $q->update([
+                'items' => $q->items + 1,
+                'status'=> 'done'
+            ]);
+
+            $status = 'done';
+        }
+
+        return ['success'=> true, 'queue_id', $q->queue_id, 'status'=> $status];
      }
 
     /**
