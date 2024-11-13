@@ -7,13 +7,12 @@
             </button>
             <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
                 <a href=".">
-                    <img src="{{asset('unioil_images/unioil_logo.png')}}" width="110" height="32" alt="Unioil"
+                    <img src="{{ asset('unioil_images/unioil_logo.png') }}" width="110" height="32" alt="Unioil"
                         class="navbar-brand-image">
                 </a>
             </h1>
 
             <div class="navbar-nav flex-row order-md-last">
-
 
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown"
@@ -44,9 +43,8 @@
                 <div class="container-xl">
                     <ul class="navbar-nav">
                         <li class="nav-item active">
-                            <a class="nav-link" href="{{route('index')}}">
-                                <span
-                                    class="nav-link-icon d-md-none d-lg-inline-block">
+                            <a class="nav-link" href="{{ route('index') }}">
+                                <span class="nav-link-icon d-md-none d-lg-inline-block">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                         stroke-linecap="round" stroke-linejoin="round">
@@ -64,8 +62,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
                                 data-bs-auto-close="outside" role="button" aria-expanded="false">
-                                <span
-                                    class="nav-link-icon d-md-none d-lg-inline-block">
+                                <span class="nav-link-icon d-md-none d-lg-inline-block">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                         stroke-linecap="round" stroke-linejoin="round">
@@ -97,15 +94,29 @@
                                 </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{route('qrgenerator')}}">
+                            <a class="nav-link" href="{{ route('qrgenerator') }}">
                                 <span
                                     class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
-                                        height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                                        fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-qrcode">
                                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path d="M9 11l3 3l8 -8" />
-                                        <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+                                        <path
+                                            d="M4 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" />
+                                        <path d="M7 17l0 .01" />
+                                        <path
+                                            d="M14 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" />
+                                        <path d="M7 7l0 .01" />
+                                        <path
+                                            d="M4 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" />
+                                        <path d="M17 7l0 .01" />
+                                        <path d="M14 14l3 0" />
+                                        <path d="M20 14l0 .01" />
+                                        <path d="M14 14l0 3" />
+                                        <path d="M14 20l3 0" />
+                                        <path d="M17 17l3 0" />
+                                        <path d="M20 17l0 3" />
                                     </svg>
                                 </span>
                                 <span class="nav-link-title">
