@@ -22,15 +22,11 @@
                     <!-- Page title actions -->
                     <div class="col-auto ms-auto d-print-none">
                       <div class="btn-list">
-                        <a href="#" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-report">
+                        <button class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-simple">
                           <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                           <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
                           generate QR
-                        </a>
-                        <a href="#" class="btn btn-primary d-sm-none btn-icon" data-bs-toggle="modal" data-bs-target="#modal-report" aria-label="Create new report">
-                          <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
-                          <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-                        </a>
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -48,8 +44,7 @@
                                         <tr>
                                             <th><button class="table-sort" data-sort="sort-qr_id">QR ID</button></th>
                                             <th><button class="table-sort" data-sort="sort-code">Code</button></th>
-                                            <th><button class="table-sort" data-sort="sort-entry_type">Entry
-                                                    Type</button></th>
+                                            <th><button class="table-sort" data-sort="sort-entry_type">Entry Type</button></th>
                                             <th><button class="table-sort" data-sort="sort-status">Status</button></th>
                                             <th><button class="table-sort" data-sort="sort-progress">Progress</button>
                                             </th>
@@ -110,13 +105,60 @@
                     </div>
                 </div>
             </div>
+
+            <div class="modal modal-blur fade" id="modal-simple" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Generate QR</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="" id="generateform">
+                        @csrf
+                    <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="numberofqr">Number of QR</label>
+                            <input type="number" class="form-control" name="numberofqr" id="numberofqr" min="1" max="15000" value="1" oninput="enforceLimit(this)">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="qrtype">QR Type</label>
+                            <select name="qrtype" id="qrtype" class="form-control">
+                                <option value="1">Single Entry QR Code</option>
+                                <option value="2">Dual Entry QR Code</option>
+                            </select>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                </form>
+                <div class="modal-footer">
+                    <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="GenerateQrCode()">Generate</button>
+                </div>
+                </div>
+            </div>
+            </div>
+
             @include('Admin.components.footer')
 
         </div>
     </div>
 
     @include('Admin.components.scripts')
-
+    <script src="{{asset('qr_js/qr_code.js')}}"></script>
+    <script>
+    function enforceLimit(input) {
+        if (input.value > 15000) {
+            input.value = 15000;
+        } else if (input.value < 1) {
+            input.value = 1;
+        }
+    }
+    </script>
 
 </body>
 
