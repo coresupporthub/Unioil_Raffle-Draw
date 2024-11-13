@@ -11,6 +11,7 @@
                         class="navbar-brand-image">
                 </a>
             </h1>
+
             <div class="navbar-nav flex-row order-md-last">
 
 
@@ -77,7 +78,7 @@
                                     </svg>
                                 </span>
                                 <span class="nav-link-title">
-                                    Interface
+                                    Regional Clusters
                                 </span>
                             </a>
                             <div class="dropdown-menu">
