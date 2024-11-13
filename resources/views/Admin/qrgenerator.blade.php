@@ -42,7 +42,6 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th><button class="table-sort" data-sort="sort-qr_id">QR ID</button></th>
                                             <th><button class="table-sort" data-sort="sort-code">Code</button></th>
                                             <th><button class="table-sort" data-sort="sort-entry_type">Entry Type</button></th>
                                             <th><button class="table-sort" data-sort="sort-status">Status</button></th>
@@ -53,7 +52,6 @@
                                     </thead>
                                     <tbody class="table-tbody">
                                         <tr>
-                                            <td class="sort-qr_id">001</td>
                                             <td class="sort-code">AB1234</td>
                                             <td class="sort-entry_type">product1</td>
                                             <td class="sort-status">Active</td>
@@ -76,7 +74,6 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td class="sort-qr_id">002</td>
                                             <td class="sort-code">CD5678</td>
                                             <td class="sort-entry_type">product2</td>
                                             <td class="sort-status">Inactive</td>
@@ -105,6 +102,39 @@
                     </div>
                 </div>
             </div>
+
+            <div class="page-body">
+                <div class="container-xl">
+                    <div class="card">
+                        <div class="card-body">
+
+                            <div id="table-default" class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th><button class="table-sort" data-sort="sort-code">Code</button></th>
+                                            <th><button class="table-sort" data-sort="sort-entry_type">Entry Type</button></th>
+                                            <th><button class="table-sort" data-sort="sort-status">Status</button></th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-tbody">
+                                        <tr>
+                                            <td class="sort-code">AB1234</td>
+                                            <td class="sort-entry_type">product1</td>
+                                            <td class="sort-status">Active</td>
+                                            <td>
+                                                <button class="btn btn-danger">Delete</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>    
 
             <div class="modal modal-blur fade" id="modal-simple" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">

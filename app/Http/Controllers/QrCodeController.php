@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Jobs\GenerateQr;
+use App\Models\QrCode;
 
 
 class QrCodeController extends Controller
@@ -17,5 +18,12 @@ class QrCodeController extends Controller
 
 
         return response()->json(['success' => true]);
+    }
+
+    public function getqrcodegenerated()
+    {
+        $qrcodes = QrCode::all();
+        
+        return response()->json(['qrcodes' => $qrcodes]);
     }
 }
