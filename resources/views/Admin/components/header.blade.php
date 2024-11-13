@@ -17,7 +17,7 @@
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown"
                         aria-label="Open user menu">
-                        <span class="avatar avatar-sm" style="background-image: url(./static/avatars/000m.jpg)"></span>
+                        <span class="avatar avatar-sm" style="background-image: url({{asset('admin_profile_image/unioil.png')}})"></span>
                         <div class="d-none d-xl-block ps-2">
                             <div>Paweł Kuna</div>
                             <div class="mt-1 small text-secondary">UI Designer</div>
@@ -42,7 +42,7 @@
             <div class="navbar">
                 <div class="container-xl">
                     <ul class="navbar-nav">
-                        <li class="nav-item active">
+                        <li class="nav-item {{ $active === 'dashboard' ? 'active' : '' }}">
                             <a class="nav-link" href="{{ route('index') }}">
                                 <span class="nav-link-icon d-md-none d-lg-inline-block">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
@@ -93,7 +93,7 @@
                                     </div>
                                 </div>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item {{ $active === 'qrgenerator' ? 'active' : '' }}">
                             <a class="nav-link" href="{{ route('qrgenerator') }}">
                                 <span
                                     class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
