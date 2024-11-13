@@ -77,10 +77,7 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <button class="btn btn-secondary" onclick="()">
-                                                    Generate QR</button>
-                                                <button class="btn btn-primary" onclick="()">Download
-                                                    PDF</button>
+                                                <button class="btn btn-danger">Delete</button>
                                             </td>
                                         </tr>
                                         <tr>
@@ -103,8 +100,7 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <button class="btn btn-secondary" onclick="()">Generate QR</button>
-                                                <button class="btn btn-primary" onclick="()">Download PDF</button>
+                                                <button class="btn btn-danger">Delete</button>
                                             </td>
                                         </tr>
                                     </tbody>
