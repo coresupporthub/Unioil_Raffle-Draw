@@ -17,8 +17,7 @@
                                         <tr>
                                             <th><button class="table-sort" data-sort="sort-qr_id">QR ID</button></th>
                                             <th><button class="table-sort" data-sort="sort-code">Code</button></th>
-                                            <th><button class="table-sort" data-sort="sort-entry_type">Entry
-                                                    Type</button></th>
+                                            <th><button class="table-sort" data-sort="sort-entry_type">Entry Type</button></th>
                                             <th><button class="table-sort" data-sort="sort-status">Status</button></th>
                                             <th><button class="table-sort" data-sort="sort-progress">Progress</button>
                                             </th>
