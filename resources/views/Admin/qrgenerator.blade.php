@@ -119,14 +119,7 @@
                                         </tr>
                                     </thead>
                                     <tbody class="table-tbody">
-                                        <tr>
-                                            <td class="sort-code">AB1234</td>
-                                            <td class="sort-entry_type">product1</td>
-                                            <td class="sort-status">Active</td>
-                                            <td>
-                                                <button class="btn btn-danger">Delete</button>
-                                            </td>
-                                        </tr>
+                                        
                                     </tbody>
                                 </table>
                             </div>
@@ -157,8 +150,8 @@
                         <div class="form-group">
                             <label for="qrtype">QR Type</label>
                             <select name="qrtype" id="qrtype" class="form-control">
-                                <option value="1">Single Entry QR Code</option>
-                                <option value="2">Dual Entry QR Code</option>
+                                <option value="Single Entry QR Code">Single Entry QR Code</option>
+                                <option value="Dual Entry QR Code">Dual Entry QR Code</option>
                             </select>
                         </div>
                     </div>

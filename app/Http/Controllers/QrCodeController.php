@@ -26,4 +26,19 @@ class QrCodeController extends Controller
         
         return response()->json(['qrcodes' => $qrcodes]);
     }
+
+    public function deletegeneratedqr(request $request){
+        $qrcodes = QrCode::where('qr_id', $request->qr_id)->first();
+        if($qrcodes){
+
+            $filePath = public_path('qr-codes/'.$qrcodes->image); // Example file path
+
+            if (file_exists($filePath)) {
+                unlink($filePath);
+            }
+
+            $qrcodes->delete();
+        }
+        return response()->json(['success' => true]);
+    }
 }
