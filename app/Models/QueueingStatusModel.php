@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class QueueingStatus extends Model
+class QueueingStatusModel extends Model
 {
     public $incrementing = false;
     protected $keyType = 'string';

@@ -9,6 +9,7 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use App\Models\QueueingStatusModel;
 
 class QueueingStatus implements ShouldBroadcast
 {
@@ -25,7 +26,7 @@ class QueueingStatus implements ShouldBroadcast
 
     public function broadcastWith():array{
 
-
+        
         return ['success'=> true, 'message'=> $this->message];
      }
 
