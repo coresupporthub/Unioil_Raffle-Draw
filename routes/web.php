@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Events\QueueingStatus;
 //ADMIN SIDE
 
 //NAVIGATION
@@ -24,6 +24,10 @@ Route::get('/customer/registrations', function () {
     return view('Admin.customers');
 })->name('customers');
 
+//SETTINGS
+Route::get('/account/settings', function () {
+    return view('Admin.accountsettings');
+})->name('accountsettings');
 
 //AUTHENTICATION
 Route::get('/admin/sign-in', function () {
@@ -39,3 +43,8 @@ Route::get('/registration/page', function () {
     return view('Customer.registration');
 });
 
+Route::get('/test', function(){
+    event(new QueueingStatus());
+
+    return 'done';
+});
