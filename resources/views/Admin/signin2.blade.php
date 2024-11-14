@@ -17,7 +17,7 @@
                                         class="navbar-brand-image" style="width: 150px; height: auto;">
                                 </a>
                             </div>
-                            <form class="card card-md" action="./" method="get" autocomplete="off" novalidate>
+                            <form class="card card-md" id="verifyForm" autocomplete="off" novalidate>
                                 <div class="card-body">
                                     <h2 class="card-title card-title-lg text-center mb-4">Authenticate Your Account</h2>
                                     <p class="my-4 text-center">Please confirm your account by entering the
