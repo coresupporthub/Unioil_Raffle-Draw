@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Events\QueueingStatus;
 //ADMIN SIDE
 
 //NAVIGATION
@@ -41,10 +40,4 @@ Route::get('/admin/verification-code', function () {
 //CUSTOMER SIDE
 Route::get('/registration/page', function () {
     return view('Customer.registration');
-});
-
-Route::get('/test', function(){
-    event(new QueueingStatus());
-
-    return 'done';
 });
