@@ -32,3 +32,23 @@ async function dataGetter(api){
 
     return result;
 }
+
+function setText(id, value){
+    const element =  document.getElementById(id);
+
+    if(element){
+        element.textContent = value;
+    }
+}
+
+function btnLoading(id, status){
+    const element = document.getElementById(id);
+
+    if(element){
+        if(status){
+            element.innerHTML = `<div class="btnLoader"></div>` ;
+        }else{
+            element.textContent = 'Verify';
+        }
+    }
+}

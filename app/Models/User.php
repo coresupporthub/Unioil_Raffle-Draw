@@ -22,7 +22,9 @@ class User extends Authenticatable
         'email',
         'password',
         'verification_code',
-        'authenticated'
+        'authenticated',
+        'login_attempt',
+        'resend_attempt'
     ];
 
     /**
@@ -34,7 +36,9 @@ class User extends Authenticatable
         'password',
         'remember_token',
         'verification_code',
-        'authenticated'
+        'authenticated',
+        'resend_attempt',
+        'login_attempt'
     ];
 
     /**

@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('password');
             $table->integer('verification_code')->nullable();
             $table->enum('authenticated', ['false', 'true'])->default('false');
+            $table->integer('login_attempt')->default(0);
+            $table->integer('resend_attempt')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

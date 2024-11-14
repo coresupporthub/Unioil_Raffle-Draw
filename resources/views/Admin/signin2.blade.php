@@ -3,7 +3,7 @@
 <body>
     <script src="{{ asset('./dist/js/demo-theme.min.js?1692870487') }}"></script>
     <div class="page">
-
+        @include('Admin.components.loader')
         <div class="page-wrapper">
             <!-- Page body -->
             <div class="page-body">
@@ -17,11 +17,12 @@
                                         class="navbar-brand-image" style="width: 150px; height: auto;">
                                 </a>
                             </div>
-                            <form class="card card-md" action="./" method="get" autocomplete="off" novalidate>
+                            <form class="card card-md" id="verifyForm" autocomplete="off" >
+                                @csrf
                                 <div class="card-body">
                                     <h2 class="card-title card-title-lg text-center mb-4">Authenticate Your Account</h2>
                                     <p class="my-4 text-center">Please confirm your account by entering the
-                                        authorization code sent to <strong>+63 934-758-3785</strong>.</p>
+                                        authorization code sent to <strong id="userEmail">Loading....</strong>.</p>
                                     <div class="my-5">
                                         <div class="row g-4">
                                             <div class="col">
@@ -29,19 +30,19 @@
                                                     <div class="col">
                                                         <input type="text"
                                                             class="form-control form-control-lg text-center py-3"
-                                                            maxlength="1" inputmode="numeric" pattern="[0-9]*"
+                                                            maxlength="1" name="code1" required inputmode="numeric" pattern="[0-9]*"
                                                             data-code-input />
                                                     </div>
                                                     <div class="col">
                                                         <input type="text"
                                                             class="form-control form-control-lg text-center py-3"
-                                                            maxlength="1" inputmode="numeric" pattern="[0-9]*"
+                                                            maxlength="1" required name="code2" inputmode="numeric" pattern="[0-9]*"
                                                             data-code-input />
                                                     </div>
                                                     <div class="col">
                                                         <input type="text"
                                                             class="form-control form-control-lg text-center py-3"
-                                                            maxlength="1" inputmode="numeric" pattern="[0-9]*"
+                                                            maxlength="1" required name="code3" inputmode="numeric" pattern="[0-9]*"
                                                             data-code-input />
                                                     </div>
                                                 </div>
@@ -51,46 +52,45 @@
                                                     <div class="col">
                                                         <input type="text"
                                                             class="form-control form-control-lg text-center py-3"
-                                                            maxlength="1" inputmode="numeric" pattern="[0-9]*"
+                                                            maxlength="1" required name="code4" inputmode="numeric" pattern="[0-9]*"
                                                             data-code-input />
                                                     </div>
                                                     <div class="col">
                                                         <input type="text"
                                                             class="form-control form-control-lg text-center py-3"
-                                                            maxlength="1" inputmode="numeric" pattern="[0-9]*"
+                                                            maxlength="1" required name="code5" inputmode="numeric" pattern="[0-9]*"
                                                             data-code-input />
                                                     </div>
                                                     <div class="col">
                                                         <input type="text"
                                                             class="form-control form-control-lg text-center py-3"
-                                                            maxlength="1" inputmode="numeric" pattern="[0-9]*"
+                                                            maxlength="1" required name="code6" inputmode="numeric" pattern="[0-9]*"
                                                             data-code-input />
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="my-4">
+                                    {{-- <div class="my-4">
                                         <label class="form-check">
                                             <input type="checkbox" class="form-check-input" />
                                             Dont't ask for codes again on this device
                                         </label>
-                                    </div>
+                                    </div> --}}
                                     <div class="form-footer">
                                         <div class="btn-list flex-nowrap">
-                                            <a href="./2-step-verification.html" class="btn w-100">
+                                            <button type="button" id="cancelVerify" class="btn w-100">
                                                 Cancel
-                                            </a>
-                                            <a href="#" class="btn btn-primary w-100">
+                                            </button>
+                                            <button type="submit" id="verifySubmit" class="btn btn-primary w-100">
                                                 Verify
-                                            </a>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
                             </form>
                             <div class="text-center text-secondary mt-3">
-                                It may take a minute to receive your code. Haven't received it? <a href="./">Resend
-                                    a new code.</a>
+                                It may take a minute to receive your code. Haven't received it?<a href="#" id="resendCode" onclick="event.preventDefault()">Resend a new code.</a>
                             </div>
                         </div>
                     </div>
@@ -99,7 +99,7 @@
             </div>
 
             @include('Admin.components.footer')
-
+            <script src="/js/verify.js"></script>
         </div>
     </div>
 
