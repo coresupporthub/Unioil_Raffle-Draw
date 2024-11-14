@@ -15,3 +15,12 @@ function dataParser(data){
         alertify.error(data.message);
     }
 }
+
+function showPass(id){
+    const inp = document.getElementById(id);
+    if(inp.type === 'password'){
+        inp.type = 'text';
+    }else{
+        inp.type = 'password';
+    }
+}

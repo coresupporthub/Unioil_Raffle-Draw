@@ -12,8 +12,9 @@ document.getElementById('authForm').addEventListener('submit', (e)=> {
             dataParser(res);
 
             if(res.success){
-
+                window.location.href = "/admin/verification-code";
             }
+
         }, error: xhr=> console.log(xhr.responseText)
     })
 });

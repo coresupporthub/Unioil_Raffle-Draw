@@ -3,8 +3,15 @@ namespace App\Http\Services;
 
 class Tools{
 
-    public static function genCode($length = 15){
-        $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    public static function genCode($length = 15, $type = "alphanumeric"){
+        switch($type){
+            case 'numeric':
+                $characters = '0123456789';
+                break;
+            default:
+                $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+                break;
+        }
 
         $charactersLength = strlen($characters);
         $randomString = '';
@@ -15,5 +22,4 @@ class Tools{
 
         return $randomString;
     }
-
 }
