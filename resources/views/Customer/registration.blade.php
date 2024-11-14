@@ -7,7 +7,11 @@
             <!-- Page body -->
             <div class="page-body">
                 <div class="container-xl d-flex flex-column justify-content-center">
-
+                    <div class="d-flex justify-content-center align-items-center w-100 flex-column gap-1">
+                        <img src="/unioil_images/unioil_logo.png" alt="unioil logo" class="mb-4">
+                        <h1>Reffle Entry</h1>
+                        <p>Code: {{ $code }}</p>
+                    </div>
                     <div class="container m-5 p-7">
                         <form class="row g-3 needs-validation" novalidate>
                             <div class="col-md-4">
@@ -59,7 +63,7 @@
 
                             <div class="col-md-4">
                                 <label for="validationCustom03" class="form-label">PRODUCT PURCHASED</label>
-                                <input type="text" class="form-control" id="validationCustom03" required>
+                                <input type="text" class="form-control" value="{{$code}}" id="validationCustom03" required>
                                 <div class="invalid-feedback">
                                     Please provide a valid city.
                                 </div>
@@ -83,7 +87,7 @@
                                     Please select a valid state.
                                 </div>
                             </div>
-                          
+
                             <div class="col-12">
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="" id="invalidCheck"
