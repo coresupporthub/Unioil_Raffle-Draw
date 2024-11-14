@@ -48,6 +48,7 @@ class GenerateQr implements ShouldQueue
         $qrCodeModel->entry_type = $entry_type;
         $qrCodeModel->status = 'unused';
         $qrCodeModel->image = $fileName;
+        $qrCodeModel->export_status = 'none';
         $qrCodeModel->save();
 
         $urlConstruct = route('customer_registrations', ['code' => $code, 'uuid'=> $qrCodeModel->qr_id]);

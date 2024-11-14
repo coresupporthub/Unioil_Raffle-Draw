@@ -85,8 +85,32 @@ function DeleteQrCode(qrId) {
 $(document).ready(function () {
 
     GetGeneratedQr();
-
+    QueueStatus();
 });
+
+async function QueueStatus(){
+    const response = await fetch('/api/get-queue-status');
+
+    const result = await response.json();
+    console.log(result);
+
+    $("#queue-progress").DataTable({
+        data: result.queue,
+        destroy: true,
+        columns: [
+            { data: "queue_number" },
+            { data: "entry_type" },
+            { data: "status" },
+            {
+                // Define the Action button column
+                data: null,
+                render: function (data, type, row) {
+                    return `<button class="btn btn-danger" onclick="DeleteQrCode('${row.qr_id}')">Delete</button>`;
+                },
+            },
+        ],
+    });
+}
 
 
 document.getElementById('exportQrBtn').addEventListener('click', ()=> {

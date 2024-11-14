@@ -16,6 +16,7 @@ return new class extends Migration
             $table->integer('queue_number');
             $table->integer('items');
             $table->integer('total_items');
+            $table->string('entry_type');
             $table->enum('status', ['inprogress', 'done']);
             $table->timestamps();
         });

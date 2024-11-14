@@ -23,6 +23,7 @@ class QrCodeController extends Controller
         $queue->items = 0;
         $queue->total_items = $req->numberofqr;
         $queue->status = 'inprogress';
+        $queue->entry_type = $req->qrtype;
         $queue->save();
 
         for($i = 0; $i < $req->numberofqr; $i++){
@@ -53,5 +54,11 @@ class QrCodeController extends Controller
             $qrcodes->delete();
         }
         return response()->json(['success' => true]);
+    }
+
+    public function queueProgress(Request $req){
+        $queue = QueueingStatusModel::all();
+
+        return response()->json(['queue'=> $queue]);
     }
 }

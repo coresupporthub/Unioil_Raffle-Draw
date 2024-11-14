@@ -16,6 +16,7 @@ class QrCode extends Model
         'entry_type',
         'status',
         'image',
+        'export_status'
     ];
 
     protected static function boot()
