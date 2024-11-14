@@ -34,4 +34,12 @@ class AuthenticationController extends Controller
             return response()->json(['success' => false, 'message' => "Email and password does not match"]);
         }
     }
+
+    public function getauth(Request $req){
+        $auth = Auth::id();
+
+        $user = User::where('id', $auth)->first();
+
+        return response()->json(['auth'=> $user]);
+    }
 }

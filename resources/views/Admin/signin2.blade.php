@@ -21,7 +21,7 @@
                                 <div class="card-body">
                                     <h2 class="card-title card-title-lg text-center mb-4">Authenticate Your Account</h2>
                                     <p class="my-4 text-center">Please confirm your account by entering the
-                                        authorization code sent to <strong>+63 934-758-3785</strong>.</p>
+                                        authorization code sent to <strong id="userEmail">Loading....</strong>.</p>
                                     <div class="my-5">
                                         <div class="row g-4">
                                             <div class="col">
@@ -70,12 +70,12 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="my-4">
+                                    {{-- <div class="my-4">
                                         <label class="form-check">
                                             <input type="checkbox" class="form-check-input" />
                                             Dont't ask for codes again on this device
                                         </label>
-                                    </div>
+                                    </div> --}}
                                     <div class="form-footer">
                                         <div class="btn-list flex-nowrap">
                                             <a href="./2-step-verification.html" class="btn w-100">
@@ -99,7 +99,7 @@
             </div>
 
             @include('Admin.components.footer')
-
+            <script src="/js/verify.js"></script>
         </div>
     </div>
 
