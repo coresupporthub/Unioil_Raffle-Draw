@@ -38,6 +38,6 @@ Route::get('/admin/verification-code', function () {
 
 
 //CUSTOMER SIDE
-Route::get('/registration/page/{code}', function ($code) {
-    return view('Customer.registration', ['code'=> $code]);
+Route::get('/registration/page/{code}/{uuid}', function ($code, $uuid) {
+    return view('Customer.registration', ['code'=> $code, 'uuid'=> $uuid]);
 })->name('customer_registrations');

@@ -16,6 +16,7 @@ class QueueingStatusModel extends Model
         'total_items',
         'items',
         'status',
+        'export_status'
     ];
 
     protected static function boot()

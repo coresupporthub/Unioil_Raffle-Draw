@@ -22,11 +22,22 @@
                     <!-- Page title actions -->
                     <div class="col-auto ms-auto d-print-none">
                       <div class="btn-list">
-                        <button class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-simple">
+                        <button class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#generateqr">
                           <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                           <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-                          generate QR
+                          Generate QR
                         </button>
+                        <button class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#export">
+                            <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-download">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" />
+                                <path d="M7 11l5 5l5 -5" />
+                                <path d="M12 4l0 12" />
+                              </svg>
+                            Export
+                        </button>
+
                       </div>
                     </div>
                   </div>
@@ -119,7 +130,7 @@
                                         </tr>
                                     </thead>
                                     <tbody class="table-tbody">
-                                        
+
                                     </tbody>
                                 </table>
                             </div>
@@ -129,7 +140,7 @@
                 </div>
             </div>
 
-            <div class="modal modal-blur fade" id="modal-simple" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal modal-blur fade" id="generateqr" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                 <div class="modal-header">
@@ -165,6 +176,31 @@
                 </div>
             </div>
             </div>
+
+
+            <div class="modal modal-blur fade" id="export" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Export to PDF</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <form class="mb-3" id="exportQrForm">
+                            @csrf
+                            <label class="form-label">How many QR you want to export?</label>
+                            <input type="number" class="form-control" required name="" placeholder="# of QR Codes">
+                          </form>
+                    </div>
+
+                    <div class="modal-footer">
+                      <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+                      <button type="button" id="exportQrBtn" class="btn btn-primary">Export</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
             @include('Admin.components.footer')
 

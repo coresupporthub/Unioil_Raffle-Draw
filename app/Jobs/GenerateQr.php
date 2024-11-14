@@ -40,7 +40,18 @@ class GenerateQr implements ShouldQueue
             $code = Tools::genCode();
         }
 
-        $urlConstruct = route('customer_registrations', ['code' => $code]);
+        $fileName = "{$code}.png";
+
+
+        $qrCodeModel = new QrCode();
+        $qrCodeModel->code = $code;
+        $qrCodeModel->entry_type = $this->entry_type;
+        $qrCodeModel->status = 'unused';
+        $qrCodeModel->image = $fileName;
+        $qrCodeModel->save();
+
+        $urlConstruct = route('customer_registrations', ['code' => $code, 'uuid'=> $qrCodeModel->qr_id]);
+
 
         $builder = new Builder(
             writer: new PngWriter(),
@@ -61,7 +72,7 @@ class GenerateQr implements ShouldQueue
         );
 
         $result = $builder->build();
-        $fileName = "{$code}.png";
+
         $qrCodePath = public_path("qr-codes/{$fileName}");
 
         if (!file_exists(public_path('qr-codes'))) {
@@ -69,13 +80,6 @@ class GenerateQr implements ShouldQueue
         }
 
         $result->saveToFile($qrCodePath);
-
-        $qrCodeModel = new QrCode();
-        $qrCodeModel->code = $code;
-        $qrCodeModel->entry_type = $this->entry_type;
-        $qrCodeModel->status = 'unused';
-        $qrCodeModel->image = $fileName;
-        $qrCodeModel->save();
 
         $q = QueueingStatusModel::where('status', 'inprogress')->first();
 

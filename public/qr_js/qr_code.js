@@ -3,7 +3,7 @@ function GenerateQrCode() {
     const formData = new FormData(form);
 
     const numberofqr = document.getElementById("numberofqr").value;
-    
+
     $.ajax({
         url: "/api/generate-qr-code", // Replace with your endpoint URL
         type: "POST",
@@ -86,4 +86,15 @@ $(document).ready(function () {
 
     GetGeneratedQr();
 
+});
+
+
+document.getElementById('exportQrBtn').addEventListener('click', ()=> {
+    document.getElementById('exportQrForm').requestSubmit();
+
+
+});
+
+document.getElementById('exportQrForm').addEventListener('submit', (e)=> {
+    e.preventDefault();
 });

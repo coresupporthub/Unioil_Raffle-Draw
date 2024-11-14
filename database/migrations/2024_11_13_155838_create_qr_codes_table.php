@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('entry_type');
             $table->enum('status', ['used', 'unused']);
             $table->string('image');
+            $table->enum('export_status', ['exported', 'none']);
             $table->timestamps();
         });
     }
