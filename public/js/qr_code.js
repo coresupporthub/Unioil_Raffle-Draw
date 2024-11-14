@@ -1,7 +1,7 @@
 function GenerateQrCode() {
     const form = document.getElementById("generateform");
     const formData = new FormData(form);
-
+    loading(true);
     const numberofqr = document.getElementById("numberofqr").value;
 
     $.ajax({
@@ -16,6 +16,7 @@ function GenerateQrCode() {
                 setTimeout(function () {
                     GetGeneratedQr();
                 }, 2000);
+                loading(false);
         },
         error: function (xhr, status, error) {
             // Handle error
@@ -63,7 +64,7 @@ function DeleteQrCode(qrId) {
     const formData = new FormData();
     formData.append("_token", csrfToken);
     formData.append("qr_id", qrId);
-
+    loading(true);
     $.ajax({
         url: "/api/delete-generate-qr-code", // Replace with your endpoint URL
         type: "POST",
@@ -72,6 +73,7 @@ function DeleteQrCode(qrId) {
         contentType: false, // Let FormData handle the content type (especially for file uploads)
         success: function (response) {
             GetGeneratedQr();
+            loading(false);
             alertify.success(`Qr Code has been deleted successfully`);
         },
         error: function (xhr, status, error) {
@@ -128,7 +130,7 @@ document.getElementById('exportQrBtn').addEventListener('click', ()=> {
 
 document.getElementById('exportQrForm').addEventListener('submit', (e)=> {
     e.preventDefault();
-
+    loading(true);
     $.ajax({
         type: "POST",
         url: "/api/export-qr",
@@ -139,7 +141,7 @@ document.getElementById('exportQrForm').addEventListener('submit', (e)=> {
         success: res => {
             const blob = new Blob([res], { type: 'application/pdf' });
             const url = URL.createObjectURL(blob);
-
+            loading(false);
             window.open(url, '_blank');
         }, error: xhr=> console.log(xhr.responseText)
     });
