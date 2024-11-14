@@ -42,10 +42,10 @@ class GenerateQr implements ShouldQueue
 
         $fileName = "{$code}.png";
 
-
+        $entry_type = $this->entry_type;
         $qrCodeModel = new QrCode();
         $qrCodeModel->code = $code;
-        $qrCodeModel->entry_type = $this->entry_type;
+        $qrCodeModel->entry_type = $entry_type;
         $qrCodeModel->status = 'unused';
         $qrCodeModel->image = $fileName;
         $qrCodeModel->save();
@@ -66,7 +66,7 @@ class GenerateQr implements ShouldQueue
             logoResizeToWidth: 100,
             logoPunchoutBackground: true,
             logoPath: public_path('/unioil_images/unioil.png'),
-            labelText: $code,
+            labelText: $entry_type,
             labelFont: new OpenSans(20),
             labelAlignment: LabelAlignment::Center
         );
