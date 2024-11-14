@@ -262,7 +262,7 @@ function loadCity(id){
     );
     dataGetter(`https://psgc.cloud/api/regions/${code}/provinces`).then(
         (data) => {
-            if(data.lenght>0){
+            if(data.length>0){
                 const selectElement = document.getElementById("city_id");
 
                 selectElement.innerHTML = "";
@@ -305,7 +305,7 @@ function loadCity2(id) {
         });
         dataGetter(`https://psgc.cloud/api/regions/${code}/provinces`).then(
             (data) => {
-                 if (data.lenght>0) {
+                 if (data.length > 0) {
                      const selectElement = document.getElementById("city_id2");
 
                      selectElement.innerHTML = "";
