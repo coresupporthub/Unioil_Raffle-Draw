@@ -3,6 +3,7 @@
 /public/build
 /public/hot
 /public/storage
+/public/qr-codes
 /storage/*.key
 /storage/pail
 /vendor
