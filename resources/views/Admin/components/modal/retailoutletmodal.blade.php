@@ -59,6 +59,7 @@
 
                       </div>
                       <div class="tab-pane" id="tabs-Region">
+
                         <form action="" method="post" id="regionForm">
                             @csrf
                         <div class="row">
@@ -75,6 +76,24 @@
                             </div>
                         </div>
                         </form>
+
+                        <div id="table-default" class="table-responsive">
+                                        <table class="table" id="regionTable">
+                                            <thead>
+                                                <tr>
+                                                    <th>Cluster</th>
+                                                    <th>Region</th>
+                                                    <th>Status</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="table-tbody">
+                                                
+                                            </tbody>
+                                        </table>
+                                        
+                        </div>
+
                      </div>
                       <div class="tab-pane" id="tabs-City">
 
@@ -99,6 +118,24 @@
                         </div>
                         </form>
                         
+                        <div id="table-default" class="table-responsive">
+                                        <table class="table" id="cityTable">
+                                            <thead>
+                                                <tr>
+                                                    <th>Cluster</th>
+                                                    <th>Region</th>
+                                                    <th>City</th>
+                                                    <th>Status</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="table-tbody">
+                                                
+                                            </tbody>
+                                        </table>
+                                        
+                        </div>
+
                       </div>
                       <div class="tab-pane" id="tabs-Street">
                         <form action="" method="post" id="storeform">

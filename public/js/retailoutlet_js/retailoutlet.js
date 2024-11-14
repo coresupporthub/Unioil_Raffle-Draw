@@ -27,6 +27,35 @@ function GetAllCluster() {
     });
 }
 
+function GetAllRegion() {
+    $.ajax({
+        url: "/api/get-region", // Replace with your endpoint URL
+        type: "GET",
+        success: function (response) {
+            const data = response.data;
+            console.log(data)
+            // $("#clusterTable").DataTable({
+            //     data: data,
+            //     destroy: true,
+            //     columns: [
+            //         { data: "cluster_name" },
+            //         { data: "cluster_status" },
+            //         {
+            //             // Define the Action button column
+            //             data: null,
+            //             render: function (data, type, row) {
+            //                 return `<button class="btn btn-danger" onclick="ChangeStatus('${row.cluster_id}','/api/cluster-status')">Change Status</button>`;
+            //             },
+            //         },
+            //     ],
+            // });
+        },
+        error: function (xhr, status, error) {
+            console.error("Error fetching data:", error);
+        },
+    });
+}
+
 function GetAllClusterSelect() {
     $.ajax({
         url: "/api/get-cluster", // Replace with your endpoint URL
@@ -276,8 +305,15 @@ function ChangeStatus(id, route) {
         },
     });
 }
-
+function LoadAll(){
+     GetAllCluster();
+     GetAllClusterSelect();
+     GetAllRegion();
+}
 $(document).ready(function () {
-    GetAllCluster();
-    GetAllClusterSelect();
+   LoadAll();
+
+   dataGetter("https://psgc.cloud/api/regions").then((data) => {
+       console.log(data);
+   });
 });
