@@ -17,7 +17,7 @@ class RetailStoreController extends Controller
         $data->cluster_name = $request->cluster_name;
         $data->save();
 
-        return response()->json(['success' => true , 'message'=>'Regional cluster successfully added', 'reload'=> 'GetAllCluster']);
+        return response()->json(['success' => true , 'message'=>'Regional cluster successfully added', 'reload'=> 'LoadAll']);
     }
 
     public function getcluster(){
@@ -33,7 +33,7 @@ class RetailStoreController extends Controller
             $data->cluster_status = 'Enable';
         }
         $data->save();
-        return response()->json(['success' => true , 'message'=>'Cluster status successfully updated', 'reload'=> 'GetAllCluster']);  
+        return response()->json(['success' => true , 'message'=>'Cluster status successfully updated', 'reload'=> 'LoadAll']);  
     }
 
     public function addregion(request $request){
@@ -43,7 +43,7 @@ class RetailStoreController extends Controller
         $data->region_name = $request->region_name;
         $data->save();
 
-        return response()->json(['success' => true, 'message' => 'Region status successfully added', 'reload' => 'GetAllCluster']);  
+        return response()->json(['success' => true, 'message' => 'Region status successfully added', 'reload' => 'LoadAll']);  
     }
 
     public function getregionbycluster(request $request){
@@ -70,8 +70,17 @@ class RetailStoreController extends Controller
         $data->store_name = $request->store_name;
         $data->store_code = $request->store_code;
         $data->save();
-
         return response()->json(['success' => true, 'message' => 'Store status successfully added']);
+    }
+
+    public function getallregion(){
+        $data = Region::all();
+        return response()->json(['data' => $data]);
+    }
+
+    public function getallcity(){
+        $data = City::all();
+        return response()->json(['data' => $data]);
     }
 
 }

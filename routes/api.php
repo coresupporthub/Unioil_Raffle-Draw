@@ -27,5 +27,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('/add-city', [RetailStoreController::class, 'addcity']);
     Route::post('/get-city-by-region', [RetailStoreController::class, 'getcitybyregion']);
     Route::post('/add-store', [RetailStoreController::class, 'addstore']);
+    Route::get('/get-region', [RetailStoreController::class, 'getallregion']);
+    Route::get('/get-city', [RetailStoreController::class, 'getallcity']);
 
 });
