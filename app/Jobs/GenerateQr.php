@@ -13,7 +13,7 @@ use Endroid\QrCode\RoundBlockSizeMode;
 use Endroid\QrCode\Writer\PngWriter;
 use App\Models\QrCode;
 use App\Http\Services\Tools;
-
+use App\Models\QueueingStatusModel;
 class GenerateQr implements ShouldQueue
 {
     use Queueable;
@@ -74,6 +74,21 @@ class GenerateQr implements ShouldQueue
         $qrCodeModel->status = 'unused';
         $qrCodeModel->image = $fileName;
         $qrCodeModel->save();
+
+        $q = QueueingStatusModel::where('status', 'inprogress')->first();
+
+        if($q){
+            if($q->items + 1 != $q->total_items){
+                $q->update([
+                    'items' => $q->items + 1,
+                ]);
+            }else{
+                $q->update([
+                    'items' => $q->items + 1,
+                    'status'=> 'done'
+                ]);
+            }
+        }
 
     }
 }
