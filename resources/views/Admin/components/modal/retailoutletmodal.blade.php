@@ -111,14 +111,14 @@
                             @csrf
                         <div class="row">
                             <div class="col-12 col-md-4 mb-3">
-                                <input type="text" name="store_id" id="store_id">
+                                <input type="text" name="store_id" id="store_id" hidden>
                                 <label for="regionalCluster">Regional Cluster</label>
                                 <select name="cluster_id" id="cluster_id2" class="form-control"></select>
                             </div>
                             <div class="col-12 col-md-4 mb-3">
                                 <label for="regionalCluster">Region</label>
                                 <select name="region_id" id="region_id2" class="form-control" oninput="loadCity2(this)"></select>
-                                <input type="text" id="region_name2" name="region_name" >
+                                <input type="text" id="region_name2" name="region_name" hidden>
                             </div>
                             <div class="col-12 col-md-4 mb-3">
                                 <label for="regionalCluster">City</label>

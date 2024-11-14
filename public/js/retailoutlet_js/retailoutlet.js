@@ -262,35 +262,8 @@ function loadCity(id){
     );
     dataGetter(`https://psgc.cloud/api/regions/${code}/provinces`).then(
         (data) => {
-
-            const selectElement = document.getElementById("city_id");
-
-            selectElement.innerHTML = "";
-
-            const defaultOption = document.createElement("option");
-            defaultOption.text = "Select a city";
-            defaultOption.value = "";
-            selectElement.appendChild(defaultOption);
-
-            data.forEach((element) => {
-                const newOption = document.createElement("option");
-                newOption.value = element.name;
-                newOption.text = element.name;
-                selectElement.appendChild(newOption);
-            });
-        }
-    );
-}
-
-function loadCity2(id) {
-    const code = id.value;
-    if (code) {
-        dataGetter(`https://psgc.cloud/api/regions/${code}`).then((data) => {
-            document.getElementById("region_name2").value = data.name;
-        });
-        dataGetter(`https://psgc.cloud/api/regions/${code}/provinces`).then(
-            (data) => {
-                const selectElement = document.getElementById("city_id2");
+            if(data.lenght>0){
+                const selectElement = document.getElementById("city_id");
 
                 selectElement.innerHTML = "";
 
@@ -305,6 +278,63 @@ function loadCity2(id) {
                     newOption.text = element.name;
                     selectElement.appendChild(newOption);
                 });
+            }else{
+                const selectElement = document.getElementById("city_id");
+
+                selectElement.innerHTML = "";
+
+                const defaultOption = document.createElement("option");
+                defaultOption.text = "Select a city";
+                defaultOption.value = "";
+                selectElement.appendChild(defaultOption);
+                 const newOption = document.createElement("option");
+                 newOption.value = 'Manila';
+                 newOption.text = "Manila";
+                 selectElement.appendChild(newOption);
+            }
+            
+        }
+    );
+}
+
+function loadCity2(id) {
+    const code = id.value;
+    if (code) {
+        dataGetter(`https://psgc.cloud/api/regions/${code}`).then((data) => {
+            document.getElementById("region_name2").value = data.name;
+        });
+        dataGetter(`https://psgc.cloud/api/regions/${code}/provinces`).then(
+            (data) => {
+                 if (data.lenght>0) {
+                     const selectElement = document.getElementById("city_id2");
+
+                     selectElement.innerHTML = "";
+
+                     const defaultOption = document.createElement("option");
+                     defaultOption.text = "Select a city";
+                     defaultOption.value = "";
+                     selectElement.appendChild(defaultOption);
+
+                     data.forEach((element) => {
+                         const newOption = document.createElement("option");
+                         newOption.value = element.name;
+                         newOption.text = element.name;
+                         selectElement.appendChild(newOption);
+                     });
+                 } else {
+                     const selectElement = document.getElementById("city_id2");
+
+                     selectElement.innerHTML = "";
+
+                     const defaultOption = document.createElement("option");
+                     defaultOption.text = "Select a city";
+                     defaultOption.value = "";
+                     selectElement.appendChild(defaultOption);
+                     const newOption = document.createElement("option");
+                     newOption.value = "Manila";
+                     newOption.text = "Manila";
+                     selectElement.appendChild(newOption);
+                 }
             }
         ); 
     }else{
