@@ -24,3 +24,11 @@ function showPass(id){
         inp.type = 'password';
     }
 }
+
+
+async function dataGetter(api){
+    const response = await fetch(api);
+    const result = await response.json();
+
+    return result;
+}

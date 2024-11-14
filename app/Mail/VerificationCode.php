@@ -16,7 +16,7 @@ class VerificationCode extends Mailable
     /**
      * Create a new message instance.
      */
-    private $code;
+    public $code;
     public function __construct($code)
     {
         $this->code = $code;
@@ -38,8 +38,7 @@ class VerificationCode extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'Admin.email.auth_verification',
-            with: ['code' => $this->code]
+            view: 'Admin.email.auth_verification'
         );
     }
 
