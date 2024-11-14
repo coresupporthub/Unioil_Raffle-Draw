@@ -10,7 +10,7 @@ use App\Http\Middleware\ApiAuthentication;
 
 Route::group(['middleware' => ['web']], function () {
 
-    
+
     Route::middleware([ApiAuthentication::class])->group(function () {
 
         Route::post('/generate-qr-code', [QrCodeController::class, 'generate']);
@@ -39,7 +39,5 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('/verify-user', [AuthenticationController::class, 'verifyuser']);
     Route::post('/logout', [AuthenticationController::class, 'logout']);
     Route::post('/resend-code', [AuthenticationController::class, 'resendcode']);
-
-
 
 });
