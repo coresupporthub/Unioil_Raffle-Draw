@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('total_items');
             $table->string('entry_type');
             $table->enum('status', ['inprogress', 'done']);
+            $table->enum('type', ['QR Generation', 'PDF Export']);
             $table->timestamps();
         });
     }

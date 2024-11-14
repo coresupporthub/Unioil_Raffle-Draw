@@ -9,4 +9,5 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/get-qr-code-generated', [QrCodeController::class, 'getqrcodegenerated']);
     Route::post('/delete-generate-qr-code', [QrCodeController::class, 'deletegeneratedqr']);
     Route::get('/get-queue-status', [QrCodeController::class, 'queueProgress']);
+    Route::post('/export-qr', [QrCodeController::class, 'exportQR']);
 });

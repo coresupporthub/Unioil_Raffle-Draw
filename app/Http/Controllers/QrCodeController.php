@@ -24,6 +24,7 @@ class QrCodeController extends Controller
         $queue->total_items = $req->numberofqr;
         $queue->status = 'inprogress';
         $queue->entry_type = $req->qrtype;
+        $queue->type = 'QR Generation';
         $queue->save();
 
         for($i = 0; $i < $req->numberofqr; $i++){
@@ -60,5 +61,23 @@ class QrCodeController extends Controller
         $queue = QueueingStatusModel::all();
 
         return response()->json(['queue'=> $queue]);
+    }
+
+    public function exportQR(Request $req){
+        $latestQueue = QueueingStatusModel::latest()->first();
+        $queue = new QueueingStatusModel();
+
+        if($latestQueue){
+            $queue->queue_number = $latestQueue->queue_number + 1;
+        }else{
+            $queue->queue_number = 1;
+        }
+
+        $queue->items = 0;
+        $queue->total_items = $req->numberofqr;
+        $queue->status = 'inprogress';
+        $queue->entry_type = $req->qrtype;
+        $queue->type = 'PDF Export';
+        $queue->save();
     }
 }

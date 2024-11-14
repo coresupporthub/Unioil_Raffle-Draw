@@ -17,6 +17,7 @@ class QueueingStatusModel extends Model
         'items',
         'status',
         'entry_type',
+        'type'
     ];
 
     protected static function boot()

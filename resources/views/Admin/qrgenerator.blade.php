@@ -9,40 +9,51 @@
         <div class="page-wrapper">
             <div class="page-header d-print-none">
                 <div class="container-xl">
-                  <div class="row g-2 align-items-center">
-                    <div class="col">
-                      <!-- Page pre-title -->
-                      <div class="page-pretitle">
-                        Overview
-                      </div>
-                      <h2 class="page-title">
-                        QR Generator
-                      </h2>
-                    </div>
-                    <!-- Page title actions -->
-                    <div class="col-auto ms-auto d-print-none">
-                      <div class="btn-list">
-                        <button class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#generateqr">
-                          <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
-                          <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-                          Generate QR
-                        </button>
-                        <button class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#export">
-                            <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-download">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" />
-                                <path d="M7 11l5 5l5 -5" />
-                                <path d="M12 4l0 12" />
-                              </svg>
-                            Export
-                        </button>
+                    <div class="row g-2 align-items-center">
+                        <div class="col">
+                            <!-- Page pre-title -->
+                            <div class="page-pretitle">
+                                Overview
+                            </div>
+                            <h2 class="page-title">
+                                QR Generator
+                            </h2>
+                        </div>
+                        <!-- Page title actions -->
+                        <div class="col-auto ms-auto d-print-none">
+                            <div class="btn-list">
+                                <button class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal"
+                                    data-bs-target="#generateqr">
+                                    <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M12 5l0 14" />
+                                        <path d="M5 12l14 0" />
+                                    </svg>
+                                    Generate QR
+                                </button>
+                                <button class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal"
+                                    data-bs-target="#export">
+                                    <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-download">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" />
+                                        <path d="M7 11l5 5l5 -5" />
+                                        <path d="M12 4l0 12" />
+                                    </svg>
+                                    Export
+                                </button>
 
-                      </div>
+                            </div>
+                        </div>
                     </div>
-                  </div>
                 </div>
-              </div>
+            </div>
 
 
             <div class="page-body">
@@ -53,8 +64,10 @@
                                 <table id="queue-progress" class="table">
                                     <thead>
                                         <tr>
-                                            <th><button class="table-sort" data-sort="sort-queue_number">Queue Number</button></th>
-                                            <th><button class="table-sort" data-sort="sort-entry_type">Entry Type</button></th>
+                                            <th><button class="table-sort" data-sort="sort-queue_number">Queue
+                                                    Number</button></th>
+                                            <th><button class="table-sort" data-sort="sort-entry_type">Entry
+                                                    Type</button></th>
                                             <th><button class="table-sort" data-sort="sort-status">Status</button></th>
                                             <th><button class="table-sort" data-sort="sort-progress">Progress</button>
                                             </th>
@@ -80,7 +93,8 @@
                                     <thead>
                                         <tr>
                                             <th><button class="table-sort" data-sort="sort-code">Code</button></th>
-                                            <th><button class="table-sort" data-sort="sort-entry_type">Entry Type</button></th>
+                                            <th><button class="table-sort" data-sort="sort-entry_type">Entry
+                                                    Type</button></th>
                                             <th><button class="table-sort" data-sort="sort-status">Status</button></th>
                                             <th>Action</th>
                                         </tr>
@@ -97,66 +111,83 @@
             </div>
 
             <div class="modal modal-blur fade" id="generateqr" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Generate QR</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="" id="generateform">
-                        @csrf
-                    <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="numberofqr">Number of QR</label>
-                            <input type="number" class="form-control" name="numberofqr" id="numberofqr" min="1" max="15000" value="1" oninput="enforceLimit(this)">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Generate QR</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" id="generateform">
+                                @csrf
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="numberofqr">Number of QR</label>
+                                            <input type="number" class="form-control" name="numberofqr" id="numberofqr"
+                                                min="1" max="15000" value="1"
+                                                oninput="enforceLimit(this)">
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="qrtype">QR Type</label>
+                                            <select name="qrtype" id="qrtype" class="form-control">
+                                                <option value="Single Entry QR Code">Single Entry QR Code</option>
+                                                <option value="Dual Entry QR Code">Dual Entry QR Code</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                        </form>
+                        <div class="modal-footer">
+                            <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary"
+                                onclick="GenerateQrCode()">Generate</button>
                         </div>
                     </div>
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="qrtype">QR Type</label>
-                            <select name="qrtype" id="qrtype" class="form-control">
-                                <option value="Single Entry QR Code">Single Entry QR Code</option>
-                                <option value="Dual Entry QR Code">Dual Entry QR Code</option>
-                            </select>
-                        </div>
-                    </div>
-                    </div>
                 </div>
-                </form>
-                <div class="modal-footer">
-                    <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="GenerateQrCode()">Generate</button>
-                </div>
-                </div>
-            </div>
             </div>
 
 
             <div class="modal modal-blur fade" id="export" tabindex="-1" role="dialog" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title">Export to PDF</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Export to PDF</h5>
 
-                    <div class="modal-body">
-                        <form class="mb-3" id="exportQrForm">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+
+                        <form class="modal-body" id="exportQrForm">
+                            <p>PDF will contain 36 qr codes per pages</p>
                             @csrf
-                            <label class="form-label">How many QR you want to export?</label>
-                            <input type="number" class="form-control" required name="" placeholder="# of QR Codes">
-                          </form>
-                    </div>
+                            <div class="mb-3">
 
-                    <div class="modal-footer">
-                      <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
-                      <button type="button" id="exportQrBtn" class="btn btn-primary">Export</button>
+                                <label class="form-label">How many pages?</label>
+                                <input type="number" class="form-control" required name="" value="1"
+                                    placeholder="# of pages">
+                            </div>
+                            <div class="mb-3">
+
+                                <label class="form-label">Entry Type</label>
+                                <select name="qrtype" class="form-control">
+                                    <option value="Single Entry QR Code">Single Entry QR Code</option>
+                                    <option value="Dual Entry QR Code">Dual Entry QR Code</option>
+                                </select>
+                            </div>
+                        </form>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+                            <button type="button" id="exportQrBtn" class="btn btn-primary">Export</button>
+                        </div>
                     </div>
-                  </div>
                 </div>
-              </div>
+            </div>
 
             @include('Admin.components.footer')
 
@@ -172,15 +203,15 @@
     </script>
 
     @include('Admin.components.scripts')
-    <script src="{{asset('qr_js/qr_code.js')}}"></script>
+    <script src="{{ asset('qr_js/qr_code.js') }}"></script>
     <script>
-    function enforceLimit(input) {
-        if (input.value > 15000) {
-            input.value = 15000;
-        } else if (input.value < 1) {
-            input.value = 1;
+        function enforceLimit(input) {
+            if (input.value > 15000) {
+                input.value = 15000;
+            } else if (input.value < 1) {
+                input.value = 1;
+            }
         }
-    }
     </script>
 
 </body>

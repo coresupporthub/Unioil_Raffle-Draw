@@ -98,7 +98,11 @@ async function QueueStatus(){
         data: result.queue,
         destroy: true,
         columns: [
-            { data: "queue_number" },
+            { data: null,
+                render: data=> {
+                    return `${data.type} ${data.queue_number}`
+                }
+             },
             { data: "entry_type" },
             { data: "status" },
             {
@@ -115,10 +119,17 @@ async function QueueStatus(){
 
 document.getElementById('exportQrBtn').addEventListener('click', ()=> {
     document.getElementById('exportQrForm').requestSubmit();
-
-
 });
 
 document.getElementById('exportQrForm').addEventListener('submit', (e)=> {
     e.preventDefault();
+
+    $.ajax({
+        type: "POST",
+        url: "/api/export-qr",
+        data: $('#exportQrForm').serialize(),
+        success: res => {
+
+        }, error: xhr=> console.log(xhr.responseText)
+    });
 });
