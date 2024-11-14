@@ -53,7 +53,7 @@
                                 <table id="queue-progress" class="table">
                                     <thead>
                                         <tr>
-                                            <th><button class="table-sort" data-sort="sort-code">Queue Number</button></th>
+                                            <th><button class="table-sort" data-sort="sort-queue_number">Queue Number</button></th>
                                             <th><button class="table-sort" data-sort="sort-entry_type">Entry Type</button></th>
                                             <th><button class="table-sort" data-sort="sort-status">Status</button></th>
                                             <th><button class="table-sort" data-sort="sort-progress">Progress</button>

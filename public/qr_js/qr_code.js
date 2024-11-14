@@ -102,10 +102,10 @@ async function QueueStatus(){
             { data: "entry_type" },
             { data: "status" },
             {
-                // Define the Action button column
+
                 data: null,
                 render: function (data, type, row) {
-                    return `<button class="btn btn-danger" onclick="DeleteQrCode('${row.qr_id}')">Delete</button>`;
+                    return `${data.items}/${data.total_items}`;
                 },
             },
         ],
