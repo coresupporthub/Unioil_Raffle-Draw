@@ -40,11 +40,13 @@ class GenerateQr implements ShouldQueue
             $code = Tools::genCode();
         }
 
+        $urlConstruct = route('customer_registrations', ['code' => $code]);
+
         $builder = new Builder(
             writer: new PngWriter(),
             writerOptions: [],
             validateResult: false,
-            data: $code,
+            data: $urlConstruct,
             encoding: new Encoding('UTF-8'),
             errorCorrectionLevel: ErrorCorrectionLevel::High,
             size: 300,

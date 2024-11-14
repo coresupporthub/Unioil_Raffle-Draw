@@ -11,7 +11,6 @@ class QrCodeController extends Controller
 {
     public function generate(Request $req)
     {
-
         $latestQueue = QueueingStatusModel::latest()->first();
         $queue = new QueueingStatusModel();
 
