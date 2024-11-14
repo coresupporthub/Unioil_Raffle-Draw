@@ -6,7 +6,8 @@
     <!-- Tabler Core -->
     <script src="{{ asset('./dist/js/tabler.min.js?1692870487') }}" defer></script>
     <script src="{{ asset('./dist/js/demo.min.js?1692870487') }}" defer></script>
-
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+    <scri type="module" src="/js/registration.js" ></scri>
     {{-- <script>
         // @formatter:off
         document.addEventListener("DOMContentLoaded", function() {
@@ -78,7 +79,7 @@
             })).render();
         });
         // @formatter:on
-    </script>
+    </>
     <script>
         // @formatter:off
         document.addEventListener("DOMContentLoaded", function() {
