@@ -29,7 +29,6 @@ function GetGeneratedQr() {
         url: "/api/get-qr-code-generated", // Replace with your endpoint URL
         type: "GET",
         success: function (response) {
-            console.log(response); // Inspect the response
 
             // Assuming the response contains the 'qrcodes' array
             const qrCodesData = response.qrcodes;
@@ -40,8 +39,9 @@ function GetGeneratedQr() {
                 destroy:true,
                 columns: [
                     { data: "code" },
-                    { data: "entry_type" }, // Assuming 'Dual Entry QR Code' corresponds to entry_type
+                    { data: "entry_type" },
                     { data: "status" },
+                    { data: "export_status"},
                     {
                         // Define the Action button column
                         data: null,
@@ -92,7 +92,6 @@ async function QueueStatus(){
     const response = await fetch('/api/get-queue-status');
 
     const result = await response.json();
-    console.log(result);
 
     $("#queue-progress").DataTable({
         data: result.queue,
@@ -112,6 +111,12 @@ async function QueueStatus(){
                     return `${data.items}/${data.total_items}`;
                 },
             },
+            {
+                data: null,
+                render: data=> {
+                    return data.export ? `<a download href="/pdf_files/${data.export.file_name}">${data.export.file_name}</a>` : 'N/A';
+                }
+            }
         ],
     });
 }
@@ -128,8 +133,14 @@ document.getElementById('exportQrForm').addEventListener('submit', (e)=> {
         type: "POST",
         url: "/api/export-qr",
         data: $('#exportQrForm').serialize(),
+        xhrFields: {
+            responseType: 'blob'
+        },
         success: res => {
+            const blob = new Blob([res], { type: 'application/pdf' });
+            const url = URL.createObjectURL(blob);
 
+            window.open(url, '_blank');
         }, error: xhr=> console.log(xhr.responseText)
     });
 });

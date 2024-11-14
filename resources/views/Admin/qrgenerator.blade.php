@@ -71,6 +71,8 @@
                                             <th><button class="table-sort" data-sort="sort-status">Status</button></th>
                                             <th><button class="table-sort" data-sort="sort-progress">Progress</button>
                                             </th>
+
+                                            <th><button class="table-sort" data-sort="sort-status">Files</button></th>
                                         </tr>
                                     </thead>
                                     <tbody class="table-tbody">
@@ -96,6 +98,7 @@
                                             <th><button class="table-sort" data-sort="sort-entry_type">Entry
                                                     Type</button></th>
                                             <th><button class="table-sort" data-sort="sort-status">Status</button></th>
+                                            <th><button class="table-sort" data-sort="sort-export_status">Export Status</button></th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -168,7 +171,7 @@
                             <div class="mb-3">
 
                                 <label class="form-label">How many pages?</label>
-                                <input type="number" class="form-control" required name="" value="1"
+                                <input type="number" class="form-control" required name="page_number" value="1"
                                     placeholder="# of pages">
                             </div>
                             <div class="mb-3">
@@ -193,17 +196,17 @@
 
         </div>
     </div>
-    @vite('resources/js/app.js')
+    {{-- @vite('resources/js/app.js')
     <script>
         setTimeout(() => {
             window.Echo.channel('queueingstatus').listen('QueueingStatus', (e) => {
                 console.log(e);
             });
         }, 200);
-    </script>
+    </script> --}}
 
     @include('Admin.components.scripts')
-    <script src="{{ asset('qr_js/qr_code.js') }}"></script>
+    <script src="{{ asset('/js/qr_code.js') }}"></script>
     <script>
         function enforceLimit(input) {
             if (input.value > 15000) {
