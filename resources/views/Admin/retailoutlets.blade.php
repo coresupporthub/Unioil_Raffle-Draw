@@ -45,13 +45,12 @@
                                         <table class="table" id="ratailOutletTable">
                                             <thead>
                                                 <tr>
-                                                    <th><button class="table-sort" data-sort="sort-city">Cluster</button></th>
-                                                    <th><button class="table-sort" data-sort="sort-type">Region</button></th>
-                                                    <th><button class="table-sort" data-sort="sort-score">City</button></th>
-                                                    <th><button class="table-sort" data-sort="sort-date">Street</button></th>
-                                                    <th><button class="table-sort" data-sort="sort-name">Outlet Name</button></th>
-                                                    <th><button class="table-sort" data-sort="sort-progress">Action</button></th>
-                                               
+                                                    <th>Cluster</th>
+                                                    <th>Region</th>
+                                                    <th>City</th>
+                                                    <th>Outlet Name</th>
+                                                    <th>Outlet Code</th>
+                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody class="table-tbody">

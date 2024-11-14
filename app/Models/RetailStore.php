@@ -20,7 +20,9 @@ class RetailStore extends Model
 
     protected $fillable = [
         'store_id',
-        'city_id',
+        'cluster_id',
+        'region_name',
+        'city_name',
         'store_name',
         'store_code',
         'store_status',
@@ -43,6 +45,6 @@ class RetailStore extends Model
      */
     public function street()
     {
-        return $this->belongsTo(City::class, 'city_id', 'city_id');
+        return $this->belongsTo(RegionalCluster::class, 'cluster_id', 'cluster_id');
     }
 }

@@ -22,12 +22,9 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('/add-retail-store', [RetailStoreController::class, 'addcluster']);
     Route::get('/get-cluster', [RetailStoreController::class, 'getcluster']);
     Route::post('/cluster-status', [RetailStoreController::class, 'clusterstatus']);
-    Route::post('/add-region', [RetailStoreController::class, 'addregion']);
-    Route::post('/get-region-by-cluster', [RetailStoreController::class, 'getregionbycluster']);
-    Route::post('/add-city', [RetailStoreController::class, 'addcity']);
-    Route::post('/get-city-by-region', [RetailStoreController::class, 'getcitybyregion']);
     Route::post('/add-store', [RetailStoreController::class, 'addstore']);
-    Route::get('/get-region', [RetailStoreController::class, 'getallregion']);
-    Route::get('/get-city', [RetailStoreController::class, 'getallcity']);
+    Route::post('/update-store', [RetailStoreController::class, 'updatestore']);
+    Route::get('/get-all-store', [RetailStoreController::class, 'getallstore']);
+    Route::get('/remove-retail', [RetailStoreController::class, 'removeretailstore']);
 
 });
