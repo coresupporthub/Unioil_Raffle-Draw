@@ -8,7 +8,12 @@ document.getElementById('authForm').addEventListener('submit', (e)=> {
         url: "/api/admin/auth",
         data: $('#authForm').serialize(),
         success: res=> {
-            console.log(res);
+            loading(false);
+            dataParser(res);
+
+            if(res.success){
+
+            }
         }, error: xhr=> console.log(xhr.responseText)
     })
 });

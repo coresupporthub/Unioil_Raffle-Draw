@@ -15,9 +15,9 @@ class AuthenticationController extends Controller
 
         if(Auth::attempt($data)){
             $req->session()->regenerate();
-            return response()->json(['success'=> true, 'Authentication is successful']);
+            return response()->json(['success'=> true, 'message' => 'Authentication is successful']);
         }else{
-            return response()->json(['success'=> false, "Email and password does not match"]);
+            return response()->json(['success'=> false, 'message' => "Email and password does not match"]);
         }
     }
 }

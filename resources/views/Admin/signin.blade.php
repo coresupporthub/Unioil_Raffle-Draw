@@ -3,7 +3,7 @@
 <body>
     <script src="{{ asset('./dist/js/demo-theme.min.js?1692870487') }}"></script>
     <div class="page">
-
+        @include('Admin.components.loader')
         <div class="page-wrapper">
             <!-- Page body -->
             <div class="page-body">
@@ -24,7 +24,7 @@
                                         @csrf
                                         <div class="mb-3">
                                             <label class="form-label">Email address</label>
-                                            <input type="email" name="email" class="form-control" placeholder="admin@email.com"
+                                            <input type="email" name="email" required class="form-control" placeholder="admin@email.com"
                                                 autocomplete="off">
                                         </div>
                                         <div class="mb-2">
@@ -35,7 +35,7 @@
                                                 </span> --}}
                                             </label>
                                             <div class="input-group input-group-flat">
-                                                <input type="password" name="password" class="form-control" placeholder="Your password"
+                                                <input type="password" required name="password" class="form-control" placeholder="Your password"
                                                     autocomplete="off">
                                                 <span class="input-group-text">
                                                     <a href="#" class="link-secondary" title="Show password"
@@ -64,6 +64,7 @@
                     </div>
                 </div>
             </div>
+
             @include('Admin.components.footer')
         </div>
     </div>
