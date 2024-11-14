@@ -51,10 +51,28 @@ document.getElementById('cancelVerify').addEventListener('click', ()=> {
 
     $.ajax({
         type: "POST",
-        url: "/api/log-out",
+        url: "/api/logout",
         data: {"_token": csrfToken},
         success: res=> {
+            if(res.success){
+                window.location.href = '/admin/sign-in';
+            }
+        }, error: xhr=> console.log(xhr.responseText)
+    });
 
+});
+
+document.getElementById('resendCode').addEventListener('click', ()=> {
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    loading(true);
+
+    $.ajax({
+        type: "POST",
+        url: "/api/resend-code",
+        data: {"_token": csrfToken},
+        success: res=> {
+            loading(false);
+            dataParser(res);
         }, error: xhr=> console.log(xhr.responseText)
     });
 

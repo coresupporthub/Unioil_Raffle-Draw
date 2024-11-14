@@ -19,6 +19,8 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('/admin/auth', [AuthenticationController::class, 'signin']);
     Route::get('/get-auth', [AuthenticationController::class, 'getauth']);
     Route::post('/verify-user', [AuthenticationController::class, 'verifyuser']);
+    Route::post('/logout', [AuthenticationController::class, 'logout']);
+    Route::post('/resend-code', [AuthenticationController::class, 'resendcode']);
 
     // Retail Store Controller
     Route::post('/add-retail-store', [RetailStoreController::class, 'addcluster']);

@@ -3,7 +3,7 @@
 <body>
     <script src="{{ asset('./dist/js/demo-theme.min.js?1692870487') }}"></script>
     <div class="page">
-
+        @include('Admin.components.loader')
         <div class="page-wrapper">
             <!-- Page body -->
             <div class="page-body">
@@ -90,8 +90,7 @@
                                 </div>
                             </form>
                             <div class="text-center text-secondary mt-3">
-                                It may take a minute to receive your code. Haven't received it? <a href="./">Resend
-                                    a new code.</a>
+                                It may take a minute to receive your code. Haven't received it?<a href="#" id="resendCode" onclick="event.preventDefault()">Resend a new code.</a>
                             </div>
                         </div>
                     </div>
@@ -106,7 +105,7 @@
 
     @include('Admin.components.scripts')
 
-    
+
 </body>
 
 </html>
