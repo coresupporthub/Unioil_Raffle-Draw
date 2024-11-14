@@ -6,6 +6,7 @@ use App\Models\Region;
 use Illuminate\Http\Request;
 use App\Models\RegionalCluster;
 use App\Models\City;
+use App\Models\RetailStore;
 
 class RetailStoreController extends Controller
 {
@@ -56,6 +57,21 @@ class RetailStoreController extends Controller
         $data->city_name = $request->city_name;
         $data->save();
         return response()->json(['success' => true, 'message' => 'City status successfully added']);
+    }
+
+    public function getcitybyregion(request $request){
+        $data = City::where('region_id',$request->id)->get();
+        return response()->json(['data' => $data]);
+    }
+
+    public function addstore(request $request){
+        $data = new RetailStore();
+        $data->city_id = $request->city_id;
+        $data->store_name = $request->store_name;
+        $data->store_code = $request->store_code;
+        $data->save();
+
+        return response()->json(['success' => true, 'message' => 'Store status successfully added']);
     }
 
 }

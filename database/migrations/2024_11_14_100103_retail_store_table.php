@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('retail_store', callback: function (Blueprint $table) {
             $table->uuid('store_id')->primary();
-            $table->string('street_id');
+            $table->string('city_id');
             $table->string('store_name');
             $table->string('store_code');
             $table->string('store_status')->default('Enable');

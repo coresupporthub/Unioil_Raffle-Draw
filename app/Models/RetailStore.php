@@ -20,7 +20,7 @@ class RetailStore extends Model
 
     protected $fillable = [
         'store_id',
-        'street_id',
+        'city_id',
         'store_name',
         'store_code',
         'store_status',
@@ -43,6 +43,6 @@ class RetailStore extends Model
      */
     public function street()
     {
-        return $this->belongsTo(Street::class, 'street_id', 'street_id');
+        return $this->belongsTo(City::class, 'city_id', 'city_id');
     }
 }
