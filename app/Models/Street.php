@@ -40,8 +40,8 @@ class Street extends Model
     /**
      * Relationship with City model
      */
-    public function city()
-    {
-        return $this->belongsTo(City::class, 'city_id', 'city_id');
-    }
+    // public function city()
+    // {
+    //     return $this->belongsTo(City::class, 'city_id', 'city_id');
+    // }
 }

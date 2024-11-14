@@ -66,6 +66,22 @@ function GetAllClusterSelect() {
                 cluster2.appendChild(newOption);
             });
 
+            const cluster3 = document.getElementById("cluster_id_store");
+
+            cluster3.innerHTML = "";
+
+            const defaultOption3 = document.createElement("option");
+            defaultOption3.text = "Select a cluster";
+            defaultOption3.value = "";
+            cluster3.appendChild(defaultOption3);
+
+            data.forEach((element) => {
+                const newOption = document.createElement("option");
+                newOption.value = element.cluster_id;
+                newOption.text = element.cluster_name;
+                cluster3.appendChild(newOption);
+            });
+
         },
         error: function (xhr, status, error) {
             console.error("Error fetching data:", error);
@@ -74,7 +90,7 @@ function GetAllClusterSelect() {
 }
 
 function GetRegionByCluster(id) {
-    
+
     const selectedValue = id.value;
     const csrfToken = $('meta[name="csrf-token"]').attr("content");
     const formData = new FormData();
@@ -90,6 +106,80 @@ function GetRegionByCluster(id) {
         success: function (response) {
             const data = response.data;
             const selectElement = document.getElementById("region_id");
+
+            selectElement.innerHTML = "";
+
+            const defaultOption = document.createElement("option");
+            defaultOption.text = "Select a resion";
+            defaultOption.value = "";
+            selectElement.appendChild(defaultOption);
+
+            data.forEach((element) => {
+                const newOption = document.createElement("option");
+                newOption.value = element.region_id;
+                newOption.text = element.region_name;
+                selectElement.appendChild(newOption);
+            });
+        },
+        error: function (xhr, status, error) {
+            console.error("Error fetching data:", error);
+        },
+    });
+}
+
+function GetCityByRegion(id) {
+    const selectedValue = id.value;
+    const csrfToken = $('meta[name="csrf-token"]').attr("content");
+    const formData = new FormData();
+    formData.append("id", selectedValue);
+    formData.append("_token", csrfToken);
+
+    $.ajax({
+        url: "/api/get-city-by-region",
+        type: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (response) {
+            const data = response.data;
+            const selectElement = document.getElementById("city_id");
+
+            selectElement.innerHTML = "";
+
+            const defaultOption = document.createElement("option");
+            defaultOption.text = "Select a city";
+            defaultOption.value = "";
+            selectElement.appendChild(defaultOption);
+
+            data.forEach((element) => {
+                const newOption = document.createElement("option");
+                newOption.value = element.city_id;
+                newOption.text = element.city_name;
+                selectElement.appendChild(newOption);
+            });
+        },
+        error: function (xhr, status, error) {
+            console.error("Error fetching data:", error);
+        },
+    });
+}
+
+function GetRegionByCluster2(id) {
+    const selectedValue = id.value;
+    const csrfToken = $('meta[name="csrf-token"]').attr("content");
+    const formData = new FormData();
+    formData.append("id", selectedValue);
+    formData.append("_token", csrfToken);
+
+    $.ajax({
+        url: "/api/get-region-by-cluster",
+        type: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (response) {
+            const data = response.data;
+            const selectElement = document.getElementById("region_id2");
 
             selectElement.innerHTML = "";
 

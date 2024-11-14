@@ -18,6 +18,8 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('/add-region', [RetailStoreController::class, 'addregion']);
     Route::post('/get-region-by-cluster', [RetailStoreController::class, 'getregionbycluster']);
     Route::post('/add-city', [RetailStoreController::class, 'addcity']);
+    Route::post('/get-city-by-region', [RetailStoreController::class, 'getcitybyregion']);
+    Route::post('/add-store', [RetailStoreController::class, 'addstore']);
 
     Route::get('/get-queue-status', [QrCodeController::class, 'queueProgress']);
     Route::post('/export-qr', [QrCodeController::class, 'exportQR']);

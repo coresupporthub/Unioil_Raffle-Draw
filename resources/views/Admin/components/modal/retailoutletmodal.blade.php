@@ -20,7 +20,7 @@
                         <a href="#tabs-City" class="nav-link" data-bs-toggle="tab">City</a>
                       </li>
                       <li class="nav-item">
-                        <a href="#tabs-Street" class="nav-link" data-bs-toggle="tab">Street</a>
+                        <a href="#tabs-Street" class="nav-link" data-bs-toggle="tab">Retail Store</a>
                       </li>
                     </ul>
                   </div>
@@ -101,9 +101,35 @@
                         
                       </div>
                       <div class="tab-pane" id="tabs-Street">
-                        <h4>Profile tab</h4>
-                        <div>Fringilla egestas nunc quis tellus diam rhoncus ultricies tristique enim at diam, sem nunc amet, pellentesque id egestas velit sed</div>
-                      </div>
+                        <form action="" method="post" id="storeform">
+                            @csrf
+                        <div class="row">
+                            <div class="col-12 col-md-4 mb-3">
+                                <label for="regionalCluster">Regional Cluster</label>
+                                <select name="cluster_id" id="cluster_id_store" class="form-control" onchange=" GetRegionByCluster2(this)"></select>
+                            </div>
+                            <div class="col-12 col-md-4 mb-3">
+                                <label for="regionalCluster">Region</label>
+                                <select name="region_id" id="region_id2" class="form-control" onclick="GetCityByRegion(this)"></select>
+                            </div>
+                            <div class="col-12 col-md-4 mb-3">
+                                <label for="regionalCluster">City</label>
+                                <select name="city_id" id="city_id" class="form-control"></select>
+                            </div>
+                            <div class="col-12 col-md-4 mb-3">
+                                <label for="regionalCluster">Retail Store</label>
+                                <input type="text" name="store_name" id="" class="form-control">
+                            </div>
+                            <div class="col-12 col-md-4 mb-3">
+                                <label for="regionalCluster">Retail Store Code</label>
+                                <input type="text" name="store_code" id="" class="form-control">
+                            </div>
+                            <div class="col-12 col-md-4 mb-3 d-flex align-items-end">
+                                <button class="btn btn-primary w-100" type="button" onclick="SubmitData('storeform','/api/add-store')">Submit</button>
+                            </div>
+                        </div>
+                        </form>
+                       </div>
                     </div>
                   </div>
                 </div>
