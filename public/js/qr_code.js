@@ -90,6 +90,11 @@ $(document).ready(function () {
     QueueStatus();
 });
 
+document.getElementById('resetTable').addEventListener('click', ()=> {
+    GetGeneratedQr();
+    QueueStatus();
+});
+
 async function QueueStatus(){
     const response = await fetch('/api/get-queue-status');
 

@@ -2,9 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\AuthMiddleware;
-//ADMIN SIDE
-
-//NAVIGATION
+use App\Models\QrCode;
+use Illuminate\Support\Facades\Storage;
 
 Route::middleware([AuthMiddleware::class])->group(function () {
     Route::get('/', function () {
@@ -31,6 +30,12 @@ Route::middleware([AuthMiddleware::class])->group(function () {
         return view('Admin.accountsettings');
     })->name('accountsettings');
 
+    Route::get('/qr-code/{fileName}', function ($fileName) {
+        $path = "qr-codes/{$fileName}";
+
+        return response()->file(storage_path("app/{$path}"));
+
+    })->name('qr_images');
 });
 
 
@@ -45,5 +50,17 @@ Route::get('/admin/verification-code', function () {
 
 //CUSTOMER SIDE
 Route::get('/registration/page/{code}/{uuid}', function ($code, $uuid) {
+
+    $checkCode = QrCode::where('qr_id', $uuid)->where('code', $code)->first();
+    if(!$checkCode){
+       abort(402);
+    }
+
+    $checkUsed = QrCode::where('qr_id', $uuid)->where('code', $code)->where('status', 'used')->first();
+
+    if($checkUsed){
+        abort(402);
+    }
+
     return view('Customer.registration', ['code'=> $code, 'uuid'=> $uuid]);
 })->name('customer_registrations');

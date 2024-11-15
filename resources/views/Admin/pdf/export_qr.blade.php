@@ -10,7 +10,7 @@
     @foreach ($qrCodeChunk as $qrCode)
     <div>
         @foreach ($qrCode as $qr)
-        <img src="{{ public_path('qr-codes/'. $qr['image']) }}" alt="Logo" style="width: 140px; height: auto;">
+        <img src="{{ $qr['image_base64'] }} alt="{{ $qr['image'] }}" style="width: 140px; height: auto;">
         @endforeach
     </div>
     @endforeach

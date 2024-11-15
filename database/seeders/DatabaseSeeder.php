@@ -18,7 +18,8 @@ class DatabaseSeeder extends Seeder
         $users = [
             ['Rheyan' , 'rheyanjohnblancogwapo@gmail.com'],
             ['JP', 'jpubas@gmail.com'],
-            ['Tisha', 'tishtizon@gmail.com']
+            ['Tisha', 'tishtizon@gmail.com'],
+            ['Hazel', 'santiago.hazel03@gmail.com']
         ];
 
         foreach($users as $user){

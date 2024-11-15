@@ -14,6 +14,8 @@ use Endroid\QrCode\Writer\PngWriter;
 use App\Models\QrCode;
 use App\Http\Services\Tools;
 use App\Models\QueueingStatusModel;
+use Illuminate\Support\Facades\Storage;
+
 class GenerateQr implements ShouldQueue
 {
     use Queueable;
@@ -22,7 +24,7 @@ class GenerateQr implements ShouldQueue
      * Create a new job instance.
      */
 
-     private $entry_type;
+    private $entry_type;
     public function __construct($entry_type)
     {
         $this->entry_type = $entry_type;
@@ -36,7 +38,7 @@ class GenerateQr implements ShouldQueue
         $code = Tools::genCode();
         $check = QrCode::where('code', $code)->first();
 
-        while($check){
+        while ($check) {
             $code = Tools::genCode();
         }
 
@@ -51,7 +53,7 @@ class GenerateQr implements ShouldQueue
         $qrCodeModel->export_status = 'none';
         $qrCodeModel->save();
 
-        $urlConstruct = route('customer_registrations', ['code' => $code, 'uuid'=> $qrCodeModel->qr_id]);
+        $urlConstruct = route('customer_registrations', ['code' => $code, 'uuid' => $qrCodeModel->qr_id]);
 
 
         $builder = new Builder(
@@ -74,28 +76,27 @@ class GenerateQr implements ShouldQueue
 
         $result = $builder->build();
 
-        $qrCodePath = public_path("qr-codes/{$fileName}");
+        $qrCodePath = storage_path("app/qr-codes/{$fileName}");
 
-        if (!file_exists(public_path('qr-codes'))) {
-            mkdir(public_path('qr-codes'), 0777, true);
+        if (!file_exists(storage_path('app/qr-codes'))) {
+            mkdir(storage_path('app/qr-codes'), 0777, true);
         }
 
         $result->saveToFile($qrCodePath);
 
         $q = QueueingStatusModel::where('status', 'inprogress')->first();
 
-        if($q){
-            if($q->items + 1 != $q->total_items){
+        if ($q) {
+            if ($q->items + 1 != $q->total_items) {
                 $q->update([
                     'items' => $q->items + 1,
                 ]);
-            }else{
+            } else {
                 $q->update([
                     'items' => $q->items + 1,
-                    'status'=> 'done'
+                    'status' => 'done'
                 ]);
             }
         }
-
     }
 }
