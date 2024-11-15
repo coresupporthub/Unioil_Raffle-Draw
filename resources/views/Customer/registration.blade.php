@@ -2,6 +2,7 @@
 @php
     $productList = App\Models\ProductList::all();
 @endphp
+
 <body>
     <script src="{{ asset('./dist/js/demo-theme.min.js?1692870487') }}"></script>
     <div class="page">
@@ -29,8 +30,8 @@
                             <div class="col-md-3">
                                 <label for="validationCustom02" class="form-label">AGE</label>
                                 <input type="text" class="form-control" id="validationCustom02" value=""
-                                maxlength="3" placeholder="Enter Age" required
-                                oninput="this.value = this.value.replace(/[^0-9]/g, '');" />
+                                    maxlength="3" placeholder="Enter Age" required
+                                    oninput="this.value = this.value.replace(/[^0-9]/g, '');" />
                                 <div class="valid-feedback">
                                     Looks good!
                                 </div>
@@ -127,7 +128,8 @@
                                 <select type="text" class="form-select" id="validationCustom02" required>
                                     <option value="" selected disabled>Select Product</option>
                                     @foreach ($productList as $product)
-                                        <option value="{{ $product->product_id }}">{{ $product->product_name }} ({{ $product->product_type }})</option>
+                                        <option value="{{ $product->product_id }}">{{ $product->product_name }}
+                                            ({{ $product->product_type }})</option>
                                     @endforeach
                                 </select>
                                 <div class="valid-feedback">
@@ -147,14 +149,10 @@
 
                             <div class="col-12">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="invalidCheck"
-                                        required>
-                                    <label class="form-check-label" for="invalidCheck">
-                                        Agree to terms and conditions
+                                    <input type="checkbox" class="form-check-input" id="privacyConsent" required>
+                                    <label class="form-check-label" for="privacyConsent">
+                                        I have read and agree to the <a href="/privacy/policy">Privacy Policy. </a>
                                     </label>
-                                    <div class="invalid-feedback">
-                                        You must agree before submitting.
-                                    </div>
                                 </div>
                             </div>
                             <div class="col-12">
