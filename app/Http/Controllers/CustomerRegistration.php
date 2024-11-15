@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Customers;
-use App\Models\RaffleEntries;
+use App\Jobs\SendEntryCoupon;
 use App\Models\QrCode;
 use App\Http\Services\Tools;
+use App\Models\ProductList;
+use App\Http\Services\Magic;
+
 class CustomerRegistration extends Controller
 {
     public function register(Request $req){
@@ -36,25 +39,16 @@ class CustomerRegistration extends Controller
         $customer->product_purchased = $req->product;
         $customer->save();
 
+        $productEntry = ProductList::where('product_id', $req->product)->first();
 
-        $serialNumber = Tools::genCode();
-
-        $checkSerialNumber = RaffleEntries::where('serial_number', $serialNumber)->first();
-
-        while($checkSerialNumber){
-            $serialNumber = Tools::genCode();
-            $checkSerialNumber = RaffleEntries::where('serial_number', $serialNumber)->first();
+        if($productEntry->entries == 1){
+            $code = Tools::CreateEntries($customer, $req);
+            SendEntryCoupon::dispatch(Magic::RAFFLE_ENTRY_SINGLE, $code, $req->email_address);
+        }else{
+            $code1 = Tools::CreateEntries($customer, $req);
+            $code2 = Tools::CreateEntries($customer, $req);
+            SendEntryCoupon::dispatch(Magic::RAFFLE_ENTRY_DOUBLE, [$code1, $code2], $req->email_address);
         }
-
-        $entry = new RaffleEntries();
-
-        $entry->customer_id = $customer->customer_id;
-        $entry->serial_number = $serialNumber;
-        $entry->qr_id = $req->unique_identifier;
-        $entry->retail_store_code = $req->store_code;
-        $entry->save();
-
-        
 
         $qrCode->update([
             'status' => 'used'

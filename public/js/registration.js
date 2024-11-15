@@ -19,6 +19,7 @@
                         data: $('#registrationForm').serialize(),
                         success: res=> {
                             loading(false);
+                            dataParser(res);
                         }, error: xhr=> console.log(xhr.responseText)
                     });
                 }
