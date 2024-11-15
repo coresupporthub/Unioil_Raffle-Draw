@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\AuthMiddleware;
 use App\Models\QrCode;
+use Illuminate\Support\Facades\Storage;
 
 Route::middleware([AuthMiddleware::class])->group(function () {
     Route::get('/', function () {
@@ -29,6 +30,12 @@ Route::middleware([AuthMiddleware::class])->group(function () {
         return view('Admin.accountsettings');
     })->name('accountsettings');
 
+    Route::get('/qr-code/{fileName}', function ($fileName) {
+        $path = "qr-codes/{$fileName}";
+
+        return response()->file(storage_path("app/{$path}"));
+
+    });
 });
 
 

@@ -121,7 +121,12 @@ class QrCodeController extends Controller
         $export->save();
 
 
-        $pdfFilePath = public_path("pdf_files/$fileName");  // Define the file path in the public folder
+        $pdfFilePath = storage_path("pdf_files/$fileName");
+
+        if (!file_exists(storage_path('app/qr-pdf_files'))) {
+            mkdir(storage_path('app/qr-pdf_files'), 0777, true);
+        }
+
         $pdf->save($pdfFilePath);
 
 
