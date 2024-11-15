@@ -109,21 +109,12 @@
                                                 <table class="table">
                                                     <thead>
                                                         <tr>
-                                                            <th>Coupon</th>
+                                                            <th>Cluster</th>
                                                             <th>Name</th>
-
                                                         </tr>
                                                     </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>1st Place</td>
-                                                            <td>John Doe</td>
-
-                                                        </tr>
-                                                        <tr>
-                                                            <td>2nd Place</td>
-                                                            <td>Jane Smith</td>
-                                                        </tr>
+                                                    <tbody id="winnerList">
+                                                       
                                                     </tbody>
                                                 </table>
                                             </div>

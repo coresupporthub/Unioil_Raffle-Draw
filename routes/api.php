@@ -32,6 +32,7 @@ Route::group(['middleware' => ['web']], function () {
         //Raffle
         Route::post('/get-raflle-entry', [RaffleController::class, 'getraffleentry']);
         Route::post('/raffle-draw', [RaffleController::class, 'raffledraw']);
+        Route::get('/get-all-winner', [RaffleController::class, 'getallwinner']);
 
     });
 

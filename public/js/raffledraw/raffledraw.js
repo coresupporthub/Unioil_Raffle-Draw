@@ -1,16 +1,3 @@
-// function GetAllEntry() {
-//     $.ajax({
-//         url: "/api/get-raflle-entry", // Replace with your endpoint URL
-//         type: "GET",
-//         success: function (response) {
-//             console.log(response)
-//         },
-//         error: function (xhr, status, error) {
-//             console.error("Error fetching data:", error);
-//         },
-//     });
-// }
-
 function GetAllClusterSelect() {
     $.ajax({
         url: "/api/get-cluster", // Replace with your endpoint URL
@@ -86,17 +73,6 @@ function startRaffle() {
         counter++;
     }, 100);
 
-    // After 3 seconds, pick the final name
-    // setTimeout(() => {
-    //     clearInterval(shuffleInterval);
-    //     const finalIndex = Math.floor(Math.random() * serial_number.length);
-    //     raffleInput.value = serial_number[finalIndex];
-    //     drawButton.disabled = false;
-
-    //     // Trigger confetti when the final name is picked
-    //     triggerConfetti();
-    // }, 5000);
-
     const csrfToken = $('meta[name="csrf-token"]').attr("content");
     const formData = new FormData();
     formData.append("_token", csrfToken);
@@ -109,9 +85,20 @@ function startRaffle() {
         processData: false,
         contentType: false,
         success: function (response) {
-            console.log(response)
-            clearInterval(shuffleInterval);
-            drawButton.disabled = false;
+            if(response.success){
+                setTimeout(() => {
+                    clearInterval(shuffleInterval);
+                    raffleInput.value = response.winner_serial_number;
+                    drawButton.disabled = false;
+                    triggerConfetti();
+                    GetAllWinner();
+                }, 5000);
+            }else{
+                alertify.alert('Warning',response.message, function () {
+                });
+                drawButton.disabled = false;
+                clearInterval(shuffleInterval);
+            }
         },
         error: function (xhr, status, error) {
             console.error("Error posting data:", error);
@@ -119,6 +106,35 @@ function startRaffle() {
     });
 
 }
+
+function GetAllWinner() {
+    $.ajax({
+        url: "/api/get-all-winner", // Replace with your endpoint URL
+        type: "GET",
+        success: function (response) {
+            console.log(response)
+            response.forEach((element) => {
+
+                var newRow = document.createElement("tr");
+
+                var clusterCell = document.createElement("td");
+                clusterCell.textContent = element.cluster;
+                newRow.appendChild(clusterCell);
+
+                var nameCell = document.createElement("td");
+                nameCell.textContent = element.customer_name; 
+                newRow.appendChild(nameCell);
+
+                document.getElementById("winnerList").appendChild(newRow);                
+
+            });
+        },
+        error: function (xhr, status, error) {
+            console.error("Error fetching data:", error);
+        },
+    });
+}
+
 
 function triggerConfetti() {
     const duration = 2 * 1000; // 2 seconds
@@ -148,6 +164,7 @@ drawButton.addEventListener("click", startRaffle);
 
 $(document).ready(function () {
     GetAllClusterSelect();
+    GetAllWinner();
     if (serial_number.length == 0) {
         document.getElementById("drawButton").disabled = true;
     } else {
