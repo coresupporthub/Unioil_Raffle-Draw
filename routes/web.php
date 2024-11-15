@@ -2,9 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\AuthMiddleware;
-//ADMIN SIDE
-
-//NAVIGATION
+use App\Models\QrCode;
 
 Route::middleware([AuthMiddleware::class])->group(function () {
     Route::get('/', function () {
@@ -45,5 +43,12 @@ Route::get('/admin/verification-code', function () {
 
 //CUSTOMER SIDE
 Route::get('/registration/page/{code}/{uuid}', function ($code, $uuid) {
+
+    $qrCode = QrCode::where('qr_id', $uuid)->where('code', $code)->where('status', 'unused')->first();
+
+    if($qrCode){
+       abort(402);
+    }
+
     return view('Customer.registration', ['code'=> $code, 'uuid'=> $uuid]);
 })->name('customer_registrations');
