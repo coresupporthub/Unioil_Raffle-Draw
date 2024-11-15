@@ -48,6 +48,7 @@ class QrCodeController extends Controller
     public function deletegeneratedqr(request $request){
         $qrcodes = QrCode::where('qr_id', $request->qr_id)->first();
         if($qrcodes){
+            
             Storage::delete('qr-codes/'.$qrcodes->image);
 
             $qrcodes->delete();
