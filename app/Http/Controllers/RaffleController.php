@@ -97,4 +97,26 @@ class RaffleController extends Controller
 
     }
 
+    public function getallentry(){
+
+        $event = Event::where('event_status', 'Active')->first();
+        $raffleEntries = RaffleEntries::where('event_id', $event->event_id)->get();
+        $data = [];
+        foreach($raffleEntries as $entry){
+            $retailStores = RetailStore::where('store_code',$entry->retail_store_code)->first();
+            $cluster = RegionalCluster::where('cluster_id',$retailStores->cluster_id)->first()->cluster_name;
+            $customer = Customers::where('customer_id',$entry->customer_id)->first();
+            $data[] = [
+                'cluster' => $cluster,
+                'retail_name' => $retailStores->store_name,
+                'serial_number' => $entry->serial_number,
+                'product_type'=> $customer->product_purchased,
+                'customer_name' => $customer->full_name,
+                'customer_email'=> $customer->email,
+                'customer_phone' => $customer->mobile_number,
+                ];
+                }
+                return response()->json($data);     
+    }
+
 }

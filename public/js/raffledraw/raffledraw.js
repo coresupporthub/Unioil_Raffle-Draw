@@ -112,7 +112,6 @@ function GetAllWinner() {
         url: "/api/get-all-winner", // Replace with your endpoint URL
         type: "GET",
         success: function (response) {
-            console.log(response)
             response.forEach((element) => {
 
                 var newRow = document.createElement("tr");
