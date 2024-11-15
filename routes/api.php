@@ -6,7 +6,7 @@ use App\Http\Controllers\QrCodeController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\RetailStoreController;
 use App\Http\Middleware\ApiAuthentication;
-
+use App\Http\Controllers\CustomerRegistration;
 
 Route::group(['middleware' => ['web']], function () {
 
@@ -37,6 +37,9 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('/verify-user', [AuthenticationController::class, 'verifyuser']);
     Route::post('/logout', [AuthenticationController::class, 'logout']);
     Route::post('/resend-code', [AuthenticationController::class, 'resendcode']);
+
+    //Customer Api
+    Route::post('/register-raffle-entry', [CustomerRegistration::class, 'register']);
 
 
 });

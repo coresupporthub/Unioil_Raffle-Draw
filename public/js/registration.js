@@ -9,6 +9,18 @@
                 if (form.checkValidity() === false) {
                     event.preventDefault();
                     event.stopPropagation();
+                }else{
+                    event.preventDefault();
+
+                    loading(true);
+                    $.ajax({
+                        type: "POST",
+                        url: "/api/register-raffle-entry",
+                        data: $('#registrationForm').serialize(),
+                        success: res=> {
+                            loading(false);
+                        }, error: xhr=> console.log(xhr.responseText)
+                    });
                 }
                 form.classList.add('was-validated');
             }, false);
@@ -49,7 +61,7 @@ document.addEventListener("DOMContentLoaded", function() {
         clearOption(baranggay, 'Select a Baranggay');
 
         data.forEach( r => {
-            const option = createOption(r.name, `${r.code}-${r.id}`);
+            const option = createOption(r.name, `${r.code}-${r.id}-${r.name}`);
 
              regionSelect.append(option);
           });
