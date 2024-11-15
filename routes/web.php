@@ -35,7 +35,7 @@ Route::middleware([AuthMiddleware::class])->group(function () {
 
         return response()->file(storage_path("app/{$path}"));
 
-    });
+    })->name('qr_images');
 });
 
 
