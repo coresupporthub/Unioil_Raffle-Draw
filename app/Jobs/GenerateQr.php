@@ -40,6 +40,7 @@ class GenerateQr implements ShouldQueue
 
         while ($check) {
             $code = Tools::genCode();
+            $check = QrCode::where('code', $code)->first();
         }
 
         $fileName = "{$code}.png";
