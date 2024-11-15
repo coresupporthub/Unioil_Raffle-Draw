@@ -64,11 +64,11 @@
                                                     <h1 class="display-1"></h1>
 
                                                     <div class="form-group mb-4">
-                                                        <input type="text" class="form-control form-control-lg"
-                                                            id="nameInput" style="font-size: 1.5rem; padding: 1rem;" />
+                                                        <input type="text" class="form-control form-control-lg text-center"
+                                                            id="raffleInput" readonly style="font-size: 1.5rem; padding: 1rem;" />
                                                     </div>
 
-                                                    <button class="btn btn-primary btn-lg w-100" id="startRaffleButton"
+                                                    <button class="btn btn-primary btn-lg w-100" id="drawButton"
                                                         style="font-size: 1.5rem; padding: 1rem;">Start Raffle</button>
                                                 </div>
                                             </div>
@@ -185,7 +185,7 @@
         </div>
     </div>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-
+     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script>
         document.getElementById('fullscreenButton').addEventListener('click', function() {
             let targetDiv = document.querySelector('#cardbg'); // Select the div by id
@@ -209,7 +209,7 @@
 
 
     @include('Admin.components.scripts')
-
+    <script src="{{asset('js/raffledraw/raffledraw.js')}}"></script>
 </body>
 
 </html>

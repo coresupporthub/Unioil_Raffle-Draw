@@ -13,6 +13,7 @@ class RaffleEntries extends Model
     protected $primaryKey = 'entries_id';
     protected $fillable = [
         'customer_id',
+        'event_id',
         'serial_number',
         'qr_id',
         'retail_store_code',

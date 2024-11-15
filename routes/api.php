@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\QrCodeController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\RetailStoreController;
+use App\Http\Controllers\RaffleController;
 use App\Http\Middleware\ApiAuthentication;
 use App\Http\Controllers\CustomerRegistration;
 
@@ -27,6 +28,9 @@ Route::group(['middleware' => ['web']], function () {
         Route::post('/update-store', [RetailStoreController::class, 'updatestore']);
         Route::get('/get-all-store', [RetailStoreController::class, 'getallstore']);
         Route::get('/remove-retail', [RetailStoreController::class, 'removeretailstore']);
+
+        //Raffle
+        Route::get('/get-raflle-entry', [RaffleController::class, 'getraffleentry']);
 
     });
 
