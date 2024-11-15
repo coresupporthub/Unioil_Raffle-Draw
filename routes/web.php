@@ -44,10 +44,15 @@ Route::get('/admin/verification-code', function () {
 //CUSTOMER SIDE
 Route::get('/registration/page/{code}/{uuid}', function ($code, $uuid) {
 
-    $qrCode = QrCode::where('qr_id', $uuid)->where('code', $code)->where('status', 'used')->first();
-
-    if($qrCode){
+    $checkCode = QrCode::where('qr_id', $uuid)->where('code', $code)->first();
+    if(!$checkCode){
        abort(402);
+    }
+
+    $checkUsed = QrCode::where('qr_id', $uuid)->where('code', $code)->where('status', 'used')->first();
+
+    if($checkUsed){
+        abort(402);
     }
 
     return view('Customer.registration', ['code'=> $code, 'uuid'=> $uuid]);
