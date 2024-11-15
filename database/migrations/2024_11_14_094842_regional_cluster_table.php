@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('regional_cluster', function (Blueprint $table) {
             $table->uuid('cluster_id')->primary();
             $table->string('cluster_name');
-            $table->string('cluster_status')->default('Enable');
+            $table->enum('cluster_status', ['Enable', 'Disable'])->default('Enable');
             $table->timestamps();
         });
     }

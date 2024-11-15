@@ -21,8 +21,8 @@
                             @csrf
 
                             <input type="hidden" name="qr_code" value="{{ $code }}">
-                            <input type="hidden" name="unique_identifier" id="{{ $uuid }}">
-                            
+                            <input type="hidden" name="unique_identifier" value="{{ $uuid }}">
+
                             <div class="col-md-6">
                                 <label for="validationCustom01" class="form-label">FULL NAME</label>
                                 <input type="text" name="fullname" placeholder="Full Name Indicated on Valid ID" class="form-control"

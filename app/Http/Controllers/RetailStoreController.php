@@ -19,10 +19,12 @@ class RetailStoreController extends Controller
         return response()->json(['success' => true , 'message'=>'Regional cluster successfully added', 'reload'=> 'LoadAll']);
     }
 
-    public function getcluster(){
-        $data = RegionalCluster::all();
-        return response()->json(['data'=>$data]);
+    public function getcluster()
+    {
+        $data = RegionalCluster::orderBy('created_at', 'asc')->get(); // Order by 'created_at' in ascending order
+        return response()->json(['data' => $data]);
     }
+
 
     public function clusterstatus(request $request){
         $data = RegionalCluster::find($request->id);

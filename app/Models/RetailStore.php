@@ -19,7 +19,6 @@ class RetailStore extends Model
     protected $keyType = 'string';
 
     protected $fillable = [
-        'store_id',
         'cluster_id',
         'region_name',
         'city_name',

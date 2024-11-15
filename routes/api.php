@@ -30,7 +30,9 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('/remove-retail', [RetailStoreController::class, 'removeretailstore']);
 
         //Raffle
-        Route::get('/get-raflle-entry', [RaffleController::class, 'getraffleentry']);
+        Route::post('/get-raflle-entry', [RaffleController::class, 'getraffleentry']);
+        Route::post('/raffle-draw', [RaffleController::class, 'raffledraw']);
+        Route::get('/get-all-winner', [RaffleController::class, 'getallwinner']);
 
     });
 
