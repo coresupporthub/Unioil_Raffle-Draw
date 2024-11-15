@@ -8,6 +8,8 @@ use App\Models\QrCode;
 use App\Models\QueueingStatusModel;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\ExportFilesModel;
+use Illuminate\Support\Facades\Storage;
+
 class QrCodeController extends Controller
 {
     public function generate(Request $req)
@@ -46,12 +48,7 @@ class QrCodeController extends Controller
     public function deletegeneratedqr(request $request){
         $qrcodes = QrCode::where('qr_id', $request->qr_id)->first();
         if($qrcodes){
-
-            $filePath = storage_path('qr-codes/'.$qrcodes->image); // Example file path
-
-            if (file_exists($filePath)) {
-                unlink($filePath);
-            }
+            Storage::delete('qr-codes/'.$qrcodes->image);
 
             $qrcodes->delete();
         }
