@@ -52,3 +52,21 @@ function btnLoading(id, status){
         }
     }
 }
+
+function createOption(name, value, data = true,){
+    if(data){
+        const option = document.createElement('option');
+        option.value = value;
+        option.textContent = name;
+
+        return option;
+    }else{
+        const option = document.createElement('option');
+        option.value = "";
+        option.textContent = name;
+        option.disabled = true;
+        option.selected = true;
+
+        return option;
+    }
+}
