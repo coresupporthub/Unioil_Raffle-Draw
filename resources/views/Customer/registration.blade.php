@@ -27,7 +27,8 @@
                             <div class="col-md-3">
                                 <label for="validationCustom02" class="form-label">AGE</label>
                                 <input type="text" class="form-control" id="validationCustom02" value=""
-                                    maxlength="3" placeholder="Enter Age" required>
+                                maxlength="3" placeholder="Enter Age" required
+                                oninput="this.value = this.value.replace(/[^0-9]/g, '');" />
                                 <div class="valid-feedback">
                                     Looks good!
                                 </div>
@@ -134,35 +135,7 @@
                                     <div class="col">
                                         <input type="text" class="form-control" placeholder="">
                                     </div>
-                                    <div data-bs-toggle="modal" data-bs-target="#openQrScanner" class="col-auto">
-                                        <a href="" data-bs-toggle="tooltip"
-                                            onclick="event.preventDefault(); event.stopPropagation();"
-                                            data-bs-placement="top" aria-label="qrcode"
-                                            data-bs-original-title="Scan QR" class="btn btn-icon"
-                                            aria-label="Button">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                class="icon icon-tabler icons-tabler-outline icon-tabler-qrcode">
-                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                <path
-                                                    d="M4 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" />
-                                                <path d="M7 17l0 .01" />
-                                                <path
-                                                    d="M14 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" />
-                                                <path d="M7 7l0 .01" />
-                                                <path
-                                                    d="M4 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" />
-                                                <path d="M17 7l0 .01" />
-                                                <path d="M14 14l3 0" />
-                                                <path d="M20 14l0 .01" />
-                                                <path d="M14 14l0 3" />
-                                                <path d="M14 20l3 0" />
-                                                <path d="M17 17l3 0" />
-                                                <path d="M20 17l0 3" />
-                                            </svg>
-                                        </a>
-                                    </div>
+
                                 </div>
                             </div>
 
@@ -186,20 +159,6 @@
                 </div>
             </div>
             @include('Customer.components.footer')
-        </div>
-    </div>
-
-    <div class="modal modal-blur fade" id="openQrScanner" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-fullscreen modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Scan Retaile Store QR-Code</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div id="reader" width="600px"></div>
-                </div>
-            </div>
         </div>
     </div>
 
