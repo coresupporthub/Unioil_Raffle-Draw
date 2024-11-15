@@ -13,7 +13,6 @@ class Event extends Model
     protected $keyType = 'string';
     public $incrementing = false;
     protected $fillable = [
-        'event_id',
         'event_name',
         'event_start',
         'event_end',

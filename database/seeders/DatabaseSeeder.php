@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\QrCode;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -31,12 +32,10 @@ class DatabaseSeeder extends Seeder
         }
 
         $this->call(ProductListSeeder::class);
-
+        $this->call(QrCodeSeeder::class);
         $this->call(CustomerSeeder::class);
-
-        $this->call(RaffleEntriesSeeder::class);
         $this->call(EventSeeder::class);
-
+        $this->call(RaffleEntriesSeeder::class);
 
     }
 }
