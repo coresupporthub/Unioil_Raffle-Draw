@@ -27,7 +27,17 @@
             <div class="page-body">
                 <div class="container-xl d-flex flex-column justify-content-center">
 
-                  
+                    <div class="page-body">
+                        <div class="container-xl">
+
+                            <div class="card">
+                                <div class="card-body">
+                                    
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
 
                 </div>
             </div>
