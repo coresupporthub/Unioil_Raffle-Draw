@@ -67,3 +67,7 @@ Route::get('/registration/page/{code}/{uuid}', function ($code, $uuid) {
 
     return view('Customer.registration', ['code'=> $code, 'uuid'=> $uuid]);
 })->name('customer_registrations');
+
+Route::get('/privacy/policy', function () {
+    return view('Customer.privacypolicy');
+})->name('privacypolicy');

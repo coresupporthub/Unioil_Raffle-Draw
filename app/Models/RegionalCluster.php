@@ -19,7 +19,6 @@ class RegionalCluster extends Model
     protected $keyType = 'string';
 
     protected $fillable = [
-        'cluster_id',
         'cluster_name',
         'cluster_status',
     ];
