@@ -75,10 +75,8 @@
                                         </div>
 
                                         <div class="col-12 col-lg-5 col-xl-3 d-flex flex-column">
-                                            <div class="card-header text-center position-relative">
-                                                <h2>Winner List</h2>
-                                                <div id="fullscreenButton"
-                                                    class=" text-center position-absolute top-0 end-0 me-2">
+                                            <div id="fullscreenButton"
+                                                    class=" text-center position-absolute top-0 end-0 me-2 mt-2 ">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                         height="24" viewBox="0 0" fill="none"
                                                         stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -95,8 +93,18 @@
                                                         <path d="M4 4l6 6" />
                                                     </svg>
                                                 </div>
-                                            </div>
 
+                                            <div class="ms-4">
+                                                <label for="selectCluster" class="form-label">Regional Clusters</label>
+                                                <select name="selectCluster" id="selectCluster" class="form-control form-select-sm" onchange="SelectEntry(this)"></select>
+                                            
+                                            </div>
+                                           
+                                             <div class="card-header text-center position-relative">
+                                                <h2>Winner List</h2>
+                                                
+                                            </div>
+                                           
                                             <div class="card-body scrollable" style="height: 35rem; overflow-y: auto;">
                                                 <table class="table">
                                                     <thead>
