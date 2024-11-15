@@ -44,7 +44,7 @@ Route::get('/admin/verification-code', function () {
 //CUSTOMER SIDE
 Route::get('/registration/page/{code}/{uuid}', function ($code, $uuid) {
 
-    $qrCode = QrCode::where('qr_id', $uuid)->where('code', $code)->where('status', 'unused')->first();
+    $qrCode = QrCode::where('qr_id', $uuid)->where('code', $code)->where('status', 'used')->first();
 
     if($qrCode){
        abort(402);

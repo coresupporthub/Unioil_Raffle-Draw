@@ -12,7 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('raffle_entries', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('entries_id')->primary();
+            $table->uuid('customer_id');
+            $table->foreign('customer_id')->references('customer_id')->on('customers');
+            $table->string('serial_number');
+            $table->uuid('qr_id');
+            $table->foreign('qr_id')->references('qr_id')->on('qr_codes');
+            $table->string('retail_store_code');
+            $table->enum('claim_status', ['true', 'false', 'none'])->default('none');
+            $table->enum('winner_status', ['true', 'false'])->default('false');
             $table->timestamps();
         });
     }
