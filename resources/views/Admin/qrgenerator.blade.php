@@ -21,7 +21,7 @@
                         </div>
                         <!-- Page title actions -->
                         <div class="col-auto ms-auto d-print-none gap-2 d-flex" >
-                            <button id="resetTable" class="btn btn-vk btn-icon" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Reset Tables" data-bs-original-title="Reset Tables" aria-label="Reset Tables">
+                            <button id="resetTable" class="btn btn-vk btn-icon" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Refresh Tables" data-bs-original-title="Refresh Tables" aria-label="Refresh Tables">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                     stroke-linecap="round" stroke-linejoin="round"
