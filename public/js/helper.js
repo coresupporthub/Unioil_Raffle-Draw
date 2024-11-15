@@ -70,3 +70,14 @@ function createOption(name, value, data = true,){
         return option;
     }
 }
+
+function clearOption(element, pl){
+
+    while(element.firstChild){
+        element.removeChild(element.firstChild);
+    }
+
+    const placeholder = createOption(pl, '', false);
+
+    element.append(placeholder);
+}

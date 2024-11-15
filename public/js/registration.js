@@ -40,6 +40,14 @@ document.addEventListener("DOMContentLoaded", function() {
     dataGetter('https://psgc.cloud/api/regions').then( data => {
         const regionSelect = document.getElementById("region");
 
+        const province = document.getElementById('province');
+        const city = document.getElementById('city');
+        const baranggay = document.getElementById('baranggay');
+
+        clearOption(province, 'Select a Province');
+        clearOption(city, 'Select a City');
+        clearOption(baranggay, 'Select a Baranggay');
+
         data.forEach( r => {
             const option = createOption(r.name, `${r.code}-${r.id}`);
 
@@ -57,13 +65,15 @@ document.getElementById('region').addEventListener('change', (e)=> {
 
     dataGetter(`https://psgc.cloud/api/regions/${regionCode}/provinces`).then(data=> {
         const province = document.getElementById('province');
-        while(province.firstChild){
-            province.removeChild(province.firstChild);
-        }
 
-        const placeholder = createOption('Select a Province', '', false);
+        const city = document.getElementById('city');
+        const baranggay = document.getElementById('baranggay');
 
-        province.append(placeholder);
+        clearOption(province, 'Select a Province');
+        clearOption(city, 'Select a City');
+        clearOption(baranggay, 'Select a Baranggay');
+
+
         data.forEach(p => {
             const option = createOption(p.name, p.id);
             province.append(option);
@@ -80,13 +90,10 @@ document.getElementById('province').addEventListener('change', e => {
 
         const city = document.getElementById('city');
 
-        while(city.firstChild){
-            city.removeChild(city.firstChild);
-        }
+        const baranggay = document.getElementById('baranggay');
 
-        const placeholder = createOption('Select a City', '', false);
-
-        city.append(placeholder);
+        clearOption(city, 'Select a City');
+        clearOption(baranggay, 'Select a Baranggay');
 
         filterCityProvince.forEach(c => {
             const option = createOption(c.name, c.id);
@@ -105,14 +112,7 @@ document.getElementById('city').addEventListener('click', e => {
 
         const baranggay = document.getElementById('baranggay');
 
-
-        while(baranggay.firstChild){
-            baranggay.removeChild(baranggay.firstChild);
-        }
-
-        const placeholder = createOption('Select a Baranggay', '', false);
-
-        baranggay.append(placeholder);
+        clearOption(baranggay, 'Select a Baranggay');
 
         filterCityBaranggay.forEach(b => {
             const option = createOption(b.name, b.id);
