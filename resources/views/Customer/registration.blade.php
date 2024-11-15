@@ -13,11 +13,15 @@
                     <div class="d-flex justify-content-center align-items-center w-100 flex-column gap-1">
                         <img src="/unioil_images/unioil_logo.png" alt="unioil logo" class="mb-4">
                         <h1>Raffle Entry</h1>
-                        <p>Code: {{ $code }}</p>
+                        <h1>{{ $code }}</h1>
                     </div>
                     <div class="container m-0 p-3 md:m-5 md:p-7">
                         <form class="row g-3 needs-validation" id="registrationForm" novalidate>
                             @csrf
+
+                            <input type="hidden" name="qr_code" value="{{ $code }}">
+                            <input type="hidden" name="unique_identifier" id="{{ $uuid }}">
+                            
                             <div class="col-md-6">
                                 <label for="validationCustom01" class="form-label">FULL NAME</label>
                                 <input type="text" name="fullname" placeholder="Full Name Indicated on Valid ID" class="form-control"
@@ -29,8 +33,8 @@
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                <label for="validationCustom02" name="age" class="form-label">AGE</label>
-                                <input type="text" class="form-control" id="validationCustom02" value=""
+                                <label for="validationCustom02"  class="form-label">AGE</label>
+                                <input type="text" name="age" class="form-control" id="validationCustom02" value=""
                                 maxlength="3" placeholder="Enter Age" required
                                 oninput="this.value = this.value.replace(/[^0-9]/g, '');" />
                                 <div class="valid-feedback">
@@ -89,9 +93,9 @@
                             </div>
 
                             <div class="col-md-3">
-                                <input type="hidden" name="street" id="streetId">
+
                                 <label for="validationCustom02" class="form-label">STREET ADDRESS</label>
-                                <input type="text" class="form-control" id="validationCustom02" value=""
+                                <input type="text" name="street" class="form-control" id="validationCustom02" value=""
                                     placeholder="Enter Street Address" required>
                                 <div class="valid-feedback">
                                     Looks good!

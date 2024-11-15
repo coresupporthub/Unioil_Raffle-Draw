@@ -85,9 +85,13 @@ document.getElementById('region').addEventListener('change', (e)=> {
         clearOption(city, 'Select a City');
         clearOption(baranggay, 'Select a Baranggay');
 
+        setValue('regionId', regionValue[2]);
+        setValue('provinceId', '');
+        setValue('cityId', '');
+        setValue('baranggayId', '');
 
         data.forEach(p => {
-            const option = createOption(p.name, p.id);
+            const option = createOption(p.name, `${p.id}-${p.name}`);
             province.append(option);
         });
 
@@ -96,7 +100,8 @@ document.getElementById('region').addEventListener('change', (e)=> {
 
 
 document.getElementById('province').addEventListener('change', e => {
-    provinceId = e.target.value;
+    const provinceValue = e.target.value.split('-');
+    provinceId = provinceValue[0];
     dataGetter(`https://psgc.cloud/api/regions/${regionCode}/cities-municipalities`).then(data => {
         const filterCityProvince = data.filter(x => x.province_id == provinceId);
 
@@ -107,8 +112,12 @@ document.getElementById('province').addEventListener('change', e => {
         clearOption(city, 'Select a City');
         clearOption(baranggay, 'Select a Baranggay');
 
+        setValue('provinceId', provinceValue[1]);
+        setValue('cityId', '');
+        setValue('baranggayId', '');
+
         filterCityProvince.forEach(c => {
-            const option = createOption(c.name, c.id);
+            const option = createOption(c.name, `${c.id}-${c.name}`);
 
             city.append(option);
         });
@@ -117,20 +126,30 @@ document.getElementById('province').addEventListener('change', e => {
 });
 
 document.getElementById('city').addEventListener('click', e => {
-    cityId = e.target.value;
+    const cityValue = e.target.value.split('-');
+    cityId = cityValue[0];
 
     dataGetter(`https://psgc.cloud/api/regions/${regionCode}/barangays`).then(data => {
+        setValue('cityId', cityValue[1]);
+        setValue('baranggayId', '');
+
         const filterCityBaranggay = data.filter(x => x.region_id == regionId && x.province_id == provinceId && x.city_municipality_id == cityId);
 
         const baranggay = document.getElementById('baranggay');
 
         clearOption(baranggay, 'Select a Baranggay');
 
+
+
         filterCityBaranggay.forEach(b => {
-            const option = createOption(b.name, b.id);
+            const option = createOption(b.name, b.name);
 
             baranggay.append(option);
         });
 
     });
+});
+
+document.getElementById('baranggay').addEventListener('change', e => {
+    setValue('baranggayId', e.target.value);
 });
