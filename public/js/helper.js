@@ -81,3 +81,12 @@ function clearOption(element, pl){
 
     element.append(placeholder);
 }
+
+
+function setValue(id, value){
+    const element = document.getElementById(id);
+
+    if(element){
+        element.value = value;
+    }
+}
