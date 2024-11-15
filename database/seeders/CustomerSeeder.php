@@ -13,7 +13,7 @@ class CustomerSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        foreach (range(1, 50) as $index) {
+        foreach (range(1, 500) as $index) {
             DB::table('customers')->insert([
                 'customer_id' => Str::uuid(),
                 'full_name' => $faker->name,
