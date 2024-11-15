@@ -16,7 +16,7 @@
                                 Overview
                             </div>
                             <h2 class="page-title">
-                                QR Generator
+                                QR Management
                             </h2>
                         </div>
                         <!-- Page title actions -->
