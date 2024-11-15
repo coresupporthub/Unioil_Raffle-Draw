@@ -20,11 +20,21 @@
                             </h2>
                         </div>
                         <!-- Page title actions -->
-                        <div class="col-auto ms-auto d-print-none">
+                        <div class="col-auto ms-auto d-print-none gap-2 d-flex" >
+                            <button id="resetTable" class="btn btn-vk btn-icon" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Reset Tables" data-bs-original-title="Reset Tables" aria-label="Reset Tables">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-refresh">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4" />
+                                    <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4" />
+                                </svg>
+                            </button>
                             <div class="btn-list">
+
                                 <button class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal"
                                     data-bs-target="#generateqr">
-                                    <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                         stroke-linecap="round" stroke-linejoin="round">
@@ -36,7 +46,6 @@
                                 </button>
                                 <button class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal"
                                     data-bs-target="#export">
-                                    <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                         stroke-linecap="round" stroke-linejoin="round"
@@ -98,7 +107,8 @@
                                             <th><button class="table-sort" data-sort="sort-entry_type">Entry
                                                     Type</button></th>
                                             <th><button class="table-sort" data-sort="sort-status">Status</button></th>
-                                            <th><button class="table-sort" data-sort="sort-export_status">Export Status</button></th>
+                                            <th><button class="table-sort" data-sort="sort-export_status">Export
+                                                    Status</button></th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -128,8 +138,8 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label for="numberofqr">Number of QR</label>
-                                            <input type="number" class="form-control" name="numberofqr" id="numberofqr"
-                                                min="1" max="15000" value="1"
+                                            <input type="number" class="form-control" name="numberofqr"
+                                                id="numberofqr" min="1" max="15000" value="1"
                                                 oninput="enforceLimit(this)">
                                         </div>
                                     </div>
@@ -171,8 +181,8 @@
                             <div class="mb-3">
 
                                 <label class="form-label">How many pages?</label>
-                                <input type="number" class="form-control" required name="page_number" value="1"
-                                    placeholder="# of pages">
+                                <input type="number" class="form-control" required name="page_number"
+                                    value="1" placeholder="# of pages">
                             </div>
                             <div class="mb-3">
 
