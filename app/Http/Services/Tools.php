@@ -1,6 +1,6 @@
 <?php
 namespace App\Http\Services;
-
+use App\Models\RaffleEntries;
 class Tools{
 
     public static function genCode($length = 15, $type = "alphanumeric"){
@@ -21,5 +21,26 @@ class Tools{
         }
 
         return $randomString;
+    }
+
+    public static function CreateEntries($customer, $req){
+        $serialNumber = Tools::genCode();
+
+        $checkSerialNumber = RaffleEntries::where('serial_number', $serialNumber)->first();
+
+        while($checkSerialNumber){
+            $serialNumber = Tools::genCode();
+            $checkSerialNumber = RaffleEntries::where('serial_number', $serialNumber)->first();
+        }
+
+        $entry = new RaffleEntries();
+
+        $entry->customer_id = $customer->customer_id;
+        $entry->serial_number = $serialNumber;
+        $entry->qr_id = $req->unique_identifier;
+        $entry->retail_store_code = $req->store_code;
+        $entry->save();
+
+        return $serialNumber;
     }
 }
