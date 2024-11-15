@@ -4,6 +4,7 @@
 @endphp
 <body>
     <script src="{{ asset('./dist/js/demo-theme.min.js?1692870487') }}"></script>
+    @include('Admin.components.loader')
     <div class="page">
         <div class="page-wrapper">
             <!-- Page body -->
@@ -12,13 +13,18 @@
                     <div class="d-flex justify-content-center align-items-center w-100 flex-column gap-1">
                         <img src="/unioil_images/unioil_logo.png" alt="unioil logo" class="mb-4">
                         <h1>Raffle Entry</h1>
-                        <p>Code: {{ $code }}</p>
+                        <h1>{{ $code }}</h1>
                     </div>
                     <div class="container m-0 p-3 md:m-5 md:p-7">
-                        <form class="row g-3 needs-validation" novalidate>
+                        <form class="row g-3 needs-validation" id="registrationForm" novalidate>
+                            @csrf
+
+                            <input type="hidden" name="qr_code" value="{{ $code }}">
+                            <input type="hidden" name="unique_identifier" id="{{ $uuid }}">
+                            
                             <div class="col-md-6">
                                 <label for="validationCustom01" class="form-label">FULL NAME</label>
-                                <input type="text" placeholder="Full Name Indicated on Valid ID" class="form-control"
+                                <input type="text" name="fullname" placeholder="Full Name Indicated on Valid ID" class="form-control"
                                     id="validationCustom01" value="" required
                                     oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');">
 
@@ -27,8 +33,8 @@
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                <label for="validationCustom02" class="form-label">AGE</label>
-                                <input type="text" class="form-control" id="validationCustom02" value=""
+                                <label for="validationCustom02"  class="form-label">AGE</label>
+                                <input type="text" name="age" class="form-control" id="validationCustom02" value=""
                                 maxlength="3" placeholder="Enter Age" required
                                 oninput="this.value = this.value.replace(/[^0-9]/g, '');" />
                                 <div class="valid-feedback">
@@ -38,6 +44,7 @@
 
                             {{-- ADDRESS --}}
                             <div class="col-md-3">
+                                <input type="hidden" name="region" id="regionId">
                                 <label for="region" class="form-label">REGION</label>
                                 <select class="form-control select2" id="region" required>
                                     <option value="" disabled selected>Select a Region</option>
@@ -50,6 +57,7 @@
 
 
                             <div class="col-md-3">
+                                <input type="hidden" name="province" id="provinceId">
                                 <label for="province" class="form-label">PROVINCE</label>
                                 <select class="form-control select2" id="province" required>
                                     <option value="">Select a Province</option>
@@ -61,6 +69,7 @@
                             </div>
 
                             <div class="col-md-3">
+                                <input type="hidden" name="city" id="cityId">
                                 <label for="city" class="form-label">CITY</label>
                                 <select class="form-control select2" id="city" required>
                                     <option value="">Select a City</option>
@@ -72,6 +81,7 @@
                             </div>
 
                             <div class="col-md-3">
+                                <input type="hidden" name="baranggay" id="baranggayId">
                                 <label for="barangay" class="form-label">BARANGAY</label>
                                 <select class="form-control select2" id="baranggay" required>
                                     <option value="">Select a Barangay</option>
@@ -83,8 +93,9 @@
                             </div>
 
                             <div class="col-md-3">
+
                                 <label for="validationCustom02" class="form-label">STREET ADDRESS</label>
-                                <input type="text" class="form-control" id="validationCustom02" value=""
+                                <input type="text" name="street" class="form-control" id="validationCustom02" value=""
                                     placeholder="Enter Street Address" required>
                                 <div class="valid-feedback">
                                     Looks good!
@@ -93,10 +104,10 @@
                             {{-- ADDRESS --}}
 
                             <div class="col-md-6">
-                                <label for="validationCustomUsername" class="form-label">MOBILE NUMBER</label>
+                                <label for="validationCustomUsername"  class="form-label">MOBILE NUMBER</label>
                                 <div class="input-group has-validation">
                                     <span class="input-group-text" id="inputGroupPrepend">+63</span>
-                                    <input type="text" class="form-control" id="validationCustomUsername"
+                                    <input name="mobile_number" type="text" class="form-control" id="validationCustomUsername"
                                         maxlength="10" aria-describedby="inputGroupPrepend" required
                                         oninput="validatePhoneNumber(this)" placeholder="Enter your phone number">
 
@@ -114,7 +125,7 @@
                                 <label for="validationCustomUsername" class="form-label">EMAIL ADDRESS</label>
                                 <div class="input-group has-validation">
                                     <span class="input-group-text" id="inputGroupPrepend">@</span>
-                                    <input type="text" class="form-control" id="validationCustomUsername"
+                                    <input name="email_address" type="text" class="form-control" id="validationCustomUsername"
                                         aria-describedby="inputGroupPrepend" required>
                                     <div class="invalid-feedback">
                                         Please enter email.
@@ -124,7 +135,7 @@
 
                             <div class="col-md-6">
                                 <label for="validationCustom04" class="form-label">PRODUCT PURCHASED</label>
-                                <select type="text" class="form-select" id="validationCustom02" required>
+                                <select type="text" name="product" class="form-select" id="validationCustom02" required>
                                     <option value="" selected disabled>Select Product</option>
                                     @foreach ($productList as $product)
                                         <option value="{{ $product->product_id }}">{{ $product->product_name }} ({{ $product->product_type }})</option>
@@ -139,7 +150,7 @@
                                 <label class="form-label">STORE ALPHANUMERIC CODE</label>
                                 <div class="row g-2">
                                     <div class="col">
-                                        <input type="text" class="form-control" placeholder="">
+                                        <input type="text" name="store_code" class="form-control" placeholder="">
                                     </div>
 
                                 </div>
