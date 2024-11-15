@@ -4,7 +4,7 @@
     <script src="{{ asset('./dist/js/demo-theme.min.js?1692870487') }}"></script>
     <div class="page">
 
-        @include('Admin.components.header', ['active' => 'raffleeventresults'])
+        @include('Admin.components.header', ['active' => 'raffleevents'])
 
         <div class="page-wrapper">
             <div class="page-header d-print-none">
@@ -56,13 +56,17 @@
 
                             <!-- Raffle Draw Details -->
                             <div class="text-center mb-5">
+                                 @php
+                                    $event = App\Models\Event::where('event_id',$_GET['event'])->first();
+                                @endphp
                                 <h1 class="fw-bold display-6 position-relative"
                                     style="color: #f75a04; padding-left: 20px; font-family: 'Poppins', sans-serif;">
                                     <span
-                                        style="border-left: 5px solid #f75a04; margin-right: 10px; padding-left: 10px;">UNIOIL
-                                        GRAND RAFFLE PROMO</span>
+                                        style=" margin-right: 10px; padding-left: 10px;">
+                                        {{ $event->event_name }}
+                                    </span>
                                 </h1>
-                                <p class="text-secondary fs-5">Draw Date: <strong>January 15, 2025</strong></p>
+                                <p class="text-secondary fs-5">Start Date: <strong>{{$event->event_start}}</strong> - End Date: <strong>{{$event->event_end}}</strong></p>
                             </div>
 
                             <!-- Winners Table -->

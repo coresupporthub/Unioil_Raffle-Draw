@@ -39,18 +39,26 @@
 
                     <div class="page-body">
                         <div class="container-xl">
-
+                            @php
+                                $raffleEvents = \App\Models\Event::all();
+                            @endphp
+                            @foreach ($raffleEvents as $event)
                             <div class="col-md-6 col-lg-3">
-                                <div class="card card-link-rotate" onclick="window.location.href='/raffle/events/results'">
-                                    <div class="ribbon bg-success">Ongoing</div>
+                                <div class="card card-link-rotate" onclick="window.location.href='/raffle/events/results?event={{$event->event_id}}'">
+                                    @if ($event->event_status =='Active')
+                                        <div class="ribbon bg-success">Ongoing</div>
+                                    @else
+                                        <div class="ribbon bg-danger">Ended</div>
+                                    @endif
                                     <div class="card-body">
-                                        <h3 class="card-title">Raffle Name</h3>
+                                        <h3 class="card-title">{{$event->event_name}}</h3>
                                         <p class="text-secondary">Lorem ipsum dolor sit amet, consectetur adipisicing
                                             elit. Architecto at consectetur culpa ducimus eum fuga fugiat, ipsa iusto,
                                             modi nostrum recusandae reiciendis saepe.</p>
                                     </div>
                                 </div>
                             </div>
+                            @endforeach
 
                         </div>
                     </div>
