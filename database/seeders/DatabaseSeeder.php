@@ -29,5 +29,7 @@ class DatabaseSeeder extends Seeder
                 'password' => '12345678'
             ]);
         }
+
+        $this->call(ProductListSeeder::class);
     }
 }

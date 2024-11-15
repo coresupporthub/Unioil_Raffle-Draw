@@ -1,5 +1,7 @@
 @include('Customer.components.head', ['title' => 'UniOil Raffle Draw'])
-
+@php
+    $productList = App\Models\ProductList::all();
+@endphp
 <body>
     <script src="{{ asset('./dist/js/demo-theme.min.js?1692870487') }}"></script>
     <div class="page">
@@ -38,7 +40,7 @@
                             <div class="col-md-3">
                                 <label for="region" class="form-label">REGION</label>
                                 <select class="form-control select2" id="region" required>
-                                    <option value="">Select Region</option>
+                                    <option value="" disabled selected>Select a Region</option>
                                 </select>
                                 <div class="valid-feedback">
                                     Looks good!
@@ -50,7 +52,7 @@
                             <div class="col-md-3">
                                 <label for="province" class="form-label">PROVINCE</label>
                                 <select class="form-control select2" id="province" required>
-                                    <option value="">Select Province</option>
+                                    <option value="">Select a Province</option>
                                     <!-- Add your city options here -->
                                 </select>
                                 <div class="valid-feedback">
@@ -61,7 +63,7 @@
                             <div class="col-md-3">
                                 <label for="city" class="form-label">CITY</label>
                                 <select class="form-control select2" id="city" required>
-                                    <option value="">Select City</option>
+                                    <option value="">Select a City</option>
                                     <!-- Add your city options here -->
                                 </select>
                                 <div class="valid-feedback">
@@ -72,7 +74,7 @@
                             <div class="col-md-3">
                                 <label for="barangay" class="form-label">BARANGAY</label>
                                 <select class="form-control select2" id="baranggay" required>
-                                    <option value="">Select Barangay</option>
+                                    <option value="">Select a Barangay</option>
                                     <!-- Add your barangay options here -->
                                 </select>
                                 <div class="valid-feedback">
@@ -122,8 +124,12 @@
 
                             <div class="col-md-6">
                                 <label for="validationCustom04" class="form-label">PRODUCT PURCHASED</label>
-                                <input type="text" class="form-control" id="validationCustom02"
-                                    value="{{ $code }}" placeholder="Enter Street Address" required>
+                                <select type="text" class="form-select" id="validationCustom02" required>
+                                    <option value="" selected disabled>Select Product</option>
+                                    @foreach ($productList as $product)
+                                        <option value="{{ $product->product_id }}">{{ $product->product_name }} ({{ $product->product_type }})</option>
+                                    @endforeach
+                                </select>
                                 <div class="valid-feedback">
                                     Looks good!
                                 </div>
