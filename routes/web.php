@@ -16,15 +16,15 @@ Route::middleware([AuthMiddleware::class])->group(function () {
     Route::get('/qr/generator', function () {
         return view('Admin.qrgenerator');
     })->name('qrgenerator');
-    Route::get('/coupon/management', function () {
-        return view('Admin.managecoupon');
-    })->name('managecoupon');
+    Route::get('/raffle/draw', function () {
+        return view('Admin.raffledraw');
+    })->name('raffledraw');
     Route::get('/retail/outlets', function () {
         return view('Admin.retailoutlets');
     })->name('retailoutlets');
-    Route::get('/customer/registrations', function () {
-        return view('Admin.customers');
-    })->name('customers');
+    Route::get('/raffle/entries', function () {
+        return view('Admin.raffleentries');
+    })->name('raffleentries');
 
     //SETTINGS
     Route::get('/account/settings', function () {

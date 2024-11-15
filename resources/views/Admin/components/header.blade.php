@@ -26,10 +26,10 @@
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                
-                        <a href="{{route('accountsettings')}}" class="dropdown-item"> Settings</a>
+
+                        <a href="{{ route('accountsettings') }}" class="dropdown-item"> Settings</a>
                         <a href="#" class="dropdown-item">Logout</a>
-                        
+
                     </div>
                 </div>
             </div>
@@ -148,11 +148,11 @@
                             </a>
                         </li>
 
-                        <li class="nav-item {{ $active === 'managecoupon' ? 'active' : '' }}">
+                        <li class="nav-item {{ $active === 'raffleentries' ? 'active' : '' }}">
 
-                            <a class="nav-link" href="{{ route('managecoupon') }}">
+                            <a class="nav-link" href="{{ route('raffleentries') }}">
                                 <span
-                                    class="nav-link-icon d-md-none d-lg-inline-block">
+                                    class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                         stroke-linecap="round" stroke-linejoin="round"
@@ -166,35 +166,33 @@
                                     </svg>
                                 </span>
                                 <span class="nav-link-title">
-                                    Coupon Management
+                                    Raffle Entries
                                 </span>
                             </a>
                         </li>
 
-                        <li class="nav-item {{ $active === 'customers' ? 'active' : '' }}">
+                        <li class="nav-item {{ $active === 'raffledraw' ? 'active' : '' }}">
 
-                            <a class="nav-link" href="{{ route('customers') }}">
-                                <span
-                                    class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
+                            <a class="nav-link" href="{{ route('raffledraw') }}">
+                                <span class="nav-link-icon d-md-none d-lg-inline-block">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                         stroke-linecap="round" stroke-linejoin="round"
-                                        class="icon icon-tabler icons-tabler-outline icon-tabler-businessplan">
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-gift">
                                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path d="M16 6m-5 0a5 3 0 1 0 10 0a5 3 0 1 0 -10 0" />
-                                        <path d="M11 6v4c0 1.657 2.239 3 5 3s5 -1.343 5 -3v-4" />
-                                        <path d="M11 10v4c0 1.657 2.239 3 5 3s5 -1.343 5 -3v-4" />
-                                        <path d="M11 14v4c0 1.657 2.239 3 5 3s5 -1.343 5 -3v-4" />
-                                        <path d="M7 9h-2.5a1.5 1.5 0 0 0 0 3h1a1.5 1.5 0 0 1 0 3h-2.5" />
-                                        <path d="M5 15v1m0 -8v1" />
+                                        <path
+                                            d="M3 8m0 1a1 1 0 0 1 1 -1h16a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-16a1 1 0 0 1 -1 -1z" />
+                                        <path d="M12 8l0 13" />
+                                        <path d="M19 12v7a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-7" />
+                                        <path
+                                            d="M7.5 8a2.5 2.5 0 0 1 0 -5a4.8 8 0 0 1 4.5 5a4.8 8 0 0 1 4.5 -5a2.5 2.5 0 0 1 0 5" />
                                     </svg>
                                 </span>
                                 <span class="nav-link-title">
-                                    Customer Registrations
+                                    Raffle Draw
                                 </span>
                             </a>
                         </li>
-
 
 
                     </ul>

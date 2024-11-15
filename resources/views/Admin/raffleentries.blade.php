@@ -1,10 +1,10 @@
-@include('Admin.components.head', ['title' => 'Customer Registration Management'])
+@include('Admin.components.head', ['title' => 'Raffle Entries'])
 
 <body>
     <script src="{{ asset('./dist/js/demo-theme.min.js?1692870487') }}"></script>
     <div class="page">
 
-        @include('Admin.components.header', ['active' => 'customers'])
+        @include('Admin.components.header', ['active' => 'raffleentries'])
 
         <div class="page-wrapper">
             <div class="page-header d-print-none">
@@ -16,7 +16,7 @@
                         Overview
                       </div>
                       <h2 class="page-title">
-                        Customer Registrations
+                        Raffle Entries
                       </h2>
                     </div>
                     <!-- Page title actions -->
