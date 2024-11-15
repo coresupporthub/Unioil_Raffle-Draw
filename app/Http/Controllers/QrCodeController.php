@@ -47,7 +47,7 @@ class QrCodeController extends Controller
         $qrcodes = QrCode::where('qr_id', $request->qr_id)->first();
         if($qrcodes){
 
-            $filePath = public_path('qr-codes/'.$qrcodes->image); // Example file path
+            $filePath = storage_path('qr-codes/'.$qrcodes->image); // Example file path
 
             if (file_exists($filePath)) {
                 unlink($filePath);
@@ -93,6 +93,15 @@ class QrCodeController extends Controller
 
         $qrCodes = QrCode::where('export_status', 'none')->where('status', 'unused')->take($limit)->select('image', 'qr_id')->get();
 
+        $qrCodes->transform(function ($qrCode) {
+            $imagePath = storage_path('app/qr-codes/' . $qrCode->image); // Adjust the path as needed
+            if (file_exists($imagePath)) {
+                $qrCode->image_base64 = 'data:image/png;base64,' . base64_encode(file_get_contents($imagePath));
+            } else {
+                $qrCode->image_base64 = null; // Handle missing image case
+            }
+            return $qrCode;
+        });
 
         $chunkedQrCodes = $qrCodes->chunk(36)->toArray();
 
@@ -121,11 +130,16 @@ class QrCodeController extends Controller
         $export->save();
 
 
-        $pdfFilePath = public_path("pdf_files/$fileName");  // Define the file path in the public folder
+        $pdfFilePath = storage_path("app/pdf_files/$fileName");
+
+        if (!file_exists(storage_path('app/pdf_files'))) {
+            mkdir(storage_path('app/pdf_files'), 0777, true);
+        }
+
         $pdf->save($pdfFilePath);
 
 
-        return $pdf->stream('invoice.pdf');
+        return $pdf->stream('qr_codes.pdf');
 
     }
 }
