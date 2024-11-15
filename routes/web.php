@@ -21,6 +21,15 @@ Route::middleware([AuthMiddleware::class])->group(function () {
     Route::get('/retail/outlets', function () {
         return view('Admin.retailoutlets');
     })->name('retailoutlets');
+    
+    Route::get('/raffle/events', function () {
+        return view('Admin.raffleevents');
+    })->name('raffleevents');
+
+    Route::get('/raffle/events/results', function () {
+        return view('Admin.raffleeventresults');
+    })->name('raffleeventresults');
+    
     Route::get('/raffle/entries', function () {
         return view('Admin.raffleentries');
     })->name('raffleentries');
