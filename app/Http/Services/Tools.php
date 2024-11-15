@@ -1,6 +1,8 @@
 <?php
 namespace App\Http\Services;
 use App\Models\RaffleEntries;
+use App\Models\Event;
+use App\Http\Services\Magic;
 class Tools{
 
     public static function genCode($length = 15, $type = "alphanumeric"){
@@ -34,6 +36,10 @@ class Tools{
         }
 
         $entry = new RaffleEntries();
+
+        $currentActiveEvent = Event::where('event_status', Magic::ACTIVE_EVENT)->first();
+
+        $entry->event_id = $currentActiveEvent->event_id;
 
         $entry->customer_id = $customer->customer_id;
         $entry->serial_number = $serialNumber;

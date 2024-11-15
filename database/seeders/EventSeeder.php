@@ -19,13 +19,13 @@ class EventSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        foreach (range(1, 50) as $index) {
+        foreach (range(1, 3) as $index) {
             DB::table('event')->insert([
                 'event_id' => Str::uuid(),
                 'event_name' => $faker->sentence(3),
                 'event_start' => $faker->dateTimeBetween('-1 month', 'now')->format('Y-m-d H:i:s'),
                 'event_end' => $faker->dateTimeBetween('now', '+1 month')->format('Y-m-d H:i:s'),
-                'event_status' => $faker->randomElement(['ongoing', 'upcoming', 'completed']),
+                'event_status' => $faker->randomElement(['Active', 'Inactive']),
             ]);
         }
     }
