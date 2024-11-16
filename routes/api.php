@@ -28,6 +28,7 @@ Route::group(['middleware' => ['web']], function () {
         Route::post('/update-store', [RetailStoreController::class, 'updatestore']);
         Route::get('/get-all-store', [RetailStoreController::class, 'getallstore']);
         Route::get('/remove-retail', [RetailStoreController::class, 'removeretailstore']);
+        Route::post('/upload-retail-store', [RetailStoreController::class, 'uploadcsv']);
 
         //Raffle
         Route::post('/get-raflle-entry', [RaffleController::class, 'getraffleentry']);

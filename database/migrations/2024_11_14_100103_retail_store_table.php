@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('retail_store', callback: function (Blueprint $table) {
             $table->uuid('store_id')->primary();
-            $table->string('cluster_id');
-            $table->string('area');
-            $table->string('address');
-            $table->string('distributor');
-            $table->string('retail_station');
-            $table->string('rto_code');
+            $table->string('cluster_id')->nullable();
+            $table->string('area')->nullable();
+            $table->string('address')->nullable();
+            $table->string('distributor')->nullable();
+            $table->string('retail_station')->nullable();
+            $table->string('rto_code')->nullable();
             $table->string('store_status')->default('Enable');
             $table->timestamps();
         });

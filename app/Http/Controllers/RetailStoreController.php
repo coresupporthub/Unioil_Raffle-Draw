@@ -9,7 +9,7 @@ use App\Models\RetailStore;
 
 class RetailStoreController extends Controller
 {
-    
+
     public function addcluster(request $request){
 
         $data =  new RegionalCluster();
@@ -35,7 +35,7 @@ class RetailStoreController extends Controller
             }
         }
         $data->delete();
-        return response()->json(['success' => true , 'message'=>'Cluster status successfully delete', 'reload'=> 'LoadAll']);  
+        return response()->json(['success' => true , 'message'=>'Cluster status successfully delete', 'reload'=> 'LoadAll']);
     }
 
     public function addstore(request $request){
@@ -72,5 +72,27 @@ class RetailStoreController extends Controller
         $data->store_code = $request->store_code;
         $data->save();
         return response()->json(['success' => true, 'message' => 'Store status successfully update', 'reload' => 'LoadAll']);
+    }
+
+    public function uploadcsv(Request $req){
+        $csvData = $req->retail_store;
+
+        array_shift($csvData);
+        foreach($csvData as $data){
+            $store = new RetailStore();
+
+            if(!empty($data[0]) && !empty($data[1]) && !empty($data[2]) && !empty($data[3]) && !empty($data)){
+                $store->cluster_id = $req->cluster;
+                $store->area = $data[0];
+                $store->address = $data[1];
+                $store->distributore = $data[2];
+                $store->retail_station = $data[3];
+                $store->rto_code = $data[4];
+                $store->save();
+            }
+
+        }
+
+        return response()->json(['success'=> true, 'message'=> 'All data are uploaded in the database']);
     }
 }
