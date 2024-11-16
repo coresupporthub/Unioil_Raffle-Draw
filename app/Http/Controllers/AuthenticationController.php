@@ -113,4 +113,10 @@ class AuthenticationController extends Controller
         }
 
     }
+
+    public function getadmindetails(Request $req){
+        $user = User::where('id', Auth::id())->first();
+
+        return response()->json(['info'=> $user]);
+    }
 }

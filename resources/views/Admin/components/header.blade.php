@@ -20,7 +20,7 @@
                         <span class="avatar avatar-sm"
                             style="background-image: url({{ asset('unioil_images/unioil.png') }})"></span>
                         <div class="d-none d-xl-block ps-2">
-                            <div>Paweł Kuna</div>
+                            <div id="administrator_name">Loading.....</div>
                             <div class="mt-1 small text-secondary">Administrator</div>
                         </div>
                     </a>

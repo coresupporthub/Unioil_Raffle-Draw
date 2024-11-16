@@ -7,6 +7,7 @@
     <script src="{{asset('./dist/js/tabler.min.js?1692870487')}}" defer></script>
     <script src="{{asset('./dist/js/demo.min.js?1692870487')}}" defer></script>
     <script src="{{asset('/js/helper.js')}}" defer></script>
+    <script src="/js/admin-details.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const list = new List('table-default', {

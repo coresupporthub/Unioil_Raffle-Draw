@@ -35,6 +35,8 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('/get-all-winner', [RaffleController::class, 'getallwinner']);
         Route::get('/get-all-entry', [RaffleController::class, 'getallentry']);
 
+        Route::get('/get-admin-details', [AuthenticationController::class, 'getadmindetails']);
+
     });
 
     //Authentication
