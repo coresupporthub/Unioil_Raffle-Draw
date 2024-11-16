@@ -70,7 +70,6 @@ class GenerateQr implements ShouldQueue
             logoResizeToWidth: 100,
             logoPunchoutBackground: true,
             logoPath: public_path('/unioil_images/unioil.png'),
-            labelText: $entry_type,
             labelFont: new OpenSans(20),
             labelAlignment: LabelAlignment::Center
         );

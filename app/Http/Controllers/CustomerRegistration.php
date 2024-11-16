@@ -9,6 +9,7 @@ use App\Models\QrCode;
 use App\Http\Services\Tools;
 use App\Models\ProductList;
 use App\Http\Services\Magic;
+use App\Models\RetailStore;
 
 class CustomerRegistration extends Controller
 {
@@ -23,6 +24,12 @@ class CustomerRegistration extends Controller
 
         if($qrStatus){
             return response()->json(['success'=> false, 'message'=> 'QR Code is not available anymore']);
+        }
+
+        $retailStore = RetailStore::where('store_code', $req->store_code)->first();
+
+        if(!$retailStore){
+            return response()->json(['success'=> false, 'message'=> 'Retail Store Code is invalid please confirm the code to the store owner']);
         }
 
         $customer = new Customers();
@@ -54,6 +61,6 @@ class CustomerRegistration extends Controller
             'status' => 'used'
         ]);
 
-        return response()->json(['data'=> 'test']);
+        return response()->json(['success'=> true, 'customer_id'=> $customer->customer_id, 'entry'=> $productEntry->entries]);
     }
 }

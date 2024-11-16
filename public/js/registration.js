@@ -19,7 +19,15 @@
                         data: $('#registrationForm').serialize(),
                         success: res=> {
                             loading(false);
-                            dataParser(res);
+                            alertify.set('notifier','position', 'top-center');
+
+                            if(res.success){
+                                alertify.success(res.message);
+                                window.location.href = `/registration-complete/coupon-serial-number/${res.customer_id}`;
+                            }else{
+                                alertify.error(res.message);
+                            }
+
                         }, error: xhr=> console.log(xhr.responseText)
                     });
                 }

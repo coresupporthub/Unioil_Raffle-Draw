@@ -38,6 +38,10 @@ Route::group(['middleware' => ['web']], function () {
         Route::post('/add-event', [RaffleController::class, 'addevent']);
         Route::post('/raffle-redraw', [RaffleController::class, 'redraw']);
 
+        //Admin Details
+        Route::get('/get-admin-details', [AuthenticationController::class, 'getadmindetails']);
+        Route::post('/admin-changepassword', [AuthenticationController::class, 'changepassword']);
+        Route::post('/update-admin-details', [AuthenticationController::class, 'updateadmin']);
     });
 
     //Authentication

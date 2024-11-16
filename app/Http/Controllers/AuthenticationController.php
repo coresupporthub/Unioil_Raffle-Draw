@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Http\Services\Tools;
 use App\Jobs\SendVerification;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Services\Magic;
 class AuthenticationController extends Controller
 {
@@ -25,7 +26,7 @@ class AuthenticationController extends Controller
                     'login_attempt' => $check->login_attempt + 1
                 ]);
             }else{
-                return response()->json(['success'=> false, "You have reached your max login attempt with incorrect password"]);
+                return response()->json(['success'=> false, "You have reached your max login attempt with incorrect password", 'redirect'=> false]);
             }
         }
 
@@ -33,6 +34,11 @@ class AuthenticationController extends Controller
             $req->session()->regenerate();
 
             $user = User::where('id', Auth::id())->first();
+
+            if($user->authenticated == 'true'){
+                return response()->json(['status'=> true, 'message'=> 'Authentication is successful', 'redirect'=> true]);
+            }
+
             $verificationCode = Tools::genCode(6, 'numeric');
 
             SendVerification::dispatch($user->email, $verificationCode);
@@ -41,9 +47,9 @@ class AuthenticationController extends Controller
                 'verification_code' => $verificationCode
             ]);
 
-            return response()->json(['success' => true, 'message' => 'Authentication is successful']);
+            return response()->json(['success' => true, 'message' => 'Authentication is successful', 'redirect'=> false]);
         } else {
-            return response()->json(['success' => false, 'message' => "Email and password does not match"]);
+            return response()->json(['success' => false, 'message' => "Email and password does not match", 'redirect'=> false]);
         }
     }
 
@@ -107,5 +113,40 @@ class AuthenticationController extends Controller
             return response()->json(['success'=> false, 'message' => 'You have reach your resend limit']);
         }
 
+    }
+
+    public function getadmindetails(Request $req){
+        $user = User::where('id', Auth::id())->first();
+
+        return response()->json(['info'=> $user]);
+    }
+
+    public function changepassword(Request $req){
+        if($req->confirmPassword != $req->newPassword){
+            return response()->json(['success'=> false, 'message'=> 'New Password and Confirm Password does not match']);
+        }
+
+        $user = User::where('id', Auth::id())->first();
+
+        if(Hash::check($req->currentPassword, $user->password)){
+            $user->update([
+                'password'=> Hash::make($req->newPassword)
+            ]);
+
+            return response()->json(['success'=> true, 'message'=> 'Password Successfully Changed']);
+        }else{
+            return response()->json(['success'=> false, 'message'=> 'Cannot Validate: Incorrect Current Admin Password']);
+        }
+    }
+
+    public function updateadmin(Request $req){
+        $user = User::where('id', Auth::id())->first();
+
+        $user->update([
+            'name'=> $req->name,
+            'email' => $req->email
+        ]);
+
+        return response()->json(['success'=> true, 'message'=> 'Admin Details Updated']);
     }
 }

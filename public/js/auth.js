@@ -15,6 +15,10 @@ document.getElementById('authForm').addEventListener('submit', (e)=> {
                 window.location.href = "/admin/verification-code";
             }
 
+            if(res.redirect){
+                window.location.href = "/";
+            }
+
         }, error: xhr=> console.log(xhr.responseText)
     })
 });

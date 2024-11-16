@@ -5,7 +5,7 @@
     <div class="page">
 
         @include('Admin.components.header', ['active' => ''])
-
+        @include('Admin.components.loader')
         <div class="page-wrapper">
             <!-- Page body -->
             <div class="page-body">
@@ -30,10 +30,10 @@
                                                     style="background-image: linear-gradient(45deg, #F75A04, #ffffff); color: white;">
                                                     Account Settings
                                                 </a>
-                                                <a href="#"
+                                                <button onclick="adminLogout()"
                                                     class="list-group-item list-group-item-action d-flex align-items-center">
                                                     Logout
-                                                </a>
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -42,33 +42,17 @@
                                         <div class="card-body" style="max-height: 500px; overflow-y: auto;">
                                             <h2 class="mb-4">My Account</h2>
                                             <h3 class="card-title">Profile Details</h3>
-                                            <div class="row align-items-center">
-                                                <div class="col-auto">
-                                                    <span class="avatar avatar-xl"
-                                                        style="background-image: url({{ asset('unioil_images/unioil.png') }})"></span>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <a href="" data-bs-toggle="modal"
-                                                        data-bs-target="#changeprofileModal" class="btn">Change
-                                                        Profile Picture</a>
-                                                </div>
-
-                                            </div>
-                                            <h3 class="card-title mt-4">Admin Profile</h3>
-                                            <div class="row g-3">
+                                            <form id="adminDetailsForm" class="row g-3">
+                                                @csrf
                                                 <div class="col-md-6">
                                                     <div class="form-label"> Name</div>
-                                                    <input type="text" class="form-control" value="Unioil Admin">
+                                                    <input type="text" disabled id="adminName" name="name" class="form-control" value="Loading...">
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-label"> Email</div>
-                                                    <input type="text" class="form-control" value="Unioil@mail.com">
+                                                    <input type="email" disabled id="adminEmail" name="email" class="form-control" value="Loading...">
                                                 </div>
-                                                {{-- <div class="col-md">
-                                                    <div class="form-label">Admin ID</div>
-                                                    <input type="text" class="form-control" value="560afc32">
-                                                </div> --}}
-                                            </div>
+                                            </form>
 
                                             <h3 class="card-title mt-4">Password</h3>
                                             <div>
@@ -79,8 +63,7 @@
                                         </div>
                                         <div class="card-footer bg-transparent mt-auto">
                                             <div class="btn-list justify-content-end">
-                                                <a href="#" class="btn">Cancel</a>
-                                                <a href="#" class="btn btn-primary">Submit</a>
+                                                <button id="adminDetailsBtn" class="btn btn-primary">Submit</button>
                                             </div>
                                         </div>
                                     </div>
@@ -105,41 +88,39 @@
     <div class="modal modal-blur fade" id="changepasswordModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
             <div class="modal-content">
-                <div class="modal-body">
+                <form id="changePasswordForm" class="modal-body">
+                    @csrf
                     <div class="modal-title">Change Admin Password</div>
                     <div class="mb-3">
                         <label for="currentPassword" class="form-label">Current Password</label>
-                        <input type="password" class="form-control" id="currentPassword"
+                        <input type="password" required name="currentPassword" class="form-control" id="currentPassword"
                             placeholder="Enter current password">
                         <div id="currentPasswordError" class="text-danger mt-2" style="display: none;">Current
                             password is required.</div>
                     </div>
                     <div class="mb-3">
                         <label for="newPassword" class="form-label">New Password</label>
-                        <input type="password" class="form-control" id="newPassword" placeholder="Enter new password">
+                        <input type="password" required oninput="checkPass(this, 'confirmPassword')" name="newPassword" class="form-control" id="newPassword" placeholder="Enter new password">
                         <div id="newPasswordError" class="text-danger mt-2" style="display: none;">New password
                             is required.</div>
                     </div>
                     <div class="mb-3">
                         <label for="confirmPassword" class="form-label">Confirm New Password</label>
-                        <input type="password" class="form-control" id="confirmPassword"
+                        <input type="password" required oninput="checkPass(this, 'newPassword')" name="confirmPassword" class="form-control" id="confirmPassword"
                             placeholder="Confirm new password">
                         <div id="confirmPasswordError" class="text-danger mt-2" style="display: none;">Passwords
                             do not match.</div>
                     </div>
-                </div>
+                </form>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-link link-secondary me-auto"
+                    <button type="button" id="closeChangePassword" class="btn btn-link link-secondary me-auto"
                         data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" id="changePasswordBtn"
-                        onclick="changeAdminPassword()">Save</button>
+                    <button type="button" class="btn btn-primary" disabled id="changePasswordBtn">Save</button>
                 </div>
             </div>
         </div>
     </div>
 
-    {{-- Upload Profile Picture --}}
-    <div class="modal modal-blur fade" id="changeprofileModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-body">
@@ -166,24 +147,7 @@
 
         {{-- modals --}}
 
-        <script>
-            function previewImage(event) {
-                const file = event.target.files[0];
-                const reader = new FileReader();
-
-                reader.onload = function() {
-                    const imagePreview = document.getElementById('imagePreview');
-                    const imagePreviewContainer = document.getElementById('imagePreviewContainer');
-
-                    imagePreview.src = reader.result;
-                    imagePreviewContainer.style.display = 'block';
-                };
-
-                if (file) {
-                    reader.readAsDataURL(file);
-                }
-            }
-        </script>
+        <script src="/js/account_settings.js"></script>
 
 </body>
 
