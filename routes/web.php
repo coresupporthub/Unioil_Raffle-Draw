@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\AuthMiddleware;
 use App\Models\QrCode;
 use Illuminate\Support\Facades\Storage;
+use App\Models\ProductList;
+use App\Models\Customers;
+use App\Models\RaffleEntries;
 
 Route::middleware([AuthMiddleware::class])->group(function () {
     Route::get('/', function () {
@@ -21,7 +24,7 @@ Route::middleware([AuthMiddleware::class])->group(function () {
     Route::get('/retail/outlets', function () {
         return view('Admin.retailoutlets');
     })->name('retailoutlets');
-    
+
     Route::get('/raffle/events', function () {
         return view('Admin.raffleevents');
     })->name('raffleevents');
@@ -29,7 +32,7 @@ Route::middleware([AuthMiddleware::class])->group(function () {
     Route::get('/raffle/events/results', function () {
         return view('Admin.raffleeventresults');
     })->name('raffleeventresults');
-    
+
     Route::get('/raffle/entries', function () {
         return view('Admin.raffleentries');
     })->name('raffleentries');
@@ -80,3 +83,22 @@ Route::get('/registration/page/{code}/{uuid}', function ($code, $uuid) {
 Route::get('/privacy/policy', function () {
     return view('Customer.privacypolicy');
 })->name('privacypolicy');
+
+Route::get('/registration-complete/coupon-serial-number/{customer_id}', function ($customer_id){
+
+    $customers = Customers::where('customer_id', $customer_id)->first();
+
+    if(!$customers){
+        abort(404);
+    }
+
+    $productPurchased = ProductList::where('product_id', $customers->product_purchased)->first();
+
+    if($productPurchased->entries == 1){
+        $raffleEntries = RaffleEntries::where('customer_id', $customers->customer_id)->first();
+    }else{
+        $raffleEntries = RaffleEntries::where('customer_id', $customers->customer_id)->get();
+    }
+
+    return view('Customer.coupon', ['entries' => $productPurchased->entries, 'code' => $raffleEntries, 'customers'=> $customers]);
+});
