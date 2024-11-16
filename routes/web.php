@@ -33,6 +33,10 @@ Route::middleware([AuthMiddleware::class])->group(function () {
         return view('Admin.raffleeventresults');
     })->name('raffleeventresults');
 
+    Route::get('/raffle/events/results/print', function () {
+        return view('Admin.raffleeventresultsprint');
+    })->name('raffleeventresultsprint');
+
     Route::get('/raffle/entries', function () {
         return view('Admin.raffleentries');
     })->name('raffleentries');

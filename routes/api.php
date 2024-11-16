@@ -38,6 +38,10 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('/get-all-event', action: [RaffleController::class, 'getallevent']);
         Route::post('/add-event', [RaffleController::class, 'addevent']);
         Route::post('/raffle-redraw', [RaffleController::class, 'redraw']);
+        Route::post('/update-event', [RaffleController::class, 'updateevent']);
+        Route::post('/inactive-event', [RaffleController::class, 'inactiveevent']);
+        Route::post('/event-winner', [RaffleController::class, 'geteventwinner']);
+        Route::post('/event-selected', [RaffleController::class, 'getaselectedevent']);
 
         //Admin Details
         Route::get('/get-admin-details', [AuthenticationController::class, 'getadmindetails']);

@@ -60,6 +60,10 @@ function loadCard() {
 }
 
 function submitdata(formID,route){
+    if (!validateForm(formID)) {
+        alertify.error("Please fill in all required fields.");
+        return;
+    }
     loading(true)
     const form = document.getElementById(formID);
     const csrfToken = $('meta[name="csrf-token"]').attr("content");
@@ -87,6 +91,24 @@ function submitdata(formID,route){
             console.error("Error posting data:", error);
         },
     });
+}
+
+function validateForm(formID) {
+    const form = document.getElementById(formID);
+    let emptyField = false;
+
+    const inputs = form.querySelectorAll("input, textarea, select");
+
+    inputs.forEach(function (input) {
+        if (input.value.trim() === "") {
+            emptyField = true;
+            input.classList.add("error");
+        } else {
+            input.classList.remove("error");
+        }
+    });
+
+    return !emptyField;
 }
 
 function dynamicCall(functionName, ...args) {
