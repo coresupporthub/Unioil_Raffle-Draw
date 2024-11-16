@@ -66,10 +66,11 @@ class RetailStoreController extends Controller
     {
         $data = RetailStore::where('store_id',$request->store_id)->first();
         $data->cluster_id = $request->cluster_id;
-        $data->region_name = $request->region_name;
-        $data->city_name = $request->city_name;
-        $data->store_name = $request->store_name;
-        $data->store_code = $request->store_code;
+        $data->area = $request->area;
+        $data->address = $request->address;
+        $data->distributor = $request->distributor;
+        $data->retail_station = $request->retail_store;
+        $data->rto_code = $request->rto_code;
         $data->save();
         return response()->json(['success' => true, 'message' => 'Store status successfully update', 'reload' => 'LoadAll']);
     }

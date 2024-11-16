@@ -115,7 +115,10 @@ function clearForm(formId) {
     const inputs = form.querySelectorAll('input');
     inputs.forEach(input => {
 
-        input.value = '';
+        if(input.name != '_token'){
+
+            input.value = '';
+        }
 
         if (input.type === 'checkbox' || input.type === 'radio') {
             input.checked = false;

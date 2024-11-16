@@ -48,7 +48,7 @@ function LoadAllRetailStore() {
                         data: null,
                         render: function (data, type, row) {
                             return (
-                                `<div class="d-flex gap-1"><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal-update-retail" onclick="updateRetail('${row.store_id}','${row.cluster_id}','${row.region_name}','${row.city_name}','${row.store_name}','${row.store_code}')">Update</button>` +
+                                `<div class="d-flex gap-1"><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal-update-retail" onclick="updateRetail('${row.store_id}','${row.cluster_id}','${row.address}','${row.area}','${row.distributor}','${row.retail_station}', '${row.rto_code}')">Update</button>` +
                                 ` ` +
                                 `<button class="btn btn-danger" onclick="ChangeStatus('${row.store_id}','/api/remove-retail')">Delete</button></div>`
                             );
@@ -69,24 +69,6 @@ function GetAllClusterSelect() {
         type: "GET",
         success: function (response) {
             const data = response.data;
-
-            const selectElement = document.getElementById("cluster_id");
-
-            while (selectElement.firstChild) {
-                selectElement.removeChild(selectElement.firstChild);
-            }
-
-            const defaultOption = document.createElement("option");
-            defaultOption.text = "Select a cluster";
-            defaultOption.value = "";
-            selectElement.appendChild(defaultOption);
-
-            data.forEach((element) => {
-                const newOption = document.createElement("option");
-                newOption.value = element.cluster_id;
-                newOption.text = element.cluster_name;
-                selectElement.appendChild(newOption);
-            });
 
             const selectElement2 = document.getElementById("cluster_id2");
 
@@ -113,27 +95,16 @@ function GetAllClusterSelect() {
     });
 }
 
-function updateRetail(id, cluster, region, city, store, code) {
+function updateRetail(id, cluster_id, address, area, distributor, retail_station, rto_code) {
     document.getElementById("store_id").value = id;
-    document.getElementById("cluster_id2").value = cluster;
-    document.getElementById("store_name").value = store;
-    document.getElementById("store_code").value = code;
-    let region_id = "";
 
-    dataGetter("https://psgc.cloud/api/regions").then((data) => {
-        data.forEach((element) => {
-            if (region === element.name) {
-                region_id = element.code;
+    setValue('cluster_id2', cluster_id);
+    setValue('address', address);
+    setValue('area', area);
+    setValue('distributor', distributor);
+    setValue('retail_store', retail_station);
+    setValue('rto_code', rto_code);
 
-            }
-        });
-        const reg = document.getElementById("region_id2");
-        reg.value = region_id;
-        loadCity2(region_id);
-        setTimeout(()=>{
-        document.getElementById('city_id2').value=city;
-        },500);
-    });
 }
 
 
@@ -168,6 +139,7 @@ function SubmitData(formID, route) {
         alertify.error("Please fill in all required fields.");
         return;
     }
+    loading(true);
 
     const form = document.getElementById(formID);
     const csrfToken = $('meta[name="csrf-token"]').attr("content");
@@ -184,6 +156,8 @@ function SubmitData(formID, route) {
             alertify.success(response.message);
             document.getElementById(formID).reset();
             dynamicCall(response.reload);
+            loading(false);
+            exec('closeRetail');
         },
         error: function (xhr, status, error) {
             console.error("Error posting data:", error);
@@ -195,6 +169,7 @@ function ChangeStatus(id, route) {
     alertify.confirm(
         "Warning","Are you sure you want to remove this data?",
         function () {
+            loading(true);
             const csrfToken = $('meta[name="csrf-token"]').attr("content");
             const formData = new FormData();
             formData.append("_token", csrfToken);
@@ -209,6 +184,7 @@ function ChangeStatus(id, route) {
                 success: function (response) {
                     alertify.success(response.message);
                     dynamicCall(response.reload);
+                    loading(false);
                 },
                 error: function (xhr, status, error) {
                     console.error("Error posting data:", error);
