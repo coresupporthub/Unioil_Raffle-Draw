@@ -6,7 +6,9 @@ function loadCard() {
         type: "GET",
         success: function (response) {
             const cardContainer = document.getElementById("eventCard");
-
+            while (cardContainer.firstChild) {
+                cardContainer.removeChild(cardContainer.firstChild);
+            }
             response.forEach((element) => {
                 let link = document.createElement("a");
                 link.setAttribute(
