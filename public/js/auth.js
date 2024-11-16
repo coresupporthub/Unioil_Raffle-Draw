@@ -11,9 +11,11 @@ document.getElementById('authForm').addEventListener('submit', (e)=> {
             loading(false);
             dataParser(res);
 
-            if(res.success && res.redirect){
+            if(res.success){
                 window.location.href = "/admin/verification-code";
-            }else{
+            }
+
+            if(res.redirect){
                 window.location.href = "/";
             }
 
