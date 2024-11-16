@@ -26,7 +26,7 @@ class AuthenticationController extends Controller
                     'login_attempt' => $check->login_attempt + 1
                 ]);
             }else{
-                return response()->json(['success'=> false, "You have reached your max login attempt with incorrect password"]);
+                return response()->json(['success'=> false, "You have reached your max login attempt with incorrect password", 'redirect'=> false]);
             }
         }
 
@@ -49,7 +49,7 @@ class AuthenticationController extends Controller
 
             return response()->json(['success' => true, 'message' => 'Authentication is successful', 'redirect'=> false]);
         } else {
-            return response()->json(['success' => false, 'message' => "Email and password does not match"]);
+            return response()->json(['success' => false, 'message' => "Email and password does not match", 'redirect'=> false]);
         }
     }
 
