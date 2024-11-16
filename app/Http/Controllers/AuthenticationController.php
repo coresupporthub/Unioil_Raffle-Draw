@@ -33,6 +33,11 @@ class AuthenticationController extends Controller
             $req->session()->regenerate();
 
             $user = User::where('id', Auth::id())->first();
+
+            if($user->authenticated == 'true'){
+                return response()->json(['status'=> true, 'message'=> 'Authentication is successful', 'redirect'=> true]);
+            }
+
             $verificationCode = Tools::genCode(6, 'numeric');
 
             SendVerification::dispatch($user->email, $verificationCode);
@@ -41,7 +46,7 @@ class AuthenticationController extends Controller
                 'verification_code' => $verificationCode
             ]);
 
-            return response()->json(['success' => true, 'message' => 'Authentication is successful']);
+            return response()->json(['success' => true, 'message' => 'Authentication is successful', 'redirect'=> false]);
         } else {
             return response()->json(['success' => false, 'message' => "Email and password does not match"]);
         }
