@@ -12,7 +12,7 @@ use Illuminate\Support\Arr;
 
 class RaffleController extends Controller
 {
-    public function getraffleentry(request $request){
+    public function getraffleentry(Request $request){
 
         $event = Event::where('event_status', 'Active')->first();
         $retailStores = RetailStore::where('cluster_id', $request->id)->pluck('store_code');
@@ -24,10 +24,10 @@ class RaffleController extends Controller
         return response()->json($raffleEntries);
     }
 
-    public function raffledraw(request $request){
+    public function raffledraw(Request $request){
 
         $check = $this->validateclusterwinner($request->id);
-        
+
         if($check){
             $cluster_name = RegionalCluster::where('cluster_id', $request->id)->first()->cluster_name;
             return response()->json([
@@ -47,7 +47,7 @@ class RaffleController extends Controller
         $shuffledSerialNumbers = $raffleEntries->pluck('serial_number')->toArray();
         shuffle($shuffledSerialNumbers);
 
-        $winnerSerialNumber = $shuffledSerialNumbers[0]; 
+        $winnerSerialNumber = $shuffledSerialNumbers[0];
 
         $winnerRaffleEntry = RaffleEntries::where('serial_number', $winnerSerialNumber)->first();
         $winnerRaffleEntry->winner_status = 'true';
@@ -84,7 +84,7 @@ class RaffleController extends Controller
         return response()->json($data);
     }
 
-    public function geteventwinner(request $request)
+    public function geteventwinner(Request $request)
     {
 
         $event = Event::where('event_id', $request->event_id)->first();
@@ -116,7 +116,7 @@ class RaffleController extends Controller
         ->whereIn('retail_store_code', $retailStores)
         ->where('event_id', $event->event_id)
         ->first();
-        
+
         if($raffleEntries){
             return true;
         }else{
@@ -144,15 +144,15 @@ class RaffleController extends Controller
                 'customer_phone' => $customer->mobile_number,
                 ];
                 }
-                return response()->json($data);     
+                return response()->json($data);
     }
 
     public function getallevent(){
         $data = Event::all();
-        return response()->json($data);     
+        return response()->json($data);
     }
 
-    public function addevent(request $request){
+    public function addevent(Request $request){
         $check = Event::where('event_status','Active')->first();
         if($check){
             return response()->json(['message' => 'There is still an ongoing raffle promo','success'=>false]);
@@ -168,7 +168,7 @@ class RaffleController extends Controller
         return response()->json(['message' => 'Event added successfully','reload'=>'loadCard','success'=>true]);
     }
 
-    public function redraw(request $request){
+    public function redraw(Request $request){
         $raffleEntries = RaffleEntries::where('serial_number',$request->serial)->first();
         $raffleEntries->winner_status = 'false';
         $raffleEntries->save();
@@ -176,12 +176,12 @@ class RaffleController extends Controller
         return response()->json(['message' => 'Cluster winner disqialified. Prize will be redrawn on '.$raffleEntries->updated_at, 'reload' => 'addWinnerRow', 'success' => true]);
     }
 
-    public function getaselectedevent(request $request)
+    public function getaselectedevent(Request $request)
     {
         $data = Event::where('event_id', $request->event_id)->first();
         return response()->json($data);
     }
-    public function updateevent(request $request){
+    public function updateevent(Request $request){
 
         $event = Event::where('event_id', $request->event_id)->where('event_status','Active')->first();
         if($event){
@@ -197,7 +197,7 @@ class RaffleController extends Controller
         return response()->json(['message' => 'This event is currently inactive, and its details cannot be edited.', 'success' => false]);
     }
 
-    public function inactiveevent(request $request){
+    public function inactiveevent(Request $request){
         $event = Event::where('event_id', $request->event_id)->first();
         $event->event_status = 'Inactive';
         $event->save();

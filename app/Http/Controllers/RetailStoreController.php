@@ -10,7 +10,7 @@ use App\Models\RetailStore;
 class RetailStoreController extends Controller
 {
 
-    public function addcluster(request $request){
+    public function addcluster(Request $request){
 
         $data =  new RegionalCluster();
         $data->cluster_name = $request->cluster_name;
@@ -26,7 +26,7 @@ class RetailStoreController extends Controller
     }
 
 
-    public function clusterstatus(request $request){
+    public function clusterstatus(Request $request){
         $data = RegionalCluster::find($request->id);
         $store = RetailStore::where('cluster_id',$data->cluster_id)->get();
         if (!$store->isEmpty()) {
@@ -38,7 +38,7 @@ class RetailStoreController extends Controller
         return response()->json(['success' => true , 'message'=>'Cluster status successfully delete', 'reload'=> 'LoadAll']);
     }
 
-    public function addstore(request $request){
+    public function addstore(Request $request){
         $data = new RetailStore();
         $data->cluster_id = $request->cluster_id;
         $data->region_name = $request->region_name;
@@ -56,13 +56,13 @@ class RetailStoreController extends Controller
         return response()->json(['data'=>$data]);
     }
 
-    public function removeretailstore(request $reqeust){
+    public function removeretailstore(Request $reqeust){
         $data = RetailStore::find($reqeust->id);
         $data->delete();
         return response()->json(['success' => true, 'message' => 'Store status successfully delete']);
     }
 
-    public function updatestore(request $request)
+    public function updatestore(Request $request)
     {
         $data = RetailStore::where('store_id',$request->store_id)->first();
         $data->cluster_id = $request->cluster_id;
