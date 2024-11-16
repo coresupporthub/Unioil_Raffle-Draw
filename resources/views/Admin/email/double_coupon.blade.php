@@ -134,7 +134,7 @@
 <tr>
 <td class="pad" style="width:100%;">
 <div align="center" class="alignment" style="line-height:10px">
-<div style="max-width: 140px;"><img alt="" height="auto" src="images/unioil_logo.png" style="display: block; height: auto; border: 0; width: 100%;" title="" width="140"/></div>
+<div style="max-width: 140px;"><img alt="" height="auto" src="{{asset('images/unioil_logo.png')}}" style="display: block; height: auto; border: 0; width: 100%;" title="" width="140"/></div>
 </div>
 </td>
 </tr>
@@ -192,7 +192,7 @@
 <tr>
 <td class="pad">
 <div style="color:#222222;direction:ltr;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:40px;font-weight:700;letter-spacing:0px;line-height:120%;text-align:center;mso-line-height-alt:48px;">
-<p style="margin: 0;"><strong>{{ $code2 }}</strong></p>
+<p style="margin: 0;"><strong>{{ $code1 }}</strong></p>
 </div>
 </td>
 </tr>
@@ -277,7 +277,7 @@
 <tr>
 <td class="pad">
 <div style="color:#222222;font-family:TimesNewRoman, 'Times New Roman', Times, Beskerville, Georgia, serif;font-size:24px;font-weight:400;letter-spacing:-1px;line-height:120%;text-align:left;mso-line-height-alt:28.799999999999997px;">
-<p style="margin: 0; word-break: break-word;">Dear <strong><em>Username</em></strong>,</p>
+	<p style="margin: 0; word-break: break-word;">Dear <strong><em>customer</em></strong>,</p>
 </div>
 </td>
 </tr>
@@ -286,7 +286,7 @@
 <tr>
 <td class="pad" style="padding-top:10px;">
 <div style="color:#222222;direction:ltr;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:16px;font-weight:400;letter-spacing:0px;line-height:120%;text-align:left;mso-line-height-alt:19.2px;">
-<p style="margin: 0;">Thank you for participating in our <strong>Grand Raffle Promo!</strong> Your unique e-raffle coupon number has been registered with <strong>two entries</strong> in the raffle.<br/><br/>Thank you,<br/><strong>Username<br/></strong><br/><br/></p>
+	<p style="margin: 0;">Thank you for joining our <strong>Grand Raffle Promo!</strong> We’re thrilled to confirm that your unique e-raffle coupon number has been successfully registered with two entries in the raffle.<br/><br/>Warm regards,	<br/><strong>Unioil<br/>  </strong><br/><br/></p>
 </div>
 </td>
 </tr>
@@ -322,10 +322,10 @@
 <div align="center" class="alignment">
 <table border="0" cellpadding="0" cellspacing="0" class="social-table" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; display: inline-block;" width="144px">
 <tr>
-<td style="padding:0 2px 0 2px;"><a href="https://www.facebook.com/unioil" target="_blank"><img alt="facebook" height="auto" src="images/facebook2x.png" style="display: block; height: auto; border: 0;" title="facebook" width="32"/></a></td>
-<td style="padding:0 2px 0 2px;"><a href="https://x.com/unioil" target="_blank"><img alt="twitter" height="auto" src="images/twitter2x.png" style="display: block; height: auto; border: 0;" title="twitter" width="32"/></a></td>
-<td style="padding:0 2px 0 2px;"><a href="https://www.instagram.com/unioilph/" target="_blank"><img alt="instagram" height="auto" src="images/instagram2x.png" style="display: block; height: auto; border: 0;" title="instagram" width="32"/></a></td>
-<td style="padding:0 2px 0 2px;"><a href="https://www.youtube.com/channel/UCI-xCuUfv1FvuFunxWlmUeQ" target="_blank"><img alt="YouTube" height="auto" src="images/youtube2x.png" style="display: block; height: auto; border: 0;" title="YouTube" width="32"/></a></td>
+<td style="padding:0 2px 0 2px;"><a href="https://www.facebook.com/unioil" target="_blank"><img alt="facebook" height="auto" src="{{asset('images/facebook2x.png')}}" style="display: block; height: auto; border: 0;" title="facebook" width="32"/></a></td>
+<td style="padding:0 2px 0 2px;"><a href="https://x.com/unioil" target="_blank"><img alt="twitter" height="auto" src="{{asset('images/twitter2x.png')}}" style="display: block; height: auto; border: 0;" title="twitter" width="32"/></a></td>
+<td style="padding:0 2px 0 2px;"><a href="https://www.instagram.com/unioilph/" target="_blank"><img alt="instagram" height="auto" src="{{asset('images/instagram2x.png')}}" style="display: block; height: auto; border: 0;" title="instagram" width="32"/></a></td>
+<td style="padding:0 2px 0 2px;"><a href="https://www.youtube.com/channel/UCI-xCuUfv1FvuFunxWlmUeQ" target="_blank"><img alt="YouTube" height="auto" src="{{asset('images/youtube2x.png')}}" style="display: block; height: auto; border: 0;" title="YouTube" width="32"/></a></td>
 </tr>
 </table>
 </div>
@@ -364,13 +364,7 @@
 <table border="0" cellpadding="0" cellspacing="0" class="icons_block block-1" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; text-align: center; line-height: 0;" width="100%">
 <tr>
 <td class="pad" style="vertical-align: middle; color: #1e0e4b; font-family: 'Inter', sans-serif; font-size: 15px; padding-bottom: 5px; padding-top: 5px; text-align: center;"><!--[if vml]><table align="center" cellpadding="0" cellspacing="0" role="presentation" style="display:inline-block;padding-left:0px;padding-right:0px;mso-table-lspace: 0pt;mso-table-rspace: 0pt;"><![endif]-->
-<!--[if !vml]><!-->
-<table cellpadding="0" cellspacing="0" class="icons-inner" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; display: inline-block; padding-left: 0px; padding-right: 0px;"><!--<![endif]-->
-<tr>
-<td style="vertical-align: middle; text-align: center; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 6px;"><a href="http://designedwithbeefree.com/" style="text-decoration: none;" target="_blank"><img align="center" alt="Beefree Logo" class="icon" height="auto" src="images/Beefree-logo.png" style="display: block; height: auto; margin: 0 auto; border: 0;" width="34"/></a></td>
-<td style="font-family: 'Inter', sans-serif; font-size: 15px; font-weight: undefined; color: #1e0e4b; vertical-align: middle; letter-spacing: undefined; text-align: center; line-height: normal;"><a href="http://designedwithbeefree.com/" style="color: #1e0e4b; text-decoration: none;" target="_blank">Designed with Beefree</a></td>
-</tr>
-</table>
+
 </td>
 </tr>
 </table>
