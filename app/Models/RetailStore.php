@@ -20,10 +20,11 @@ class RetailStore extends Model
 
     protected $fillable = [
         'cluster_id',
-        'region_name',
-        'city_name',
-        'store_name',
-        'store_code',
+        'address',
+        'area',
+        'distributor',
+        'retail_station',
+        'rto_code',
         'store_status',
     ];
 
