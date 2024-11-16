@@ -71,7 +71,9 @@ function GetAllClusterSelect() {
 
             const selectElement = document.getElementById("cluster_id");
 
-            selectElement.innerHTML = "";
+            while (selectElement.firstChild) {
+                selectElement.removeChild(selectElement.firstChild);
+            }
 
             const defaultOption = document.createElement("option");
             defaultOption.text = "Select a cluster";
@@ -87,7 +89,9 @@ function GetAllClusterSelect() {
 
             const selectElement2 = document.getElementById("cluster_id2");
 
-            selectElement2.innerHTML = "";
+            while (selectElement2.firstChild) {
+                selectElement2.removeChild(selectElement2.firstChild);
+            }
 
             const defaultOption2 = document.createElement("option");
             defaultOption2.text = "Select a cluster";
@@ -221,7 +225,9 @@ function loadRegion(){
 
        const selectElement = document.getElementById("region_id");
 
-       selectElement.innerHTML = "";
+       while (selectElement.firstChild) {
+           selectElement.removeChild(selectElement.firstChild);
+       }
 
        const defaultOption = document.createElement("option");
        defaultOption.text = "Select a region";
@@ -237,7 +243,9 @@ function loadRegion(){
 
        const selectElement2 = document.getElementById("region_id2");
 
-       selectElement2.innerHTML = "";
+       while (selectElement2.firstChild) {
+           selectElement2.removeChild(selectElement2.firstChild);
+       }
 
        const defaultOption2 = document.createElement("option");
        defaultOption2.text = "Select a region";
@@ -265,7 +273,9 @@ function loadCity(id){
             if(data.length>0){
                 const selectElement = document.getElementById("city_id");
 
-                selectElement.innerHTML = "";
+                while (selectElement.firstChild) {
+                    selectElement.removeChild(selectElement.firstChild);
+                }
 
                 const defaultOption = document.createElement("option");
                 defaultOption.text = "Select a city";
@@ -281,8 +291,9 @@ function loadCity(id){
             }else{
                 const selectElement = document.getElementById("city_id");
 
-                selectElement.innerHTML = "";
-
+                while (selectElement.firstChild) {
+                    selectElement.removeChild(selectElement.firstChild);
+                }
                 const defaultOption = document.createElement("option");
                 defaultOption.text = "Select a city";
                 defaultOption.value = "";
@@ -308,7 +319,9 @@ function loadCity2(id) {
                  if (data.length > 0) {
                      const selectElement = document.getElementById("city_id2");
 
-                     selectElement.innerHTML = "";
+                     while (selectElement.firstChild) {
+                         selectElement.removeChild(selectElement.firstChild);
+                     }
 
                      const defaultOption = document.createElement("option");
                      defaultOption.text = "Select a city";
@@ -324,7 +337,9 @@ function loadCity2(id) {
                  } else {
                      const selectElement = document.getElementById("city_id2");
 
-                     selectElement.innerHTML = "";
+                     while (selectElement.firstChild) {
+                         selectElement.removeChild(selectElement.firstChild);
+                     }
 
                      const defaultOption = document.createElement("option");
                      defaultOption.text = "Select a city";
@@ -345,7 +360,9 @@ function loadCity2(id) {
             (data) => {
                 const selectElement = document.getElementById("city_id2");
 
-                selectElement.innerHTML = "";
+                while (selectElement.firstChild) {
+                    selectElement.removeChild(selectElement.firstChild);
+                }
 
                 const defaultOption = document.createElement("option");
                 defaultOption.text = "Select a city";

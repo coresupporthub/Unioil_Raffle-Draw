@@ -112,6 +112,10 @@ function GetAllWinner() {
         url: "/api/get-all-winner", // Replace with your endpoint URL
         type: "GET",
         success: function (response) {
+            const tableBody = document.getElementById("winnerList");
+            while (tableBody.firstChild) {
+                tableBody.removeChild(tableBody.firstChild);
+            }
             response.forEach((element) => {
 
                 var newRow = document.createElement("tr");
@@ -124,7 +128,7 @@ function GetAllWinner() {
                 nameCell.textContent = element.customer_name; 
                 newRow.appendChild(nameCell);
 
-                document.getElementById("winnerList").appendChild(newRow);                
+                tableBody.appendChild(newRow);                
 
             });
         },

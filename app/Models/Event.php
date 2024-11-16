@@ -16,6 +16,8 @@ class Event extends Model
         'event_name',
         'event_start',
         'event_end',
+        'event_price',
+        'event_description',
         'event_status',
     ];
     protected static function boot()

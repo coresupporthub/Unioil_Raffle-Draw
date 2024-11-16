@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('retail_store_code');
             $table->enum('claim_status', ['true', 'false', 'none'])->default('none');
             $table->enum('winner_status', ['true', 'false'])->default('false');
+            $table->enum('winner_record', ['true', 'false'])->default('false');
             $table->timestamps();
         });
     }
