@@ -96,3 +96,49 @@ function getCsrf(){
 
     return csrfToken;
 }
+
+function exec(id){
+    const element = document.getElementById(id);
+
+    if(element){
+        element.click();
+    }
+}
+
+function clearForm(formId) {
+    const form = document.getElementById(formId); // Get the form by its ID
+    if (!form) {
+        console.error(`Form with ID "${formId}" not found.`);
+        return;
+    }
+
+    const inputs = form.querySelectorAll('input');
+    inputs.forEach(input => {
+
+        input.value = '';
+
+        if (input.type === 'checkbox' || input.type === 'radio') {
+            input.checked = false;
+        }
+    });
+
+
+    const textareas = form.querySelectorAll('textarea');
+    textareas.forEach(textarea => {
+        textarea.value = '';
+    });
+
+    const selects = form.querySelectorAll('select');
+    selects.forEach(select => {
+        select.selectedIndex = 0;
+    });
+}
+
+
+function enable(id, status){
+    const element = document.getElementById(id);
+
+    if(element){
+        element.disabled = status;
+    }
+}

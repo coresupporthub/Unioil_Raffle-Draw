@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Http\Services\Tools;
 use App\Jobs\SendVerification;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Services\Magic;
 class AuthenticationController extends Controller
 {
@@ -118,5 +119,34 @@ class AuthenticationController extends Controller
         $user = User::where('id', Auth::id())->first();
 
         return response()->json(['info'=> $user]);
+    }
+
+    public function changepassword(Request $req){
+        if($req->confirmPassword != $req->newPassword){
+            return response()->json(['success'=> false, 'message'=> 'New Password and Confirm Password does not match']);
+        }
+
+        $user = User::where('id', Auth::id())->first();
+
+        if(Hash::check($req->currentPassword, $user->password)){
+            $user->update([
+                'password'=> Hash::make($req->newPassword)
+            ]);
+
+            return response()->json(['success'=> true, 'message'=> 'Password Successfully Changed']);
+        }else{
+            return response()->json(['success'=> false, 'message'=> 'Cannot Validate: Incorrect Current Admin Password']);
+        }
+    }
+
+    public function updateadmin(Request $req){
+        $user = User::where('id', Auth::id())->first();
+
+        $user->update([
+            'name'=> $req->name,
+            'email' => $req->email
+        ]);
+
+        return response()->json(['success'=> true, 'message'=> 'Admin Details Updated']);
     }
 }

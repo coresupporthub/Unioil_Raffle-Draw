@@ -35,8 +35,10 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('/get-all-winner', [RaffleController::class, 'getallwinner']);
         Route::get('/get-all-entry', [RaffleController::class, 'getallentry']);
 
+        //Admin Details
         Route::get('/get-admin-details', [AuthenticationController::class, 'getadmindetails']);
-
+        Route::post('/admin-changepassword', [AuthenticationController::class, 'changepassword']);
+        Route::post('/update-admin-details', [AuthenticationController::class, 'updateadmin']);
     });
 
     //Authentication
