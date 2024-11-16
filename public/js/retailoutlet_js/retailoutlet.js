@@ -33,23 +33,24 @@ function LoadAllRetailStore() {
         type: "GET",
         success: function (response) {
             const data = response.data;
+            console.log(data);
             $("#ratailOutletTable").DataTable({
                 data: data,
                 destroy: true,
                 columns: [
                     { data: "cluster_name" },
-                    { data: "region_name" },
-                    { data: "city_name" },
-                    { data: "store_name" },
-                    { data: "store_code" },
+                    { data: "address" },
+                    { data: "distributor" },
+                    { data: "retail_station" },
+                    { data: "rto_code" },
                     {
                         // Define the Action button column
                         data: null,
                         render: function (data, type, row) {
                             return (
-                                `<button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal-update-retail" onclick="updateRetail('${row.store_id}','${row.cluster_id}','${row.region_name}','${row.city_name}','${row.store_name}','${row.store_code}')">Update</button>` +
+                                `<div class="d-flex gap-1"><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal-update-retail" onclick="updateRetail('${row.store_id}','${row.cluster_id}','${row.region_name}','${row.city_name}','${row.store_name}','${row.store_code}')">Update</button>` +
                                 ` ` +
-                                `<button class="btn btn-danger" onclick="ChangeStatus('${row.store_id}','/api/remove-retail')">Delete</button>`
+                                `<button class="btn btn-danger" onclick="ChangeStatus('${row.store_id}','/api/remove-retail')">Delete</button></div>`
                             );
                         },
                     },
