@@ -90,3 +90,9 @@ function setValue(id, value){
         element.value = value;
     }
 }
+
+function getCsrf(){
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+    return csrfToken;
+}

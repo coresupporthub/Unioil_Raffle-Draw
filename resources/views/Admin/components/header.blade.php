@@ -28,7 +28,7 @@
                     <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
 
                         <a href="{{ route('accountsettings') }}" class="dropdown-item"> Settings</a>
-                        <a href="#" class="dropdown-item">Logout</a>
+                        <button onclick="adminLogout()" class="dropdown-item">Logout</button>
 
                     </div>
                 </div>
