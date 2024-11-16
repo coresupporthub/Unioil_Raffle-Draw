@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Http\Services\Tools;
 use Illuminate\Http\Request;
 use App\Models\RegionalCluster;
 use App\Models\RetailStore;
@@ -75,7 +75,10 @@ class RetailStoreController extends Controller
     }
 
     public function uploadcsv(Request $req){
-        $csvData = $req->retail_store;
+        $csv = $req->csv_file;
+
+        $csvData = Tools::readCSV($csv);
+
 
         array_shift($csvData);
         foreach($csvData as $data){
@@ -85,7 +88,7 @@ class RetailStoreController extends Controller
                 $store->cluster_id = $req->cluster;
                 $store->area = $data[0];
                 $store->address = $data[1];
-                $store->distributore = $data[2];
+                $store->distributor = $data[2];
                 $store->retail_station = $data[3];
                 $store->rto_code = $data[4];
                 $store->save();

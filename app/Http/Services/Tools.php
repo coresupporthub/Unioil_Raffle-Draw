@@ -1,12 +1,17 @@
 <?php
+
 namespace App\Http\Services;
+
 use App\Models\RaffleEntries;
 use App\Models\Event;
 use App\Http\Services\Magic;
-class Tools{
 
-    public static function genCode($length = 15, $type = "alphanumeric"){
-        switch($type){
+class Tools
+{
+
+    public static function genCode($length = 15, $type = "alphanumeric")
+    {
+        switch ($type) {
             case 'numeric':
                 $characters = '0123456789';
                 break;
@@ -25,12 +30,13 @@ class Tools{
         return $randomString;
     }
 
-    public static function CreateEntries($customer, $req){
+    public static function CreateEntries($customer, $req)
+    {
         $serialNumber = Tools::genCode();
 
         $checkSerialNumber = RaffleEntries::where('serial_number', $serialNumber)->first();
 
-        while($checkSerialNumber){
+        while ($checkSerialNumber) {
             $serialNumber = Tools::genCode();
             $checkSerialNumber = RaffleEntries::where('serial_number', $serialNumber)->first();
         }
@@ -48,5 +54,17 @@ class Tools{
         $entry->save();
 
         return $serialNumber;
+    }
+
+    public static function readCSV($file)
+    {
+        $rows = [];
+        if (($handle = fopen($file, 'r')) !== false) {
+            while (($data = fgetcsv($handle, 1000, ',')) !== false) {
+                $rows[] = $data;
+            }
+            fclose($handle);
+        }
+        return $rows;
     }
 }
