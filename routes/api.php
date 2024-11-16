@@ -28,12 +28,20 @@ Route::group(['middleware' => ['web']], function () {
         Route::post('/update-store', [RetailStoreController::class, 'updatestore']);
         Route::get('/get-all-store', [RetailStoreController::class, 'getallstore']);
         Route::get('/remove-retail', [RetailStoreController::class, 'removeretailstore']);
+        Route::post('/upload-retail-store', [RetailStoreController::class, 'uploadcsv']);
 
         //Raffle
         Route::post('/get-raflle-entry', [RaffleController::class, 'getraffleentry']);
         Route::post('/raffle-draw', [RaffleController::class, 'raffledraw']);
         Route::get('/get-all-winner', [RaffleController::class, 'getallwinner']);
         Route::get('/get-all-entry', [RaffleController::class, 'getallentry']);
+        Route::get('/get-all-event', action: [RaffleController::class, 'getallevent']);
+        Route::post('/add-event', [RaffleController::class, 'addevent']);
+        Route::post('/raffle-redraw', [RaffleController::class, 'redraw']);
+        Route::post('/update-event', [RaffleController::class, 'updateevent']);
+        Route::post('/inactive-event', [RaffleController::class, 'inactiveevent']);
+        Route::post('/event-winner', [RaffleController::class, 'geteventwinner']);
+        Route::post('/event-selected', [RaffleController::class, 'getaselectedevent']);
 
         //Admin Details
         Route::get('/get-admin-details', [AuthenticationController::class, 'getadmindetails']);

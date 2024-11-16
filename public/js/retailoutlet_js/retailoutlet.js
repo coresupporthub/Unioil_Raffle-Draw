@@ -33,23 +33,24 @@ function LoadAllRetailStore() {
         type: "GET",
         success: function (response) {
             const data = response.data;
+            console.log(data);
             $("#ratailOutletTable").DataTable({
                 data: data,
                 destroy: true,
                 columns: [
                     { data: "cluster_name" },
-                    { data: "region_name" },
-                    { data: "city_name" },
-                    { data: "store_name" },
-                    { data: "store_code" },
+                    { data: "address" },
+                    { data: "distributor" },
+                    { data: "retail_station" },
+                    { data: "rto_code" },
                     {
                         // Define the Action button column
                         data: null,
                         render: function (data, type, row) {
                             return (
-                                `<button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal-update-retail" onclick="updateRetail('${row.store_id}','${row.cluster_id}','${row.region_name}','${row.city_name}','${row.store_name}','${row.store_code}')">Update</button>` +
+                                `<div class="d-flex gap-1"><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal-update-retail" onclick="updateRetail('${row.store_id}','${row.cluster_id}','${row.region_name}','${row.city_name}','${row.store_name}','${row.store_code}')">Update</button>` +
                                 ` ` +
-                                `<button class="btn btn-danger" onclick="ChangeStatus('${row.store_id}','/api/remove-retail')">Delete</button>`
+                                `<button class="btn btn-danger" onclick="ChangeStatus('${row.store_id}','/api/remove-retail')">Delete</button></div>`
                             );
                         },
                     },
@@ -71,7 +72,9 @@ function GetAllClusterSelect() {
 
             const selectElement = document.getElementById("cluster_id");
 
-            selectElement.innerHTML = "";
+            while (selectElement.firstChild) {
+                selectElement.removeChild(selectElement.firstChild);
+            }
 
             const defaultOption = document.createElement("option");
             defaultOption.text = "Select a cluster";
@@ -87,7 +90,9 @@ function GetAllClusterSelect() {
 
             const selectElement2 = document.getElementById("cluster_id2");
 
-            selectElement2.innerHTML = "";
+            while (selectElement2.firstChild) {
+                selectElement2.removeChild(selectElement2.firstChild);
+            }
 
             const defaultOption2 = document.createElement("option");
             defaultOption2.text = "Select a cluster";
@@ -119,14 +124,14 @@ function updateRetail(id, cluster, region, city, store, code) {
         data.forEach((element) => {
             if (region === element.name) {
                 region_id = element.code;
-                
+
             }
         });
         const reg = document.getElementById("region_id2");
         reg.value = region_id;
         loadCity2(region_id);
         setTimeout(()=>{
-        document.getElementById('city_id2').value=city;     
+        document.getElementById('city_id2').value=city;
         },500);
     });
 }
@@ -221,7 +226,9 @@ function loadRegion(){
 
        const selectElement = document.getElementById("region_id");
 
-       selectElement.innerHTML = "";
+       while (selectElement.firstChild) {
+           selectElement.removeChild(selectElement.firstChild);
+       }
 
        const defaultOption = document.createElement("option");
        defaultOption.text = "Select a region";
@@ -237,7 +244,9 @@ function loadRegion(){
 
        const selectElement2 = document.getElementById("region_id2");
 
-       selectElement2.innerHTML = "";
+       while (selectElement2.firstChild) {
+           selectElement2.removeChild(selectElement2.firstChild);
+       }
 
        const defaultOption2 = document.createElement("option");
        defaultOption2.text = "Select a region";
@@ -265,7 +274,9 @@ function loadCity(id){
             if(data.length>0){
                 const selectElement = document.getElementById("city_id");
 
-                selectElement.innerHTML = "";
+                while (selectElement.firstChild) {
+                    selectElement.removeChild(selectElement.firstChild);
+                }
 
                 const defaultOption = document.createElement("option");
                 defaultOption.text = "Select a city";
@@ -281,8 +292,9 @@ function loadCity(id){
             }else{
                 const selectElement = document.getElementById("city_id");
 
-                selectElement.innerHTML = "";
-
+                while (selectElement.firstChild) {
+                    selectElement.removeChild(selectElement.firstChild);
+                }
                 const defaultOption = document.createElement("option");
                 defaultOption.text = "Select a city";
                 defaultOption.value = "";
@@ -292,7 +304,7 @@ function loadCity(id){
                  newOption.text = "Manila";
                  selectElement.appendChild(newOption);
             }
-            
+
         }
     );
 }
@@ -308,7 +320,9 @@ function loadCity2(id) {
                  if (data.length > 0) {
                      const selectElement = document.getElementById("city_id2");
 
-                     selectElement.innerHTML = "";
+                     while (selectElement.firstChild) {
+                         selectElement.removeChild(selectElement.firstChild);
+                     }
 
                      const defaultOption = document.createElement("option");
                      defaultOption.text = "Select a city";
@@ -324,7 +338,9 @@ function loadCity2(id) {
                  } else {
                      const selectElement = document.getElementById("city_id2");
 
-                     selectElement.innerHTML = "";
+                     while (selectElement.firstChild) {
+                         selectElement.removeChild(selectElement.firstChild);
+                     }
 
                      const defaultOption = document.createElement("option");
                      defaultOption.text = "Select a city";
@@ -336,7 +352,7 @@ function loadCity2(id) {
                      selectElement.appendChild(newOption);
                  }
             }
-        ); 
+        );
     }else{
         dataGetter(`https://psgc.cloud/api/regions/${id}`).then((data) => {
             document.getElementById("region_name2").value = data.name;
@@ -345,7 +361,9 @@ function loadCity2(id) {
             (data) => {
                 const selectElement = document.getElementById("city_id2");
 
-                selectElement.innerHTML = "";
+                while (selectElement.firstChild) {
+                    selectElement.removeChild(selectElement.firstChild);
+                }
 
                 const defaultOption = document.createElement("option");
                 defaultOption.text = "Select a city";
@@ -361,7 +379,7 @@ function loadCity2(id) {
             }
         );
     }
-        
+
 }
 function LoadAll(){
      GetAllCluster();
@@ -372,4 +390,31 @@ function LoadAll(){
 $(document).ready(function () {
    LoadAll();
 
+});
+
+
+document.getElementById('uploadBtn').addEventListener('click', ()=> {
+    document.getElementById('uploadCsvForm').requestSubmit();
+});
+
+document.getElementById('uploadCsvForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const form = document.getElementById('uploadCsvForm');
+    const formData = new FormData(form);
+
+    loading(true);
+    $.ajax({
+        type: 'POST',
+        url: "/api/upload-retail-store",
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: res=> {
+            loading(false);
+            LoadAllRetailStore();
+            clearForm('uploadCsvForm');
+            exec('closeUploadModal');
+            dataParser(res);
+        }, error: xhr=> console.log(xhr.responseText)
+    })
 });

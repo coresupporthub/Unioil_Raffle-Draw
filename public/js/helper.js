@@ -142,3 +142,10 @@ function enable(id, status){
         element.disabled = status;
     }
 }
+
+function getValue(id){
+    const element = document.getElementById(id);
+    if(element){
+        return element.value;
+    }
+}

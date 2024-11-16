@@ -26,7 +26,7 @@ class CustomerRegistration extends Controller
             return response()->json(['success'=> false, 'message'=> 'QR Code is not available anymore']);
         }
 
-        $retailStore = RetailStore::where('store_code', $req->store_code)->first();
+        $retailStore = RetailStore::where('rto_code', $req->store_code)->first();
 
         if(!$retailStore){
             return response()->json(['success'=> false, 'message'=> 'Retail Store Code is invalid please confirm the code to the store owner']);

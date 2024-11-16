@@ -1,4 +1,7 @@
-        <div class="modal modal-blur fade" id="modal-simple" tabindex="-1" role="dialog" aria-hidden="true">
+        @php
+            $cluster = App\Models\RegionalCluster::all();
+        @endphp
+        <div class="modal modal-blur fade" id="addClusterModal" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
                 <div class="modal-content">
                 <div class="modal-header">
@@ -45,10 +48,10 @@
                                                 </tr>
                                             </thead>
                                             <tbody class="table-tbody">
-                                                
+
                                             </tbody>
                                         </table>
-                                        
+
                         </div>
 
                       </div>
@@ -84,7 +87,7 @@
                         </div>
                         </form>
                      </div>
-                      
+
                     </div>
                   </div>
                 </div>
@@ -92,7 +95,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
-                    
+
                 </div>
                 </div>
             </div>
@@ -140,7 +143,93 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+
                 </div>
                 </div>
             </div>
             </div>
+
+
+
+            <div class="modal modal-blur fade" id="importCsvModal" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Import Retail Outlets</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form id="uploadCsvForm" class="modal-body">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="clusterCSV">Select a Cluster</label>
+                            <select name="cluster" id="clusterCSV" class="form-select">
+                                <option value="" disabled selected>-----Select a cluster----</option>
+                                @foreach ($cluster as $clust)
+                                    <option value="{{ $clust->cluster_id }}">{{ $clust->cluster_name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-label">Upload CSV File</div>
+                            <input type="file" name="csv_file" id="csv_file" class="form-control">
+                        </div>
+
+                    </form>
+                    <div class="modal-footer">
+                        <button type="button" id="closeUploadModal" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+                        <button type="button" id="uploadBtn" class="btn btn-primary" >Upload</button>
+                    </div>
+                    </div>
+                </div>
+                </div>
+
+
+                <div class="modal modal-blur fade" id="modal-update-retail" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Update Retail Outlet</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="" method="post" id="updateregionForm">
+                                @csrf
+                            <div class="row">
+                                <div class="col-12 col-md-4 mb-3">
+                                    <input type="text" name="store_id" id="store_id" hidden>
+                                    <label for="regionalCluster">Regional Cluster</label>
+                                    <select name="cluster_id" id="cluster_id2" class="form-control"></select>
+                                </div>
+                                <div class="col-12 col-md-4 mb-3">
+                                    <label for="regionalCluster">Region</label>
+                                    <select name="region_id" id="region_id2" class="form-control" oninput="loadCity2(this)"></select>
+                                    <input type="text" id="region_name2" name="region_name" hidden>
+                                </div>
+                                <div class="col-12 col-md-4 mb-3">
+                                    <label for="regionalCluster">City</label>
+                                    <select name="city_name" id="city_id2" class="form-control"></select>
+                                </div>
+                                <div class="col-12 col-md-4 mb-3">
+                                    <label for="regionalCluster">Retail Store</label>
+                                    <input type="text" name="store_name" id="store_name" class="form-control">
+                                </div>
+                                <div class="col-12 col-md-4 mb-3">
+                                    <label for="regionalCluster">Store Code</label>
+                                    <input type="text" name="store_code" id="store_code" class="form-control">
+                                </div>
+                                <div class="col-12 col-md-4 mb-3 d-flex align-items-end">
+                                    <button class="btn btn-primary w-100" type="button" onclick="SubmitData('updateregionForm','/api/update-store')">Update</button>
+                                </div>
+                            </div>
+                            </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+
+                    </div>
+                    </div>
+                </div>
+                </div>
+
+
+

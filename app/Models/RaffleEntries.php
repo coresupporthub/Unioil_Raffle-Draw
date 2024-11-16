@@ -19,6 +19,7 @@ class RaffleEntries extends Model
         'retail_store_code',
         'claim_status',
         'winner_status',
+        'winner_record',
     ];
 
     protected static function boot()
