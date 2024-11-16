@@ -15,7 +15,7 @@ class RaffleController extends Controller
     public function getraffleentry(Request $request){
 
         $event = Event::where('event_status', 'Active')->first();
-        $retailStores = RetailStore::where('cluster_id', $request->id)->pluck('store_code');
+        $retailStores = RetailStore::where('cluster_id', $request->id)->pluck('rto_code');
         $raffleEntries = RaffleEntries::where('winner_status', 'false')
         ->whereIn('retail_store_code', $retailStores)
         ->where('event_id', $event->event_id)
@@ -37,7 +37,7 @@ class RaffleController extends Controller
         }
 
         $event = Event::where('event_status', 'Active')->first();
-        $retailStores = RetailStore::where('cluster_id', $request->id)->pluck('store_code');
+        $retailStores = RetailStore::where('cluster_id', $request->id)->pluck('rto_code');
         $raffleEntries = RaffleEntries::where('winner_status', 'false')
         ->whereIn('retail_store_code', $retailStores)
         ->where('event_id', $event->event_id)
@@ -69,7 +69,7 @@ class RaffleController extends Controller
         ->get();
         $data = [];
         foreach($raffleEntries as $entry){
-            $retailStores = RetailStore::where('store_code',$entry->retail_store_code)->first();
+            $retailStores = RetailStore::where('rto_code',$entry->retail_store_code)->first();
             $cluster = RegionalCluster::where('cluster_id',$retailStores->cluster_id)->first()->cluster_name;
             $customer = Customers::where('customer_id',$entry->customer_id)->first();
             $data[] = [
@@ -93,7 +93,7 @@ class RaffleController extends Controller
             ->get();
         $data = [];
         foreach ($raffleEntries as $entry) {
-            $retailStores = RetailStore::where('store_code', $entry->retail_store_code)->first();
+            $retailStores = RetailStore::where('rto_code', $entry->retail_store_code)->first();
             $cluster = RegionalCluster::where('cluster_id', $retailStores->cluster_id)->first()->cluster_name;
             $customer = Customers::where('customer_id', $entry->customer_id)->first();
             $data[] = [
@@ -111,7 +111,7 @@ class RaffleController extends Controller
     public function validateclusterwinner($id){
 
         $event = Event::where('event_status', 'Active')->first();
-        $retailStores = RetailStore::where('cluster_id', $id)->pluck('store_code');
+        $retailStores = RetailStore::where('cluster_id', $id)->pluck('rto_code');
         $raffleEntries = RaffleEntries::where('winner_status', 'true')
         ->whereIn('retail_store_code', $retailStores)
         ->where('event_id', $event->event_id)
@@ -131,12 +131,12 @@ class RaffleController extends Controller
         $raffleEntries = RaffleEntries::where('event_id', $event->event_id)->get();
         $data = [];
         foreach($raffleEntries as $entry){
-            $retailStores = RetailStore::where('store_code',$entry->retail_store_code)->first();
+            $retailStores = RetailStore::where('rto_code',$entry->retail_store_code)->first();
             $cluster = RegionalCluster::where('cluster_id',$retailStores->cluster_id)->first()->cluster_name;
             $customer = Customers::where('customer_id',$entry->customer_id)->first();
             $data[] = [
                 'cluster' => $cluster,
-                'retail_name' => $retailStores->store_name,
+                'retail_name' => $retailStores->retail_station,
                 'serial_number' => $entry->serial_number,
                 'product_type'=> $customer->product_purchased,
                 'customer_name' => $customer->full_name,

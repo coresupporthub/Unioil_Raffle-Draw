@@ -13,10 +13,17 @@ class RegionalClusterSeeder extends Seeder
      */
     public function run(): void
     {
-        for($i = 0; $i < 5; $i++){
+        $region = [
+            'NCR',
+            'NORTH LUZON',
+            'SOUTH LUZON',
+            'PANAY-NEGROS',
+            'SOUTH MINDANAO'
+        ];
+
+        foreach($region as $reg){
             $rc = new RegionalCluster();
-            $number = $i + 1;
-            $rc->cluster_name = "Regional Cluster {$number}";
+            $rc->cluster_name = $reg;
             $rc->cluster_status = "Enable";
             $rc->save();
         }
