@@ -42,7 +42,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="submitdata('add-event-form',`/api/add-event`)">Save changes</button>
+            <button type="button" class="btn btn-primary" onclick="submitdata('add-event-form',`/api/add-event`)">Save changes</button>
           </div>
         </div>
       </div>

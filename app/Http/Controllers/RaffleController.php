@@ -84,6 +84,30 @@ class RaffleController extends Controller
         return response()->json($data);
     }
 
+    public function geteventwinner(request $request)
+    {
+
+        $event = Event::where('event_id', $request->event_id)->first();
+        $raffleEntries = RaffleEntries::where('winner_status', 'true')
+        ->where('event_id', $event->event_id)
+            ->get();
+        $data = [];
+        foreach ($raffleEntries as $entry) {
+            $retailStores = RetailStore::where('store_code', $entry->retail_store_code)->first();
+            $cluster = RegionalCluster::where('cluster_id', $retailStores->cluster_id)->first()->cluster_name;
+            $customer = Customers::where('customer_id', $entry->customer_id)->first();
+            $data[] = [
+                'event_price' => $event->event_price,
+                'serial_number' => $entry->serial_number,
+                'customer_name' => $customer->full_name,
+                'customer_email' => $customer->email,
+                'customer_number' => $customer->mobile_number,
+                'cluster' => $cluster
+            ];
+        }
+        return response()->json($data);
+    }
+
     public function validateclusterwinner($id){
 
         $event = Event::where('event_status', 'Active')->first();
@@ -152,8 +176,31 @@ class RaffleController extends Controller
         return response()->json(['message' => 'Cluster winner disqialified. Prize will be redrawn on '.$raffleEntries->updated_at, 'reload' => 'addWinnerRow', 'success' => true]);
     }
 
-    public function getactiveevent(){
-        $data = Event::where('event_status','Active')->first();
+    public function getaselectedevent(request $request)
+    {
+        $data = Event::where('event_id', $request->event_id)->first();
         return response()->json($data);
+    }
+    public function updateevent(request $request){
+
+        $event = Event::where('event_id', $request->event_id)->where('event_status','Active')->first();
+        if($event){
+        $event->event_name = $request->event_name;
+        $event->event_price = $request->event_price;
+        $event->event_start = $request->event_start;
+        $event->event_end = $request->event_end;
+        $event->event_description = $request->event_description;
+        $event->save();
+
+        return response()->json(['message' => 'Event successfully update', 'reload' => 'getevent', 'success' => true]);
+        }
+        return response()->json(['message' => 'This event is currently inactive, and its details cannot be edited.', 'success' => false]);
+    }
+
+    public function inactiveevent(request $request){
+        $event = Event::where('event_id', $request->event_id)->first();
+        $event->event_status = 'Inactive';
+        $event->save();
+        return response()->json(['message' => 'Event successfully inactive', 'success' => true]);
     }
 }

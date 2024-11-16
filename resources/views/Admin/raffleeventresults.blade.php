@@ -22,8 +22,7 @@
                         <!-- Page title actions -->
                         <div class="col-auto ms-auto d-print-none">
                             <div class="btn-list">
-                                <button class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal"
-                                    data-bs-target="#modal-simple">
+                                <a class="btn btn-primary d-none d-sm-inline-block" href="/raffle/events/results/print?event={{ $_GET['event'] }}" target="_blank">
                                     <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -39,7 +38,7 @@
                                         <path d="M8 11h4" />
                                         <path d="M8 15h3" />
                                     </svg> Generate Report
-                                </button>
+                                </a>
 
                                 <button class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal"
                                     data-bs-target="#update-event-modal">
@@ -75,17 +74,15 @@
 
                             <!-- Raffle Draw Details -->
                             <div class="text-center mb-5">
-                                 @php
-                                    $event = App\Models\Event::where('event_id',$_GET['event'])->first();
-                                @endphp
+                                 
                                 <h1 class="fw-bold display-6 position-relative"
                                     style="color: #f75a04; padding-left: 20px; font-family: 'Poppins', sans-serif;">
                                     <span
-                                        style=" margin-right: 10px; padding-left: 10px;">
-                                        {{ $event->event_name }}
+                                        style=" margin-right: 10px; padding-left: 10px;" id="title_event_name">
+                                        
                                     </span>
                                 </h1>
-                                <p class="text-secondary fs-5">Start Date: <strong>{{$event->event_start}}</strong> - End Date: <strong>{{$event->event_end}}</strong></p>
+                                <p class="text-secondary fs-5">Start Date: <strong id="title_start"> </strong> - End Date: <strong id="title_end"> </strong></p>
                             </div>
 
                             <!-- Winners Table -->
@@ -119,7 +116,7 @@
 
                             <!-- Back to Raffles Button -->
                             <div class="text-center mt-5">
-                                <a href="/raffle/events" class="btn btn-primary">← Back to Raffles</a>
+                                <a href="/raffle/draw" class="btn btn-primary">← Back to Raffles</a>
                             </div>
                         </div>
 
@@ -129,16 +126,17 @@
         </div>
 
     <div class="modal modal-blur fade" id="update-event-modal" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">Update Event Raffle</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
             <div class="modal-body">
-                <form action="" method="post" id="add-event-form" class="row g-3">
+                <form action="" method="post" id="update-event-form" class="row g-3">
                 <!-- Event Name -->
                 <div class="col-md-6 col-12">
+                    <input type="text" name="event_id" id="event_id" class="form-control" placeholder="Event ID" readonly hidden>
                     <label for="event_name" class="form-label">Event Name</label>
                     <input type="text" class="form-control" name="event_name" id="event_name" placeholder="Enter event name">
                 </div>
@@ -171,7 +169,8 @@
             </div>
           <div class="modal-footer">
             <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Save changes</button>
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="confirmation()">Set Incative</button>
+            <button type="button" class="btn btn-primary" onclick=" SubmitData('update-event-form', '/api/update-event')">Save changes</button>
           </div>
         </div>
       </div>
@@ -179,7 +178,7 @@
 
 
         @include('Admin.components.footer')
-
+        @include('Admin.components.loader')
     </div>
     </div>
 
