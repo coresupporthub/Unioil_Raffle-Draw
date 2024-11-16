@@ -159,6 +159,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <form id="uploadCsvForm" class="modal-body">
+                        @csrf
                         <div class="mb-3">
                             <label for="clusterCSV">Select a Cluster</label>
                             <select name="cluster" id="clusterCSV" class="form-select">
@@ -170,7 +171,7 @@
                         </div>
                         <div class="mb-3">
                             <div class="form-label">Upload CSV File</div>
-                            <input type="file" id="csv_file" class="form-control">
+                            <input type="file" name="csv_file" id="csv_file" class="form-control">
                         </div>
 
                     </form>

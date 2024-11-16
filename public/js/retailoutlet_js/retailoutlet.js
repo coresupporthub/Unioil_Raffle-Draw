@@ -391,62 +391,6 @@ $(document).ready(function () {
 
 });
 
-let csvDataCollection;
-document.getElementById('csv_file').addEventListener('change', function (event) {
-    const file = event.target.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = function (e) {
-        const csvData = e.target.result;
-        const parsedData = parseCSV(csvData);
-        csvDataCollection = parsedData;
-    };
-    reader.readAsText(file);
-});
-
-function parseCSV(data) {
-    const rows = [];
-    let currentRow = [];
-    let currentCell = '';
-    let inQuotes = false;
-
-    for (let i = 0; i < data.length; i++) {
-        const char = data[i];
-        const nextChar = data[i + 1];
-
-        if (char === '"' && inQuotes && nextChar === '"') {
-
-            currentCell += '"';
-            i++;
-        } else if (char === '"') {
-
-            inQuotes = !inQuotes;
-        } else if (char === ',' && !inQuotes) {
-
-            currentRow.push(currentCell.trim());
-            currentCell = '';
-        } else if ((char === '\n' || char === '\r') && !inQuotes) {
-
-            if (currentCell || currentRow.length) {
-                currentRow.push(currentCell.trim());
-                rows.push(currentRow);
-                currentRow = [];
-                currentCell = '';
-            }
-        } else {
-
-            currentCell += char;
-        }
-    }
-
-    if (currentCell || currentRow.length) {
-        currentRow.push(currentCell.trim());
-        rows.push(currentRow);
-    }
-
-    return rows;
-}
 
 document.getElementById('uploadBtn').addEventListener('click', ()=> {
     document.getElementById('uploadCsvForm').requestSubmit();
@@ -454,15 +398,16 @@ document.getElementById('uploadBtn').addEventListener('click', ()=> {
 
 document.getElementById('uploadCsvForm').addEventListener('submit', e => {
     e.preventDefault();
+    const form = document.getElementById('uploadCsvForm');
+    const formData = new FormData(form);
 
     loading(true);
-    const csrf = getCsrf();
-    const cluster = getValue('clusterCSV');
-
     $.ajax({
         type: 'POST',
         url: "/api/upload-retail-store",
-        data: {"_token": csrf, "cluster": cluster, "retail_store": csvDataCollection},
+        data: formData,
+        contentType: false,
+        processData: false,
         success: res=> {
             loading(false);
             LoadAllRetailStore();
