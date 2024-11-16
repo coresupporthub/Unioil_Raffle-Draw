@@ -5,7 +5,7 @@
     <div class="page">
 
         @include('Admin.components.header', ['active' => 'retailoutlets'])
-
+        @include('Admin.components.loader')
         <div class="page-wrapper">
             <div class="page-header d-print-none">
                 <div class="container-xl">
@@ -58,10 +58,10 @@
                                             <thead>
                                                 <tr>
                                                     <th>Cluster</th>
-                                                    <th>Region</th>
-                                                    <th>City</th>
-                                                    <th>Outlet Name</th>
-                                                    <th>Outlet Code</th>
+                                                    <th>Address</th>
+                                                    <th>Distributor</th>
+                                                    <th>Retail Station</th>
+                                                    <th>RTO Code</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
