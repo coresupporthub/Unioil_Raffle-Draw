@@ -133,12 +133,12 @@ class RaffleController extends Controller
         foreach($raffleEntries as $entry){
             $retailStores = RetailStore::where('rto_code',$entry->retail_store_code)->first();
             $cluster = RegionalCluster::where('cluster_id',$retailStores->cluster_id)->first()->cluster_name;
-            $customer = Customers::where('customer_id',$entry->customer_id)->first();
+            $customer = Customers::where('customer_id',$entry->customer_id)->join('product_lists', 'product_lists.product_id', '=', 'customers.product_purchased')->first();
             $data[] = [
                 'cluster' => $cluster,
                 'retail_name' => $retailStores->retail_station,
                 'serial_number' => $entry->serial_number,
-                'product_type'=> $customer->product_purchased,
+                'product_type'=> $customer->product_name,
                 'customer_name' => $customer->full_name,
                 'customer_email'=> $customer->email,
                 'customer_phone' => $customer->mobile_number,
