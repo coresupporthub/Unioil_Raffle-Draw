@@ -1,5 +1,7 @@
 @include('Admin.components.head', ['title' => 'Retail Outlet Management'])
-
+@php
+$cluster = App\Models\RegionalCluster::all();
+@endphp
 <body>
     <script src="{{ asset('./dist/js/demo-theme.min.js?1692870487') }}"></script>
     <div class="page">
@@ -21,7 +23,17 @@
                     </div>
                     <!-- Page title actions -->
                     <div class="col-auto ms-auto d-print-none">
+
                       <div class="btn-list">
+                        <div class="d-flex gap-2 align-items-center">
+                            <label for="clusterFilter" class="d-flex gap-1 fs-3">Cluster <span>Filter</span></label>
+                            <select class="form-select" id="clusterFilter">
+                                <option value="all">All</option>
+                                @foreach ($cluster as $clust)
+                                    <option value="{{ $clust->cluster_id }}">{{ $clust->cluster_name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                         <button class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#importCsvModal">
                             <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-file-description">

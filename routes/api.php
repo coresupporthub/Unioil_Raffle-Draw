@@ -8,6 +8,7 @@ use App\Http\Controllers\RetailStoreController;
 use App\Http\Controllers\RaffleController;
 use App\Http\Middleware\ApiAuthentication;
 use App\Http\Controllers\CustomerRegistration;
+use App\Models\RetailStore;
 
 Route::group(['middleware' => ['web']], function () {
 
@@ -29,6 +30,7 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('/get-all-store', [RetailStoreController::class, 'getallstore']);
         Route::post('/remove-retail', [RetailStoreController::class, 'removeretailstore']);
         Route::post('/upload-retail-store', [RetailStoreController::class, 'uploadcsv']);
+        Route::get('/filter-cluster', [RetailStoreController::class, 'filtercluster']);
 
         //Raffle
         Route::post('/get-raflle-entry', [RaffleController::class, 'getraffleentry']);

@@ -99,4 +99,11 @@ class RetailStoreController extends Controller
 
         return response()->json(['success'=> true, 'message'=> 'All data are uploaded in the database']);
     }
+
+    public function filtercluster(Request $req){
+        $store = RetailStore::where('retail_store.cluster_id', $req->filter)->join('regional_cluster', 'retail_store.cluster_id', '=', 'regional_cluster.cluster_id')
+        ->select('regional_cluster.cluster_name', 'retail_store.*')->get();
+
+        return response()->json(['success'=> true, 'data'=> $store]);
+    }
 }
