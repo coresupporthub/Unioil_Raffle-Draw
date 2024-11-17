@@ -56,7 +56,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('/verify-user', [AuthenticationController::class, 'verifyuser']);
     Route::post('/logout', [AuthenticationController::class, 'logout']);
     Route::post('/resend-code', [AuthenticationController::class, 'resendcode']);
-
+    Route::post('/check-retail-store', [CustomerRegistration::class, 'checkretailstore']);
     //Customer Api
     Route::post('/register-raffle-entry', [CustomerRegistration::class, 'register']);
 

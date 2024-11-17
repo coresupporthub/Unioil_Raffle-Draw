@@ -13,29 +13,58 @@
                     event.preventDefault();
 
                     loading(true);
+
+                    const csrf = getCsrf();
+
                     $.ajax({
                         type: "POST",
-                        url: "/api/register-raffle-entry",
-                        data: $('#registrationForm').serialize(),
+                        url: "/api/check-retail-store",
+                        data: {"_token": csrf, "rto_code": getValue('store_code')},
                         success: res=> {
-                            loading(false);
                             alertify.set('notifier','position', 'top-center');
-
+                            loading(false);
                             if(res.success){
-                                alertify.success(res.message);
-                                window.location.href = `/registration-complete/coupon-serial-number/${res.customer_id}`;
+                                const storeModal = document.getElementById('confirmStore');
+                                const modal = new bootstrap.Modal(storeModal);
+                                setText('retailStationConfirm', res.store.retail_station);
+                                setText('distributorConfirm', res.store.distributor);
+                                setText('rtoCodeConfirm', res.store.rto_code);
+
+                                modal.show();
                             }else{
                                 alertify.error(res.message);
                             }
-
                         }, error: xhr=> console.log(xhr.responseText)
-                    });
+                    })
+
                 }
                 form.classList.add('was-validated');
             }, false);
         });
     }, false);
 })();
+
+
+function saveRegistration(){
+    loading(true)
+    $.ajax({
+        type: "POST",
+        url: "/api/register-raffle-entry",
+        data: $('#registrationForm').serialize(),
+        success: res=> {
+            loading(false);
+            alertify.set('notifier','position', 'top-center');
+
+            if(res.success){
+                alertify.success(res.message);
+                window.location.href = `/registration-complete/coupon-serial-number/${res.customer_id}`;
+            }else{
+                alertify.error(res.message);
+            }
+
+        }, error: xhr=> console.log(xhr.responseText)
+    });
+}
 
 function validatePhoneNumber(input) {
     const phoneNumber = input.value;
@@ -161,4 +190,9 @@ document.getElementById('city').addEventListener('click', e => {
 
 document.getElementById('baranggay').addEventListener('change', e => {
     setValue('baranggayId', e.target.value);
+});
+
+
+document.getElementById('confirmRegistrationBtn').addEventListener('click', ()=> {
+    saveRegistration();
 });

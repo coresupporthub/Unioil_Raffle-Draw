@@ -10,6 +10,7 @@ use App\Http\Services\Tools;
 use App\Models\ProductList;
 use App\Http\Services\Magic;
 use App\Models\RetailStore;
+use App\Models\Event;
 
 class CustomerRegistration extends Controller
 {
@@ -30,6 +31,12 @@ class CustomerRegistration extends Controller
 
         if(!$retailStore){
             return response()->json(['success'=> false, 'message'=> 'Retail Store Code is invalid please confirm the code to the store owner']);
+        }
+
+        $currentActiveEvent = Event::where('event_status', Magic::ACTIVE_EVENT)->first();
+
+        if(!$currentActiveEvent){
+            return response()->json(['success'=> false, 'message'=> 'There is no current promo event available for this entry']);
         }
 
         $customer = new Customers();
@@ -62,5 +69,15 @@ class CustomerRegistration extends Controller
         ]);
 
         return response()->json(['success'=> true, 'customer_id'=> $customer->customer_id, 'entry'=> $productEntry->entries]);
+    }
+
+    public function checkretailstore(Request $req){
+        $store = RetailStore::where('rto_code', $req->rto_code)->first();
+
+        if(!$store){
+            return response()->json(['success'=> false, 'message'=> 'Retail code is invalid please ask the store owner for there code']);
+        }
+
+        return response()->json(['success'=> true, 'message'=> 'Verify Retail Code', 'store'=>$store]);
     }
 }
