@@ -45,8 +45,6 @@ class QrCodeController extends Controller
         return response()->json(['qrcodes' => $qrcodes]);
     }
 
-
-
     public function queueProgress(Request $req){
         $queue = QueueingStatusModel::all();
         foreach($queue as $q){
@@ -142,5 +140,11 @@ class QrCodeController extends Controller
 
         return $pdf->stream('qr_codes.pdf');
 
+    }
+
+    public function filterqr(Request $req){
+        $qr = QrCode::where('entry_type', $req->filter)->get();
+
+        return response()->json(['success'=> true, 'data'=> $qr]);
     }
 }

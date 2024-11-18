@@ -25,26 +25,34 @@ function GenerateQrCode() {
     });
 }
 
+function initializeQRTable(data){
+    if ($.fn.dataTable.isDataTable("#generatedQrTable")) {
+        const table = $("#generatedQrTable").DataTable();
+        table.clear();
+        table.rows.add(data);
+        table.draw();
+    } else {
+
+        $("#generatedQrTable").DataTable({
+            data: data,
+            columns: [
+                { data: "code" },
+                { data: "entry_type" },
+                { data: "status" },
+                { data: "export_status" },
+            ],
+        });
+    }
+
+}
+
 function GetGeneratedQr() {
     $.ajax({
         url: "/api/get-qr-code-generated", // Replace with your endpoint URL
         type: "GET",
         success: function (response) {
-
-            // Assuming the response contains the 'qrcodes' array
             const qrCodesData = response.qrcodes;
-
-            // Initialize DataTable
-            $("#generatedQrTable").DataTable({
-                data: qrCodesData,
-                destroy:true,
-                columns: [
-                    { data: "code" },
-                    { data: "entry_type" },
-                    { data: "status" },
-                    { data: "export_status"},
-                ],
-            });
+            initializeQRTable(qrCodesData);
         },
         error: function (xhr, status, error) {
             console.error("Error fetching data:", error);
@@ -125,4 +133,27 @@ document.getElementById('exportQrForm').addEventListener('submit', (e)=> {
             dataParser({'success': false, 'message': 'No Unexported qr code images are available for export! Please add atleast 1'});
         }
     });
+});
+
+function GetGenerateQRFilter(filter){
+    $.ajax({
+        type: "GET",
+        url: `/api/filter-qrcodes?filter=${filter}`,
+        dataType: "json",
+        success: res=> {
+            const data = res.data;
+
+            initializeQRTable(data);
+        }, error: xhr=> console.log(xhr.responseText)
+    })
+}
+
+document.getElementById('filterQR').addEventListener('click', (e)=>{
+    const filter = e.target.value;
+
+    if(filter == 'all'){
+        GetGeneratedQr();
+    }else{
+        GetGenerateQRFilter(filter);
+    }
 });
