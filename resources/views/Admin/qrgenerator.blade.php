@@ -109,7 +109,6 @@
                                             <th><button class="table-sort" data-sort="sort-status">Status</button></th>
                                             <th><button class="table-sort" data-sort="sort-export_status">Export
                                                     Status</button></th>
-                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody class="table-tbody">

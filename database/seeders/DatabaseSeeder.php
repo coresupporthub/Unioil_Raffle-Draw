@@ -31,7 +31,7 @@ class DatabaseSeeder extends Seeder
         }
 
         $this->call(ProductListSeeder::class);
-        $this->call(QrCodeSeeder::class);
+        // $this->call(QrCodeSeeder::class);
         $this->call(RegionalClusterSeeder::class);
         // $this->call(RetailStoreSeeder::class);
         // $this->call(CustomerSeeder::class);
