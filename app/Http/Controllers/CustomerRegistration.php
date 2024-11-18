@@ -50,6 +50,7 @@ class CustomerRegistration extends Controller
         $customer->street = $req->street;
         $customer->mobile_number = $req->mobile_number;
         $customer->email = $req->email_address;
+        $customer->qr_id = $qrCode->qr_id;
         $customer->product_purchased = $req->product;
         $customer->save();
 

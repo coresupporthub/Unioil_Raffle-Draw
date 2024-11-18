@@ -8,6 +8,9 @@ use App\Models\QrCode;
 use App\Models\QueueingStatusModel;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\ExportFilesModel;
+use App\Models\Customers;
+use App\Models\ProductList;
+use App\Models\RaffleEntries;
 use Illuminate\Support\Facades\Storage;
 
 class QrCodeController extends Controller
@@ -146,5 +149,25 @@ class QrCodeController extends Controller
         $qr = QrCode::where('entry_type', $req->filter)->get();
 
         return response()->json(['success'=> true, 'data'=> $qr]);
+    }
+
+    public function viewqrdetails(Request $req){
+        $customer = Customers::where('qr_id', $req->id)->first();
+        if(!$customer){
+            return response()->json(['success'=> false, 'message'=> 'No customer found']);
+        }
+
+        $product = ProductList::where('product_id', $customer->product_purchased)->first();
+
+        $entries = RaffleEntries::where('qr_id', $req->id);
+        if($product->entries == 1){
+            $entry = $entries->first();
+        }else{
+            $entry = $entries->get();
+        }
+
+        $qrCode = QrCode::where('qr_id', $req->id)->first();
+
+        return response()->json(['success'=> true, 'customer'=> $customer, 'entries'=> $entry, 'product'=> $product, 'qr'=> $qrCode]);
     }
 }

@@ -40,6 +40,11 @@ function initializeQRTable(data){
                 { data: "entry_type" },
                 { data: "status" },
                 { data: "export_status" },
+                { data: null,
+                    render: data => {
+                        return `<button class="btn btn-info" onclick="viewQR('${data.qr_id}')">View</button>`
+                    },
+                }
             ],
         });
     }
@@ -157,3 +162,14 @@ document.getElementById('filterQR').addEventListener('click', (e)=>{
         GetGenerateQRFilter(filter);
     }
 });
+
+function viewQR(id){
+    $.ajax({
+        type: "GET",
+        url: `/api/view-qrcodes?id=${id}`,
+        dataType: "json",
+        success: res=> {
+            console.log(res);
+        }, error: xhr=> console.log(xhr.responseText)
+    })
+}
