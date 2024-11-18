@@ -153,21 +153,34 @@ class QrCodeController extends Controller
 
     public function viewqrdetails(Request $req){
         $customer = Customers::where('qr_id', $req->id)->first();
+
+
+        $qrCode = QrCode::where('qr_id', $req->id)->first();
+
+        $imagePath = storage_path('app/qr-codes/' . $qrCode->image);
+
+        if (file_exists($imagePath)) {
+            $qrCode->image_base64 = 'data:image/png;base64,' . base64_encode(file_get_contents($imagePath));
+        } else {
+            $qrCode->image_base64 = null; // Handle missing image case
+        }
+
+
         if(!$customer){
-            return response()->json(['success'=> false, 'message'=> 'No customer found']);
+            return response()->json(['success'=> false, 'message'=> 'No customer found', 'qr'=> $qrCode]);
         }
 
         $product = ProductList::where('product_id', $customer->product_purchased)->first();
 
-        $entries = RaffleEntries::where('qr_id', $req->id);
+        $entries = RaffleEntries::where('qr_id', $req->id)->join('retail_store', 'retail_store.rto_code', '=', 'raffle_entries.retail_store_code' );
         if($product->entries == 1){
             $entry = $entries->first();
+            $entry_type = 'Single Entry';
         }else{
             $entry = $entries->get();
+            $entry_type = 'Double Entry';
         }
 
-        $qrCode = QrCode::where('qr_id', $req->id)->first();
-
-        return response()->json(['success'=> true, 'customer'=> $customer, 'entries'=> $entry, 'product'=> $product, 'qr'=> $qrCode]);
+        return response()->json(['success'=> true, 'entry_type'=> $entry_type, 'customer'=> $customer, 'entries'=> $entry, 'product'=> $product, 'qr'=> $qrCode]);
     }
 }

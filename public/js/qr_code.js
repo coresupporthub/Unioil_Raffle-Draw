@@ -42,7 +42,7 @@ function initializeQRTable(data){
                 { data: "export_status" },
                 { data: null,
                     render: data => {
-                        return `<button class="btn btn-info" onclick="viewQR('${data.qr_id}')">View</button>`
+                        return `<button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#viewQR" onclick="viewQR('${data.qr_id}')">View</button>`
                     },
                 }
             ],
@@ -169,7 +169,42 @@ function viewQR(id){
         url: `/api/view-qrcodes?id=${id}`,
         dataType: "json",
         success: res=> {
-            console.log(res);
+            setImage('qrCodeImage', res.qr.image_base64);
+            setText('viewCode', res.qr.code);
+            setText('viewUUID', res.qr.qr_id);
+            setText('viewEntryType', res.qr.entry_type);
+            setText('viewStatus', res.qr.status);
+
+            const available = document.getElementById('entry_available');
+            const unavailable = document.getElementById('entry_unavalable');
+            if(res.success){
+                available.classList.remove('d-none');
+                unavailable.classList.add('d-none');
+
+                setText('viewCustomerName', res.customer.full_name);
+                setText('viewAddress', res.customer.address);
+                setText('viewEmail', res.customer.email);
+                setText('viewContact', res.customer.contact);
+                setText('viewProductPurchased', res.product.product_name);
+
+                if(res.entry_type == 'Single Entry'){
+                    setText('viewSerialNumber2', 'Not Available');
+                    setText('viewSerialNumber1', res.entries.serial_number);
+                }else{
+                    let ent = 1;
+                    res.entries.forEach(e => {
+                        setText(`viewSerialNumber${ent}`, e.serial_number);
+                        ent++;
+                    });
+                }
+
+                setText('viewRegistrationDate', res.customer.created_at);
+                setText('viewRetailStation', res.entries.retail_station);
+                setText('viewDistributor', res.entries.distributor);
+            }else{
+                available.classList.add('d-none');
+                unavailable.classList.remove('d-none');
+            }
         }, error: xhr=> console.log(xhr.responseText)
     })
 }
