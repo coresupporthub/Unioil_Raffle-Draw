@@ -5,7 +5,7 @@
             <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Add Retail Outlet</h5>
+                    <h5 class="modal-title">Add Cluster</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -181,5 +181,70 @@
                 </div>
                 </div>
 
+                <div class="modal modal-blur fade" id="addRetailStore" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Add Retail Outlet</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                        <div class="col-md-12">
+                            <form  id="addRetailStationForm">
+                                @csrf
+                            <div class="row">
+                                <div class="col-6 mb-4">
+                                    <label for="clusterAddStore">Select a Cluster</label>
+                                    <select name="cluster" id="clusterAddStore" class="form-select">
+                                        <option value="" disabled selected>-----Select a cluster----</option>
+                                        @foreach ($cluster as $clust)
+                                            <option value="{{ $clust->cluster_id }}">{{ $clust->cluster_name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <small id="clusterAddStoreE" class="text-danger d-none">Please choose a cluster to proceed</small>
+                                </div>
+                                <div class="col-6 mb-4">
+                                    <label for="areaAdd">Area</label>
+                                    <input type="text" name="area" id="areaAdd" placeholder="Add area" class="form-control">
+                                    <small id="areaAddE" class="text-danger d-none">Please add an area to proceed</small>
+                                </div>
+                                <div class="col-6 mb-4">
+                                    <label for="addressAdd">Address</label>
+                                    <input type="text" name="address" id="addressAdd" placeholder="Add Address" class="form-control">
+                                    <small id="addressAddE" class="text-danger d-none">Please add an address to proceed</small>
+                                </div>
+
+                                <div class="col-6 mb-4">
+                                    <label for="distributorAdd">Distributor</label>
+                                    <input type="text" name="distributor" id="distributorAdd" placeholder="Add Distributor" class="form-control">
+                                    <small id="distributorAddE" class="text-danger d-none">Please add a distributor to proceed</small>
+                                </div>
+
+                                <div class="col-6 mb-4">
+                                    <label for="retailStationAdd">Retail Station</label>
+                                    <input type="text" name="retail_station" id="retailStationAdd" placeholder="Add Retail Station" class="form-control">
+                                    <small id="retailStationAddE" class="text-danger d-none">Please add a Retail Station to proceed</small>
+                                </div>
+
+                                <div class="col-6 mb-4">
+                                    <label for="rtoCodeAdd">RTO Code</label>
+                                    <input type="text" name="rto_code" id="rtoCodeAdd" placeholder="Add RTO Code" class="form-control">
+                                    <small id="rtoCodeAddE" class="text-danger d-none">RTO Code is required to proceed</small>
+                                </div>
+
+                                <div class="col-12">
+                                    <button class="btn btn-primary w-100" type="submit" id="saveRetailStation">Save</button>
+                                </div>
+                            </div>
+                            </form>
+                      </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="closeAddRetailStation" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+
+                        </div>
+                        </div>
+                    </div>
+                    </div>
 
 

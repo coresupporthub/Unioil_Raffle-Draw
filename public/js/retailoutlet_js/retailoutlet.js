@@ -189,6 +189,7 @@ function ChangeStatus(id, route) {
                     alertify.success(response.message);
                     dynamicCall(response.reload);
                     loading(false);
+                    LoadAllRetailStore();
                 },
                 error: function (xhr, status, error) {
                     console.error("Error posting data:", error);
@@ -201,170 +202,9 @@ function ChangeStatus(id, route) {
     );
 }
 
-function loadRegion(){
-   dataGetter("https://psgc.cloud/api/regions").then((data) => {
-
-       const selectElement = document.getElementById("region_id");
-
-       while (selectElement.firstChild) {
-           selectElement.removeChild(selectElement.firstChild);
-       }
-
-       const defaultOption = document.createElement("option");
-       defaultOption.text = "Select a region";
-       defaultOption.value = "";
-       selectElement.appendChild(defaultOption);
-
-       data.forEach((element) => {
-           const newOption = document.createElement("option");
-           newOption.value = element.code;
-           newOption.text = element.name;
-           selectElement.appendChild(newOption);
-       });
-
-       const selectElement2 = document.getElementById("region_id2");
-
-       while (selectElement2.firstChild) {
-           selectElement2.removeChild(selectElement2.firstChild);
-       }
-
-       const defaultOption2 = document.createElement("option");
-       defaultOption2.text = "Select a region";
-       defaultOption2.value = "";
-       selectElement2.appendChild(defaultOption2);
-
-       data.forEach((element) => {
-           const newOption = document.createElement("option");
-           newOption.value = element.code;
-           newOption.text = element.name;
-           selectElement2.appendChild(newOption);
-       });
-   });
-}
-
-function loadCity(id){
-    const code = id.value;
-    dataGetter(`https://psgc.cloud/api/regions/${code}`).then(
-        (data) => {
-            document.getElementById('region_name').value=data.name;
-        }
-    );
-    dataGetter(`https://psgc.cloud/api/regions/${code}/provinces`).then(
-        (data) => {
-            if(data.length>0){
-                const selectElement = document.getElementById("city_id");
-
-                while (selectElement.firstChild) {
-                    selectElement.removeChild(selectElement.firstChild);
-                }
-
-                const defaultOption = document.createElement("option");
-                defaultOption.text = "Select a city";
-                defaultOption.value = "";
-                selectElement.appendChild(defaultOption);
-
-                data.forEach((element) => {
-                    const newOption = document.createElement("option");
-                    newOption.value = element.name;
-                    newOption.text = element.name;
-                    selectElement.appendChild(newOption);
-                });
-            }else{
-                const selectElement = document.getElementById("city_id");
-
-                while (selectElement.firstChild) {
-                    selectElement.removeChild(selectElement.firstChild);
-                }
-                const defaultOption = document.createElement("option");
-                defaultOption.text = "Select a city";
-                defaultOption.value = "";
-                selectElement.appendChild(defaultOption);
-                 const newOption = document.createElement("option");
-                 newOption.value = 'Manila';
-                 newOption.text = "Manila";
-                 selectElement.appendChild(newOption);
-            }
-
-        }
-    );
-}
-
-function loadCity2(id) {
-    const code = id.value;
-    if (code) {
-        dataGetter(`https://psgc.cloud/api/regions/${code}`).then((data) => {
-            document.getElementById("region_name2").value = data.name;
-        });
-        dataGetter(`https://psgc.cloud/api/regions/${code}/provinces`).then(
-            (data) => {
-                 if (data.length > 0) {
-                     const selectElement = document.getElementById("city_id2");
-
-                     while (selectElement.firstChild) {
-                         selectElement.removeChild(selectElement.firstChild);
-                     }
-
-                     const defaultOption = document.createElement("option");
-                     defaultOption.text = "Select a city";
-                     defaultOption.value = "";
-                     selectElement.appendChild(defaultOption);
-
-                     data.forEach((element) => {
-                         const newOption = document.createElement("option");
-                         newOption.value = element.name;
-                         newOption.text = element.name;
-                         selectElement.appendChild(newOption);
-                     });
-                 } else {
-                     const selectElement = document.getElementById("city_id2");
-
-                     while (selectElement.firstChild) {
-                         selectElement.removeChild(selectElement.firstChild);
-                     }
-
-                     const defaultOption = document.createElement("option");
-                     defaultOption.text = "Select a city";
-                     defaultOption.value = "";
-                     selectElement.appendChild(defaultOption);
-                     const newOption = document.createElement("option");
-                     newOption.value = "Manila";
-                     newOption.text = "Manila";
-                     selectElement.appendChild(newOption);
-                 }
-            }
-        );
-    }else{
-        dataGetter(`https://psgc.cloud/api/regions/${id}`).then((data) => {
-            document.getElementById("region_name2").value = data.name;
-        });
-        dataGetter(`https://psgc.cloud/api/regions/${id}/provinces`).then(
-            (data) => {
-                const selectElement = document.getElementById("city_id2");
-
-                while (selectElement.firstChild) {
-                    selectElement.removeChild(selectElement.firstChild);
-                }
-
-                const defaultOption = document.createElement("option");
-                defaultOption.text = "Select a city";
-                defaultOption.value = "";
-                selectElement.appendChild(defaultOption);
-
-                data.forEach((element) => {
-                    const newOption = document.createElement("option");
-                    newOption.value = element.name;
-                    newOption.text = element.name;
-                    selectElement.appendChild(newOption);
-                });
-            }
-        );
-    }
-
-}
 function LoadAll(){
      GetAllCluster();
      GetAllClusterSelect();
-     loadRegion();
      LoadAllRetailStore();
 }
 $(document).ready(function () {
@@ -443,4 +283,34 @@ document.getElementById('clusterFilter').addEventListener('change', (e)=> {
     }else{
         FilterRetailStore(filter);
     }
+});
+
+
+document.getElementById('addRetailStationForm').addEventListener('submit', e => {
+    e.preventDefault();
+
+    const inputs = [
+        ['clusterAddStore', 'clusterAddStoreE'],
+        ['addressAdd', 'addressAddE'],
+        ['retailStationAdd', 'retailStationAddE'],
+        ['distributorAdd', 'distributorAddE'],
+        ['rtoCodeAdd', 'rtoCodeAddE']
+    ];
+
+    if(checkValidity(inputs)){
+        loading(true);
+
+        $.ajax({
+            type: "POST",
+            url: "/api/add-single-retail-store",
+            data: $('#addRetailStationForm').serialize(),
+            success: res=> {
+                loading(false);
+                dataParser(res);
+                exec('closeAddRetailStation');
+                LoadAllRetailStore();
+            }, error: xhr=> console.log(xhr.responseText)
+        })
+    }
+
 });
