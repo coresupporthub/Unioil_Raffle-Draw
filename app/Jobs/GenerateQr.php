@@ -69,7 +69,7 @@ class GenerateQr implements ShouldQueue
             roundBlockSizeMode: RoundBlockSizeMode::Margin,
             logoResizeToWidth: 100,
             logoPunchoutBackground: true,
-            logoPath: public_path('/unioil_images/unioil.png'),
+            logoPath: public_path('/unioil_images/small-bw-logo.png'),
             labelFont: new OpenSans(20),
             labelAlignment: LabelAlignment::Center
         );

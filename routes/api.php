@@ -17,15 +17,14 @@ Route::group(['middleware' => ['web']], function () {
 
         Route::post('/generate-qr-code', [QrCodeController::class, 'generate']);
         Route::get('/get-qr-code-generated', [QrCodeController::class, 'getqrcodegenerated']);
-        Route::post('/delete-generate-qr-code', [QrCodeController::class, 'deletegeneratedqr']);
         Route::get('/get-queue-status', [QrCodeController::class, 'queueProgress']);
         Route::post('/export-qr', [QrCodeController::class, 'exportQR']);
+        Route::get('/filter-qrcodes', [QrCodeController::class, 'filterqr']);
 
         // Retail Store Controller
         Route::post('/add-retail-store', [RetailStoreController::class, 'addcluster']);
         Route::get('/get-cluster', [RetailStoreController::class, 'getcluster']);
         Route::post('/cluster-status', [RetailStoreController::class, 'clusterstatus']);
-        Route::post('/add-store', [RetailStoreController::class, 'addstore']);
         Route::post('/update-store', [RetailStoreController::class, 'updatestore']);
         Route::get('/get-all-store', [RetailStoreController::class, 'getallstore']);
         Route::post('/remove-retail', [RetailStoreController::class, 'removeretailstore']);

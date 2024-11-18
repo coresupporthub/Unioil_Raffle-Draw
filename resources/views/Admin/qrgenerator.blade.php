@@ -20,8 +20,10 @@
                             </h2>
                         </div>
                         <!-- Page title actions -->
-                        <div class="col-auto ms-auto d-print-none gap-2 d-flex" >
-                            <button id="resetTable" class="btn btn-vk btn-icon" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Refresh Tables" data-bs-original-title="Refresh Tables" aria-label="Refresh Tables">
+                        <div class="col-auto ms-auto d-print-none gap-2 d-flex">
+                            <button id="resetTable" class="btn btn-vk btn-icon" data-bs-toggle="tooltip"
+                                data-bs-placement="top" aria-label="Refresh Tables"
+                                data-bs-original-title="Refresh Tables" aria-label="Refresh Tables">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                     stroke-linecap="round" stroke-linejoin="round"
@@ -99,6 +101,15 @@
                     <div class="card">
                         <div class="card-body">
 
+                            <div class="d-flex w-100 justify-content-end align-items-center gap-2 mb-4">
+                                <label for="filterQR">Filter QR Entry Type</label>
+                                <select id="filterQR" class="form-select w-50">
+                                    <option value="all">All</option>
+                                    <option value="Single Entry QR Code">Single Entry QR Code</option>
+                                    <option value="Dual Entry QR Code">Dual Entry QR Code</option>
+                                </select>
+                            </div>
+
                             <div id="table-default" class="table-responsive">
                                 <table class="table" id="generatedQrTable">
                                     <thead>
@@ -109,7 +120,6 @@
                                             <th><button class="table-sort" data-sort="sort-status">Status</button></th>
                                             <th><button class="table-sort" data-sort="sort-export_status">Export
                                                     Status</button></th>
-                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody class="table-tbody">

@@ -45,17 +45,6 @@ class QrCodeController extends Controller
         return response()->json(['qrcodes' => $qrcodes]);
     }
 
-    public function deletegeneratedqr(request $request){
-        $qrcodes = QrCode::where('qr_id', $request->qr_id)->first();
-        if($qrcodes){
-            
-            Storage::delete('qr-codes/'.$qrcodes->image);
-
-            $qrcodes->delete();
-        }
-        return response()->json(['success' => true]);
-    }
-
     public function queueProgress(Request $req){
         $queue = QueueingStatusModel::all();
         foreach($queue as $q){
@@ -74,6 +63,14 @@ class QrCodeController extends Controller
         $latestQueue = QueueingStatusModel::latest()->first();
         $queue = new QueueingStatusModel();
 
+        $limit = 24 * $req->page_number;
+
+        $qrCodes = QrCode::where('export_status', 'none')->where('status', 'unused')->take($limit)->select('image', 'qr_id')->get();
+
+        if(count($qrCodes) < 3){
+            return response()->json(['success'=> false, 'message'=> 'No Unexported qr code images are available for export! Please add atleast 3 codes'], 404);
+        }
+
         if($latestQueue){
             $queue->queue_number = $latestQueue->queue_number + 1;
         }else{
@@ -87,9 +84,6 @@ class QrCodeController extends Controller
         $queue->type = 'PDF Export';
         $queue->save();
 
-        $limit = 36 * $req->page_number;
-
-        $qrCodes = QrCode::where('export_status', 'none')->where('status', 'unused')->take($limit)->select('image', 'qr_id')->get();
 
         $qrCodes->transform(function ($qrCode) {
             $imagePath = storage_path('app/qr-codes/' . $qrCode->image); // Adjust the path as needed
@@ -101,19 +95,11 @@ class QrCodeController extends Controller
             return $qrCode;
         });
 
-        $chunkedQrCodes = $qrCodes->chunk(36)->toArray();
+        $chunkedQrCodes = $qrCodes->chunk(24)->map(function ($chunk) {
+            return $chunk->chunk(3);
+        });
 
-        $pdf = Pdf::loadView('Admin.pdf.export_qr', ['qrCodeChunk'=> $chunkedQrCodes]);
-
-        foreach($chunkedQrCodes as $qrCodesC){
-            foreach($qrCodesC as $qrCode){
-                $qr = QrCode::where('qr_id', $qrCode['qr_id'])->first();
-
-                $qr->update([
-                    'export_status'=> 'exported'
-                ]);
-            }
-        }
+        $chunkedQrCodesArray = $chunkedQrCodes->toArray();
 
         $checkExport = ExportFilesModel::latest()->first();
         $export = new ExportFilesModel();
@@ -127,6 +113,21 @@ class QrCodeController extends Controller
         $export->queue_id = $queue->queue_id;
         $export->save();
 
+        $pdf = Pdf::loadView('Admin.pdf.export_qr', ['qrCodeChunkBy24'=> $chunkedQrCodesArray, 'file_title'=> $fileName]);
+
+        foreach($chunkedQrCodes as $qrCodesC){
+            foreach($qrCodesC as $qrCodes){
+                foreach($qrCodes as $qr){
+                    $qr = QrCode::where('qr_id', $qr['qr_id'])->first();
+
+                    $qr->update([
+                        'export_status'=> 'exported'
+                    ]);
+                }
+            }
+        }
+
+
 
         $pdfFilePath = storage_path("app/pdf_files/$fileName");
 
@@ -139,5 +140,11 @@ class QrCodeController extends Controller
 
         return $pdf->stream('qr_codes.pdf');
 
+    }
+
+    public function filterqr(Request $req){
+        $qr = QrCode::where('entry_type', $req->filter)->get();
+
+        return response()->json(['success'=> true, 'data'=> $qr]);
     }
 }

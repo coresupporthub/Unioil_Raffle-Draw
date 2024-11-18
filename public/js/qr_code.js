@@ -25,63 +25,39 @@ function GenerateQrCode() {
     });
 }
 
+function initializeQRTable(data){
+    if ($.fn.dataTable.isDataTable("#generatedQrTable")) {
+        const table = $("#generatedQrTable").DataTable();
+        table.clear();
+        table.rows.add(data);
+        table.draw();
+    } else {
+
+        $("#generatedQrTable").DataTable({
+            data: data,
+            columns: [
+                { data: "code" },
+                { data: "entry_type" },
+                { data: "status" },
+                { data: "export_status" },
+            ],
+        });
+    }
+
+}
+
 function GetGeneratedQr() {
     $.ajax({
         url: "/api/get-qr-code-generated", // Replace with your endpoint URL
         type: "GET",
         success: function (response) {
-
-            // Assuming the response contains the 'qrcodes' array
             const qrCodesData = response.qrcodes;
-
-            // Initialize DataTable
-            $("#generatedQrTable").DataTable({
-                data: qrCodesData,
-                destroy:true,
-                columns: [
-                    { data: "code" },
-                    { data: "entry_type" },
-                    { data: "status" },
-                    { data: "export_status"},
-                    {
-                        // Define the Action button column
-                        data: null,
-                        render: function (data, type, row) {
-                            return `<button class="btn btn-danger" onclick="DeleteQrCode('${row.qr_id}')">Delete</button>`;
-                        },
-                    },
-                ],
-            });
+            initializeQRTable(qrCodesData);
         },
         error: function (xhr, status, error) {
             console.error("Error fetching data:", error);
         },
     });
-}
-function DeleteQrCode(qrId) {
-
-    const csrfToken = $('meta[name="csrf-token"]').attr("content");
-    const formData = new FormData();
-    formData.append("_token", csrfToken);
-    formData.append("qr_id", qrId);
-    loading(true);
-    $.ajax({
-        url: "/api/delete-generate-qr-code", // Replace with your endpoint URL
-        type: "POST",
-        data: formData,
-        processData: false, // Prevent jQuery from processing the data
-        contentType: false, // Let FormData handle the content type (especially for file uploads)
-        success: function (response) {
-            GetGeneratedQr();
-            loading(false);
-            alertify.success(`Qr Code has been deleted successfully`);
-        },
-        error: function (xhr, status, error) {
-            // Handle error
-            console.error("Error posting data:", error);
-        },
-    });
-
 }
 
 $(document).ready(function () {
@@ -144,10 +120,40 @@ document.getElementById('exportQrForm').addEventListener('submit', (e)=> {
             responseType: 'blob'
         },
         success: res => {
-            const blob = new Blob([res], { type: 'application/pdf' });
-            const url = URL.createObjectURL(blob);
             loading(false);
-            window.open(url, '_blank');
-        }, error: xhr=> console.log(xhr.responseText)
+
+           const blob = new Blob([res], { type: 'application/pdf' });
+           const url = URL.createObjectURL(blob);
+
+           window.open(url, '_blank');
+
+        }, error: xhr=> {
+            console.log(xhr.responseText);
+            loading(false);
+            dataParser({'success': false, 'message': 'No Unexported qr code images are available for export! Please add atleast 1'});
+        }
     });
+});
+
+function GetGenerateQRFilter(filter){
+    $.ajax({
+        type: "GET",
+        url: `/api/filter-qrcodes?filter=${filter}`,
+        dataType: "json",
+        success: res=> {
+            const data = res.data;
+
+            initializeQRTable(data);
+        }, error: xhr=> console.log(xhr.responseText)
+    })
+}
+
+document.getElementById('filterQR').addEventListener('click', (e)=>{
+    const filter = e.target.value;
+
+    if(filter == 'all'){
+        GetGeneratedQr();
+    }else{
+        GetGenerateQRFilter(filter);
+    }
 });
