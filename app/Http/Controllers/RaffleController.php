@@ -73,7 +73,7 @@ class RaffleController extends Controller
             $cluster = RegionalCluster::where('cluster_id',$retailStores->cluster_id)->first()->cluster_name;
             $customer = Customers::where('customer_id',$entry->customer_id)->first();
             $data[] = [
-                'event_price'=>$event->event_price,
+                'event_prize'=>$event->event_price,
                 'serial_number' => $entry->serial_number,
                 'customer_name' => $customer->full_name,
                 'customer_email'=>$customer->email,
@@ -97,7 +97,7 @@ class RaffleController extends Controller
             $cluster = RegionalCluster::where('cluster_id', $retailStores->cluster_id)->first()->cluster_name;
             $customer = Customers::where('customer_id', $entry->customer_id)->first();
             $data[] = [
-                'event_price' => $event->event_price,
+                'event_prize' => $event->event_price,
                 'serial_number' => $entry->serial_number,
                 'customer_name' => $customer->full_name,
                 'customer_email' => $customer->email,
@@ -159,7 +159,7 @@ class RaffleController extends Controller
         }
         $event = new Event();
         $event->event_name = $request->event_name;
-        $event->event_price = $request->event_price;
+        $event->event_prize = $request->event_price;
         $event->event_start = $request->event_start;
         $event->event_end = $request->event_end;
         $event->event_description = $request->event_description;
@@ -186,7 +186,7 @@ class RaffleController extends Controller
         $event = Event::where('event_id', $request->event_id)->where('event_status','Active')->first();
         if($event){
         $event->event_name = $request->event_name;
-        $event->event_price = $request->event_price;
+        $event->event_prize = $request->event_price;
         $event->event_start = $request->event_start;
         $event->event_end = $request->event_end;
         $event->event_description = $request->event_description;
