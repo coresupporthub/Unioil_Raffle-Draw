@@ -219,7 +219,7 @@
                             </a>
                         </li>
 
-                        <li class="nav-item {{ $active === 'reportsandanalytics' ? 'active' : '' }}">
+                        {{-- <li class="nav-item {{ $active === 'reportsandanalytics' ? 'active' : '' }}">
 
                             <a class="nav-link" href="{{ route('reportsandanalytics') }}">
                                 <span class="nav-link-icon d-md-none d-lg-inline-block">
@@ -237,7 +237,7 @@
                                     Reports and Analytics
                                 </span>
                             </a>
-                        </li>
+                        </li> --}}
 
                     </ul>
 
