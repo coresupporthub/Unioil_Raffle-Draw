@@ -125,27 +125,58 @@ class RaffleController extends Controller
 
     }
 
-    public function getallentry(){
+    public function getallentry(Request $request)
+    {
+        // Fetch events based on request
+        $events = !empty($request->event_id)
+            ? Event::where('event_id', $request->event_id)->get()
+            : Event::all();
 
-        $event = Event::where('event_status', 'Active')->first();
-        $raffleEntries = RaffleEntries::where('event_id', $event->event_id)->get();
         $data = [];
-        foreach($raffleEntries as $entry){
-            $retailStores = RetailStore::where('rto_code',$entry->retail_store_code)->first();
-            $cluster = RegionalCluster::where('cluster_id',$retailStores->cluster_id)->first()->cluster_name;
-            $customer = Customers::where('customer_id',$entry->customer_id)->join('product_lists', 'product_lists.product_id', '=', 'customers.product_purchased')->first();
-            $data[] = [
-                'cluster' => $cluster,
-                'retail_name' => $retailStores->retail_station,
-                'serial_number' => $entry->serial_number,
-                'product_type'=> $customer->product_name,
-                'customer_name' => $customer->full_name,
-                'customer_email'=> $customer->email,
-                'customer_phone' => $customer->mobile_number,
-                ];
+
+        foreach ($events as $event) {
+            // Filter raffle entries based on the presence of a region
+            $raffleEntriesQuery = RaffleEntries::where('event_id', $event->event_id);
+
+            if (!empty($request->region)) {
+                $retailData = RetailStore::where('cluster_id', $request->region)->first();
+                if (!$retailData) continue; // Skip if no retail store matches the region
+                $raffleEntriesQuery->where('retail_store_code', $retailData->rto_code);
+            }
+
+            $raffleEntries = $raffleEntriesQuery->get();
+
+            // Process each raffle entry
+            foreach ($raffleEntries as $raffle) {
+                $retailStores = RetailStore::where('rto_code', $raffle->retail_store_code)->first();
+                $cluster = $retailStores
+                    ? RegionalCluster::where('cluster_id', $retailStores->cluster_id)->first()?->cluster_name
+                    : null;
+
+                $customer = Customers::where('customer_id', $raffle->customer_id)
+                    ->join('product_lists', 'product_lists.product_id', '=', 'customers.product_purchased')
+                    ->first();
+
+                if ($retailStores && $cluster && $customer) {
+                    $data[] = [
+                        'cluster' => $cluster,
+                        'area'=>  $retailStores->area,
+                        'address' =>  $retailStores->address,
+                        'distributor' =>  $retailStores->distributor,
+                        'retail_name' => $retailStores->retail_station,
+                        'serial_number' => $raffle->serial_number,
+                        'product_type' => $customer->product_name,
+                        'customer_name' => $customer->full_name,
+                        'customer_email' => $customer->email,
+                        'customer_phone' => $customer->mobile_number,
+                    ];
                 }
-                return response()->json($data);
+            }
+        }
+
+        return response()->json($data);
     }
+
 
     public function getallevent(){
         $data = Event::all();
