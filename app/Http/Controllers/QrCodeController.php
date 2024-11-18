@@ -74,6 +74,14 @@ class QrCodeController extends Controller
         $latestQueue = QueueingStatusModel::latest()->first();
         $queue = new QueueingStatusModel();
 
+        $limit = 24 * $req->page_number;
+
+        $qrCodes = QrCode::where('export_status', 'none')->where('status', 'unused')->take($limit)->select('image', 'qr_id')->get();
+
+        if(count($qrCodes) < 3){
+            return response()->json(['success'=> false, 'message'=> 'No Unexported qr code images are available for export! Please add atleast 3 codes'], 404);
+        }
+
         if($latestQueue){
             $queue->queue_number = $latestQueue->queue_number + 1;
         }else{
@@ -87,9 +95,6 @@ class QrCodeController extends Controller
         $queue->type = 'PDF Export';
         $queue->save();
 
-        $limit = 24 * $req->page_number;
-
-        $qrCodes = QrCode::where('export_status', 'none')->where('status', 'unused')->take($limit)->select('image', 'qr_id')->get();
 
         $qrCodes->transform(function ($qrCode) {
             $imagePath = storage_path('app/qr-codes/' . $qrCode->image); // Adjust the path as needed

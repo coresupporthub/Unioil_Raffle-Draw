@@ -144,10 +144,17 @@ document.getElementById('exportQrForm').addEventListener('submit', (e)=> {
             responseType: 'blob'
         },
         success: res => {
-            const blob = new Blob([res], { type: 'application/pdf' });
-            const url = URL.createObjectURL(blob);
             loading(false);
-            window.open(url, '_blank');
-        }, error: xhr=> console.log(xhr.responseText)
+
+           const blob = new Blob([res], { type: 'application/pdf' });
+           const url = URL.createObjectURL(blob);
+
+           window.open(url, '_blank');
+
+        }, error: xhr=> {
+            console.log(xhr.responseText);
+            loading(false);
+            dataParser({'success': false, 'message': 'No Unexported qr code images are available for export! Please add atleast 1'});
+        }
     });
 });
