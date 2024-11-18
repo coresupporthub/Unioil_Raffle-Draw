@@ -45,16 +45,7 @@ class QrCodeController extends Controller
         return response()->json(['qrcodes' => $qrcodes]);
     }
 
-    public function deletegeneratedqr(request $request){
-        $qrcodes = QrCode::where('qr_id', $request->qr_id)->first();
-        if($qrcodes){
 
-            Storage::delete('qr-codes/'.$qrcodes->image);
-
-            $qrcodes->delete();
-        }
-        return response()->json(['success' => true]);
-    }
 
     public function queueProgress(Request $req){
         $queue = QueueingStatusModel::all();

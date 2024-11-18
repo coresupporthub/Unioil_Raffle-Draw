@@ -43,13 +43,6 @@ function GetGeneratedQr() {
                     { data: "entry_type" },
                     { data: "status" },
                     { data: "export_status"},
-                    {
-                        // Define the Action button column
-                        data: null,
-                        render: function (data, type, row) {
-                            return `<button class="btn btn-danger" onclick="DeleteQrCode('${row.qr_id}')">Delete</button>`;
-                        },
-                    },
                 ],
             });
         },
@@ -57,31 +50,6 @@ function GetGeneratedQr() {
             console.error("Error fetching data:", error);
         },
     });
-}
-function DeleteQrCode(qrId) {
-
-    const csrfToken = $('meta[name="csrf-token"]').attr("content");
-    const formData = new FormData();
-    formData.append("_token", csrfToken);
-    formData.append("qr_id", qrId);
-    loading(true);
-    $.ajax({
-        url: "/api/delete-generate-qr-code", // Replace with your endpoint URL
-        type: "POST",
-        data: formData,
-        processData: false, // Prevent jQuery from processing the data
-        contentType: false, // Let FormData handle the content type (especially for file uploads)
-        success: function (response) {
-            GetGeneratedQr();
-            loading(false);
-            alertify.success(`Qr Code has been deleted successfully`);
-        },
-        error: function (xhr, status, error) {
-            // Handle error
-            console.error("Error posting data:", error);
-        },
-    });
-
 }
 
 $(document).ready(function () {
