@@ -4,8 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\AuthMiddleware;
 use App\Models\QrCode;
 use Illuminate\Support\Facades\Storage;
-use App\Models\ProductList;
 use App\Models\Customers;
+use App\Models\ProductList;
 use App\Models\RaffleEntries;
 
 Route::middleware([AuthMiddleware::class])->group(function () {
@@ -81,7 +81,15 @@ Route::get('/registration/page/{code}/{uuid}', function ($code, $uuid) {
         abort(402);
     }
 
-    return view('Customer.registration', ['code'=> $code, 'uuid'=> $uuid]);
+    if($checkCode->entry_type == 'Dual Entry QR Code'){
+        $product = ProductList::where('entries', 2)->get();
+        $productType = 'Dual Entry';
+    }else{
+        $product = ProductList::where('entries', 1)->get();
+        $productType = 'Single Entry';
+    }
+
+    return view('Customer.registration', ['code'=> $code, 'uuid'=> $uuid, 'products'=> $product, 'product_type'=> $productType]);
 })->name('customer_registrations');
 
 Route::get('/privacy/policy', function () {

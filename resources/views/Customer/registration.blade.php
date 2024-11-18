@@ -1,7 +1,4 @@
 @include('Customer.components.head', ['title' => 'UniOil Raffle Draw'])
-@php
-    $productList = App\Models\ProductList::all();
-@endphp
 
 <body>
     <script src="{{ asset('./dist/js/demo-theme.min.js?1692870487') }}"></script>
@@ -135,10 +132,10 @@
                             </div>
 
                             <div class="col-md-6">
-                                <label for="validationCustom04" class="form-label">PRODUCT PURCHASED</label>
+                                <label for="validationCustom04" class="form-label">PRODUCT PURCHASED ({{ $product_type }})</label>
                                 <select type="text" name="product" class="form-select" id="validationCustom02" required>
                                     <option value="" selected disabled>Select Product</option>
-                                    @foreach ($productList as $product)
+                                    @foreach ($products as $product)
                                         <option value="{{ $product->product_id }}">{{ $product->product_name }}
                                             ({{ $product->product_type }})</option>
                                     @endforeach
