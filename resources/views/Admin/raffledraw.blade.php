@@ -62,7 +62,7 @@
                                 <div class="card-body" id="cardbg" style="background: linear-gradient(to right, #FF7F00, #FFFFFF);
 ">
 
-                                    <div class="row g-0 p-5">
+                                    <div class="row g-0 p-5 w-100">
 
                                         <div class="col-12 col-lg-7 col-xl-9 border-end">
 
