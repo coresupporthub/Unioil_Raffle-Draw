@@ -85,7 +85,7 @@ class RetailStoreController extends Controller
         foreach($csvData as $data){
             $store = new RetailStore();
 
-            if(!empty($data[0]) && !empty($data[1]) && !empty($data[2]) && !empty($data[3]) && !empty($data)){
+            if(!empty($data[0]) || !empty($data[1]) || !empty($data[2]) || !empty($data[3]) || !empty($data[4])){
                 $store->cluster_id = $req->cluster;
                 $store->area = $data[0];
                 $store->address = $data[1];
