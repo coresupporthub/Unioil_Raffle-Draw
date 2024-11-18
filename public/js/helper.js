@@ -184,3 +184,11 @@ function checkValidity(data){
 
     return false;
 }
+
+function setImage(id, src){
+    const img = document.getElementById(id);
+
+    if(img){
+        img.src = src;
+    }
+}

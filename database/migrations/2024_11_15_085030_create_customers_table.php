@@ -22,6 +22,8 @@ return new class extends Migration
             $table->string('street');
             $table->string('mobile_number');
             $table->string('email');
+            $table->uuid('qr_id');
+            $table->foreign('qr_id')->references('qr_id')->on('qr_codes');
             $table->string('product_purchased');
             $table->timestamps();
         });

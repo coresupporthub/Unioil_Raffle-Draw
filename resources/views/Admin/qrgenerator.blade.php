@@ -120,6 +120,8 @@
                                             <th><button class="table-sort" data-sort="sort-status">Status</button></th>
                                             <th><button class="table-sort" data-sort="sort-export_status">Export
                                                     Status</button></th>
+                                            <th><button class="table-sort" data-sort="sort-export_status">Export
+                                                    Action</button></th>
                                         </tr>
                                     </thead>
                                     <tbody class="table-tbody">
@@ -169,6 +171,57 @@
                             <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
                             <button type="button" class="btn btn-primary"
                                 onclick="GenerateQrCode()">Generate</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal modal-blur fade" id="viewQR" tabindex="-1" role="dialog"  aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">View QR Code Details</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-6">
+                                    <img src="" id="qrCodeImage" alt="QR Code">
+                                </div>
+
+                                <div class="col-6">
+                                    <h3 class="mb-2">QR Code Details</h3>
+                                    <hr class="my-2">
+                                    <p class="mb-1"><strong>Code: </strong> <span id="viewCode">Loading...</span></p>
+                                    <p class="mb-1"><strong>Unique Identifier:</strong> <span id="viewUUID">Loading...</span></p>
+                                    <p class="mb-1"><strong>Entry Type:</strong>  <span id="viewEntryType">Loading...</span></p>
+                                    <p class="mb-1"><strong>Status:</strong>  <span id="viewStatus">Loading...</span></p>
+                                    <hr class="my-2">
+                                    <div id="entry_available" class="d-none">
+                                    <p class="mb-1"><strong>Customer Name: </strong> <span id="viewCustomerName">Loading...</span></p>
+                                    <p class="mb-1"><strong>Address: </strong> <span id="viewAddress">Loading...</span></p>
+                                    <p class="mb-1"><strong>Email: </strong> <span id="viewEmail">Loading...</span></p>
+                                    <p class="mb-1"><strong>Contact: </strong> <span id="viewContact">Loading...</span></p>
+                                    <p class="mb-1"><strong>Product Purchased: </strong> <span id="viewProductPurchased">Loading...</span></p>
+                                    <p class="mb-1"><strong>Serial Number 1: </strong> <span id="viewSerialNumber1">Loading...</span></p>
+                                    <p class="mb-1"><strong>Serial Number 2: </strong> <span id="viewSerialNumber2">Loading...</span></p>
+                                    <p class="mb-1"><strong>Registration Date:</strong> <span id="viewRegistrationDate">Loading...</span></p>
+                                    <p class="mb-1"><strong>Retail Station:</strong> <span id="viewRetailStation">Loading...</span></p>
+                                    <p class="mb-1"><strong>Distributor:</strong> <span id="viewDistributor">Loading...</span></p>
+                                    </div>
+
+                                    <div id="entry_unavalable" class="d-none">
+                                        <h3 class="text-muted mb-1">No Entry Found</h3>
+                                        <p class="mb-1 text-muted">QR is not in used</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Save
+                                changes</button>
                         </div>
                     </div>
                 </div>

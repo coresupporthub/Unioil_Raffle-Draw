@@ -20,6 +20,7 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('/get-queue-status', [QrCodeController::class, 'queueProgress']);
         Route::post('/export-qr', [QrCodeController::class, 'exportQR']);
         Route::get('/filter-qrcodes', [QrCodeController::class, 'filterqr']);
+        Route::get('/view-qrcodes', [QrCodeController::class, 'viewqrdetails']);
 
         // Retail Store Controller
         Route::post('/add-retail-store', [RetailStoreController::class, 'addcluster']);
@@ -38,7 +39,7 @@ Route::group(['middleware' => ['web']], function () {
         Route::post('/raffle-draw', [RaffleController::class, 'raffledraw']);
         Route::get('/get-all-winner', [RaffleController::class, 'getallwinner']);
         Route::post('/get-all-entry', [RaffleController::class, 'getallentry']);
-        Route::get('/get-all-event', action: [RaffleController::class, 'getallevent']);
+        Route::get('/get-all-event', [RaffleController::class, 'getallevent']);
         Route::post('/add-event', [RaffleController::class, 'addevent']);
         Route::post('/raffle-redraw', [RaffleController::class, 'redraw']);
         Route::post('/update-event', [RaffleController::class, 'updateevent']);

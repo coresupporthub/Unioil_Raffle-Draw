@@ -21,8 +21,15 @@ class Customers extends Model
         'street',
         'mobile_number',
         'email',
+        'qr_id',
         'product_purchased'
     ];
+
+    protected $hidden = [
+        'qr_id',
+        'product_purchased',
+    ];
+
 
     protected static function boot()
     {
