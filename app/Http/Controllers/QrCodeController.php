@@ -48,7 +48,7 @@ class QrCodeController extends Controller
     public function deletegeneratedqr(request $request){
         $qrcodes = QrCode::where('qr_id', $request->qr_id)->first();
         if($qrcodes){
-            
+
             Storage::delete('qr-codes/'.$qrcodes->image);
 
             $qrcodes->delete();
@@ -105,15 +105,15 @@ class QrCodeController extends Controller
 
         $pdf = Pdf::loadView('Admin.pdf.export_qr', ['qrCodeChunk'=> $chunkedQrCodes]);
 
-        foreach($chunkedQrCodes as $qrCodesC){
-            foreach($qrCodesC as $qrCode){
-                $qr = QrCode::where('qr_id', $qrCode['qr_id'])->first();
+        // foreach($chunkedQrCodes as $qrCodesC){
+        //     foreach($qrCodesC as $qrCode){
+        //         $qr = QrCode::where('qr_id', $qrCode['qr_id'])->first();
 
-                $qr->update([
-                    'export_status'=> 'exported'
-                ]);
-            }
-        }
+        //         $qr->update([
+        //             'export_status'=> 'exported'
+        //         ]);
+        //     }
+        // }
 
         $checkExport = ExportFilesModel::latest()->first();
         $export = new ExportFilesModel();
