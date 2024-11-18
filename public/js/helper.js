@@ -152,3 +152,35 @@ function getValue(id){
         return element.value;
     }
 }
+
+
+function checkInp(inp, textErr){
+    const inputElement = document.getElementById(inp);
+    const text = document.getElementById(textErr);
+
+    if(inputElement.value == ''){
+        text.classList.remove('d-none');
+        inputElement.classList.add('border', 'border-danger');
+
+        return 0;
+    }
+
+    text.classList.add('d-none');
+    inputElement.classList.remove('border', 'border-danger');
+
+    return 1;
+}
+
+function checkValidity(data){
+    let validity = 0;
+
+    data.forEach(element => {
+        validity += checkInp(element[0], element[1]);
+    });
+
+    if(validity == data.length){
+        return true;
+    }
+
+    return false;
+}

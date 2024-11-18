@@ -106,4 +106,19 @@ class RetailStoreController extends Controller
 
         return response()->json(['success'=> true, 'data'=> $store]);
     }
+
+    public function addretailstore(Request $req){
+        $store = new RetailStore();
+
+        $store->cluster_id = $req->cluster;
+        $store->address = $req->address;
+        $store->area = $req->area;
+        $store->distributor = $req->distributor;
+        $store->retail_station = $req->retail_station;
+        $store->rto_code = $req->rto_code;
+
+        $store->save();
+
+        return response()->json(['success'=> true, 'message'=> "Retail station has been successfully added"]);
+    }
 }
