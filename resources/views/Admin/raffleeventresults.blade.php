@@ -143,7 +143,7 @@
 
                 <!-- Event Price -->
                 <div class="col-md-6 col-12">
-                    <label for="event_price" class="form-label">Event Price</label>
+                    <label for="event_price" class="form-label">Event Prize</label>
                     <input type="text" class="form-control" name="event_price" id="event_price" placeholder="Enter event price">
                 </div>
 
