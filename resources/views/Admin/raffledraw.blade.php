@@ -61,7 +61,7 @@
                                 <div class="card-body" id="cardbg" style="background: linear-gradient(to right, #FF7F00, #FFFFFF);
 ">
 
-                                    <div class="row g-0 p-5">
+                                    <div class="row g-0 p-5 w-100">
 
                                         <div class="col-12 col-lg-7 col-xl-9 border-end">
 
@@ -109,14 +109,14 @@
                                             <div class="ms-4">
                                                 <label for="selectCluster" class="form-label">Regional Clusters</label>
                                                 <select name="selectCluster" id="selectCluster" class="form-control form-select-sm" onchange="SelectEntry(this)"></select>
-                                            
+
                                             </div>
-                                           
+
                                              <div class="card-header text-center position-relative">
                                                 <h2>Winner List</h2>
-                                                
+
                                             </div>
-                                           
+
                                             <div class="card-body scrollable" style="height: 35rem; overflow-y: auto;">
                                                 <table class="table">
                                                     <thead>
@@ -126,7 +126,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody id="winnerList">
-                                                       
+
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -138,7 +138,7 @@
                                     <div class="car-wrapper">
                                         <div class="car-wrapper_inner">
 
-                                        <div class="car_outter">  
+                                        <div class="car_outter">
                                             <div class="car">
                                             <div class="body">
                                                 <div></div>
@@ -149,18 +149,18 @@
                                                 <div class="handle"></div>
                                                 <div class="bottom"></div>
                                                 </div>
-                                                <div class="window"></div> 
+                                                <div class="window"></div>
                                                 <div class="light"></div>
                                                 <div class="light-front"></div>
                                                 <div class="antenna"></div>
                                                 <div class="ice-cream" >
                                                 <img class="" src="{{asset('unioil_images/unioil.png')}}" alt="Ice cream cone">
-                                                </div>  
+                                                </div>
                                             </div>
                                             <div>
                                                 <div class="wheel"></div>
                                                 <div class="wheel"></div>
-                                            </div>    
+                                            </div>
                                             <div class="wind">
                                                 <div class="p p1"></div>
                                                 <div class="p p2"></div>
