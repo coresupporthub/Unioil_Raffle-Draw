@@ -178,10 +178,12 @@ class RaffleController extends Controller
     }
 
 
-    public function getallevent(){
-        $data = Event::all();
+    public function getallevent()
+    {
+        $data = Event::orderBy('created_at', 'desc')->get(); // Order by latest created_at
         return response()->json($data);
     }
+
 
     public function addevent(Request $request){
         $check = Event::where('event_status','Active')->first();
