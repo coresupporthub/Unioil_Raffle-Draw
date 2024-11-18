@@ -5,9 +5,21 @@
         border-right: 1px solid #ccc;
     }
 
-    #cardbg:fullscreen {
-        background-color: #fff;
-    }
+.card-body:fullscreen {
+    width: 100vw; /* Full width of the viewport */
+    height: 100vh; /* Full height of the viewport */
+    background: inherit; /* Keep the existing background */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: auto;
+    padding: 0; /* Remove default padding in fullscreen */
+    margin: 0; /* Remove default margin in fullscreen */
+}
+.card-body {
+    transition: all 0.3s ease-in-out;
+}
 
 
     body {
@@ -186,23 +198,36 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
      <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script>
-        document.getElementById('fullscreenButton').addEventListener('click', function() {
-            let targetDiv = document.querySelector('#cardbg'); // Select the div by id
+       const fullscreenButton = document.getElementById('fullscreenButton');
+    const cardBody = document.querySelector('.card-body');
 
-            if (document.fullscreenElement) {
-                document.exitFullscreen();
-            } else {
-                if (targetDiv.requestFullscreen) {
-                    targetDiv.requestFullscreen();
-                } else if (targetDiv.mozRequestFullScreen) { // Firefox
-                    targetDiv.mozRequestFullScreen();
-                } else if (targetDiv.webkitRequestFullscreen) { // Chrome, Safari, Opera
-                    targetDiv.webkitRequestFullscreen();
-                } else if (targetDiv.msRequestFullscreen) { // IE/Edge
-                    targetDiv.msRequestFullscreen();
-                }
-            }
-        });
+fullscreenButton.addEventListener('click', () => {
+    if (document.fullscreenElement) {
+        // Exit fullscreen
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+        }
+    } else {
+        // Enter fullscreen
+        if (cardBody.requestFullscreen) {
+            cardBody.requestFullscreen();
+        } else if (cardBody.webkitRequestFullscreen) {
+            cardBody.webkitRequestFullscreen();
+        } else if (cardBody.mozRequestFullScreen) {
+            cardBody.mozRequestFullScreen();
+        } else if (cardBody.msRequestFullscreen) {
+            cardBody.msRequestFullscreen();
+        }
+    }
+});
+
+
     </script>
 
 
