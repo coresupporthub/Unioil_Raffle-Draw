@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Export PDF File</title>
+    <title>{{ $file_title }}</title>
     <style>
          @page {
-            margin: 5mm;
+            margin: 1mm;
         }
         table {
             width: 100%;
@@ -19,315 +19,44 @@
             page-break-inside: avoid;
         }
         td {
-            background-image: url('{{ public_path('unioil_images/coupon_b-w.jpg') }}');
+            background-image: url('{{ public_path('unioil_images/coupon_bw.jpg') }}');
             background-size: 100% 100%;
             background-position: center;
             background-repeat: no-repeat;
             border: 1px solid #ccc;
-            padding: 5px;
             position: relative;
-            height: 96px; 
+            width:2.70in;
+            height: 1.70in;
         }
         td img {
             position: absolute;
-            bottom: 4.4mm;
-            right: 1.9mm;
-            width: 96px;
-            height: 76px;
+            bottom: 7.2mm;
+            right: 2.1mm;
+            width: 100px;
+            height: 115px;
         }
 
     </style>
 </head>
 <body>
-
+    @foreach ($qrCodeChunkBy24 as $qrCodeBy8)
     <table >
-        <tr>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-        </tr>
-        <tr>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-        </tr>
-        <tr>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-        </tr>
-        <tr>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-        </tr>
-        <tr>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-        </tr>
-        <tr>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-        </tr>
-        <tr>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-        </tr>
-        <tr>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-        </tr>
-    </table>
 
+        @foreach ($qrCodeBy8 as $qrCodeBy3)
+        <tr>
+            @foreach ($qrCodeBy3 as $qrCode)
+            <td style="text-align: center;">
+                <img src="{{ $qrCode['image_base64'] }}">
+            </td>
+            @endforeach
 
-
-
-    <table >
-        <tr>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
         </tr>
-        <tr>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-        </tr>
-        <tr>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-        </tr>
-        <tr>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-        </tr>
-        <tr>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-        </tr>
-        <tr>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-        </tr>
-        <tr>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-        </tr>
-        <tr>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-        </tr>
-    </table>
-
-
-    <table >
-        <tr>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-        </tr>
-        <tr>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-        </tr>
-        <tr>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-        </tr>
-        <tr>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-        </tr>
-        <tr>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-        </tr>
-        <tr>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-        </tr>
-        <tr>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-        </tr>
-        <tr>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-            <td style="text-align: center;">
-                <img src="{{ public_path('unioil_images/0BIB9AWO800P027.png') }}" alt="">
-            </td>
-        </tr>
-    </table>
-
-
-
-
-
-
-    {{-- @foreach ($qrCodeChunk as $qrCode)
-    <div>
-        @foreach ($qrCode as $qr)
-        <img src="{{ $qr['image_base64'] }} alt="{{ $qr['image'] }}" style="width: 140px; height: auto; border: 1px solid black">
         @endforeach
-    </div>
-    @endforeach --}}
+
+    </table>
+
+    @endforeach
+
+
 </body>
 </html>
