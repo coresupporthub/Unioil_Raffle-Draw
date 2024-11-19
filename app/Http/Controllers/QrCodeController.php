@@ -90,11 +90,11 @@ class QrCodeController extends Controller
 
 
         $qrCodes->transform(function ($qrCode) {
-            $imagePath = storage_path('app/qr-codes/' . $qrCode->image); // Adjust the path as needed
+            $imagePath = storage_path('app/qr-codes/' . $qrCode->image);
             if (file_exists($imagePath)) {
                 $qrCode->image_base64 = 'data:image/png;base64,' . base64_encode(file_get_contents($imagePath));
             } else {
-                $qrCode->image_base64 = null; // Handle missing image case
+                $qrCode->image_base64 = null; 
             }
             return $qrCode;
         });
@@ -164,7 +164,7 @@ class QrCodeController extends Controller
         if (file_exists($imagePath)) {
             $qrCode->image_base64 = 'data:image/png;base64,' . base64_encode(file_get_contents($imagePath));
         } else {
-            $qrCode->image_base64 = null; // Handle missing image case
+            $qrCode->image_base64 = null;
         }
 
 

@@ -88,6 +88,20 @@ class RetailStoreController extends Controller
             $store = new RetailStore();
 
             if(!empty($data[0]) || !empty($data[1]) || !empty($data[2]) || !empty($data[3]) || !empty($data[4])){
+
+                $checker = RetailStore::where('cluster_id', $req->cluster)
+                                    ->where('area', $data[0])
+                                    ->where('address', $data[1])
+                                    ->where('distributor', $data[2])
+                                    ->where('retail_station', $data[3])
+                                    ->where('rto_code', $data[4])
+                                    ->first();
+
+
+                if($checker){
+                    continue;
+                }
+
                 $store->cluster_id = $req->cluster;
                 $store->area = $data[0];
                 $store->address = $data[1];
