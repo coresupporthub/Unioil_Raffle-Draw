@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Customers;
 use App\Models\ProductList;
+use App\Models\RetailStore;
 use App\Models\Event;
+use App\Models\RegionalCluster;
 
 
 class AnalyticsController extends Controller
@@ -95,6 +97,7 @@ class AnalyticsController extends Controller
             'eventData' => $groupedByDate,
         ]);
     }
+    
 
     public function entriesbyproducttype(Request $req, $event)
     {
@@ -137,4 +140,54 @@ class AnalyticsController extends Controller
 
         return response()->json($groupedByMonth);
     }
+
+    public function getClusterData($eventId)
+    {
+        if ($eventId == 'active') {
+            $activeEvent = Event::where('event_status', 'Active')->first();
+    
+            if (!$activeEvent) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'No active event found.',
+                ]);
+            }
+    
+            $eventId = $activeEvent->event_id; 
+        }
+    
+        $clusters = RegionalCluster::all();
+        $clusterData = [];
+    
+        foreach ($clusters as $cluster) {
+            $retails = RetailStore::where('cluster_id', $cluster->cluster_id)->get(); 
+    
+            $totalEntries = 0; 
+            foreach ($retails as $retail) {
+                $customers = Customers::where('event_id', $eventId)
+                    ->where('store_id', $retail->store_id)
+                    ->get();
+    
+                foreach ($customers as $customer) {
+                    $product = ProductList::where('product_id', $customer->product_purchased)->first();
+    
+                    if ($product) { 
+                        $totalEntries += $product->entries == 2 ? 2 : 1;
+                    }
+                }
+            }
+    
+            $clusterData[] = [
+                'cluster' => $cluster->cluster_name,
+                'entries' => $totalEntries,
+            ];
+        }
+    
+        return response()->json([
+            'success' => true,
+            'message' => 'Cluster data fetched successfully.',
+            'data' => $clusterData,
+        ]);
+    }
+    
 }

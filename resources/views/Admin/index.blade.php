@@ -95,7 +95,7 @@
                                     <div class="form-group col-8 mb-2">
                                         <select class="form-select form-select-md border-primary" style="color: #ff3300"
                                             aria-label="Select Event" id="event-dropdown"
-                                            onchange="fetchEventData(this.value)">
+                                            onchange="fetchEntriesData(this.value)">
                                             <option selected disabled value="">Select Event</option>
                                             @if ($events->isEmpty())
                                                 <option value="#" disabled>No events available</option>
@@ -117,17 +117,17 @@
 
                     <div class="row m-2">
                         {{-- AREA CHART --}}
-                        <div class="col-lg-7 col-xl-7">
+                        <div class="col-lg-6 col-xl-6">
                             <div class="card">
                                 <div class="card-body">
                                     @php
                                         $events = Event::all();
                                     @endphp
-
                                     <div class="form-group col-8 mb-2">
                                         <select class="form-select form-select-md border-primary" style="color: #ff3300"
-                                            aria-label="Select Event">
+                                            onchange="fetchEventDataarea(this.value)" aria-label="Select Event">
                                             <option selected disabled value="">Select Event</option>
+                                            <!-- Option for active event -->
                                             @if ($events->isEmpty())
                                                 <option value="#" disabled>No events available</option>
                                             @else
@@ -137,7 +137,6 @@
                                                 @endforeach
                                             @endif
                                         </select>
-
                                     </div>
 
                                     <h3 class="text-center"> Raffle Entry Issuance Over Time </h3>
@@ -147,17 +146,17 @@
                         </div>
 
                         {{-- BAR GRAPH --}}
-                        <div class="col-lg-5 col-xl-5">
+                        <div class="col-lg-6 col-xl-6">
                             <div class="card">
                                 <div class="card-body">
                                     @php
                                         $events = Event::all();
                                     @endphp
 
-                                    <div class="form-group col-8 mb-2">
+                                    <div class="form-group col-9 mb-2">
                                         <select class="form-select form-select-md border-primary" style="color: #ff3300"
                                             aria-label="Select Event" id="event-dropdown"
-                                            onchange="fetchEventData(this.value)">
+                                            onchange="fetchClusterData(this.value)">
                                             <option selected disabled value="">Select Event</option>
                                             @if ($events->isEmpty())
                                                 <option value="#" disabled>No events available</option>
