@@ -55,13 +55,22 @@ class RaffleController extends Controller
         $winnerSerialNumber = $shuffledSerialNumbers[0];
 
         $winnerRaffleEntry = RaffleEntries::where('serial_number', $winnerSerialNumber)->first();
-        $winnerRaffleEntry->winner_status = 'true';
-        $winnerRaffleEntry->winner_record = 'true';
-        $winnerRaffleEntry->save();
+        // $winnerRaffleEntry->winner_status = 'true';
+        // $winnerRaffleEntry->winner_record = 'true';
+        // $winnerRaffleEntry->save();
+
+        $customerWinner = Customers::where('customer_id', $winnerRaffleEntry->customer_id)->first();
+        $store = RetailStore::where('store_id', $customerWinner->store_id)->join('regional_cluster', 'retail_store.cluster_id', '=', 'regional_cluster.cluster_id')
+        ->select('cluster_name')->first();
+
+        $product = ProductList::where('product_id', $customerWinner->product_purchased)->select('product_name')->first();
 
         $response =[
             'success' => true,
-            'winner_serial_number' => $winnerSerialNumber
+            'winner_serial_number' => $winnerSerialNumber,
+            'winner_details' => $customerWinner,
+            'cluster_name'=> $store,
+            'product'=> $product
         ];
         Tools::Logger($request, ['Raffle Draw Stated', "Raffle Draw Selected a winner"], $response);
         return response()->json($response);

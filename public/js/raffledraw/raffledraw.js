@@ -66,7 +66,11 @@ function startRaffle() {
     drawButton.disabled = true;
     let counter = 0;
 
-    // Shuffle names every 100ms
+    const drumrolls = new Audio('/sounds/drumrolls.mp3');
+    drumrolls.loop = true;
+    drumrolls.volume = 0.5;
+    drumrolls.play();
+
     const shuffleInterval = setInterval(() => {
         const randomIndex = Math.floor(Math.random() * serial_number.length);
         raffleInput.value = serial_number[randomIndex];
@@ -90,8 +94,12 @@ function startRaffle() {
                     clearInterval(shuffleInterval);
                     raffleInput.value = response.winner_serial_number;
                     drawButton.disabled = false;
-                    console.log(response);
                     show('confetti');
+                    drumrolls.pause();
+                    setText('winner-name', response.winner_details.full_name);
+                    setText('serial-number-winner', response.winner_serial_number);
+                    setText('product-purchased-winner', response.product.product_name);
+                    setText('cluster-winner', response.cluster_name.cluster_name);
                     GetAllWinner();
                 }, 5000);
             }else{
@@ -174,4 +182,8 @@ $(document).ready(function () {
     } else {
         document.getElementById("drawButton").disabled = false;
     }
+});
+
+document.getElementById('confetti').addEventListener('click', ()=> {
+    hide('confetti');
 });

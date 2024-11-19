@@ -14,10 +14,12 @@ style="z-index: 999999999; background-color: rgba(0,0,0,0.4); width: 100vw !impo
     <h1>🎉 Congratulations to the Winner! 🎉</h1>
     <div class="winner-card">
         <div class="winner-info">
+            <h2> <span id="cluster-winner"></span> Cluster Winner</h2>
             <h2 id="winner-name">User Name</h2>
-            <p id="winning-details">Details about the winning trade...</p>
+            <p class="fs-3"><strong>Serial No: </strong><span id="serial-number-winner"></span></p>
+            <p class="fs-3"><strong>Product Purchased: </strong><span id="product-purchased-winner"></span></p>
         </div>
-        <div class="confetti" id="confetti"></div>
+
     </div>
 </div>
 
