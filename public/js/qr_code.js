@@ -200,7 +200,7 @@ function viewQR(id){
                     });
                 }
 
-                setText('viewRegistrationDate', res.customer.created_at);
+                setText('viewRegistrationDate', formatDateTime(res.customer.created_at));
                 setText('viewRetailStation', res.entries.retail_station);
                 setText('viewDistributor', res.entries.distributor);
             }else{
