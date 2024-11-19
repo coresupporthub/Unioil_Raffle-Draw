@@ -55,6 +55,8 @@
           },
       })).render();
   });
+//   Product Type Breakdown
+
 
 //   Raffle Entries issued by Product Type
 document.addEventListener("DOMContentLoaded", function () {
@@ -137,7 +139,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-//   Registration and Participation
+//   Regional Cluster Raffle Participation
   document.addEventListener("DOMContentLoaded", function() {
       // Bar Chart
       window.ApexCharts && (new ApexCharts(document.getElementById('chart-tasks-overview'), {
@@ -162,17 +164,7 @@ document.addEventListener("DOMContentLoaded", function () {
               enabled: false,
           },
           fill: {
-              type: "gradient",
-              gradient: {
-                  shade: 'dark',
-                  type: "vertical",
-                  shadeIntensity: 0.7,
-                  gradientToColors: ['#fd7e14'],
-                  inverseColors: true,
-                  opacityFrom: 1,
-                  opacityTo: 0.8,
-                  stops: [0, 100],
-              },
+              type: "solid",
           },
           series: [{
               name: "Raffle Entries",
@@ -239,7 +231,7 @@ document.addEventListener("DOMContentLoaded", function () {
                   shade: 'dark',
                   type: "vertical",
                   shadeIntensity: 0.7,
-                  gradientToColors: ['#137f13', '#fd7e14'],
+                  gradientToColors: ['#fd7e14', '#fd7e14'],
                   inverseColors: false,
                   opacityFrom: 0.8,
                   opacityTo: 0.3,
@@ -252,11 +244,8 @@ document.addEventListener("DOMContentLoaded", function () {
               curve: "smooth",
           },
           series: [{
-              name: "Series 1",
+              name: "Raffle Entries",
               data: [155, 65, 465, 265, 225, 325, 80]
-          }, {
-              name: "Series 2",
-              data: [113, 42, 65, 54, 76, 65, 35]
           }],
           tooltip: {
               theme: 'dark'
@@ -291,7 +280,7 @@ document.addEventListener("DOMContentLoaded", function () {
               '2020-06-20', '2020-06-21', '2020-06-22', '2020-06-23', '2020-06-24',
               '2020-06-25', '2020-06-26'
           ],
-          colors: ['#137f13', '#fd7e14'],
+          colors: ['#fd7e14', '#fd7e14'],
           legend: {
               show: false,
           },
