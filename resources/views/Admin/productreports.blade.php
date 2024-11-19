@@ -40,27 +40,65 @@
 
                             <div class="card">
                                 <div class="card-body">
+                                  <form action="" id="searchEntry" method="post">
+                                    @csrf      
+                            <div class="card mb-2">
+                            <div class="row p-2" style="background-color: #fd7e14">
+                                <div class="col-4 mb-3">
+                                    <h4 class="mb-2 ms-2 text-white" for="">Raffle Events </h4>
+                                    <select class="form-select" name="event_id" id="event_id" onchange=" GetAllEntry()">
+                                         <option value="" selected> All Raffle Event </option>
+                                        @php
+                                            $events = App\Models\Event::all();
+                                        @endphp
+                                        @foreach ($events as $event)
+                                             <option value="{{$event->event_id}}"> {{$event->event_name}} </option>
+                                        @endforeach
+                                </div>
+
+                                <div class="col-4 mb-3">
+                                    <h4 class="mb-2 ms-2 text-white" for=""> Regional Cluster </h4>
+                                    <select class="form-select" name="region" id="region" onchange=" GetAllEntry()">
+                                         <option value="" selected> All Cluster </option>
+                                         @php
+                                            $regions = App\Models\RegionalCluster::all();
+                                        @endphp
+                                         @foreach ($regions as $region)
+                                             <option value="{{$region->cluster_id}}"> {{$region->cluster_name}} </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="col-4 mb-3">
+                                    <h4 class="mb-2 ms-2 text-white" for=""> Product Type </h4>
+                                    <select class="form-select" name="producttype" id="producttype" onchange=" GetAllEntry()">
+                                         <option value="" selected> All Product </option>
+                                         @php
+                                            $products = App\Models\ProductList::all();
+                                        @endphp
+                                         @foreach ($products as $product)
+                                             <option value="{{$product->product_id}}"> {{$product->product_name}} </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                            </div>
+                        </div>
+                         </form>
                                     <div id="table-default" class="table-responsive">
                                         <table class="table">
                                             <thead>
                                                 <tr>
                                                     <th><button class="table-sort" data-sort="sort-customer-id">Regional Cluster</button></th>
                                                     <th><button class="table-sort" data-sort="sort-name">Area</button></th>
-                                                    <th><button class="table-sort" data-sort="sort-email">Distributo</button></th>
+                                                    <th><button class="table-sort" data-sort="sort-email">Distributor</button></th>
                                                     <th><button class="table-sort" data-sort="sort-phone">Retail Store</button></th>
                                                     <th><button class="table-sort" data-sort="sort-purchase">Purchase Date</button></th>
                                                     <th><button class="table-sort" data-sort="sort-product">Product Purchased</button></th>
                                                 </tr>
                                             </thead>
                                             <tbody class="table-tbody">
-                                                <tr>
-                                                    <td class="sort-customer-id">C1001</td>
-                                                    <td class="sort-name">Juan Dela Cruz</td>
-                                                    <td class="sort-email">juan.dela.cruz@email.com</td>
-                                                    <td class="sort-phone">09171234567</td>
-                                                    <td class="sort-purchase" data-date="1698534000">October 28, 2023</td>
-                                                    <td class="sort-product">Fully Synthetic Oil</td>
-                                                </tr>
+                                                
                                             </tbody>
                                         </table>
                                         
@@ -80,6 +118,6 @@
     </div>
 
     @include('Admin.components.scripts')
-    
+    <script src="{{asset('js/productreport/productreport.js')}}"></script>
 </body>
 </html>
