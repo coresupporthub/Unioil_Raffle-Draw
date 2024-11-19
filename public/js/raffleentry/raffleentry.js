@@ -14,7 +14,6 @@ function GetAllEntry() {
         success: function (response) {
             const data = response;
 
-            console.log(data);
             // Initialize DataTable and save instance
             const table = $("#entryTable").DataTable({
                 data: data,
