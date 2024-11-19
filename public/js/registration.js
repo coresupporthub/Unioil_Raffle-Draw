@@ -119,6 +119,16 @@ document.getElementById('region').addEventListener('change', (e)=> {
         const city = document.getElementById('city');
         const baranggay = document.getElementById('baranggay');
 
+        if(regionCode == '1300000000'){
+            enable('province', true);
+            setText('provinceLable', 'PROVINCE (NA)');
+            provinceId = 65;
+            loadCity(65);
+        }else{
+            enable('province', false);
+            setText('provinceLable', 'PROVINCE')
+        }
+
         clearOption(province, 'Select a Province');
         clearOption(city, 'Select a City');
         clearOption(baranggay, 'Select a Baranggay');
@@ -140,8 +150,14 @@ document.getElementById('region').addEventListener('change', (e)=> {
 document.getElementById('province').addEventListener('change', e => {
     const provinceValue = e.target.value.split('-');
     provinceId = provinceValue[0];
+    loadCity(provinceId);
+});
+
+
+
+function loadCity(prov_id){
     dataGetter(`https://psgc.cloud/api/regions/${regionCode}/cities-municipalities`).then(data => {
-        const filterCityProvince = data.filter(x => x.province_id == provinceId);
+        const filterCityProvince = data.filter(x => x.province_id == prov_id);
 
         const city = document.getElementById('city');
 
@@ -150,18 +166,37 @@ document.getElementById('province').addEventListener('change', e => {
         clearOption(city, 'Select a City');
         clearOption(baranggay, 'Select a Baranggay');
 
-        setValue('provinceId', provinceValue[1]);
+        setValue('provinceId', provinceId);
         setValue('cityId', '');
         setValue('baranggayId', '');
 
-        filterCityProvince.forEach(c => {
-            const option = createOption(c.name, `${c.id}-${c.name}`);
+        const manila = [
+            1350,
+            1351,
+            1352,
+            1353,
+            1354,
+            1355,
+            1356,
+            1357,
+            1358,
+            1359,
+            1360,
+            1361,
+            1362,
+            1363,
+        ];
 
-            city.append(option);
+        filterCityProvince.forEach(c => {
+            if(c.id != 1349){
+                const option = createOption(manila.includes(c.id) ? `${c.name} (City of Manila)`: c.name, `${c.id}-${manila.includes(c.id) ? `${c.name} (City of Manila)`: c.name}`);
+
+                city.append(option);
+            }
         });
 
     });
-});
+}
 
 document.getElementById('city').addEventListener('click', e => {
     const cityValue = e.target.value.split('-');
@@ -176,9 +211,6 @@ document.getElementById('city').addEventListener('click', e => {
         const baranggay = document.getElementById('baranggay');
 
         clearOption(baranggay, 'Select a Baranggay');
-
-
-
         filterCityBaranggay.forEach(b => {
             const option = createOption(b.name, b.name);
 

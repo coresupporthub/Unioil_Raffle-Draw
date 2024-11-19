@@ -56,10 +56,10 @@
 
                             <div class="col-md-3">
                                 <input type="hidden" name="province" id="provinceId">
-                                <label for="province" class="form-label">PROVINCE</label>
+                                <label for="province" id="provinceLable" class="form-label">PROVINCE</label>
                                 <select class="form-control select2" id="province" required>
                                     <option value="">Select a Province</option>
-                                    <!-- Add your city options here -->
+
                                 </select>
                                 <div class="valid-feedback">
                                     Looks good!
@@ -71,7 +71,7 @@
                                 <label for="city" class="form-label">CITY</label>
                                 <select class="form-control select2" id="city" required>
                                     <option value="">Select a City</option>
-                                    <!-- Add your city options here -->
+
                                 </select>
                                 <div class="valid-feedback">
                                     Looks good!
@@ -83,7 +83,7 @@
                                 <label for="barangay" class="form-label">BARANGAY</label>
                                 <select class="form-control select2" id="baranggay" required>
                                     <option value="">Select a Barangay</option>
-                                    <!-- Add your barangay options here -->
+
                                 </select>
                                 <div class="valid-feedback">
                                     Looks good!
@@ -94,7 +94,7 @@
 
                                 <label for="validationCustom02" class="form-label">STREET ADDRESS</label>
                                 <input type="text" name="street" class="form-control" id="validationCustom02" value=""
-                                    placeholder="Enter Street Address" required>
+                                    placeholder="Enter Street Address">
                                 <div class="valid-feedback">
                                     Looks good!
                                 </div>
@@ -149,7 +149,7 @@
                                 <label class="form-label">STORE ALPHANUMERIC CODE</label>
                                 <div class="row g-2">
                                     <div class="col">
-                                        <input type="text" name="store_code" id="store_code" class="form-control" placeholder="">
+                                        <input type="text" name="store_code" id="store_code" class="form-control" placeholder="" required>
                                     </div>
 
                                 </div>
