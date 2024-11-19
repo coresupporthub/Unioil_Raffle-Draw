@@ -28,7 +28,7 @@ class ActivityLogs extends Model
         'response_data'
     ];
 
-    protected $cast = [
+    protected $casts = [
         'sent_data' => 'array',
         'response_data' => 'array'
     ];

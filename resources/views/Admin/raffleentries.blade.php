@@ -111,77 +111,77 @@
                 </div>
                 <div class="modal-body">
                    <div class="row">
-    <!-- Regional Cluster -->
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="region">Regional Cluster</label>
-            <p id="regiondisplay"></p>
-        </div>
-    </div>
-    <!-- Area -->
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="area">Area</label>
-            <p id="area"></p>
-        </div>
-    </div>
-    <!-- Address -->
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="address">Address</label>
-            <p id="address"></p>
-        </div>
-    </div>
-    <!-- Distributor -->
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="distributor">Distributor</label>
-            <p id="distributor"></p>
-        </div>
-    </div>
-    <!-- Retail Store -->
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="store">Retail Store</label>
-            <p id="store"></p>
-        </div>
-    </div>
-    <!-- Coupon -->
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="coupon">Coupon</label>
-            <p id="coupon"></p>
-        </div>
-    </div>
-    <!-- Product -->
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="product">Product</label>
-            <p id="product"></p>
-        </div>
-    </div>
-    <!-- Full Name -->
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="name">Full Name</label>
-            <p id="name"></p>
-        </div>
-    </div>
-    <!-- Email -->
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="email">Email</label>
-            <p id="email"></p>
-        </div>
-    </div>
-    <!-- Phone Number -->
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="phone">Phone Number</label>
-            <p id="phone"></p>
-        </div>
-    </div>
-</div>
+                        <!-- Regional Cluster -->
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="region">Regional Cluster</label>
+                                <p id="regiondisplay"></p>
+                            </div>
+                        </div>
+                        <!-- Area -->
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="area">Area</label>
+                                <p id="area"></p>
+                            </div>
+                        </div>
+                        <!-- Address -->
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="address">Address</label>
+                                <p id="address"></p>
+                            </div>
+                        </div>
+                        <!-- Distributor -->
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="distributor">Distributor</label>
+                                <p id="distributor"></p>
+                            </div>
+                        </div>
+                        <!-- Retail Store -->
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="store">Retail Store</label>
+                                <p id="store"></p>
+                            </div>
+                        </div>
+                        <!-- Coupon -->
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="coupon">Coupon</label>
+                                <p id="coupon"></p>
+                            </div>
+                        </div>
+                        <!-- Product -->
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="product">Product</label>
+                                <p id="product"></p>
+                            </div>
+                        </div>
+                        <!-- Full Name -->
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="name">Full Name</label>
+                                <p id="name"></p>
+                            </div>
+                        </div>
+                        <!-- Email -->
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <p id="email"></p>
+                            </div>
+                        </div>
+                        <!-- Phone Number -->
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="phone">Phone Number</label>
+                                <p id="phone"></p>
+                            </div>
+                        </div>
+                    </div>
 
                 </div>
                 <div class="modal-footer">
