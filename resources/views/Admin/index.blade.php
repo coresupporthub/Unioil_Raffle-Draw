@@ -127,7 +127,6 @@
                                     <div class="form-group col-8 mb-2">
                                         <select class="form-select form-select-md border-primary" style="color: #ff3300"
                                             aria-label="Select Event">
-
                                             <option selected disabled value="">Select Event</option>
                                             @if ($events->isEmpty())
                                                 <option value="#" disabled>No events available</option>
@@ -138,6 +137,7 @@
                                                 @endforeach
                                             @endif
                                         </select>
+
                                     </div>
 
                                     <h3 class="text-center"> Raffle Entry Issuance Over Time </h3>
