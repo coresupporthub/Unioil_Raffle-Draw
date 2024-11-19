@@ -49,7 +49,7 @@ function GetAllEntry() {
                 info: true, // Show table info
                 footerCallback: function (row, data, start, end, display) {
                     const totalRows = data.length;
-                    $("#total-rows").html("Total Rows: " + totalRows);
+                    $("#total-rows").html("Total Products: " + totalRows);
                 },
             });
 
