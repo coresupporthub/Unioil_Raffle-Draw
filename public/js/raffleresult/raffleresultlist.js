@@ -7,7 +7,7 @@ function addWinnerRow() {
 
     // Get a specific query parameter
     const eventId = urlParams.get("event"); // Replace 'event' with your parameter name
-    
+
 
     const csrfToken = $('meta[name="csrf-token"]').attr("content");
     const formData = new FormData();
@@ -115,7 +115,7 @@ function getevent(){
 
     // Get a specific query parameter
     const eventId = urlParams.get("event"); // Replace 'event' with your parameter name
-   
+
 
     const csrfToken = $('meta[name="csrf-token"]').attr("content");
     const formData = new FormData();
@@ -138,7 +138,7 @@ function getevent(){
 
             document.getElementById("event_id").value = response.event_id;
             document.getElementById("event_name").value = response.event_name;
-            document.getElementById("event_price").value = response.event_price;
+            document.getElementById("event_price").value = response.event_prize;
             document.getElementById("event_start").value = response.event_start;
             document.getElementById("event_end").value = response.event_end;
             document.getElementById("event_description").value =
@@ -174,7 +174,7 @@ function SubmitData(formID, route) {
                  addWinnerRow();
                 alertify.success(response.message);
             }else{
-              alertify.alert("Warning", response.message, function () {});  
+              alertify.alert("Warning", response.message, function () {});
             }
         },
         error: function (xhr, status, error) {
@@ -215,9 +215,9 @@ function validateForm(formID) {
 }
 
 $(document).ready(function () {
-    
+
     addWinnerRow();
     getevent();
 
-    
+
 });
