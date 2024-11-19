@@ -177,7 +177,7 @@
                         </div>
                         </form>
                         <div class="modal-footer">
-                            <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+                            <button type="button" id="closeQrCodeGenerator" class="btn me-auto" data-bs-dismiss="modal">Close</button>
                             <button type="button" class="btn btn-primary"
                                 onclick="GenerateQrCode()" data-bs-dismiss="modal">Generate</button>
                         </div>
@@ -229,7 +229,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
-                           
+
                         </div>
                     </div>
                 </div>
@@ -266,8 +266,8 @@
                         </form>
 
                         <div class="modal-footer">
-                            <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
-                            <button type="button" id="exportQrBtn" data-bs-dismiss="modal" class="btn btn-primary">Export</button>
+                            <button type="button" id="closeExportModal" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+                            <button type="button" id="exportQrBtn" class="btn btn-primary">Export</button>
                         </div>
                     </div>
                 </div>

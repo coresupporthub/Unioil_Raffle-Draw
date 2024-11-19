@@ -58,6 +58,7 @@ function GetGeneratedQr() {
         type: "GET",
         success: function (response) {
             const qrCodesData = response.qrcodes;
+            exec('closeQrCodeGenerator');
             initializeQRTable(qrCodesData);
         },
         error: function (xhr, status, error) {
@@ -136,7 +137,8 @@ document.getElementById('exportQrForm').addEventListener('submit', (e)=> {
         }, error: xhr=> {
             console.log(xhr.responseText);
             loading(false);
-            dataParser({'success': false, 'message': 'No Unexported qr code images are available for export! Please add atleast 1'});
+            dataParser({'success': false, 'message': 'No Unexported qr code images are available for export! Please add atleast 3'});
+            exec('closeExportModal');
         }
     });
 });
@@ -199,7 +201,7 @@ function viewQR(id){
                     });
                 }
 
-                setText('viewRegistrationDate', res.customer.created_at);
+                setText('viewRegistrationDate', formatDateTime(res.customer.created_at));
                 setText('viewRetailStation', res.entries.retail_station);
                 setText('viewDistributor', res.entries.distributor);
             }else{

@@ -1,5 +1,25 @@
 @include('Admin.components.head', ['title' => 'UniOil Raffle Draw'])
 
+<style>
+    .form-select:focus {
+        border-color: #ff2600;
+        box-shadow: 0 0 0 0.25rem rgba(255, 136, 38, 0.25);
+    }
+
+    .form-select option {
+        color: #fd7e14;
+    }
+
+    .form-select option:checked {
+        background-color: #fd7e14;
+        color: white;
+    }
+
+    .form-select option:hover {
+        background-color: #e7f1ff;
+    }
+</style>
+
 <body>
     <script src="{{ asset('./dist/js/demo-theme.min.js?1692870487') }}"></script>
 
@@ -35,18 +55,27 @@
 
                         {{-- DONUT CHART --}}
                         <div class="col-lg-4 col-xl-4">
-
                             <div class="card">
                                 <div class="card-body">
-                                    <div class="dropdown">
-                                        <button class="btn btn-md btn-outline-sucess dropdown-toggle" type="button"
-                                            id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Select Event
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <li><a class="dropdown-item" href="#">Event 1</a></li>
-                                            <li><a class="dropdown-item" href="#">Event 2</a></li>
-                                        </ul>
+                                    @php
+                                        use App\Models\Event;
+                                        $events = Event::all();
+                                    @endphp
+
+                                    <div class="form-group" style="width: 140px">
+                                        <select class="form-select form-select-md border-primary" style="color: #ff3300"
+                                            aria-label="Select Event" id="event-dropdown"
+                                            onchange="fetchEventData(this.value)">
+                                            <option selected disabled value="">Select Event</option>
+                                            @if ($events->isEmpty())
+                                                <option value="#" disabled>No events available</option>
+                                            @else
+                                                @foreach ($events as $event)
+                                                    <option value="{{ $event->event_id }}">{{ $event->event_name }}
+                                                    </option>
+                                                @endforeach
+                                            @endif
+                                        </select>
                                     </div>
                                     <h3 class="text-center"> Product Type Breakdown </h3>
                                     <div id="chart-demo-pie"></div>
@@ -58,15 +87,24 @@
                         <div class="col-lg-8 col-xl-8">
                             <div class="card">
                                 <div class="card-body">
-                                    <div class="dropdown">
-                                        <button class="btn btn-md btn-outline-sucess dropdown-toggle" type="button"
-                                            id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Select Event
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <li><a class="dropdown-item" href="#">Event 1</a></li>
-                                            <li><a class="dropdown-item" href="#">Event 2</a></li>
-                                        </ul>
+                                    @php
+                                        $events = Event::all();
+                                    @endphp
+
+                                    <div class="form-group" style="width: 140px">
+                                        <select class="form-select form-select-md border-primary" style="color: #ff3300"
+                                            aria-label="Select Event">
+
+                                            <option selected disabled value="">Select Event</option>
+                                            @if ($events->isEmpty())
+                                                <option value="#" disabled>No events available</option>
+                                            @else
+                                                @foreach ($events as $event)
+                                                    <option value="{{ $event->event_id }}">{{ $event->event_name }}
+                                                    </option>
+                                                @endforeach
+                                            @endif
+                                        </select>
                                     </div>
                                     <h3 class="text-center"> Raffle Entries Issued by Product Type </h3>
                                     <div id="chart-tasks-overview1"></div>
@@ -80,16 +118,26 @@
                         <div class="col-lg-7 col-xl-7">
                             <div class="card">
                                 <div class="card-body">
-                                    <div class="dropdown">
-                                        <button class="btn btn-md btn-outline-sucess dropdown-toggle" type="button"
-                                            id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Select Event
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <li><a class="dropdown-item" href="#">Event 1</a></li>
-                                            <li><a class="dropdown-item" href="#">Event 2</a></li>
-                                        </ul>
+                                    @php
+                                        $events = Event::all();
+                                    @endphp
+
+                                    <div class="form-group" style="width: 140px">
+                                        <select class="form-select form-select-md border-primary" style="color: #ff3300"
+                                            aria-label="Select Event">
+
+                                            <option selected disabled value="">Select Event</option>
+                                            @if ($events->isEmpty())
+                                                <option value="#" disabled>No events available</option>
+                                            @else
+                                                @foreach ($events as $event)
+                                                    <option value="{{ $event->event_id }}">{{ $event->event_name }}
+                                                    </option>
+                                                @endforeach
+                                            @endif
+                                        </select>
                                     </div>
+
                                     <h3 class="text-center"> Raffle Entry Issuance Over Time </h3>
                                     <div id="chart-completion-tasks-10"></div>
                                 </div>
@@ -100,16 +148,26 @@
                         <div class="col-lg-5 col-xl-5">
                             <div class="card">
                                 <div class="card-body">
-                                    <div class="dropdown">
-                                        <button class="btn btn-md btn-outline-sucess dropdown-toggle" type="button"
-                                            id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Select Event
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <li><a class="dropdown-item" href="#">Event 1</a></li>
-                                            <li><a class="dropdown-item" href="#">Event 2</a></li>
-                                        </ul>
+                                    @php
+                                        $events = Event::all();
+                                    @endphp
+
+                                    <div class="form-group" style="width: 140px">
+                                        <select class="form-select form-select-md border-primary" style="color: #ff3300"
+                                            aria-label="Select Event">
+
+                                            <option selected disabled value="">Select Event</option>
+                                            @if ($events->isEmpty())
+                                                <option value="#" disabled>No events available</option>
+                                            @else
+                                                @foreach ($events as $event)
+                                                    <option value="{{ $event->event_id }}">{{ $event->event_name }}
+                                                    </option>
+                                                @endforeach
+                                            @endif
+                                        </select>
                                     </div>
+
                                     <h3 class="text-center"> Regional Cluster Raffle Participation</h3>
                                     <div id="chart-tasks-overview"></div>
                                 </div>
