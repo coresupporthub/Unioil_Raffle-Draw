@@ -47,6 +47,10 @@ Route::group(['middleware' => ['web']], function () {
         Route::post('/event-winner', [RaffleController::class, 'geteventwinner']);
         Route::post('/event-selected', [RaffleController::class, 'getaselectedevent']);
 
+        // Product Report
+        Route::post( '/product-report', [RaffleController::class, 'productreport']);
+
+
         //Admin Details
         Route::get('/get-admin-details', [AuthenticationController::class, 'getadmindetails']);
         Route::post('/admin-changepassword', [AuthenticationController::class, 'changepassword']);
