@@ -16,7 +16,7 @@ class RaffleController extends Controller
 
         $event = Event::where('event_status', 'Active')->first();
         $retailStores = RetailStore::where('cluster_id', $request->id)->pluck('rto_code');
-        $raffleEntries = RaffleEntries::where('winner_status', 'false')
+        $raffleEntries = RaffleEntries::where('winner_status', 'false')->where('winner_record','false')
         ->whereIn('retail_store_code', $retailStores)
         ->where('event_id', $event->event_id)
         ->get();
@@ -38,7 +38,7 @@ class RaffleController extends Controller
 
         $event = Event::where('event_status', 'Active')->first();
         $retailStores = RetailStore::where('cluster_id', $request->id)->pluck('rto_code');
-        $raffleEntries = RaffleEntries::where('winner_status', 'false')
+        $raffleEntries = RaffleEntries::where('winner_status', 'false')->where('winner_record','false')
         ->whereIn('retail_store_code', $retailStores)
         ->where('event_id', $event->event_id)
         ->select('serial_number')
@@ -112,7 +112,7 @@ class RaffleController extends Controller
 
         $event = Event::where('event_status', 'Active')->first();
         $retailStores = RetailStore::where('cluster_id', $id)->pluck('rto_code');
-        $raffleEntries = RaffleEntries::where('winner_status', 'true')
+        $raffleEntries = RaffleEntries::where('winner_status', 'true')->where('winner_record','true')
         ->whereIn('retail_store_code', $retailStores)
         ->where('event_id', $event->event_id)
         ->first();
