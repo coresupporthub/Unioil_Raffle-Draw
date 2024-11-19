@@ -63,7 +63,7 @@ Route::group(['middleware' => ['web']], function () {
 
         //Analytics 
         Route::get('/events/data/{eventId}', [AnalyticsController::class, 'getEventData']);
-        Route::get('/events/data/active', [AnalyticsController::class, 'getActiveEvent']);
+        Route::get('/events/datas/active', [AnalyticsController::class, 'getActiveEvent']);
 
 
     });
