@@ -13,7 +13,7 @@ class AnalyticsController extends Controller
 {
     public function getEventData($eventId)
     {
-        $activeEvent = Event::where('event_status', 'active')->first();
+        $activeEvent = Event::where('event_status', 'Active')->first();
     
         if (!$activeEvent) {
             return response()->json([
@@ -24,27 +24,23 @@ class AnalyticsController extends Controller
         }
     
         $customers = Customers::where('event_id', $eventId)->get();
-        $products = ProductList::whereIn('product_id', $customers->pluck('product_purchased'))->get();
-    
-        $semiSynthetic = $products->where('entries', 1)->count();
-        $fullySynthetic = $products->where('entries', 2)->count();
-    
-        if ($customers->isEmpty() || $products->isEmpty()) {
-            return response()->json([
-                'success' => true,
-                'message' => 'No data for selected event.',
-                'eventData' => $activeEvent,
-                'semiSynthetic' => 0,
-                'fullySynthetic' => 0,
-            ]);
+        $countFull = 0;
+        $countSemi = 0;
+        foreach($customers as $customer){
+            $products = ProductList::where('product_id', $customer->product_purchased)->first();
+            if($products->entries == 1){
+                $countSemi += 1; 
+            }else{
+                $countFull += 1; 
+            }
         }
     
         return response()->json([
             'success' => true,
             'message' => 'Event data fetched successfully.',
             'eventData' => $activeEvent,
-            'semiSynthetic' => $semiSynthetic,
-            'fullySynthetic' => $fullySynthetic,
+            'semiSynthetic' => $countSemi,
+            'fullySynthetic' => $countFull,
         ]);
     }
     

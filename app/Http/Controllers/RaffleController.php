@@ -55,9 +55,9 @@ class RaffleController extends Controller
         $winnerSerialNumber = $shuffledSerialNumbers[0];
 
         $winnerRaffleEntry = RaffleEntries::where('serial_number', $winnerSerialNumber)->first();
-        // $winnerRaffleEntry->winner_status = 'true';
-        // $winnerRaffleEntry->winner_record = 'true';
-        // $winnerRaffleEntry->save();
+        $winnerRaffleEntry->winner_status = 'true';
+        $winnerRaffleEntry->winner_record = 'true';
+        $winnerRaffleEntry->save();
 
         $customerWinner = Customers::where('customer_id', $winnerRaffleEntry->customer_id)->first();
         $store = RetailStore::where('store_id', $customerWinner->store_id)->join('regional_cluster', 'retail_store.cluster_id', '=', 'regional_cluster.cluster_id')
@@ -159,16 +159,16 @@ class RaffleController extends Controller
                 $query->whereIn('retail_store_code', $retailData);
             }
 
-         
+
             $raffleData = $query->get();
 
-           
+
                 foreach ($raffleData as $raffle) {
                 $retailStores = RetailStore::where('rto_code', $raffle->retail_store_code)->first();
                 $cluster = $retailStores
                    ? RegionalCluster::where('cluster_id', $retailStores->cluster_id)->first()?->cluster_name
                     : null;
-                
+
                 $customer = Customers::where('customer_id', $raffle->customer_id)
                     ->join('product_lists', 'product_lists.product_id', '=', 'customers.product_purchased')
                     ->first();

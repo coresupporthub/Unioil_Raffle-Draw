@@ -285,7 +285,7 @@
             });
         }, 200);
     </script> --}}
-
+    <input type="hidden" id="pdfFiles" value="{{ Storage::url('pdf_files') }}/qr_codes_export_1.pdf">
     @include('Admin.components.scripts')
     <script src="{{ asset('/js/qr_code.js') }}"></script>
     <script>

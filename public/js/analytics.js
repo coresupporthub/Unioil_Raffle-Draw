@@ -9,7 +9,9 @@ function fetchEventData(eventId) {
         dataType: 'json',
         success: function (data) {
             if (data.success) {
+            
                 updateChart(data.semiSynthetic, data.fullySynthetic);
+
             } else {
 
                 updateChart(0, 0, true); 
@@ -103,12 +105,13 @@ document.addEventListener('DOMContentLoaded', function () {
         chartInstance.render();
 
         $.ajax({
-            url: '/api/events/data/active', 
+            url: '/api/events/datas/active', 
             method: 'GET',
             dataType: 'json',
             success: function (data) {
                 if (data.success && data.eventData) {
                     const activeEventId = data.eventData.event_id; 
+
                     fetchEventData(activeEventId); 
                 } else {
                     updateChart(0, 0, true); 

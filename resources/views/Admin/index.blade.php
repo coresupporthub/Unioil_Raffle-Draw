@@ -62,7 +62,7 @@
                                         $events = Event::all();
                                     @endphp
 
-                                    <div class="form-group" style="width: 140px">
+                                    <div class="form-group col-8 mb-2">
                                         <select class="form-select form-select-md border-primary" style="color: #ff3300"
                                             aria-label="Select Event" id="event-dropdown"
                                             onchange="fetchEventData(this.value)">
@@ -92,7 +92,7 @@
                                         $events = Event::all();
                                     @endphp
 
-                                    <div class="form-group" style="width: auto">
+                                    <div class="form-group col-8 mb-2">
                                         <select class="form-select form-select-md border-primary" style="color: #ff3300"
                                             aria-label="Select Event" id="event-dropdown"
                                             onchange="fetchEventData(this.value)">
@@ -116,7 +116,7 @@
                     </div>
 
                     <div class="row m-2">
-                        {{-- BAR GRAPH --}}
+                        {{-- AREA CHART --}}
                         <div class="col-lg-7 col-xl-7">
                             <div class="card">
                                 <div class="card-body">
@@ -124,7 +124,7 @@
                                         $events = Event::all();
                                     @endphp
 
-                                    <div class="form-group" style="width: 140px">
+                                    <div class="form-group col-8 mb-2">
                                         <select class="form-select form-select-md border-primary" style="color: #ff3300"
                                             aria-label="Select Event">
 
@@ -154,10 +154,10 @@
                                         $events = Event::all();
                                     @endphp
 
-                                    <div class="form-group" style="width: 140px">
+                                    <div class="form-group col-8 mb-2">
                                         <select class="form-select form-select-md border-primary" style="color: #ff3300"
-                                            aria-label="Select Event">
-
+                                            aria-label="Select Event" id="event-dropdown"
+                                            onchange="fetchEventData(this.value)">
                                             <option selected disabled value="">Select Event</option>
                                             @if ($events->isEmpty())
                                                 <option value="#" disabled>No events available</option>
