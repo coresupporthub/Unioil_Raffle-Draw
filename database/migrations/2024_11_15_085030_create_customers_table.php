@@ -25,6 +25,11 @@ return new class extends Migration
             $table->uuid('qr_id');
             $table->foreign('qr_id')->references('qr_id')->on('qr_codes');
             $table->string('product_purchased');
+            $table->uuid('store_id');
+            $table->foreign('store_id')->references('store_id')->on('retail_store');
+            $table->uuid('store_id');
+            $table->foreign('store_id')->references('store_id')->on('retail_store');
+            $table->uuid('event_id');
             $table->timestamps();
         });
     }
