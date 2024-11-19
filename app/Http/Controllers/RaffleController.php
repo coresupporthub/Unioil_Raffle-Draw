@@ -159,17 +159,11 @@ class RaffleController extends Controller
                 $query->whereIn('retail_store_code', $retailData);
             }
 
-            // Fetch raffle entries for the event, with or without region filter
+
             $raffleData = $query->get();
 
-            // Add raffle entries to the data array
-            // foreach ($raffleData as $raffle) {
-            //     $data[] = [
-            //         'event_id' => $raffle->event_id,
-            //         'raffle_data' => $raffle,
-            //     ];
-            // }
-                   foreach ($raffleData as $raffle) {
+
+                foreach ($raffleData as $raffle) {
                 $retailStores = RetailStore::where('rto_code', $raffle->retail_store_code)->first();
                 $cluster = $retailStores
                    ? RegionalCluster::where('cluster_id', $retailStores->cluster_id)->first()?->cluster_name
