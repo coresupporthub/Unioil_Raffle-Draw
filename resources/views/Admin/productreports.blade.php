@@ -1,10 +1,10 @@
-@include('Admin.components.head', ['title' => 'Reports And Analytics'])
+@include('Admin.components.head', ['title' => 'Product Reports'])
 
 <body>
     <script src="{{ asset('./dist/js/demo-theme.min.js?1692870487') }}"></script>
     <div class="page">
 
-        @include('Admin.components.header', ['active' => 'reportsandanalytics'])
+        @include('Admin.components.header', ['active' => 'productreports'])
 
         <div class="page-wrapper">
             <div class="page-header d-print-none">
@@ -16,7 +16,7 @@
                         Overview
                       </div>
                       <h2 class="page-title">
-                        Reports And Analytics
+                        Product Reports 
                       </h2>
                     </div>
                     <!-- Page title actions -->
