@@ -66,9 +66,9 @@ function startRaffle() {
     drawButton.disabled = true;
     let counter = 0;
 
-    const drumrolls = new Audio('/sounds/drumrolls.mp3');
+    const drumrolls = new Audio("/sounds/drumroll.mp3");
     drumrolls.loop = true;
-    drumrolls.volume = 0.5;
+    drumrolls.volume = 0.8;
     drumrolls.play();
 
     const shuffleInterval = setInterval(() => {
@@ -81,6 +81,7 @@ function startRaffle() {
     const formData = new FormData();
     formData.append("_token", csrfToken);
     formData.append("id", cluster_id);
+    let celebrate = new Audio("/sounds/bell.mp3");
 
     $.ajax({
         url: "/api/raffle-draw",
@@ -101,10 +102,13 @@ function startRaffle() {
                     setText('product-purchased-winner', response.product.product_name);
                     setText('cluster-winner', response.cluster_name.cluster_name);
                     GetAllWinner();
+                    
+                    celebrate.play();
                 }, 5000);
             }else{
                 alertify.alert('Warning',response.message, function () {
                 });
+                drumrolls.pause();
                 drawButton.disabled = false;
                 clearInterval(shuffleInterval);
             }
