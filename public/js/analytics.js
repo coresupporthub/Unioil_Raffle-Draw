@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
             chart: {
                 type: "donut",
                 fontFamily: "inherit",
-                height: 340,
+                height: 354,
                 sparkline: { enabled: true },
                 animations: { enabled: false },
             },
@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     stops: [0, 100],
                 },
             },
-            series: [0, 0], // Default values for the chart
+            series: [0, 0], 
             labels: ["No Event Data", ""], 
             tooltip: { theme: "dark", enabled: false }, 
             grid: { strokeDashArray: 4 },
@@ -222,7 +222,7 @@ function fetchEventDataarea(eventId) {
                 new ApexCharts(chartElement, {
                     chart: {
                         type: 'line',
-                        height: 250,
+                        height: 302,
                         sparkline: { enabled: true }
                     },
                     series: [{
