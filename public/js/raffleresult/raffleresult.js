@@ -1,10 +1,16 @@
-
+const dateRanges = [];
 
 function loadCard() {
     $.ajax({
         url: "/api/get-all-event", // Replace with your endpoint URL
         type: "GET",
         success: function (response) {
+             response.forEach((element) => {
+                 dateRanges.push({
+                     from: element.event_start,
+                     to: element.event_end,
+                 });
+             });
             const cardContainer = document.getElementById("eventCard");
             while (cardContainer.firstChild) {
                 cardContainer.removeChild(cardContainer.firstChild);
@@ -17,7 +23,7 @@ function loadCard() {
                 );
                 link.classList.add("card-link");
                 link.classList.add("col-md-6", "col-lg-3");
-                
+
                 let colDiv = document.createElement("div");
                 colDiv.classList.add("col-md-6", "col-lg-3");
 
@@ -54,6 +60,17 @@ function loadCard() {
 
                 cardContainer.appendChild(link);
             });
+
+            flatpickr("#event_start", {
+                dateFormat: "Y-m-d", // Format as YYYY-MM-DD
+                minDate: "today", // Disable past dates
+                disable: dateRanges, // Use the array of date ranges
+            });
+            flatpickr("#event_end", {
+                dateFormat: "Y-m-d", // Format as YYYY-MM-DD
+                minDate: "today", // Disable past dates
+                disable: dateRanges, // Use the array of date ranges
+            });
         },
         error: function (xhr, status, error) {
             console.error("Error fetching data:", error);
@@ -61,12 +78,12 @@ function loadCard() {
     });
 }
 
-function submitdata(formID,route){
+function submitdata(formID, route) {
     if (!validateForm(formID)) {
         alertify.error("Please fill in all required fields.");
         return;
     }
-    loading(true)
+    loading(true);
     const form = document.getElementById(formID);
     const csrfToken = $('meta[name="csrf-token"]').attr("content");
     const formData = new FormData(form);
@@ -80,13 +97,12 @@ function submitdata(formID,route){
         contentType: false,
         success: function (response) {
             loading(false);
-            if(response.success){
+            if (response.success) {
                 alertify.success(response.message);
                 document.getElementById(formID).reset();
                 dynamicCall(response.reload);
-            }else{
-                alertify.alert("Warning",response.message, function () {
-                });
+            } else {
+                alertify.alert("Warning", response.message, function () {});
             }
         },
         error: function (xhr, status, error) {

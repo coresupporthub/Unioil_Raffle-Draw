@@ -81,10 +81,10 @@
                                                     <th>Regional Cluster</th>
                                                     <th>Store Name</th>
                                                     <th>Coupon</th>
-                                                    <th>Product Type</th>
-                                                    <th>Name</th>
+                                                    <th>Product Purchased</th>
+                                                    <th>Entry Name</th>
                                                     <th>Email</th>
-                                                    <th>Number</th>
+                                                    <th>Phone Number</th>
                                                 </tr>
                                             </thead>
                                             <tbody class="table-tbody">

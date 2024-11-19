@@ -12,6 +12,7 @@ function GenerateQrCode() {
         contentType: false, // Let FormData handle the content type (especially for file uploads)
         success: function (response) {
                 alertify.success(`${numberofqr} QR Code(s) generation is now in progress.`);
+                form.reset();
                 GetGeneratedQr();
                 setTimeout(function () {
                     GetGeneratedQr();
@@ -126,7 +127,7 @@ document.getElementById('exportQrForm').addEventListener('submit', (e)=> {
         },
         success: res => {
             loading(false);
-
+            document.getElementById("exportQrForm").reset();
            const blob = new Blob([res], { type: 'application/pdf' });
            const url = URL.createObjectURL(blob);
 
