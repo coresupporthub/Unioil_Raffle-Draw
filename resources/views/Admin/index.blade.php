@@ -77,6 +77,7 @@
                                             @endif
                                         </select>
                                     </div>
+
                                     <h3 class="text-center"> Product Type Breakdown </h3>
                                     <div id="chart-demo-pie"></div>
                                 </div>
@@ -91,10 +92,10 @@
                                         $events = Event::all();
                                     @endphp
 
-                                    <div class="form-group" style="width: 140px">
+                                    <div class="form-group" style="width: auto">
                                         <select class="form-select form-select-md border-primary" style="color: #ff3300"
-                                            aria-label="Select Event">
-
+                                            aria-label="Select Event" id="event-dropdown"
+                                            onchange="fetchEventData(this.value)">
                                             <option selected disabled value="">Select Event</option>
                                             @if ($events->isEmpty())
                                                 <option value="#" disabled>No events available</option>
@@ -106,6 +107,7 @@
                                             @endif
                                         </select>
                                     </div>
+
                                     <h3 class="text-center"> Raffle Entries Issued by Product Type </h3>
                                     <div id="chart-tasks-overview1"></div>
                                 </div>
