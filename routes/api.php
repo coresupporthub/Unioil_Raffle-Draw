@@ -9,6 +9,7 @@ use App\Http\Controllers\RaffleController;
 use App\Http\Middleware\ApiAuthentication;
 use App\Http\Controllers\CustomerRegistration;
 use App\Http\Controllers\ActivityLogsController;
+use App\Http\Controllers\AnalyticsController;
 
 Route::group(['middleware' => ['web']], function () {
 
@@ -59,6 +60,12 @@ Route::group(['middleware' => ['web']], function () {
         //Activity Logs
         Route::get('/activitylogs/list', [ActivityLogsController::class, 'list']);
         Route::get('/activitylogs/details/{id}', [ActivityLogsController::class, 'details']);
+
+        //Analytics 
+        Route::get('/events/data/{eventId}', [AnalyticsController::class, 'getEventData']);
+        Route::get('/events/data/active', [AnalyticsController::class, 'getActiveEvent']);
+
+
     });
 
     //Authentication
