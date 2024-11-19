@@ -18,7 +18,6 @@
     .form-select option:hover {
         background-color: #e7f1ff;
     }
-    
 </style>
 
 <body>
@@ -56,7 +55,6 @@
 
                         {{-- DONUT CHART --}}
                         <div class="col-lg-4 col-xl-4">
-
                             <div class="card">
                                 <div class="card-body">
                                     @php
@@ -64,16 +62,16 @@
                                         $events = Event::all();
                                     @endphp
 
-                                    <div class="form-group col-5">
+                                    <div class="form-group" style="width: 140px">
                                         <select class="form-select form-select-md border-primary" style="color: #ff3300"
-                                            aria-label="Select Event">
-
+                                            aria-label="Select Event" id="event-dropdown"
+                                            onchange="fetchEventData(this.value)">
                                             <option selected disabled value="">Select Event</option>
                                             @if ($events->isEmpty())
                                                 <option value="#" disabled>No events available</option>
                                             @else
                                                 @foreach ($events as $event)
-                                                    <option value="{{ $event->event_name }}">{{ $event->event_name }}
+                                                    <option value="{{ $event->event_id }}">{{ $event->event_name }}
                                                     </option>
                                                 @endforeach
                                             @endif
@@ -93,7 +91,7 @@
                                         $events = Event::all();
                                     @endphp
 
-                                    <div class="form-group col-3">
+                                    <div class="form-group" style="width: 140px">
                                         <select class="form-select form-select-md border-primary" style="color: #ff3300"
                                             aria-label="Select Event">
 
@@ -102,7 +100,7 @@
                                                 <option value="#" disabled>No events available</option>
                                             @else
                                                 @foreach ($events as $event)
-                                                    <option value="{{ $event->event_name }}">{{ $event->event_name }}
+                                                    <option value="{{ $event->event_id }}">{{ $event->event_name }}
                                                     </option>
                                                 @endforeach
                                             @endif
@@ -124,7 +122,7 @@
                                         $events = Event::all();
                                     @endphp
 
-                                    <div class="form-group col-3">
+                                    <div class="form-group" style="width: 140px">
                                         <select class="form-select form-select-md border-primary" style="color: #ff3300"
                                             aria-label="Select Event">
 
@@ -133,7 +131,7 @@
                                                 <option value="#" disabled>No events available</option>
                                             @else
                                                 @foreach ($events as $event)
-                                                    <option value="{{ $event->event_name }}">{{ $event->event_name }}
+                                                    <option value="{{ $event->event_id }}">{{ $event->event_name }}
                                                     </option>
                                                 @endforeach
                                             @endif
@@ -154,7 +152,7 @@
                                         $events = Event::all();
                                     @endphp
 
-                                    <div class="form-group col-4">
+                                    <div class="form-group" style="width: 140px">
                                         <select class="form-select form-select-md border-primary" style="color: #ff3300"
                                             aria-label="Select Event">
 
@@ -163,7 +161,7 @@
                                                 <option value="#" disabled>No events available</option>
                                             @else
                                                 @foreach ($events as $event)
-                                                    <option value="{{ $event->event_name }}">{{ $event->event_name }}
+                                                    <option value="{{ $event->event_id }}">{{ $event->event_name }}
                                                     </option>
                                                 @endforeach
                                             @endif

@@ -8,6 +8,7 @@ use App\Models\Customers;
 use App\Models\ProductList;
 use App\Models\RaffleEntries;
 
+
 Route::middleware([AuthMiddleware::class])->group(function () {
     Route::get('/', function () {
         return view('Admin.index');
@@ -52,6 +53,8 @@ Route::middleware([AuthMiddleware::class])->group(function () {
     Route::get('/activity-logs', function (){
         return view('Admin.activitylogs');
     });
+
+    
 });
 
 
