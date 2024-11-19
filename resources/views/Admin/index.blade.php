@@ -56,7 +56,7 @@
                         <div class="col-12">
                             <div class="card shadow">
                                 <div class="card-body text-center">
-                                    <h5 class="text-primary fw-bold mb-3">Select an Event to View Insights</h5>
+                                    <h4 class="fw-bold mb-1">Select an Event to View Insights</h4>
                                     @php
                                         use App\Models\Event;
                                         $events = Event::all();
@@ -83,7 +83,7 @@
                     
                     <div class="row m-2">
                         {{-- DONUT CHART --}}
-                        <div class="col-lg-6 col-xl-6">
+                        <div class="col-lg-4 col-xl-4">
                             <div class="card">
                                 <div class="card-body">
                                     <h3 class="text-center">Product Type Breakdown</h3>
@@ -93,7 +93,7 @@
                         </div>
                     
                         {{-- BAR GRAPH --}}
-                        <div class="col-lg-6 col-xl-6">
+                        <div class="col-lg-8 col-xl-8">
                             <div class="card">
                                 <div class="card-body">
                                     <h3 class="text-center">Raffle Entries Issued by Product Type</h3>
@@ -105,7 +105,7 @@
                     
                     <div class="row m-2">
                         {{-- AREA CHART --}}
-                        <div class="col-lg-6 col-xl-6">
+                        <div class="col-lg-7 col-xl7">
                             <div class="card">
                                 <div class="card-body">
                                     <h3 class="text-center">Raffle Entry Issuance Over Time</h3>
@@ -115,7 +115,7 @@
                         </div>
                     
                         {{-- REGIONAL CLUSTER PARTICIPATION --}}
-                        <div class="col-lg-6 col-xl-6">
+                        <div class="col-lg-5 col-xl-5">
                             <div class="card">
                                 <div class="card-body">
                                     <h3 class="text-center">Regional Cluster Raffle Participation</h3>
