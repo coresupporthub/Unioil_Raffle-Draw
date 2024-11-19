@@ -16,10 +16,10 @@ return new class extends Migration
             $table->string('full_name');
             $table->integer('age');
             $table->string('region');
-            $table->string('province');
+            $table->string('province')->nullable();
             $table->string('city');
             $table->string('brgy');
-            $table->string('street');
+            $table->string('street')->nullable();
             $table->string('mobile_number');
             $table->string('email');
             $table->uuid('qr_id');
