@@ -89,7 +89,7 @@ class QrCodeController extends Controller
 
         $qrCodes = QrCode::where('export_status', 'none')->where('status', 'unused')->take($limit)->select('image', 'qr_id')->get();
 
-        if(count($qrCodes) < 3){
+        if($qrCodes->count() < 3){
             return response()->json(['success'=> false, 'message'=> 'No Unexported qr code images are available for export! Please add atleast 3 codes'], 404);
         }
 

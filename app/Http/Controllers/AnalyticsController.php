@@ -69,8 +69,6 @@ class AnalyticsController extends Controller
             $event = Event::where('event_id', $filter)->first();
         }
 
-        $customers = Customers::where('event_id', $event->event_id)->get();
-
         $customers = Customers::where('event_id', $event->event_id)
             ->get()
             ->groupBy(function ($date) {
@@ -86,5 +84,47 @@ class AnalyticsController extends Controller
         }
 
         return response()->json($groupedByDate);
+    }
+
+    public function entriesbyproducttype(Request $req, $event)
+    {
+        if ($event == 'active') {
+            $eventData = Event::where('event_status', 'Active')->first();
+        } else {
+            $eventData = Event::where('event_id', $event)->first();
+        }
+
+        $customers = Customers::where('event_id', $eventData->event_id)
+            ->get()
+            ->groupBy(function ($date) {
+
+                return $date->created_at->format('Y-m');
+            });
+
+        $groupedByMonth = [];
+
+        foreach ($customers as $month => $records) {
+            $f_synthetic = 0;
+            $s_synthetic = 0;
+
+            foreach($records as $rec){
+                $product = ProductList::where('product_id', $rec['product_purchased'])->first();
+
+                if($product->entries == 1){
+                    $s_synthetic++;
+                }else{
+                    $f_synthetic++;
+                }
+            }
+
+            $groupedByMonth[] = [
+                'month' => $month,
+                'count' => $records->count(),
+                'fully_synthetic' => $f_synthetic,
+                'semi_synthetic' => $s_synthetic
+            ];
+        }
+
+        return response()->json($groupedByMonth);
     }
 }
