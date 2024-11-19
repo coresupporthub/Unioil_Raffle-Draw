@@ -49,12 +49,9 @@ Route::middleware([AuthMiddleware::class])->group(function () {
         return view('Admin.accountsettings');
     })->name('accountsettings');
 
-    Route::get('/qr-code/{fileName}', function ($fileName) {
-        $path = "qr-codes/{$fileName}";
-
-        return response()->file(storage_path("app/{$path}"));
-
-    })->name('qr_images');
+    Route::get('/activity-logs', function (){
+        return view('Admin.activitylogs');
+    });
 });
 
 

@@ -26,7 +26,7 @@
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-
+                        <a href="/activity-logs" class="dropdown-item"> Activity Log</a>
                         <a href="{{ route('accountsettings') }}" class="dropdown-item"> Settings</a>
                         <button onclick="adminLogout()" class="dropdown-item">Logout</button>
 
