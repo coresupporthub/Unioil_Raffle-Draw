@@ -69,8 +69,6 @@ class AnalyticsController extends Controller
             $event = Event::where('event_id', $filter)->first();
         }
 
-        $customers = Customers::where('event_id', $event->event_id)->get();
-
         $customers = Customers::where('event_id', $event->event_id)
             ->get()
             ->groupBy(function ($date) {
