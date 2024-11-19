@@ -22,7 +22,8 @@ class Customers extends Model
         'mobile_number',
         'email',
         'qr_id',
-        'product_purchased'
+        'product_purchased',
+        'store_id'
     ];
 
     protected $hidden = [

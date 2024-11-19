@@ -52,6 +52,7 @@ class CustomerRegistration extends Controller
         $customer->email = $req->email_address;
         $customer->qr_id = $qrCode->qr_id;
         $customer->product_purchased = $req->product;
+        $customer->store_id = $retailStore->store_id;
         $customer->save();
 
         $productEntry = ProductList::where('product_id', $req->product)->first();
