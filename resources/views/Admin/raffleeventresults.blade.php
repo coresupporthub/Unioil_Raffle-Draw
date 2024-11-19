@@ -169,7 +169,7 @@
             </div>
           <div class="modal-footer">
             <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmInactive">Set Incative</button>
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" id="inactiveBtn" data-bs-target="#confirmInactive">Set Inactive</button>
             <button type="button" class="btn btn-primary" onclick=" SubmitData('update-event-form', '/api/update-event')">Save changes</button>
           </div>
         </div>
@@ -189,9 +189,10 @@
 
               <form class="form-group" id="confirmInactiveForm">
                 @csrf
+                <input type="hidden" id="event_idInactive" name="event_id">
                 <label for="adminPassword">Admin Password</label>
-                <input type="password" id="adminPassword" class="form-control" placeholder="Enter your admin password here">
-                <small class="text-danger d-none" id="adminPassworE"></small>
+                <input type="password" id="adminPassword" name="password" class="form-control" placeholder="Enter your admin password here">
+                <small class="text-danger d-none" id="adminPasswordE">This is a required field</small>
               </form>
             </div>
             <div class="modal-footer">

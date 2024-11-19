@@ -9,6 +9,9 @@ use App\Models\RegionalCluster;
 use App\Models\RetailStore;
 use App\Models\Customers;
 use App\Http\Services\Tools;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class RaffleController extends Controller
 {
@@ -243,6 +246,13 @@ class RaffleController extends Controller
     }
 
     public function inactiveevent(Request $request){
+
+        $user = User::where('id', Auth::id())->first();
+
+        if(!Hash::check($request->password, $user->password)){
+            return response()->json(['success'=>false, 'message'=> 'Incorrect Password please try again']);
+        }
+
         $event = Event::where('event_id', $request->event_id)->first();
         $event->event_status = 'Inactive';
         $event->save();

@@ -217,3 +217,12 @@ function formatDateTime(isoString) {
 
     return `${formattedDate} - ${formattedTime}`;
 }
+
+
+function hide(id){
+    const element = document.getElementById(id);
+
+    if(element){
+        element.classList.add('d-none');
+    }
+}
