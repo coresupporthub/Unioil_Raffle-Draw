@@ -95,7 +95,7 @@ class AuthenticationController extends Controller
 
             if($user->verification_attempt < Magic::MAX_VERIFICATION_ATTEMPT){
                 $user->update([
-                    'verification_attempt' => $user->verification_attempt++,
+                    'verification_attempt' => $user->verification_attempt + 1,
                 ]);
             }else{
 

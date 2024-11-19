@@ -8,7 +8,7 @@ use App\Http\Controllers\RetailStoreController;
 use App\Http\Controllers\RaffleController;
 use App\Http\Middleware\ApiAuthentication;
 use App\Http\Controllers\CustomerRegistration;
-use App\Models\RetailStore;
+use App\Http\Controllers\ActivityLogsController;
 
 Route::group(['middleware' => ['web']], function () {
 
@@ -51,6 +51,10 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('/get-admin-details', [AuthenticationController::class, 'getadmindetails']);
         Route::post('/admin-changepassword', [AuthenticationController::class, 'changepassword']);
         Route::post('/update-admin-details', [AuthenticationController::class, 'updateadmin']);
+
+        //Activity Logs
+        Route::get('/activitylogs/list', [ActivityLogsController::class, 'list']);
+        Route::get('/activitylogs/details/{id}', [ActivityLogsController::class, 'details']);
     });
 
     //Authentication
