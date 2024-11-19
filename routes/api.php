@@ -61,10 +61,10 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('/activitylogs/list', [ActivityLogsController::class, 'list']);
         Route::get('/activitylogs/details/{id}', [ActivityLogsController::class, 'details']);
 
-        //Analytics 
+        //Analytics
         Route::get('/events/data/{eventId}', [AnalyticsController::class, 'getEventData']);
         Route::get('/events/datas/active', [AnalyticsController::class, 'getActiveEvent']);
-
+        Route::get('/entry/issuance/{filter}', [AnalyticsController::class, 'entryissuance']);
 
     });
 
