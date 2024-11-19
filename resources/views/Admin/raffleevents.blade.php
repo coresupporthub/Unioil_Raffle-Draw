@@ -1,4 +1,5 @@
 @include('Admin.components.head', ['title' => 'Raffle Events'])
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
 <style>
     .card-link-rotate:hover {
@@ -75,6 +76,7 @@
     </div>
 
     @include('Admin.components.scripts')
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="{{asset('js/raffleresult/raffleresult.js')}}"></script>
 
 </body>

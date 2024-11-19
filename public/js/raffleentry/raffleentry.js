@@ -34,24 +34,28 @@ function GetAllEntry() {
                 info: true, // Show table info
             });
 
-            // Add click event for rows
-            $("#entryTable tbody").on("click", "tr", function () {
+            // Delegate the click event to the table body
+            $("#entryTable").on("click", "tbody tr", function () {
                 const rowData = table.row(this).data(); // Get data for the clicked row
 
-                // Populate modal content
-                $("#regiondisplay").text(rowData.cluster || "N/A");
-                $("#area").text(rowData.area || "N/A");
-                $("#address").text(rowData.address || "N/A");
-                $("#distributor").text(rowData.distributor || "N/A");
-                $("#store").text(rowData.retail_name || "N/A");
-                $("#coupon").text(rowData.serial_number || "N/A");
-                $("#product").text(rowData.product_type || "N/A");
-                $("#name").text(rowData.customer_name || "N/A");
-                $("#email").text(rowData.customer_email || "N/A");
-                $("#phone").text(rowData.customer_phone || "N/A");
+                if (rowData) {
+                    // Populate modal content only if rowData exists
+                    $("#regiondisplay").text(rowData.cluster || "N/A");
+                    $("#area").text(rowData.area || "N/A");
+                    $("#address").text(rowData.address || "N/A");
+                    $("#distributor").text(rowData.distributor || "N/A");
+                    $("#store").text(rowData.retail_name || "N/A");
+                    $("#coupon").text(rowData.serial_number || "N/A");
+                    $("#product").text(rowData.product_type || "N/A");
+                    $("#name").text(rowData.customer_name || "N/A");
+                    $("#email").text(rowData.customer_email || "N/A");
+                    $("#phone").text(rowData.customer_phone || "N/A");
 
-                // Show the modal
-                $("#viewModal").modal("show");
+                    // Show the modal
+                    $("#viewModal").modal("show");
+                } else {
+                    console.warn("No data available for the clicked row.");
+                }
             });
         },
         error: function (xhr, status, error) {
@@ -59,6 +63,7 @@ function GetAllEntry() {
         },
     });
 }
+
 
 
 $(document).ready(function () {

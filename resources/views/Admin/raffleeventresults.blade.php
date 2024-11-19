@@ -1,5 +1,20 @@
 @include('Admin.components.head', ['title' => 'Raffle Event Results'])
+                        @php
+    $eventId = request()->query('event'); // Use request() to retrieve the query parameter
+    $event = null;
 
+    if ($eventId) {
+        $event = App\Models\Event::where('event_id', $eventId)->where('event_status','Inactive')->first();
+    }
+@endphp
+
+@if($event)
+    <style>
+        .hide-me{
+            display: none;
+        }
+    </style>
+@endif
 <body>
     <script src="{{ asset('./dist/js/demo-theme.min.js?1692870487') }}"></script>
     <div class="page">
@@ -39,7 +54,7 @@
                                         <path d="M8 15h3" />
                                     </svg> Generate Report
                                 </a>
-
+                                <div class=" hide-me">
                                 <button class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal"
                                     data-bs-target="#update-event-modal">
                                     <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
@@ -58,6 +73,7 @@
                                         <path d="M8 15h3" />
                                     </svg> Update Raffle Event
                                 </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -103,7 +119,7 @@
                                                     <th>Prize</th>
                                                     <th>Winner Name</th>
                                                     <th>Email</th>
-                                                    <th>Action</th>
+                                                    <th class="hide-me">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="winnerListTable">
@@ -116,7 +132,7 @@
 
                             <!-- Back to Raffles Button -->
                             <div class="text-center mt-5">
-                                <a href="/raffle/draw" class="btn btn-primary">← Back to Raffles</a>
+                                <a href="/raffle/draw" class="btn btn-primary hide-me">← Back to Raffles</a>
                             </div>
                         </div>
 

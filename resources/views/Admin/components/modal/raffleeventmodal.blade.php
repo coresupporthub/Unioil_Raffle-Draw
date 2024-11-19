@@ -10,25 +10,25 @@
                 <!-- Event Name -->
                 <div class="col-md-6 col-12">
                     <label for="event_name" class="form-label">Event Name</label>
-                    <input type="text" class="form-control" name="event_name" id="event_name" placeholder="Enter event name">
+                    <input type="text" class="form-control" name="event_name" id="event_name" placeholder="Enter event name" maxlength="30">
                 </div>
 
                 <!-- Event Price -->
                 <div class="col-md-6 col-12">
                     <label for="event_price" class="form-label">Event Prize</label>
-                    <input type="text" class="form-control" name="event_price" id="event_price" placeholder="Enter event price">
+                    <input type="text" class="form-control" name="event_price" id="event_price" placeholder="Enter event prize"  maxlength="50">
                 </div>
 
                 <!-- Event Start -->
                 <div class="col-md-6 col-12">
                     <label for="event_start" class="form-label">Event Start</label>
-                    <input type="date" class="form-control" name="event_start" id="event_start">
+                    <input type="text" class="form-control" name="event_start" id="event_start" placeholder="Enter event start">
                 </div>
 
                 <!-- Event End -->
                 <div class="col-md-6 col-12">
                     <label for="event_end" class="form-label">Event End</label>
-                    <input type="date" class="form-control" name="event_end" id="event_end">
+                    <input type="text" class="form-control" name="event_end" id="event_end" placeholder="Enter event end">
                 </div>
 
                 <!-- Event Description -->
@@ -42,7 +42,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" onclick="submitdata('add-event-form',`/api/add-event`)">Save changes</button>
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="submitdata('add-event-form',`/api/add-event`)">Save changes</button>
           </div>
         </div>
       </div>
