@@ -68,13 +68,20 @@ class AnalyticsController extends Controller
         } else {
             $event = Event::where('event_id', $filter)->first();
         }
-
+    
+        if (!$event) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Event not found.',
+            ]);
+        }
+    
         $customers = Customers::where('event_id', $event->event_id)
             ->get()
             ->groupBy(function ($date) {
                 return $date->created_at->format('Y-m-d');
             });
-
+    
         $groupedByDate = [];
         foreach ($customers as $date => $records) {
             $groupedByDate[] = [
@@ -82,8 +89,11 @@ class AnalyticsController extends Controller
                 'count' => $records->count(),
             ];
         }
-
-        return response()->json($groupedByDate);
+    
+        return response()->json([
+            'success' => true,
+            'eventData' => $groupedByDate,
+        ]);
     }
 
     public function entriesbyproducttype(Request $req, $event)
