@@ -67,7 +67,7 @@ class QrCodeController extends Controller
         $latestQueue = QueueingStatusModel::latest()->first();
         $queue = new QueueingStatusModel();
 
-        $limit = 24 * $req->page_number;
+        $limit = 36 * $req->page_number;
 
         $qrCodes = QrCode::where('export_status', 'none')->where('status', 'unused')->take($limit)->select('image', 'qr_id')->get();
 
@@ -99,8 +99,8 @@ class QrCodeController extends Controller
             return $qrCode;
         });
 
-        $chunkedQrCodes = $qrCodes->chunk(24)->map(function ($chunk) {
-            return $chunk->chunk(3);
+        $chunkedQrCodes = $qrCodes->chunk(36)->map(function ($chunk) {
+            return $chunk->chunk(4);
         });
 
         $chunkedQrCodesArray = $chunkedQrCodes->toArray();
@@ -117,7 +117,7 @@ class QrCodeController extends Controller
         $export->queue_id = $queue->queue_id;
         $export->save();
 
-        $pdf = Pdf::loadView('Admin.pdf.export_qr', ['qrCodeChunkBy24'=> $chunkedQrCodesArray, 'file_title'=> $fileName]);
+        $pdf = Pdf::loadView('Admin.pdf.export_qr', ['qrCodeChunkBy24'=> $chunkedQrCodesArray, 'file_title'=> $fileName, 'entry' => $req->qrtype]);
 
         foreach($chunkedQrCodes as $qrCodesC){
             foreach($qrCodesC as $qrCodes){

@@ -9,31 +9,35 @@
          @page {
             margin: 1mm;
         }
+        body{
+            text-align: center;
+        }
         table {
-            width: 100%;
+            width: 2in;
             border-collapse: collapse;
             page-break-before: auto;
             page-break-after: auto;
+            margin: auto;
         }
         tbody tr {
             page-break-inside: avoid;
         }
         td {
-            background-image: url('{{ public_path('unioil_images/coupon_bw.jpg') }}');
+            background-image: url('{{ $entry == 'Single Entry QR Code' ? public_path('unioil_images/entry_coupon_1.jpg') : public_path('unioil_images/entry_coupon_2.jpg') }}');
             background-size: 100% 100%;
             background-position: center;
             background-repeat: no-repeat;
             border: 1px solid #ccc;
             position: relative;
-            width:2.70in;
-            height: 1.70in;
+            width:2in;
+            height: 1.5in;
         }
         td img {
             position: absolute;
-            bottom: 7.2mm;
-            right: 2.1mm;
-            width: 100px;
-            height: 115px;
+            bottom: 13mm;
+            right: 1.2mm;
+            width: 18mm;
+            height: 18mm;
         }
 
     </style>

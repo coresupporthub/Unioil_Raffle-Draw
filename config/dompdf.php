@@ -213,7 +213,7 @@ return [
          *
          * @var int
          */
-        'dpi' => 96,
+        'dpi' => 350,
 
         /**
          * Enable embedded PHP
