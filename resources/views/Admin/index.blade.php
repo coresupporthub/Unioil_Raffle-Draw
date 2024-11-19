@@ -30,36 +30,93 @@
             <!-- Page body -->
             <div class="page-body">
                 <div class="container-xl">
-                  {{-- graph chart --}}
+
                     <div class="row m-2">
 
-                        <div class="col-lg-12 col-xl-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div id="chart-completion-tasks-10"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row m-2">
                         {{-- DONUT CHART --}}
                         <div class="col-lg-4 col-xl-4">
+
                             <div class="card">
                                 <div class="card-body">
+                                    <div class="dropdown">
+                                        <button class="btn btn-md btn-outline-sucess dropdown-toggle" type="button"
+                                            id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Select Event
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <li><a class="dropdown-item" href="#">Event 1</a></li>
+                                            <li><a class="dropdown-item" href="#">Event 2</a></li>
+                                        </ul>
+                                    </div>
+                                    <h3 class="text-center"> Product Type Breakdown </h3>
                                     <div id="chart-demo-pie"></div>
                                 </div>
                             </div>
                         </div>
 
-                        {{-- BAR CHART --}}
+                        {{-- BAR GRAPH --}}
                         <div class="col-lg-8 col-xl-8">
                             <div class="card">
                                 <div class="card-body">
+                                    <div class="dropdown">
+                                        <button class="btn btn-md btn-outline-sucess dropdown-toggle" type="button"
+                                            id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Select Event
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <li><a class="dropdown-item" href="#">Event 1</a></li>
+                                            <li><a class="dropdown-item" href="#">Event 2</a></li>
+                                        </ul>
+                                    </div>
+                                    <h3 class="text-center"> Raffle Entries Issued by Product Type </h3>
+                                    <div id="chart-tasks-overview1"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row m-2">
+                        {{-- BAR GRAPH --}}
+                        <div class="col-lg-7 col-xl-7">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="dropdown">
+                                        <button class="btn btn-md btn-outline-sucess dropdown-toggle" type="button"
+                                            id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Select Event
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <li><a class="dropdown-item" href="#">Event 1</a></li>
+                                            <li><a class="dropdown-item" href="#">Event 2</a></li>
+                                        </ul>
+                                    </div>
+                                    <h3 class="text-center"> Raffle Entry Issuance Over Time </h3>
+                                    <div id="chart-completion-tasks-10"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- BAR GRAPH --}}
+                        <div class="col-lg-5 col-xl-5">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="dropdown">
+                                        <button class="btn btn-md btn-outline-sucess dropdown-toggle" type="button"
+                                            id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Select Event
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <li><a class="dropdown-item" href="#">Event 1</a></li>
+                                            <li><a class="dropdown-item" href="#">Event 2</a></li>
+                                        </ul>
+                                    </div>
+                                    <h3 class="text-center"> Regional Cluster Raffle Participation</h3>
                                     <div id="chart-tasks-overview"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>

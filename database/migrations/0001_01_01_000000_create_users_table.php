@@ -21,6 +21,7 @@ return new class extends Migration
             $table->enum('authenticated', ['false', 'true'])->default('false');
             $table->integer('login_attempt')->default(0);
             $table->integer('resend_attempt')->default(0);
+            $table->integer('verification_attempt')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

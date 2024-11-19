@@ -24,7 +24,8 @@ class User extends Authenticatable
         'verification_code',
         'authenticated',
         'login_attempt',
-        'resend_attempt'
+        'resend_attempt',
+        'verification_attempt'
     ];
 
     /**
@@ -38,7 +39,8 @@ class User extends Authenticatable
         'verification_code',
         'authenticated',
         'resend_attempt',
-        'login_attempt'
+        'login_attempt',
+        'verification_attempt'
     ];
 
     /**
