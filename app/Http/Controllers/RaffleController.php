@@ -8,7 +8,7 @@ use App\Models\Event;
 use App\Models\RegionalCluster;
 use App\Models\RetailStore;
 use App\Models\Customers;
-use Illuminate\Support\Arr;
+use App\Http\Services\Tools;
 
 class RaffleController extends Controller
 {
@@ -54,10 +54,12 @@ class RaffleController extends Controller
         $winnerRaffleEntry->winner_record = 'true';
         $winnerRaffleEntry->save();
 
-        return response()->json([
+        $response =[
             'success' => true,
             'winner_serial_number' => $winnerSerialNumber
-        ]);
+        ];
+        Tools::Logger($request, ['Raffle Draw Stated', "Raffle Draw Selected a winner"], $response);
+        return response()->json($response);
 
     }
 
@@ -198,7 +200,11 @@ class RaffleController extends Controller
         $event->event_description = $request->event_description;
         $event->event_status = 'Active';
         $event->save();
-        return response()->json(['message' => 'Event added successfully','reload'=>'loadCard','success'=>true]);
+
+        $response = ['message' => 'Event added successfully','reload'=>'loadCard','success'=>true];
+        Tools::Logger($request, ['Added an Event', "Event {$request->event_name} has been added"], $response);
+
+        return response()->json($response);
     }
 
     public function redraw(Request $request){
@@ -206,7 +212,10 @@ class RaffleController extends Controller
         $raffleEntries->winner_status = 'false';
         $raffleEntries->save();
 
-        return response()->json(['message' => 'Cluster winner disqialified. Prize will be redrawn on '.$raffleEntries->updated_at, 'reload' => 'addWinnerRow', 'success' => true]);
+        $response = ['message' => 'Cluster winner disqialified. Prize will be redrawn on '.$raffleEntries->updated_at, 'reload' => 'addWinnerRow', 'success' => true];
+        Tools::Logger($request, ['Disqualify Customer', "A winner is unable to claim the prize and successfully remove its winner status"], $response);
+
+        return response()->json($response);
     }
 
     public function getaselectedevent(Request $request)
@@ -225,7 +234,10 @@ class RaffleController extends Controller
         $event->event_description = $request->event_description;
         $event->save();
 
-        return response()->json(['message' => 'Event successfully update', 'reload' => 'getevent', 'success' => true]);
+        $response = ['message' => 'Event successfully update', 'reload' => 'getevent', 'success' => true];
+        Tools::Logger($request, ['Update Event Details', "Event is successfully Updated"], $response);
+
+        return response()->json($response);
         }
         return response()->json(['message' => 'This event is currently inactive, and its details cannot be edited.', 'success' => false]);
     }
@@ -234,6 +246,10 @@ class RaffleController extends Controller
         $event = Event::where('event_id', $request->event_id)->first();
         $event->event_status = 'Inactive';
         $event->save();
-        return response()->json(['message' => 'Event successfully inactive', 'success' => true]);
+
+        $response = ['message' => 'Event successfully inactive', 'success' => true];
+        Tools::Logger($request, ['Event Close', "Event is successfully set to inactive status"], $response);
+
+        return response()->json($response);
     }
 }
