@@ -221,3 +221,8 @@ $(document).ready(function () {
 
 
 });
+
+
+document.getElementById('confirmInactiveBtn').addEventListener('click', ()=> {
+    
+});

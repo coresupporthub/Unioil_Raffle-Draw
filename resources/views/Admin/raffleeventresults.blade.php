@@ -187,14 +187,16 @@
               <p class="mb-1">Please provide the the current administrators login password to verify this action!</p>
               <small class="text-danger">Note! This action is irreversible </small>
 
-              <form class="form-group" action="">
+              <form class="form-group" id="confirmInactiveForm">
+                @csrf
                 <label for="adminPassword">Admin Password</label>
                 <input type="password" id="adminPassword" class="form-control" placeholder="Enter your admin password here">
+                <small class="text-danger d-none" id="adminPassworE"></small>
               </form>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Save changes</button>
+              <button type="button" class="btn btn-primary" id="confirmInactiveBtn" data-bs-dismiss="modal">Proceed</button>
             </div>
           </div>
         </div>
