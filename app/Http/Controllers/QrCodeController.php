@@ -49,18 +49,36 @@ class QrCodeController extends Controller
         return response()->json(['qrcodes' => $qrcodes]);
     }
 
-    public function queueProgress(Request $req){
+    public function queueProgress(Request $req)
+    {
         $queue = QueueingStatusModel::all();
-        foreach($queue as $q){
+
+        foreach ($queue as $q) {
             $export = ExportFilesModel::where('queue_id', $q->queue_id)->first();
 
-            if($export){
+            if ($export) {
+                $filePath = storage_path('app/pdf_files/' . $export->file_name);
+
+
+                if (file_exists($filePath)) {
+                    $fileContent = file_get_contents($filePath);
+                    $base64Encoded = base64_encode($fileContent);
+                    $mimeType = mime_content_type($filePath);
+
+                    $dataUri = 'data:' . $mimeType . ';base64,' . $base64Encoded;
+                    $export->base64File = $dataUri;
+                } else {
+
+                    $export->base64File = null;
+                }
+
                 $q->export = $export;
-            }else{
+            } else {
                 $q->export = null;
             }
         }
-        return response()->json(['queue'=> $queue]);
+
+        return response()->json(['queue' => $queue]);
     }
 
     public function exportQR(Request $req){
@@ -94,7 +112,7 @@ class QrCodeController extends Controller
             if (file_exists($imagePath)) {
                 $qrCode->image_base64 = 'data:image/png;base64,' . base64_encode(file_get_contents($imagePath));
             } else {
-                $qrCode->image_base64 = null; 
+                $qrCode->image_base64 = null;
             }
             return $qrCode;
         });

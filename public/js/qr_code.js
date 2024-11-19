@@ -78,8 +78,13 @@ document.getElementById('resetTable').addEventListener('click', ()=> {
     QueueStatus();
 });
 
-async function QueueStatus(){
+async function QueueStatus() {
     const response = await fetch('/api/get-queue-status');
+
+    if (!response.ok) {
+        alert("Failed to fetch queue status");
+        return;
+    }
 
     const result = await response.json();
 
@@ -87,15 +92,19 @@ async function QueueStatus(){
         data: result.queue,
         destroy: true,
         columns: [
-            { data: null,
-                render: data=> {
-                    return `${data.type} ${data.queue_number}`
-                }
-             },
-            { data: "entry_type" },
-            { data: "status" },
             {
-
+                data: null,
+                render: data => {
+                    return `${data.type} ${data.queue_number}`;
+                }
+            },
+            {
+                data: "entry_type"
+            },
+            {
+                data: "status"
+            },
+            {
                 data: null,
                 render: function (data, type, row) {
                     return `${data.items}/${data.total_items}`;
@@ -103,8 +112,17 @@ async function QueueStatus(){
             },
             {
                 data: null,
-                render: data=> {
-                    return data.export ? `<a download href="/pdf_files/${data.export.file_name}">${data.export.file_name}</a>` : 'N/A';
+                render: data => {
+                    if (data.export && data.export.base64File) {
+                        let base64File = data.export.base64File;
+                        if (base64File.startsWith('data:')) {
+                            return `<a download href="${base64File}">${data.export.file_name}</a>`;
+                        } else {
+                            return 'Invalid file data';
+                        }
+                    } else {
+                        return 'N/A';
+                    }
                 }
             }
         ],
