@@ -71,6 +71,10 @@
                 <div class="container-xl">
                     <div class="card">
                         <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <!-- Card Title aligned to the left -->
+                                <h5 class="card-title mb-0">Queue List & Exported QR Code</h5>
+                            </div>
                             <div id="table-default" class="table-responsive">
                                 <table id="queue-progress" class="table">
                                     <thead>
@@ -100,14 +104,19 @@
                 <div class="container-xl">
                     <div class="card">
                         <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <!-- Card Title aligned to the left -->
+                                <h5 class="card-title mb-0">Generated QR Codes</h5>
 
-                            <div class="d-flex w-100 justify-content-end align-items-center gap-2 mb-4">
-                                <label for="filterQR">Filter QR Entry Type</label>
-                                <select id="filterQR" class="form-select w-50">
-                                    <option value="all">All</option>
-                                    <option value="Single Entry QR Code">Single Entry QR Code</option>
-                                    <option value="Dual Entry QR Code">Dual Entry QR Code</option>
-                                </select>
+                                <!-- Dropdown aligned to the right -->
+                                <div class="d-flex align-items-center gap-2">
+                                    <label for="filterQR" class="mb-0">Filter QR Entry Type</label>
+                                    <select id="filterQR" class="form-select w-50">
+                                        <option value="all">All</option>
+                                        <option value="Single Entry QR Code">Single Entry QR Code</option>
+                                        <option value="Dual Entry QR Code">Dual Entry QR Code</option>
+                                    </select>
+                                </div>
                             </div>
 
                             <div id="table-default" class="table-responsive">
@@ -170,7 +179,7 @@
                         <div class="modal-footer">
                             <button type="button" id="closeQrCodeGenerator" class="btn me-auto" data-bs-dismiss="modal">Close</button>
                             <button type="button" class="btn btn-primary"
-                                onclick="GenerateQrCode()">Generate</button>
+                                onclick="GenerateQrCode()" data-bs-dismiss="modal">Generate</button>
                         </div>
                     </div>
                 </div>

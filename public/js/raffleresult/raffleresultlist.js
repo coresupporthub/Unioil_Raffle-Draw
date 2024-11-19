@@ -38,7 +38,7 @@ function addWinnerRow() {
                  newRow.appendChild(tdCluster);
 
                  let tdPrize = document.createElement("td");
-                 tdPrize.textContent = element.event_price;
+                 tdPrize.textContent = element.event_prize;
                  newRow.appendChild(tdPrize);
 
                  let tdWinnerName = document.createElement("td");
@@ -52,6 +52,7 @@ function addWinnerRow() {
                  let tdAction = document.createElement("td");
                  let deleteButton = document.createElement("button");
                  deleteButton.textContent = "Redraw";
+                 deleteButton.className = "hide-me";
                  deleteButton.classList.add("btn", "btn-warning");
                  deleteButton.addEventListener("click", function () {
                      alertify.confirm(
