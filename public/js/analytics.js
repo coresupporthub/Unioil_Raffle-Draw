@@ -149,16 +149,35 @@ function fetchActiveEventData() {
         success: function (data) {
             if (data.success && data.eventData) {
                 const activeEventId = data.eventData.event_id; 
-                fetchEventData(activeEventId);
+                const activeEventName = data.eventData.event_name;
+
+                const dropdown = document.getElementById('event-dropdown');
+                dropdown.value = activeEventId;
+
+                const activeOption = Array.from(dropdown.options).find(
+                    option => option.value == activeEventId
+                );
+                if (!activeOption) {
+                    const newOption = new Option(activeEventName, activeEventId, true, true);
+                    dropdown.add(newOption);
+                }
+
+                fetchEventData(activeEventId); 
+                fetchEntriesData(activeEventId); 
+                fetchClusterData(activeEventId); 
+                fetchEventDataarea(activeEventId);
             } else {
+                console.warn('No active event found.');
                 updateChart(0, 0, true);
             }
         },
         error: function () {
+            console.error('Failed to fetch active event data.');
             updateChart(0, 0, true);
         }
     });
 }
+
 
 // Fetch regional cluster raffle data
 function fetchClusterData(eventId) {
@@ -179,7 +198,7 @@ function fetchClusterData(eventId) {
                         fontFamily: 'inherit',
                         height: 302,
                         parentHeightOffset: 0,
-                        toolbar: { show: false },
+                        toolbar: { show: true }, 
                         animations: { enabled: false },
                     },
                     plotOptions: { bar: { columnWidth: '70%' } },
@@ -195,6 +214,19 @@ function fetchClusterData(eventId) {
                 });
 
                 chart.render();
+
+                // Add a download button for exporting the chart
+                const downloadButton = document.createElement('button');
+                downloadButton.textContent = 'Download Chart';
+                downloadButton.style.marginTop = '10px';
+                downloadButton.style.padding = '8px 12px';
+                downloadButton.style.backgroundColor = '#137f13';
+                downloadButton.style.color = '#fff';
+                downloadButton.style.border = 'none';
+                downloadButton.style.cursor = 'pointer';
+                downloadButton.style.borderRadius = '4px';
+
+
             } else {
                 chartElement.innerHTML = "<p>No event data found.</p>";
             }
@@ -215,31 +247,70 @@ function fetchEventDataarea(eventId) {
         method: 'GET',
         success: function (data) {
             const chartElement = document.getElementById('chart-completion-tasks-10');
+            chartElement.innerHTML = ""; // Clear previous chart if any
+            
             if (data.success && data.eventData.length > 0) {
                 const labels = data.eventData.map(entry => entry.date);
                 const counts = data.eventData.map(entry => entry.count);
 
                 new ApexCharts(chartElement, {
                     chart: {
-                        type: 'line',
+                        type: 'area',
                         height: 302,
-                        sparkline: { enabled: true }
                     },
                     series: [{
+                        name: 'Raffle Entries',
                         data: counts
                     }],
                     xaxis: {
                         categories: labels,
-                        axisBorder: { show: false },
-                        axisTicks: { show: false }
+                        title: {
+                            text: 'Date',
+                            style: {
+                                color: '#333',
+                                fontWeight: 'bold',
+                            }
+                        },
+                        labels: {
+                            rotate: -45,
+                            style: {
+                                colors: '#333',
+                                fontSize: '12px',
+                            }
+                        },
+                        axisBorder: { show: true },
+                        axisTicks: { show: true },
+                    },
+                    yaxis: {
+                        title: {
+                            text: 'Count',
+                            style: {
+                                color: '#333',
+                                fontWeight: 'bold',
+                            }
+                        }
                     },
                     stroke: { width: 2, curve: 'smooth' },
-                    colors: ['#fd7e14']
+                    colors: ['#fd7e14'],
+                    dataLabels: { enabled: false },
+                    tooltip: {
+                        x: {
+                            format: 'dd MMM yyyy'
+                        }
+                    },
+                    grid: {
+                        borderColor: '#e7e7e7',
+                        strokeDashArray: 4
+                    }
                 }).render();
+            } else {
+                chartElement.innerHTML = "<p>No data available for this event.</p>";
             }
         },
         error: function () {
+            const chartElement = document.getElementById('chart-completion-tasks-10');
             chartElement.innerHTML = "<p>Error loading data.</p>";
         }
     });
 }
+

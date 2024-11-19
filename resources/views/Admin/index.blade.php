@@ -52,124 +52,73 @@
                 <div class="container-xl">
 
                     <div class="row m-2">
-
-                        {{-- DONUT CHART --}}
-                        <div class="col-lg-4 col-xl-4">
-                            <div class="card">
-                                <div class="card-body">
+                        {{-- Event Selection Card --}}
+                        <div class="col-12">
+                            <div class="card shadow">
+                                <div class="card-body text-center">
+                                    <h5 class="text-primary fw-bold mb-3">Select an Event to View Insights</h5>
                                     @php
                                         use App\Models\Event;
                                         $events = Event::all();
                                     @endphp
-
-                                    <div class="form-group col-8 mb-2">
-                                        <select class="form-select form-select-md border-primary" style="color: #ff3300"
-                                            aria-label="Select Event" id="event-dropdown"
-                                            onchange="fetchEventData(this.value)">
-                                            <option selected disabled value="">Select Event</option>
+                                    <div class="form-group mx-auto" style="max-width: 400px;">
+                                        <select class="form-select border-primary fw-semibold" 
+                                                style="color: #ff3300;" 
+                                                id="event-dropdown" 
+                                                onchange="updateCharts(this.value)">
+                                            <option selected disabled value="">Choose an Event</option>
                                             @if ($events->isEmpty())
                                                 <option value="#" disabled>No events available</option>
                                             @else
                                                 @foreach ($events as $event)
-                                                    <option value="{{ $event->event_id }}">{{ $event->event_name }}
-                                                    </option>
+                                                    <option value="{{ $event->event_id }}">{{ $event->event_name }}</option>
                                                 @endforeach
                                             @endif
                                         </select>
                                     </div>
-
-                                    <h3 class="text-center"> Product Type Breakdown </h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row m-2">
+                        {{-- DONUT CHART --}}
+                        <div class="col-lg-6 col-xl-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h3 class="text-center">Product Type Breakdown</h3>
                                     <div id="chart-demo-pie"></div>
                                 </div>
                             </div>
                         </div>
-
+                    
                         {{-- BAR GRAPH --}}
-                        <div class="col-lg-8 col-xl-8">
+                        <div class="col-lg-6 col-xl-6">
                             <div class="card">
                                 <div class="card-body">
-                                    @php
-                                        $events = Event::all();
-                                    @endphp
-
-                                    <div class="form-group col-8 mb-2">
-                                        <select class="form-select form-select-md border-primary" style="color: #ff3300"
-                                            aria-label="Select Event" id="event-dropdown"
-                                            onchange="fetchEntriesData(this.value)">
-                                            <option selected disabled value="">Select Event</option>
-                                            @if ($events->isEmpty())
-                                                <option value="#" disabled>No events available</option>
-                                            @else
-                                                @foreach ($events as $event)
-                                                    <option value="{{ $event->event_id }}">{{ $event->event_name }}
-                                                    </option>
-                                                @endforeach
-                                            @endif
-                                        </select>
-                                    </div>
-
-                                    <h3 class="text-center"> Raffle Entries Issued by Product Type </h3>
+                                    <h3 class="text-center">Raffle Entries Issued by Product Type</h3>
                                     <div id="chart-tasks-overview1"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
+                    
                     <div class="row m-2">
                         {{-- AREA CHART --}}
                         <div class="col-lg-6 col-xl-6">
                             <div class="card">
                                 <div class="card-body">
-                                    @php
-                                        $events = Event::all();
-                                    @endphp
-                                    <div class="form-group col-8 mb-2">
-                                        <select class="form-select form-select-md border-primary" style="color: #ff3300"
-                                            onchange="fetchEventDataarea(this.value)" aria-label="Select Event">
-                                            <option selected disabled value="">Select Event</option>
-                                            <!-- Option for active event -->
-                                            @if ($events->isEmpty())
-                                                <option value="#" disabled>No events available</option>
-                                            @else
-                                                @foreach ($events as $event)
-                                                    <option value="{{ $event->event_id }}">{{ $event->event_name }}
-                                                    </option>
-                                                @endforeach
-                                            @endif
-                                        </select>
-                                    </div>
-
-                                    <h3 class="text-center"> Raffle Entry Issuance Over Time </h3>
+                                    <h3 class="text-center">Raffle Entry Issuance Over Time</h3>
                                     <div id="chart-completion-tasks-10"></div>
                                 </div>
                             </div>
                         </div>
-
-                        {{-- BAR GRAPH --}}
+                    
+                        {{-- REGIONAL CLUSTER PARTICIPATION --}}
                         <div class="col-lg-6 col-xl-6">
                             <div class="card">
                                 <div class="card-body">
-                                    @php
-                                        $events = Event::all();
-                                    @endphp
-
-                                    <div class="form-group col-9 mb-2">
-                                        <select class="form-select form-select-md border-primary" style="color: #ff3300"
-                                            aria-label="Select Event" id="event-dropdown"
-                                            onchange="fetchClusterData(this.value)">
-                                            <option selected disabled value="">Select Event</option>
-                                            @if ($events->isEmpty())
-                                                <option value="#" disabled>No events available</option>
-                                            @else
-                                                @foreach ($events as $event)
-                                                    <option value="{{ $event->event_id }}">{{ $event->event_name }}
-                                                    </option>
-                                                @endforeach
-                                            @endif
-                                        </select>
-                                    </div>
-
-                                    <h3 class="text-center"> Regional Cluster Raffle Participation</h3>
+                                    <h3 class="text-center">Regional Cluster Raffle Participation</h3>
                                     <div id="chart-tasks-overview"></div>
                                 </div>
                             </div>
