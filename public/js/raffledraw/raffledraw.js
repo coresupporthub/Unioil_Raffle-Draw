@@ -56,7 +56,7 @@ function SelectEntry(id){
             console.error("Error posting data:", error);
         },
     });
-    
+
 }
 
 const raffleInput = document.getElementById("raffleInput");
@@ -90,7 +90,8 @@ function startRaffle() {
                     clearInterval(shuffleInterval);
                     raffleInput.value = response.winner_serial_number;
                     drawButton.disabled = false;
-                    triggerConfetti();
+                    console.log(response);
+                    show('confetti');
                     GetAllWinner();
                 }, 5000);
             }else{
@@ -125,10 +126,10 @@ function GetAllWinner() {
                 newRow.appendChild(clusterCell);
 
                 var nameCell = document.createElement("td");
-                nameCell.textContent = element.customer_name; 
+                nameCell.textContent = element.customer_name;
                 newRow.appendChild(nameCell);
 
-                tableBody.appendChild(newRow);                
+                tableBody.appendChild(newRow);
 
             });
         },

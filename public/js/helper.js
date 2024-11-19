@@ -226,3 +226,12 @@ function hide(id){
         element.classList.add('d-none');
     }
 }
+
+function show(id){
+    const element = document.getElementById(id);
+
+    if(element){
+        element.classList.remove('d-none');
+        element.classList.add('d-flex');
+    }
+}

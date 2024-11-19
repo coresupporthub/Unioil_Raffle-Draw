@@ -1,0 +1,93 @@
+.winner-container {
+    text-align: center;
+    background: linear-gradient(135deg, #ff7e5f, #feb47b);
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 1s ease-in-out;
+    max-width: 600px;
+    margin: 20px;
+    width: 100%;
+}
+
+.winner-card {
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 30px;
+    border-radius: 10px;
+    margin-top: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.winner-info {
+    z-index: 1;
+    position: relative;
+
+}
+
+#winner-name {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+#winning-details {
+    font-size: 20px;
+}
+
+.confetti {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image: url('https://cdn.pixabay.com/photo/2017/08/30/07/30/confetti-2695687_960_720.png');
+    background-repeat: repeat;
+    opacity: 0;
+    animation: confetti 2s ease-in-out infinite;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes confetti {
+    0% { opacity: 0; transform: translateY(-100vh); }
+    50% { opacity: 1; }
+    100% { opacity: 0; transform: translateY(100vh); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    #winner-name {
+        font-size: 28px;
+    }
+
+    #winning-details {
+        font-size: 18px;
+    }
+
+    .winner-card {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    #winner-name {
+        font-size: 24px;
+    }
+
+    #winning-details {
+        font-size: 16px;
+    }
+
+    .winner-card {
+        padding: 15px;
+    }
+
+    .winner-container {
+        padding: 20px;
+    }
+}
