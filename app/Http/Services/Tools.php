@@ -5,6 +5,8 @@ namespace App\Http\Services;
 use App\Models\RaffleEntries;
 use App\Models\Event;
 use App\Http\Services\Magic;
+use App\Models\ActivityLogs;
+use Illuminate\Support\Facades\Auth;
 
 class Tools
 {
@@ -66,5 +68,20 @@ class Tools
             fclose($handle);
         }
         return $rows;
+    }
+
+    public static function Logger($request, array $actions, $response){
+        $logs = new ActivityLogs();
+
+        $logs->user_id = Auth::id();
+        $logs->action = $actions[0];
+        $logs->result = $actions[1];
+        $logs->device = $request->userAgent();
+        $logs->page_route =  $request->headers->get('referer');
+        $logs->api_calls = $request->path();
+        $logs->session_id = $request->session()->getId();
+        $logs->sent_data =$request->all();
+        $logs->response_data = $response;
+        $logs->save();
     }
 }
