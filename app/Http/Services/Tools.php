@@ -79,8 +79,9 @@ class Tools
         $logs->device = $request->userAgent();
         $logs->page_route =  $request->headers->get('referer');
         $logs->api_calls = $request->path();
+        $logs->request_type = $request->method();
         $logs->session_id = $request->session()->getId();
-        $logs->sent_data =$request->all();
+        $logs->sent_data = $request->all();
         $logs->response_data = $response;
         $logs->save();
     }

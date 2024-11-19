@@ -11,7 +11,7 @@ use App\Models\ExportFilesModel;
 use App\Models\Customers;
 use App\Models\ProductList;
 use App\Models\RaffleEntries;
-use Illuminate\Support\Facades\Storage;
+use App\Http\Services\Tools;
 
 class QrCodeController extends Controller
 {
@@ -37,8 +37,9 @@ class QrCodeController extends Controller
             GenerateQr::dispatch($req->qrtype);
         }
 
-
-        return response()->json(['success' => true]);
+        $response = ['success' => true];
+        Tools::Logger($req, ['Generate QR Code', 'QR Code generation is successfully in progress'], $response);
+        return response()->json($response);
     }
 
     public function getqrcodegenerated()
@@ -140,6 +141,7 @@ class QrCodeController extends Controller
 
         $pdf->save($pdfFilePath);
 
+        Tools::Logger($req, ['Export QR Code', 'Successfully Exported QR Coupons in the PDF File'], ['open_pdf_file'=> $fileName]);
 
         return $pdf->stream('qr_codes.pdf');
 

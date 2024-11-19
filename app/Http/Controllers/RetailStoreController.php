@@ -16,7 +16,10 @@ class RetailStoreController extends Controller
         $data->cluster_name = $request->cluster_name;
         $data->save();
 
-        return response()->json(['success' => true , 'message'=>'Regional cluster successfully added', 'reload'=> 'LoadAll']);
+        $response = ['success' => true , 'message'=>'Regional cluster successfully added', 'reload'=> 'LoadAll'];
+        Tools::Logger($request, ['Add Regional Cluster', "Successfully add {$request->cluster_name} in the regional Cluster List"],$response);
+
+        return response()->json($response);
     }
 
     public function getcluster()
@@ -38,16 +41,6 @@ class RetailStoreController extends Controller
         return response()->json(['success' => true , 'message'=>'Cluster status successfully delete', 'reload'=> 'LoadAll']);
     }
 
-    public function addstore(Request $request){
-        $data = new RetailStore();
-        $data->cluster_id = $request->cluster_id;
-        $data->region_name = $request->region_name;
-        $data->city_name = $request->city_name;
-        $data->store_name = $request->store_name;
-        $data->store_code = $request->store_code;
-        $data->save();
-        return response()->json(['success' => true, 'message' => 'Store status successfully added', 'reload' => 'LoadAll']);
-    }
 
     public function getallstore(){
         $data = RetailStore::join('regional_cluster', 'retail_store.cluster_id', '=', 'regional_cluster.cluster_id')
@@ -56,10 +49,15 @@ class RetailStoreController extends Controller
         return response()->json(['data'=>$data]);
     }
 
-    public function removeretailstore(Request $reqeust){
-        $data = RetailStore::find($reqeust->id);
+    public function removeretailstore(Request $request){
+        $data = RetailStore::find($request->id);
+
+        $response = ['success' => true, 'message' => 'Store status successfully delete'];
+        Tools::Logger($request, ['Remove Retail Store', "Successfully deleted {$data->retail_station} in the Retail Store List"], $response);
+
         $data->delete();
-        return response()->json(['success' => true, 'message' => 'Store status successfully delete']);
+
+        return response()->json($response);
     }
 
     public function updatestore(Request $request)
@@ -71,8 +69,12 @@ class RetailStoreController extends Controller
         $data->distributor = $request->distributor;
         $data->retail_station = $request->retail_store;
         $data->rto_code = $request->rto_code;
+
+
+        $response = ['success' => true, 'message' => 'Store status successfully update', 'reload' => 'LoadAll'];
+        Tools::Logger($request, ['Update Retail Store', "Successfully updated from {$data->retail_station} to {$request->retail_store} in the Retail Store List"], $response);
         $data->save();
-        return response()->json(['success' => true, 'message' => 'Store status successfully update', 'reload' => 'LoadAll']);
+        return response()->json($response);
     }
 
     public function uploadcsv(Request $req){
@@ -97,7 +99,10 @@ class RetailStoreController extends Controller
 
         }
 
-        return response()->json(['success'=> true, 'message'=> 'All data are uploaded in the database']);
+        $response = ['success'=> true, 'message'=> 'All data are uploaded in the database'];
+        Tools::Logger($req, ['Upload CSV File ', "Successfully Uploaded a CSV File in retail Store List"], $response);
+
+        return response()->json($response);
     }
 
     public function filtercluster(Request $req){
@@ -119,6 +124,9 @@ class RetailStoreController extends Controller
 
         $store->save();
 
-        return response()->json(['success'=> true, 'message'=> "Retail station has been successfully added"]);
+        $response = ['success'=> true, 'message'=> "Retail station has been successfully added"];
+        Tools::Logger($req, ['Added A Retail Store', "Successfully added a retail store"], $response);
+
+        return response()->json($response);
     }
 }

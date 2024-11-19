@@ -22,8 +22,8 @@ return new class extends Migration
             $table->string('api_calls')->nullable();
             $table->string('request_type')->nullable();
             $table->string('session_id')->nullable();
-            $table->string('sent_data')->nullable();
-            $table->string('response_data')->nullable();
+            $table->longText('sent_data')->nullable();
+            $table->longText('response_data')->nullable();
             $table->timestamps();
         });
     }
