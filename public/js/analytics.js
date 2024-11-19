@@ -1,4 +1,4 @@
-
+//   Product Type Breakdown
   document.addEventListener("DOMContentLoaded", function() {
       // Donut Chart
       window.ApexCharts && (new ApexCharts(document.getElementById('chart-demo-pie'), {
@@ -56,7 +56,88 @@
       })).render();
   });
 
+//   Raffle Entries issued by Product Type
+document.addEventListener("DOMContentLoaded", function () {
+    // Bar Chart for Fully Synthetic and Semi Synthetic Raffle Entries Over Time
+    window.ApexCharts && (new ApexCharts(document.getElementById('chart-tasks-overview1'), {
+        chart: {
+            type: "bar",
+            fontFamily: 'inherit',
+            height: 302,
+            parentHeightOffset: 0,
+            toolbar: {
+                show: false,
+            },
+            animations: {
+                enabled: false,
+            },
+        },
+        plotOptions: {
+            bar: {
+                columnWidth: '50%',
+                dataLabels: {
+                    position: 'top', 
+                },
+            },
+        },
+        dataLabels: {
+            enabled: false,
+        },
+        fill: {
+            type: "solid",
+        },
+        series: [
+            {
+                name: "Fully Synthetic",
+                data: [120, 150, 170, 140, 180, 190, 220, 200, 210, 230, 240, 260], 
+            },
+            {
+                name: "Semi Synthetic",
+                data: [80, 100, 90, 120, 110, 130, 140, 150, 160, 170, 180, 200], 
+            },
+        ],
+        tooltip: {
+            theme: 'dark',
+        },
+        grid: {
+            padding: {
+                top: -20,
+                right: 0,
+                left: -4,
+                bottom: -4,
+            },
+            strokeDashArray: 4,
+        },
+        xaxis: {
+            labels: {
+                padding: 0,
+            },
+            tooltip: {
+                enabled: false,
+            },
+            axisBorder: {
+                show: false,
+            },
+            categories: [
+                'January', 'February', 'March', 'April', 'May', 'June',
+                'July', 'August', 'September', 'October', 'November', 'December',
+            ],
+        },
+        yaxis: {
+            labels: {
+                padding: 4,
+            },
+        },
+        colors: ['#137f13', '#fd7e14'],
+        legend: {
+            show: true,
+            position: 'top',
+        },
+    })).render();
+});
 
+
+//   Registration and Participation
   document.addEventListener("DOMContentLoaded", function() {
       // Bar Chart
       window.ApexCharts && (new ApexCharts(document.getElementById('chart-tasks-overview'), {
@@ -94,7 +175,7 @@
               },
           },
           series: [{
-              name: "Cluster Data",
+              name: "Raffle Entries",
               data: [44, 32, 48, 72, 60]
           }],
           tooltip: {
@@ -133,13 +214,14 @@
       })).render();
   });
 
+  //   Raffle Entries issued by Product Type
   document.addEventListener("DOMContentLoaded", function() {
       // Area Chart
       window.ApexCharts && (new ApexCharts(document.getElementById('chart-completion-tasks-10'), {
           chart: {
               type: "area",
               fontFamily: 'inherit',
-              height: 240,
+              height: 302,
               parentHeightOffset: 0,
               toolbar: {
                   show: false,
