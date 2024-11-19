@@ -187,7 +187,7 @@
               <p class="mb-1">Please provide the the current administrators login password to verify this action!</p>
               <small class="text-danger">Note! This action is irreversible </small>
 
-              <form class="form-group" id="confirmInactiveForm">
+              <form class="form-group mt-4" id="confirmInactiveForm">
                 @csrf
                 <input type="hidden" id="event_idInactive" name="event_id">
                 <label for="adminPassword">Admin Password</label>
