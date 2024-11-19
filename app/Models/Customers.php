@@ -23,7 +23,8 @@ class Customers extends Model
         'email',
         'qr_id',
         'product_purchased',
-        'store_id'
+        'store_id',
+        'event_id'
     ];
 
     protected $hidden = [
