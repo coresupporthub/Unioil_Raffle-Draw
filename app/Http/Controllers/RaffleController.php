@@ -55,13 +55,22 @@ class RaffleController extends Controller
         $winnerSerialNumber = $shuffledSerialNumbers[0];
 
         $winnerRaffleEntry = RaffleEntries::where('serial_number', $winnerSerialNumber)->first();
-        $winnerRaffleEntry->winner_status = 'true';
-        $winnerRaffleEntry->winner_record = 'true';
-        $winnerRaffleEntry->save();
+        // $winnerRaffleEntry->winner_status = 'true';
+        // $winnerRaffleEntry->winner_record = 'true';
+        // $winnerRaffleEntry->save();
+
+        $customerWinner = Customers::where('customer_id', $winnerRaffleEntry->customer_id)->first();
+        $store = RetailStore::where('store_id', $customerWinner->store_id)->join('regional_cluster', 'retail_store.cluster_id', '=', 'regional_cluster.cluster_id')
+        ->select('cluster_name')->first();
+
+        $product = ProductList::where('product_id', $customerWinner->product_purchased)->select('product_name')->first();
 
         $response =[
             'success' => true,
-            'winner_serial_number' => $winnerSerialNumber
+            'winner_serial_number' => $winnerSerialNumber,
+            'winner_details' => $customerWinner,
+            'cluster_name'=> $store,
+            'product'=> $product
         ];
         Tools::Logger($request, ['Raffle Draw Stated', "Raffle Draw Selected a winner"], $response);
         return response()->json($response);
@@ -150,17 +159,11 @@ class RaffleController extends Controller
                 $query->whereIn('retail_store_code', $retailData);
             }
 
-            // Fetch raffle entries for the event, with or without region filter
+         
             $raffleData = $query->get();
 
-            // Add raffle entries to the data array
-            // foreach ($raffleData as $raffle) {
-            //     $data[] = [
-            //         'event_id' => $raffle->event_id,
-            //         'raffle_data' => $raffle,
-            //     ];
-            // }
-                   foreach ($raffleData as $raffle) {
+           
+                foreach ($raffleData as $raffle) {
                 $retailStores = RetailStore::where('rto_code', $raffle->retail_store_code)->first();
                 $cluster = $retailStores
                    ? RegionalCluster::where('cluster_id', $retailStores->cluster_id)->first()?->cluster_name
@@ -186,46 +189,6 @@ class RaffleController extends Controller
                 }
             }
         }
-
-        // foreach ($events as $event) {
-        //     // Filter raffle entries based on the presence of a region
-        //     $raffleEntriesQuery = RaffleEntries::where('event_id', $event->event_id);
-
-        //     if (!empty($request->region)) {
-        //         $retailData = RetailStore::where('cluster_id', $request->region)->first();
-        //         if (!$retailData) continue; // Skip if no retail store matches the region
-        //         $raffleEntriesQuery->where('retail_store_code', $retailData->rto_code);
-        //     }
-
-        //     $raffleEntries = $raffleEntriesQuery->get();
-
-        //     // Process each raffle entry
-        //     foreach ($raffleEntries as $raffle) {
-        //         $retailStores = RetailStore::where('rto_code', $raffle->retail_store_code)->first();
-        //         $cluster = $retailStores
-        // //            ? RegionalCluster::where('cluster_id', $retailStores->cluster_id)->first()?->cluster_name
-        //             : null;
-                
-        //         $customer = Customers::where('customer_id', $raffle->customer_id)
-        //             ->join('product_lists', 'product_lists.product_id', '=', 'customers.product_purchased')
-        //             ->first();
-
-        //         if ($retailStores && $cluster && $customer) {
-        //             $data[] = [
-        //                 'cluster' => $cluster,
-        //                 'area'=>  $retailStores->area,
-        //                 'address' =>  $retailStores->address,
-        //                 'distributor' =>  $retailStores->distributor,
-        //                 'retail_name' => $retailStores->retail_station,
-        //                 'serial_number' => $raffle->serial_number,
-        //                 'product_type' => $customer->product_name,
-        //                 'customer_name' => $customer->full_name,
-        //                 'customer_email' => $customer->email,
-        //                 'customer_phone' => $customer->mobile_number,
-        //             ];
-        //         }
-        //     }
-        // }
 
         return response()->json($data);
     }
