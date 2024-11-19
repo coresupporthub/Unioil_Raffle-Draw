@@ -26,9 +26,9 @@
                                     <th><button class="table-sort" data-sort="sort-status">User</button></th>
                                     <th><button class="table-sort" data-sort="sort-action">Action</button></th>
                                     <th><button class="table-sort" data-sort="sort-result">Result</button></th>
-                                    <th><button class="table-sort" data-sort="sort-export_status">Timestamp</button></th>
-                                    <th><button class="table-sort" data-sort="sort-export_status">Device</button></th>
-                                    <th><button class="table-sort" data-sort="sort-export_status">View More Info</button></th>
+                                    <th><button class="table-sort" data-sort="sort-timestamp">Timestamp</button></th>
+                                    <th><button class="table-sort" data-sort="sort-devide">Device</button></th>
+                                    <th>View More Info</th>
                                 </tr>
                             </thead>
                             <tbody class="table-tbody">
