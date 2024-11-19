@@ -44,13 +44,12 @@
                                         <table class="table">
                                             <thead>
                                                 <tr>
-                                                    <th><button class="table-sort" data-sort="sort-customer-id">Customer ID</button></th>
-                                                    <th><button class="table-sort" data-sort="sort-name">Customer Name</button></th>
-                                                    <th><button class="table-sort" data-sort="sort-email">Email</button></th>
-                                                    <th><button class="table-sort" data-sort="sort-phone">Phone Number</button></th>
+                                                    <th><button class="table-sort" data-sort="sort-customer-id">Regional Cluster</button></th>
+                                                    <th><button class="table-sort" data-sort="sort-name">Area</button></th>
+                                                    <th><button class="table-sort" data-sort="sort-email">Distributo</button></th>
+                                                    <th><button class="table-sort" data-sort="sort-phone">Retail Store</button></th>
                                                     <th><button class="table-sort" data-sort="sort-purchase">Purchase Date</button></th>
                                                     <th><button class="table-sort" data-sort="sort-product">Product Purchased</button></th>
-                                                    <th><button class="table-sort" data-sort="sort-coupon-status">Coupon Status</button></th>
                                                 </tr>
                                             </thead>
                                             <tbody class="table-tbody">
@@ -61,16 +60,6 @@
                                                     <td class="sort-phone">09171234567</td>
                                                     <td class="sort-purchase" data-date="1698534000">October 28, 2023</td>
                                                     <td class="sort-product">Fully Synthetic Oil</td>
-                                                    <td class="sort-coupon-status">Active</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="sort-customer-id">C1002</td>
-                                                    <td class="sort-name">Maria Santos</td>
-                                                    <td class="sort-email">maria.santos@email.com</td>
-                                                    <td class="sort-phone">09179876543</td>
-                                                    <td class="sort-purchase" data-date="1697355600">October 15, 2023</td>
-                                                    <td class="sort-product">Semi-Synthetic Oil</td>
-                                                    <td class="sort-coupon-status">Redeemed</td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -91,6 +80,6 @@
     </div>
 
     @include('Admin.components.scripts')
-
+    
 </body>
 </html>
