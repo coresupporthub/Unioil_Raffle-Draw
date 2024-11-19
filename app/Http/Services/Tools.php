@@ -80,8 +80,7 @@ class Tools
         $logs->page_route =  $request->headers->get('referer');
         $logs->api_calls = $request->path();
         $logs->session_id = $request->session()->getId();
-        $queryString = http_build_query($request->all());
-        $logs->sent_data = $queryString;
+        $logs->sent_data =$request->all();
         $logs->response_data = $response;
         $logs->save();
     }

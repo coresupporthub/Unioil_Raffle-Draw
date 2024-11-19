@@ -28,6 +28,11 @@ class ActivityLogs extends Model
         'response_data'
     ];
 
+    protected $cast = [
+        'sent_data' => 'array',
+        'response_data' => 'array'
+    ];
+
     protected static function boot()
     {
         parent::boot();
