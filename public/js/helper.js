@@ -192,3 +192,28 @@ function setImage(id, src){
         img.src = src;
     }
 }
+
+
+function formatDateTime(isoString) {
+    const date = new Date(isoString);
+    const options = {
+        month: 'long',
+        day: '2-digit',
+        year: 'numeric',
+    };
+
+    const formattedDate = date.toLocaleDateString('en-US', options);
+
+
+    let hours = date.getHours();
+    const minutes = date.getMinutes();
+    const period = hours >= 12 ? 'PM' : 'AM';
+
+
+    hours = hours % 12 || 12;
+
+    const formattedTime = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')} ${period}`;
+
+
+    return `${formattedDate} - ${formattedTime}`;
+}
