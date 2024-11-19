@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", function () {
             bar: {
                 columnWidth: '50%',
                 dataLabels: {
-                    position: 'top', // Positions the data labels on top of the bars
+                    position: 'top', 
                 },
             },
         },
@@ -84,16 +84,16 @@ document.addEventListener("DOMContentLoaded", function () {
             enabled: false,
         },
         fill: {
-            type: "solid", // Changed to solid
+            type: "solid",
         },
         series: [
             {
                 name: "Fully Synthetic",
-                data: [120, 150, 170, 140, 180, 190, 220, 200, 210, 230, 240, 260], // Example data
+                data: [120, 150, 170, 140, 180, 190, 220, 200, 210, 230, 240, 260], 
             },
             {
                 name: "Semi Synthetic",
-                data: [80, 100, 90, 120, 110, 130, 140, 150, 160, 170, 180, 200], // Example data
+                data: [80, 100, 90, 120, 110, 130, 140, 150, 160, 170, 180, 200], 
             },
         ],
         tooltip: {
