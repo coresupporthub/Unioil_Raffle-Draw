@@ -40,9 +40,9 @@ Route::middleware([AuthMiddleware::class])->group(function () {
     Route::get('/raffle/entries', function () {
         return view('Admin.raffleentries');
     })->name('raffleentries');
-    Route::get('/reports/analytics', function () {
-        return view('Admin.reportsandanalytics');
-    })->name('reportsandanalytics');
+    Route::get('/product/reports', function () {
+        return view('Admin.productreports');
+    })->name('productreports');
 
     //SETTINGS
     Route::get('/account/settings', function () {

@@ -45,13 +45,17 @@
 
                             <a class="nav-link" href="{{ route('index') }}">
                                 <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                        stroke-linecap="round" stroke-linejoin="round">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-chart-histogram">
                                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
-                                        <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
-                                        <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+                                        <path d="M3 3v18h18" />
+                                        <path d="M20 18v3" />
+                                        <path d="M16 16v5" />
+                                        <path d="M12 13v8" />
+                                        <path d="M8 16v5" />
+                                        <path d="M3 11c6 0 5 -5 9 -5s3 5 9 5" />
                                     </svg>
                                 </span>
                                 <span class="nav-link-title">
@@ -219,25 +223,27 @@
                             </a>
                         </li>
 
-                        {{-- <li class="nav-item {{ $active === 'reportsandanalytics' ? 'active' : '' }}">
+                        <li class="nav-item {{ $active === 'productreports' ? 'active' : '' }}">
 
-                            <a class="nav-link" href="{{ route('reportsandanalytics') }}">
+                            <a class="nav-link" href="{{ route('productreports') }}">
                                 <span class="nav-link-icon d-md-none d-lg-inline-block">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                         stroke-linecap="round" stroke-linejoin="round"
-                                        class="icon icon-tabler icons-tabler-outline icon-tabler-database">
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-shopping-cart-dollar">
                                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path d="M12 6m-8 0a8 3 0 1 0 16 0a8 3 0 1 0 -16 0" />
-                                        <path d="M4 6v6a8 3 0 0 0 16 0v-6" />
-                                        <path d="M4 12v6a8 3 0 0 0 16 0v-6" />
+                                        <path d="M4 19a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                                        <path d="M13 17h-7v-14h-2" />
+                                        <path d="M6 5l14 1l-.575 4.022m-4.925 2.978h-8.5" />
+                                        <path d="M21 15h-2.5a1.5 1.5 0 0 0 0 3h1a1.5 1.5 0 0 1 0 3h-2.5" />
+                                        <path d="M19 21v1m0 -8v1" />
                                     </svg>
                                 </span>
                                 <span class="nav-link-title">
-                                    Reports and Analytics
+                                    Product Reports
                                 </span>
                             </a>
-                        </li> --}}
+                        </li>
 
                     </ul>
 
