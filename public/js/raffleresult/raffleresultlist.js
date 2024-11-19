@@ -137,12 +137,17 @@ function getevent(){
                 response.event_end;
 
             document.getElementById("event_id").value = response.event_id;
+            setValue('event_idInactive', response.event_id);
             document.getElementById("event_name").value = response.event_name;
             document.getElementById("event_price").value = response.event_prize;
             document.getElementById("event_start").value = response.event_start;
             document.getElementById("event_end").value = response.event_end;
             document.getElementById("event_description").value =
                 response.event_description;
+
+                if(response.event_status == 'Inactive'){
+                    hide('inactiveBtn');
+                }
         },
         error: function (xhr, status, error) {
             console.error("Error posting data:", error);
@@ -150,51 +155,7 @@ function getevent(){
     });
 }
 
-function SubmitData(formID, route) {
-    if (!validateForm(formID)) {
-        alertify.error("Please fill in all required fields.");
-        return;
-    }
-    loading(true);
-    const form = document.getElementById(formID);
-    const csrfToken = $('meta[name="csrf-token"]').attr("content");
-    const formData = new FormData(form);
-    formData.append("_token", csrfToken);
 
-    $.ajax({
-        url: route,
-        type: "POST",
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function (response) {
-            loading(false);
-            if(response.success){
-                dynamicCall(response.reload);
-                 addWinnerRow();
-                alertify.success(response.message);
-            }else{
-              alertify.alert("Warning", response.message, function () {});
-            }
-        },
-        error: function (xhr, status, error) {
-            console.error("Error posting data:", error);
-        },
-    });
-}
-
-function confirmation(){
-    alertify.confirm(
-        "Warning",
-        "Are you sure you want to set this raffle event to inactive?",
-        function () {
-           SubmitData("update-event-form", "/api/inactive-event");
-        },
-        function () {
-            alertify.error("Cancel");
-        }
-    );
-}
 
 function validateForm(formID) {
     const form = document.getElementById(formID);
@@ -220,4 +181,26 @@ $(document).ready(function () {
     getevent();
 
 
+});
+
+
+document.getElementById('confirmInactiveBtn').addEventListener('click', ()=> {
+   loading(true);
+
+   const inputs = [
+    ['adminPassword', 'adminPasswordE']
+   ];
+
+   if(checkValidity(inputs)){
+    $.ajax({
+        type: "POST",
+        url: "/api/inactive-event",
+        data: $('#confirmInactiveForm').serialize(),
+        success: res=> {
+            loading(false);
+            addWinnerRow();
+            dataParser(res);
+        }, error: xhr=> console.log(xhr.responseText)
+    });
+   }
 });
