@@ -32,6 +32,17 @@ class Customers extends Model
         'product_purchased',
     ];
 
+    protected $casts = [
+        'full_name' => 'encrypted',
+        'age' => 'encrypted',
+        'region' => 'encrypted',
+        'province'=> 'encrypted',
+        'brgy' => 'encrypted',
+        'street'=> 'encrypted',
+        'mobile_number' => 'encrypted',
+        'email' => 'encrypted',
+    ];
+
 
     protected static function boot()
     {
