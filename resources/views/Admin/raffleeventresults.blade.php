@@ -74,12 +74,12 @@
 
                             <!-- Raffle Draw Details -->
                             <div class="text-center mb-5">
-                                 
+
                                 <h1 class="fw-bold display-6 position-relative"
                                     style="color: #f75a04; padding-left: 20px; font-family: 'Poppins', sans-serif;">
                                     <span
                                         style=" margin-right: 10px; padding-left: 10px;" id="title_event_name">
-                                        
+
                                     </span>
                                 </h1>
                                 <p class="text-secondary fs-5">Start Date: <strong id="title_start"> </strong> - End Date: <strong id="title_end"> </strong></p>
@@ -107,7 +107,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody id="winnerListTable">
-                                               
+
                                             </tbody>
                                         </table>
                                     </div>
@@ -169,13 +169,36 @@
             </div>
           <div class="modal-footer">
             <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="confirmation()">Set Incative</button>
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmInactive">Set Incative</button>
             <button type="button" class="btn btn-primary" onclick=" SubmitData('update-event-form', '/api/update-event')">Save changes</button>
           </div>
         </div>
       </div>
     </div>
 
+    <div class="modal modal-blur fade" id="confirmInactive" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Authentication Needed</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p class="mb-1">Please provide the the current administrators login password to verify this action!</p>
+              <small class="text-danger">Note! This action is irreversible </small>
+
+              <form class="form-group" action="">
+                <label for="adminPassword">Admin Password</label>
+                <input type="password" id="adminPassword" class="form-control" placeholder="Enter your admin password here">
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
 
         @include('Admin.components.footer')
         @include('Admin.components.loader')
