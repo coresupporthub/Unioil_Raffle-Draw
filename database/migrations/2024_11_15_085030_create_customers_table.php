@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('customers', function (Blueprint $table) {
             $table->uuid('customer_id')->primary();
             $table->string('full_name');
-            $table->integer('age');
+            $table->string('age');
             $table->string('region');
             $table->string('province')->nullable();
             $table->string('city');
