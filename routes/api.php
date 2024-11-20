@@ -34,7 +34,8 @@ Route::group(['middleware' => ['web']], function () {
         Route::post('/upload-retail-store', [RetailStoreController::class, 'uploadcsv']);
         Route::get('/filter-cluster', [RetailStoreController::class, 'filtercluster']);
         Route::post('/add-single-retail-store', [RetailStoreController::class, 'addretailstore']);
-
+        Route::post('/update-cluster', [RetailStoreController::class, 'updatecluster']);
+        Route::post('/enable-cluster', [RetailStoreController::class, 'enablecluster']);
 
         //Raffle
         Route::post('/get-raflle-entry', [RaffleController::class, 'getraffleentry']);

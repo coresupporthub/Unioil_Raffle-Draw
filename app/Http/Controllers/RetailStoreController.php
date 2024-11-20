@@ -30,14 +30,12 @@ class RetailStoreController extends Controller
 
 
     public function clusterstatus(Request $request){
-        $data = RegionalCluster::find($request->id);
-        $store = RetailStore::where('cluster_id',$data->cluster_id)->get();
-        if (!$store->isEmpty()) {
-            foreach ($store as $retail) {
-                $retail->delete();
-            }
-        }
-        $data->delete();
+        $data = RegionalCluster::where('cluster_id', $request->id)->first();
+
+        $data->update([
+            'cluster_status' => 'Disable'
+        ]);
+
         return response()->json(['success' => true , 'message'=>'Cluster status successfully delete', 'reload'=> 'LoadAll']);
     }
 
@@ -188,5 +186,33 @@ class RetailStoreController extends Controller
         Tools::Logger($req, ['Added A Retail Store', "Successfully added a retail store"], $response);
 
         return response()->json($response);
+    }
+
+    public function updatecluster(Request $req){
+        $cluster = RegionalCluster::where('cluster_id', $req->cluster_id)->first();
+
+        if(!$cluster){
+            return response()->json(['success'=> false, 'message'=> 'No Valid Cluster Found using this id']);
+        }
+
+        $cluster->update([
+            'cluster_name'=> $req->cluster_name
+        ]);
+
+        return response()->json(['success'=> true, 'message'=> 'Regional Cluster Name Updated']);
+    }
+
+    public function enablecluster(Request $req){
+        $cluster = RegionalCluster::where('cluster_id', $req->id)->first();
+
+        if(!$cluster){
+            return response()->json(['success'=> false, 'message'=> 'No Valid Cluster Found using this id']);
+        }
+
+        $cluster->update([
+            'cluster_status'=> 'Enable'
+        ]);
+
+        return response()->json(['success'=> true, 'message'=> 'Regional Cluster Enabled']);
     }
 }

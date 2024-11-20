@@ -16,7 +16,7 @@ function GetAllCluster() {
                         // Define the Action button column
                         data: null,
                         render: function (data, type, row) {
-                            return `<div class="d-flex gap-1">
+                            return data.cluster_status == 'Enable' ? `<div class="d-flex gap-1">
                             <button class="btn btn-success activeEdit" id="updateCluster${data.cluster_id}" onclick="UpdateCluster('${row.cluster_id}', this, '${data.cluster_name}')">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-pencil">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -37,9 +37,15 @@ function GetAllCluster() {
                             <path d="M14 11l0 6" />
                             <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
                             <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
-                            </svg> Delete</button>
-                            </div>`;
+                            </svg> Disable</button>
+                            </div>` :  `<button class="btn btn-info" onclick="EnableCluster('${data.cluster_id}')">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-checks">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M7 12l5 5l10 -10" />
+                            <path d="M2 12l5 5m5 -5l5 -5" />
+                            </svg> Enable</button>`;
                         },
+                        width: '10%'
                     },
                 ],
             });
@@ -78,9 +84,6 @@ function UpdateCluster(id, btn, name) {
 }
 
 function CancelUpdate(btn){
-
-
-
     show('clusterForm');
     hide('clusterFormUpdate');
 
@@ -89,6 +92,40 @@ function CancelUpdate(btn){
     const updateBtn = document.getElementById(updateClusterId);
 
     updateBtn.classList.remove('d-none');
+}
+
+function EnableCluster(id){
+    Swal.fire({
+        title: "Are you sure?",
+        text: "Do you want to enable this back this cluster",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Enable it"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          loading(true);
+
+          const csrfToken = $('meta[name="csrf-token"]').attr("content");
+          const data = {
+            "_token" : csrfToken,
+            "id": id
+          };
+
+          $.ajax({
+            type: "POST",
+            url: "/api/enable-cluster",
+            data: data,
+            success: res=> {
+                loading(false);
+                dataParser(res);
+                GetAllCluster();
+            }, error: xhr=> console.log(xhr.responseText)
+          });
+
+        }
+      });
 }
 
 
@@ -104,10 +141,15 @@ document.getElementById('clusterFormUpdate').addEventListener('submit', e => {
 
         $.ajax({
             type: "POST",
-            url: "",
+            url: "/api/update-cluster",
             data: $('#clusterFormUpdate').serialize(),
             success: res=> {
-                
+                loading(false);
+                dataParser(res);
+                GetAllCluster();
+                show('clusterForm');
+                hide('clusterFormUpdate');
+
             }, error: xhr=> console.log(xhr.response)
         })
     }
@@ -258,7 +300,7 @@ function SubmitData(formID, route) {
 
 function ChangeStatus(id, route) {
     alertify.confirm(
-        "Warning", "Are you sure you want to remove this data?",
+        "Warning", "Are you sure you want to disable this cluster?",
         function () {
             loading(true);
             const csrfToken = $('meta[name="csrf-token"]').attr("content");
