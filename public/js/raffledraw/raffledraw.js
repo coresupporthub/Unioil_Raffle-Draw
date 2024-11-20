@@ -66,9 +66,9 @@ function startRaffle() {
     drawButton.disabled = true;
     let counter = 0;
 
-    const drumrolls = new Audio("/sounds/drumroll.mp3");
+    const drumrolls = new Audio("/sounds/machine.mp3");
     drumrolls.loop = true;
-    drumrolls.volume = 0.8;
+    drumrolls.volume = 1;
     drumrolls.play();
 
     const shuffleInterval = setInterval(() => {
@@ -81,8 +81,8 @@ function startRaffle() {
     const formData = new FormData();
     formData.append("_token", csrfToken);
     formData.append("id", cluster_id);
-    let celebrate = new Audio("/sounds/bell.mp3");
-
+    let celebrate = new Audio("/sounds/winning.mp3");
+    celebrate.volume = 1;
     $.ajax({
         url: "/api/raffle-draw",
         type: "POST",
