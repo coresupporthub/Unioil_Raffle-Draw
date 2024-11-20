@@ -22,4 +22,7 @@ class Magic{
 
     const MAX_QR_PER_PAGE = 36;
     const MINIMUM_COUNT_FOR_EXPORT = 3;
+
+    const QR_ENTRY_SINGLE = 'Single Entry QR Code';
+    const QR_ENTRY_DOUBLE = 'Dual Entry QR Code';
 }
