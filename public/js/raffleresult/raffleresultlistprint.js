@@ -31,7 +31,7 @@ function addWinnerRow() {
                 newRow.appendChild(tdCluster);
 
                 let tdPrize = document.createElement("td");
-                tdPrize.textContent = element.event_price;
+                tdPrize.textContent = element.event_prize;
                 newRow.appendChild(tdPrize);
 
                 let tdWinnerName = document.createElement("td");
