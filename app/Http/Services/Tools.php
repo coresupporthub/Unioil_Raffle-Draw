@@ -85,4 +85,10 @@ class Tools
         $logs->response_data = $response;
         $logs->save();
     }
+
+    public static function searchInArray($data, $searchValue) {
+        return array_filter($data, function ($item) use ($searchValue) {
+            return in_array($searchValue, $item);
+        });
+    }
 }
