@@ -28,43 +28,43 @@ function GetAllCluster() {
 }
 
 function LoadAllRetailStore() {
-    $.ajax({
-        url: "/api/get-all-store", // Replace with your endpoint URL
-        type: "GET",
-        success: function (response) {
-            const data = response.data;
-            if ($.fn.DataTable.isDataTable("#ratailOutletTable")) {
-                const table = $("#ratailOutletTable").DataTable();
-                table.clear().rows.add(data).draw();
-            } else {
-                $("#ratailOutletTable").DataTable({
-                    data: data,
-                    destroy: true,
-                    columns: [
-                        { data: "cluster_name" },
-                        { data: "address" },
-                        { data: "distributor" },
-                        { data: "retail_station" },
-                        { data: "rto_code" },
-                        {
-                            // Define the Action button column
-                            data: null,
-                            render: function (data, type, row) {
-                                return (
-                                    `<div class="d-flex gap-1"><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal-update-retail" onclick="updateRetail('${row.store_id}','${row.cluster_id}','${row.address}','${row.area}','${row.distributor}','${row.retail_station}', '${row.rto_code}')">Update</button>` +
-                                    ` ` +
-                                    `<button class="btn btn-danger" onclick="ChangeStatus('${row.store_id}','/api/remove-retail')">Delete</button></div>`
-                                );
-                            },
-                        },
-                    ],
-                });
-            }
-        },
-        error: function (xhr, status, error) {
-            console.error("Error fetching data:", error);
-        },
-    });
+    const tableId = "#ratailOutletTable";
+
+
+    if ($.fn.DataTable.isDataTable(tableId)) {
+
+        $(tableId).DataTable().destroy();
+    }
+        $(tableId).DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: '/api/get-all-store',
+                dataSrc: 'data'
+            },
+            destroy: true,
+            columns: [
+                { data: "cluster_name" },
+                { data: "address" },
+                { data: "distributor" },
+                { data: "retail_station" },
+                { data: "rto_code" },
+                {
+                    data: null,
+                    render: function (data, type, row) {
+                        return (
+                            `<div class="d-flex gap-1"><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal-update-retail" onclick="updateRetail('${row.store_id}','${row.cluster_id}','${row.address}','${row.area}','${row.distributor}','${row.retail_station}', '${row.rto_code}')">Update</button>` +
+                            ` ` +
+                            `<button class="btn btn-danger" onclick="ChangeStatus('${row.store_id}','/api/remove-retail')">Delete</button></div>`
+                        );
+                    },
+                },
+            ],
+            paging: true,
+            lengthChange: true,
+            pageLength: 10,
+            destroy: true
+        });
 }
 
 function GetAllClusterSelect() {
@@ -114,7 +114,7 @@ function updateRetail(id, cluster_id, address, area, distributor, retail_station
 
 function dynamicCall(functionName, ...args) {
     if (typeof window[functionName] === "function") {
-        window[functionName](...args); // Call the function dynamically with any passed arguments
+        window[functionName](...args);
     } else {
         console.error("Function not found:", functionName);
     }
@@ -197,7 +197,7 @@ function ChangeStatus(id, route) {
             });
         },
         function () {
-            alertify.error("Cancel");
+            return;
         }
     );
 }
@@ -239,40 +239,45 @@ document.getElementById('uploadCsvForm').addEventListener('submit', e => {
     })
 });
 
-async function FilterRetailStore(filter){
-    const response = await fetch(`/api/filter-cluster?filter=${filter}`);
+function FilterRetailStore(filter){
+    const tableId = "#ratailOutletTable";
 
-    const result = await response.json();
 
-    const data = result.data;
+    if ($.fn.DataTable.isDataTable(tableId)) {
 
-    if ($.fn.DataTable.isDataTable("#ratailOutletTable")) {
-        const table = $("#ratailOutletTable").DataTable();
-        table.clear().rows.add(data).draw();
-    } else {
-        $("#ratailOutletTable").DataTable({
-            data: data,
-            destroy: true,
-            columns: [
-                { data: "cluster_name" },
-                { data: "address" },
-                { data: "distributor" },
-                { data: "retail_station" },
-                { data: "rto_code" },
-                {
-                    // Define the Action button column
-                    data: null,
-                    render: function (data, type, row) {
-                        return (
-                            `<div class="d-flex gap-1"><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal-update-retail" onclick="updateRetail('${row.store_id}','${row.cluster_id}','${row.address}','${row.area}','${row.distributor}','${row.retail_station}', '${row.rto_code}')">Update</button>` +
-                            ` ` +
-                            `<button class="btn btn-danger" onclick="ChangeStatus('${row.store_id}','/api/remove-retail')">Delete</button></div>`
-                        );
-                    },
-                },
-            ],
-        });
+        $(tableId).DataTable().destroy();
     }
+
+    $(tableId).DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: `/api/filter-cluster?filter=${filter}`,
+            dataSrc: 'data'
+        },
+        destroy: true,
+        columns: [
+            { data: "cluster_name" },
+            { data: "address" },
+            { data: "distributor" },
+            { data: "retail_station" },
+            { data: "rto_code" },
+            {
+                data: null,
+                render: function (data, type, row) {
+                    return (
+                        `<div class="d-flex gap-1"><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal-update-retail" onclick="updateRetail('${row.store_id}','${row.cluster_id}','${row.address}','${row.area}','${row.distributor}','${row.retail_station}', '${row.rto_code}')">Update</button>` +
+                        ` ` +
+                        `<button class="btn btn-danger" onclick="ChangeStatus('${row.store_id}','/api/remove-retail')">Delete</button></div>`
+                    );
+                },
+            },
+        ],
+        paging: true,
+        lengthChange: true,
+        pageLength: 10,
+        destroy: true
+    });
 }
 
 document.getElementById('clusterFilter').addEventListener('change', (e)=> {

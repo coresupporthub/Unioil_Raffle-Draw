@@ -26,44 +26,38 @@ function GenerateQrCode() {
     });
 }
 
-function initializeQRTable(data){
-    if ($.fn.dataTable.isDataTable("#generatedQrTable")) {
-        const table = $("#generatedQrTable").DataTable();
-        table.clear();
-        table.rows.add(data);
-        table.draw();
-    } else {
-
-        $("#generatedQrTable").DataTable({
-            data: data,
-            columns: [
-                { data: "code" },
-                { data: "entry_type" },
-                { data: "status" },
-                { data: "export_status" },
-                { data: null,
-                    render: data => {
-                        return `<button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#viewQR" onclick="viewQR('${data.qr_id}')">View</button>`
-                    },
-                }
-            ],
-        });
-    }
-
-}
 
 function GetGeneratedQr() {
-    $.ajax({
-        url: "/api/get-qr-code-generated", // Replace with your endpoint URL
-        type: "GET",
-        success: function (response) {
-            const qrCodesData = response.qrcodes;
-            exec('closeQrCodeGenerator');
-            initializeQRTable(qrCodesData);
+    const tableId = "#generatedQrTable";
+
+    if ($.fn.DataTable.isDataTable(tableId)) {
+        $(tableId).DataTable().clear().destroy();
+    }
+
+    $(tableId).DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: '/api/get-qr-code-generated',
+            type: 'GET',
+            dataSrc: 'data'
         },
-        error: function (xhr, status, error) {
-            console.error("Error fetching data:", error);
-        },
+        columns: [
+            { data: "code" },
+            { data: "entry_type" },
+            { data: "status" },
+            { data: "export_status" },
+            {
+                data: null,
+                render: data => {
+                    return `<button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#viewQR" onclick="viewQR('${data.qr_id}')">View</button>`;
+                }
+            }
+        ],
+        paging: true,
+        lengthChange: true,
+        pageLength: 10,
+        destroy: true
     });
 }
 
@@ -77,19 +71,12 @@ document.getElementById('resetTable').addEventListener('click', ()=> {
     GetGeneratedQr();
     QueueStatus();
 });
-
-async function QueueStatus() {
-    const response = await fetch('/api/get-queue-status');
-
-    if (!response.ok) {
-        alert("Failed to fetch queue status");
-        return;
-    }
-
-    const result = await response.json();
-
+function QueueStatus() {
     $("#queue-progress").DataTable({
-        data: result.queue,
+        ajax: {
+            url: '/api/get-queue-status',
+            dataSrc: 'queue'
+        },
         destroy: true,
         columns: [
             {
@@ -166,20 +153,44 @@ document.getElementById('exportQrForm').addEventListener('submit', (e)=> {
     });
 });
 
-function GetGenerateQRFilter(filter){
-    $.ajax({
-        type: "GET",
-        url: `/api/filter-qrcodes?filter=${filter}`,
-        dataType: "json",
-        success: res=> {
-            const data = res.data;
+function GetGenerateQRFilter(filter) {
+    const tableId = "#generatedQrTable";
 
-            initializeQRTable(data);
-        }, error: xhr=> console.log(xhr.responseText)
-    })
+
+    if ($.fn.DataTable.isDataTable(tableId)) {
+
+        $(tableId).DataTable().destroy();
+    }
+
+
+    $(tableId).DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: `/api/filter-qrcodes?filter=${filter}`,
+            type: 'GET',
+            dataSrc: 'data'
+        },
+        columns: [
+            { data: "code" },
+            { data: "entry_type" },
+            { data: "status" },
+            { data: "export_status" },
+            {
+                data: null,
+                render: data => {
+                    return `<button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#viewQR" onclick="viewQR('${data.qr_id}')">View</button>`;
+                }
+            }
+        ],
+        paging: true,
+        lengthChange: true,
+        pageLength: 10,
+        destroy: true,
+    });
 }
 
-document.getElementById('filterQR').addEventListener('click', (e)=>{
+document.getElementById('filterQR').addEventListener('change', (e)=>{
     const filter = e.target.value;
 
     if(filter == 'all'){
@@ -236,9 +247,32 @@ function viewQR(id){
 }
 
 document.getElementById('openExportBtn').addEventListener('click', async ()=> {
-    const response = await fetch('/api/get-export-page-num');
+    const response = await fetch('/api/get-export-page-num?filter=Single Entry QR Code');
 
     const result = await response.json();
 
-    setValue('export_pages', result.page);
+    suggestExport(result.page);
 });
+
+document.getElementById('selectExportQRType').addEventListener('change', async (e)=> {
+    const filter = e.target.value;
+
+    const response = await fetch(`/api/get-export-page-num?filter=${filter}`);
+
+    const result = await response.json();
+
+    suggestExport(result.page);
+});
+
+function suggestExport(data){
+
+    if(data == 0){
+        enable('exportQrBtn', true);
+        enable('export_pages', true);
+    }else{
+        enable('exportQrBtn', false);
+        enable('export_pages', false);
+    }
+
+    setValue('export_pages', data);
+}

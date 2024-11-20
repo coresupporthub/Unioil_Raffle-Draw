@@ -34,7 +34,7 @@
                             </div>
 
                             <!-- Winners Table -->
-                            <div class="card shadow">
+                            <div class="card shadow mb-4">
                                 <div class="card-header text-white d-flex justify-content-center align-items-center"
                                     style="background-color: #f75a04;">
                                     <h2 class="mb-0">🎉 Winners List 🎉</h2>
@@ -54,6 +54,33 @@
                                                 </tr>
                                             </thead>
                                             <tbody id="winnerListTable">
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card shadow">
+                                <div class="card-header text-white d-flex justify-content-center align-items-center"
+                                    style="background-color: #f70404;">
+                                    <h2 class="mb-0">Redrawn Winners (Unconfirmed Prizes)</h2>
+                                </div>
+
+
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover align-middle">
+                                            <thead class="table-primary">
+                                                <tr>
+                                                    <th>Coupon</th>
+                                                    <th>Cluster</th>
+                                                    <th>Prize</th>
+                                                    <th>Winner Name</th>
+                                                    <th>Email</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="unclaim-table">
 
                                             </tbody>
                                         </table>

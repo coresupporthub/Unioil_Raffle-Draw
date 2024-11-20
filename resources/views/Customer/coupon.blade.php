@@ -16,6 +16,7 @@
 <h2>Great! Your entry has been saved for the raffle draw</h2>
 <div style="    font-size: 18px;">We have sent you an email of this serial numbers of your raffle coupons<br>
   Please secure it for reference and ownership</div>
+  <p>Please take a screenshot of your entry coupon serial number for reference</p>
 <div style="background-color: #d5dcdf;
     margin: 50px auto;
     padding: 20px 0;">

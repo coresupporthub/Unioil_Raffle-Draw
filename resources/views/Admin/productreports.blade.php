@@ -16,7 +16,7 @@
                         Overview
                       </div>
                       <h2 class="page-title">
-                        Product Reports 
+                        Product Reports
                       </h2>
                     </div>
                     <!-- Page title actions -->
@@ -41,12 +41,12 @@
                             <div class="card">
                                 <div class="card-body">
                                   <form action="" id="searchEntry" method="post">
-                                    @csrf      
+                                    @csrf
                             <div class="card mb-2">
                             <div class="row p-2" style="background-color: #fd7e14">
                                 <div class="col-4 mb-3">
                                     <h4 class="mb-2 ms-2 text-white" for="">Raffle Events </h4>
-                                    <select class="form-select" name="event_id" id="event_id" onchange=" GetAllEntry()">
+                                    <select class="form-select" name="event_id" id="event_id" onchange="GetAllEntry()">
                                          <option value="" selected> All Raffle Events </option>
                                         @php
                                             $events = App\Models\Event::all();
@@ -54,6 +54,7 @@
                                         @foreach ($events as $event)
                                              <option value="{{$event->event_id}}"> {{$event->event_name}} </option>
                                         @endforeach
+                                    </select>
                                 </div>
 
                                 <div class="col-4 mb-3">
