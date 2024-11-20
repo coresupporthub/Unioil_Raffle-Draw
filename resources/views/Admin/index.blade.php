@@ -43,7 +43,7 @@
                         <!-- Page title actions -->
                         <div class="col-auto ms-auto d-print-none me-3">
                             <div class="card-body text-center">
-                                <h4 class="fw-bold mb-1">Select an Event to View Insights</h4>
+                                <h4 class="fw-bold mb-1">Select Event to View Insights</h4>
                                 @php
                                     use App\Models\Event;
                                     $events = Event::all();
@@ -73,34 +73,17 @@
                 <div class="container-xl">
 
                     <div class="row m-2">
-                        {{-- Event Selection Card --}}
 
-                        {{-- <div class="col-12">
-                            <div class="card shadow">
-                                <div class="card-body text-center">
-                                    <h4 class="fw-bold mb-1">Select an Event to View Insights</h4>
-                                    @php
-                                        $events = App\Models\Event::all();
-                                    @endphp
-                                    <div class="form-group mx-auto" style="max-width: 400px;">
-                                        <select class="form-select border-primary fw-semibold"
-                                                style="color: #ff3300;"
-                                                id="event-dropdown"
-                                                onchange="updateCharts(this.value)">
-                                            <option selected disabled value="">Choose an Event</option>
-                                            @if ($events->isEmpty())
-                                                <option value="#" disabled>No events available</option>
-                                            @else
-                                                @foreach ($events as $event)
-                                                    <option value="{{ $event->event_id }}">{{ $event->event_name }}</option>
-                                                @endforeach
-                                            @endif
-                                        </select>
-                                    </div>
+                        <div class="col-lg-12 col-xl-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h3 class="text-center">Entries by Product Type Across Regional Clusters</h3>
+
+                                    <div id="chart-combination"></div>
+                                    <div id="total-entries"></div>
                                 </div>
                             </div>
-                        </div> --}}
-
+                        </div>
                     </div>
 
                     <div class="row m-2">
@@ -126,18 +109,9 @@
                     </div>
 
                     <div class="row m-2">
-                        {{-- AREA CHART --}}
-                        <div class="col-lg-7 col-xl7">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h3 class="text-center">Raffle Entry Issuance Over Time</h3>
-                                    <div id="chart-completion-tasks-10"></div>
-                                </div>
-                            </div>
-                        </div>
+
 
                         {{-- REGIONAL CLUSTER PARTICIPATION --}}
-
                         <div class="col-lg-5 col-xl-5">
                             <div class="card">
                                 <div class="card-body">
@@ -146,12 +120,20 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
 
+                        {{-- AREA CHART --}}
+                        <div class="col-lg-7 col-xl-7">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h3 class="text-center">Raffle Entry Issuance Over Time</h3>
+                                    <div id="chart-completion-tasks-10"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-
         @include('Admin.components.footer')
     </div>
     </div>
