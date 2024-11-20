@@ -83,6 +83,7 @@
                                 <select name="cluster_id" id="cluster_id2" class="form-control">
 
                                 </select>
+                                <small class="text-danger d-none" id="cluster_id2E">This is required</small>
                             </div>
                             <div class="col-12 col-md-4 mb-3">
                                 <label for="area">Area</label>
@@ -99,10 +100,12 @@
                             <div class="col-12 col-md-4 mb-3">
                                 <label for="retail_store">Retail Store</label>
                                 <input type="text" id="retail_store" name="retail_store" class="form-control">
+                                <small class="text-danger d-none" id="retail_storeE">This is required</small>
                             </div>
                             <div class="col-12 col-md-4 mb-3">
                                 <label for="rto_code">RTO Code</label>
                                 <input type="text" name="rto_code" id="rto_code" class="form-control">
+                                <small class="text-danger d-none" id="rto_codeE">This is required</small>
                             </div>
 
                         </div>

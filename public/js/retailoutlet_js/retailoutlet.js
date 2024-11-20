@@ -233,9 +233,9 @@ function updateRetail(id, cluster_id, address, area, distributor, retail_station
     document.getElementById("store_id").value = id;
 
     setValue('cluster_id2', cluster_id);
-    setValue('address', address);
-    setValue('area', area);
-    setValue('distributor', distributor);
+    setValue('address', address == 'null' ? '' : address);
+    setValue('area', area == 'null' ? '' : area);
+    setValue('distributor', distributor == 'null' ? '' : distributor);
     setValue('retail_store', retail_station);
     setValue('rto_code', rto_code);
 
@@ -250,53 +250,44 @@ function dynamicCall(functionName, ...args) {
     }
 }
 
-function validateForm(formID) {
-    const form = document.getElementById(formID);
-    let emptyField = false;
 
-    const inputs = form.querySelectorAll("input, textarea, select");
-
-    inputs.forEach(function (input) {
-        if (input.value.trim() === "") {
-            emptyField = true;
-            input.classList.add("error");
-        } else {
-            input.classList.remove("error");
-        }
-    });
-
-    return !emptyField;
-}
 
 function SubmitData(formID, route) {
-    if (!validateForm(formID)) {
-        alertify.error("Please fill in all required fields.");
-        return;
+
+    const inputs = [
+        ['cluster_id2', 'cluster_id2E'],
+        ['retail_store', 'retail_storeE'],
+        ['rto_code', 'rto_codeE'],
+    ];
+
+    if(checkValidity(inputs)){
+        loading(true);
+
+        const form = document.getElementById(formID);
+        const csrfToken = $('meta[name="csrf-token"]').attr("content");
+        const formData = new FormData(form);
+        formData.append("_token", csrfToken);
+
+        $.ajax({
+            url: route,
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                alertify.success(response.message);
+                document.getElementById(formID).reset();
+                dynamicCall(response.reload);
+                loading(false);
+                exec('closeRetail');
+                setValue('clusterFilter', 'all');
+            },
+            error: function (xhr, status, error) {
+                console.error("Error posting data:", error);
+            },
+        });
     }
-    loading(true);
 
-    const form = document.getElementById(formID);
-    const csrfToken = $('meta[name="csrf-token"]').attr("content");
-    const formData = new FormData(form);
-    formData.append("_token", csrfToken);
-
-    $.ajax({
-        url: route,
-        type: "POST",
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function (response) {
-            alertify.success(response.message);
-            document.getElementById(formID).reset();
-            dynamicCall(response.reload);
-            loading(false);
-            exec('closeRetail');
-        },
-        error: function (xhr, status, error) {
-            console.error("Error posting data:", error);
-        },
-    });
 }
 
 function ChangeStatus(id, route) {
@@ -444,6 +435,7 @@ function DeleteRetail(id){
                 loading(false);
                 dataParser(res);
                 LoadAllRetailStore();
+                setValue('clusterFilter', 'all');
             }, error: xhr=> console.log(xhr.responseText)
          });
         }
