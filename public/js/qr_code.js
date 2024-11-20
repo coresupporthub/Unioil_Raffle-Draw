@@ -236,9 +236,19 @@ function viewQR(id){
 }
 
 document.getElementById('openExportBtn').addEventListener('click', async ()=> {
-    const response = await fetch('/api/get-export-page-num');
+    const response = await fetch('/api/get-export-page-num?filter=Single Entry QR Code');
 
     const result = await response.json();
+
+    setValue('export_pages', result.page);
+});
+
+document.getElementById('selectExportQRType').addEventListener('change', async (e)=> {
+    const filter = e.target.value;
+
+    const response = await fetch(`/api/get-export-page-num?filter=${filter}`);
+
+    const result = response.json();
 
     setValue('export_pages', result.page);
 });

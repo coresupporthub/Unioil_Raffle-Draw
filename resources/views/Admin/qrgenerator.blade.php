@@ -258,7 +258,7 @@
                             <div class="mb-3">
 
                                 <label class="form-label">Entry Type</label>
-                                <select name="qrtype" class="form-control">
+                                <select id="selectExportQRType" name="qrtype" class="form-control">
                                     <option value="Single Entry QR Code">Single Entry QR Code</option>
                                     <option value="Dual Entry QR Code">Dual Entry QR Code</option>
                                 </select>
