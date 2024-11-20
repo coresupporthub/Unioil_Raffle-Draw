@@ -143,7 +143,7 @@
                             </div>
                             <!-- Back to Raffles Button -->
                             <div class="text-center mt-5">
-                                <a href="/raffle/draw" class="btn btn-primary hide-me">← Back to Raffles</a>
+                                <a href="/raffle/draw" class="btn btn-primary hide-me">← Back to Raffle Page                                </a>
                             </div>
                         </div>
 
@@ -155,7 +155,7 @@
     <div class="modal modal-blur fade" id="update-event-modal" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
-          <div class="modal-header">
+          <div class="modal-header Unioil-header">
             <h5 class="modal-title">Update Event Raffle</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
@@ -195,7 +195,7 @@
             </form>
             </div>
           <div class="modal-footer">
-            <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-outline-dark me-auto" data-bs-dismiss="modal">Close</button>
             <button type="button" class="btn btn-danger" data-bs-toggle="modal" id="inactiveBtn" data-bs-target="#confirmInactive">Set Inactive</button>
             <button type="button" class="btn btn-primary" onclick=" SubmitData('update-event-form', '/api/update-event')">Save changes</button>
           </div>
