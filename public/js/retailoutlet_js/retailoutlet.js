@@ -184,7 +184,7 @@ function LoadAllRetailStore() {
                     return (
                         `<div class="d-flex gap-1"><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal-update-retail" onclick="updateRetail('${row.store_id}','${row.cluster_id}','${row.address}','${row.area}','${row.distributor}','${row.retail_station}', '${row.rto_code}')">Update</button>` +
                         ` ` +
-                        `<button class="btn btn-danger" onclick="ChangeStatus('${row.store_id}','/api/remove-retail')">Delete</button></div>`
+                        `<button class="btn btn-danger" onclick="DeleteRetail('${row.store_id}')">Delete</button></div>`
                     );
                 },
             },
@@ -195,6 +195,7 @@ function LoadAllRetailStore() {
         destroy: true
     });
 }
+
 
 function GetAllClusterSelect() {
     $.ajax({
@@ -404,7 +405,7 @@ function FilterRetailStore(filter) {
                     return (
                         `<div class="d-flex gap-1"><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal-update-retail" onclick="updateRetail('${row.store_id}','${row.cluster_id}','${row.address}','${row.area}','${row.distributor}','${row.retail_station}', '${row.rto_code}')">Update</button>` +
                         ` ` +
-                        `<button class="btn btn-danger" onclick="ChangeStatus('${row.store_id}','/api/remove-retail')">Delete</button></div>`
+                        `<button class="btn btn-danger" onclick="DeleteRetail('${row.store_id}')">Delete</button></div>`
                     );
                 },
             },
@@ -414,6 +415,39 @@ function FilterRetailStore(filter) {
         pageLength: 10,
         destroy: true
     });
+}
+
+function DeleteRetail(id){
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+         loading(true);
+         const csrfToken = $('meta[name="csrf-token"]').attr("content");
+
+         const data = {
+            "_token": csrfToken,
+            "id": id
+         }
+
+         $.ajax({
+            type: "POST",
+            url: "/api/remove-retail",
+            data: data,
+            success: res=> {
+                loading(false);
+                dataParser(res);
+                LoadAllRetailStore();
+            }, error: xhr=> console.log(xhr.responseText)
+         });
+        }
+      });
 }
 
 document.getElementById('clusterFilter').addEventListener('change', (e) => {
