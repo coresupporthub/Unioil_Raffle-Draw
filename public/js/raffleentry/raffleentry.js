@@ -33,7 +33,23 @@ function GetAllEntry() {
             { data: "customer_phone" },
         ],
         dom: "Bfrtip",
-        buttons: ["copy", "csv", "excel", "pdf", "print"],
+        buttons: [
+            "copy",
+            {
+                extend: "csv",
+                text: "Export All to CSV",
+                action: function (e, dt, button, config) {
+                    fetchAllData("/api/get-all-entry", "csv");
+                },
+            },
+            {
+                extend: "print",
+                text: "Print All",
+                action: function (e, dt, button, config) {
+                    fetchAllData("/api/get-all-entry", "print");
+                },
+            },
+        ],
         paging: true,
         searching: true,
         info: true,
@@ -66,6 +82,132 @@ function GetAllEntry() {
     });
 }
 
+function fetchAllData(url, format) {
+    const csrfToken = $('meta[name="csrf-token"]').attr("content");
+
+    $.ajax({
+        url: url,
+        type: "POST",
+        headers: {
+            "X-CSRF-TOKEN": csrfToken,
+        },
+        data: {
+            region: $("#region").val(),
+            event_id: $("#event_id").val(),
+            allData: true,
+        },
+        success: function (response) {
+            const data = response.data;
+            if (format === "csv") {
+                exportToCSV(data, "export_all_data.csv");
+            } else if (format === "print") {
+                printData(data);
+            }
+        },
+        error: function () {
+            alert("Failed to fetch data for export.");
+        },
+    });
+}
+function exportToCSV(data, filename) {
+
+    if (Array.isArray(data) && data.length > 0) {
+
+        const headers = Object.keys(data[0]);
+
+
+        const escapeCsvValue = (value) => {
+            if (typeof value === 'string') {
+
+                value = value.replace(/\r/g, '');
+                value = value.replace(/\n/g, ' ');
+                value = value.replace(/#/g, '%23');
+
+
+                if (value.includes(',') || value.includes('"')) {
+                    return `"${value.replace(/"/g, '""')}"`;
+                }
+            }
+            return value;
+        };
+
+        const csvContent = "data:text/csv;charset=utf-8,"
+            + headers.map(header => escapeCsvValue(header)).join(",") + "\n"
+            + data.map(row => headers.map(header => escapeCsvValue(row[header])).join(",")).join("\n");
+
+        console.log("Generated CSV content:", csvContent);
+
+        const encodedUri = encodeURI(csvContent);
+
+
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", filename);
+
+
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    } else {
+        console.warn("No data available for export.");
+    }
+}
+
+
+function printData(data) {
+
+    const headers = Object.keys(data[0]);
+    const tableHeader = headers.map(header => `<th>${header}</th>`).join("");
+
+    const tableRows = data
+        .map(row => {
+            const rowData = Object.values(row)
+                .map(value => `<td>${value || "N/A"}</td>`)
+                .join("");
+            return `<tr>${rowData}</tr>`;
+        })
+        .join("");
+
+    const tableContent = `
+        <table border="1" style="width: 100%; border-collapse: collapse;">
+            <thead>
+                <tr>${tableHeader}</tr>
+            </thead>
+            <tbody>
+                ${tableRows}
+            </tbody>
+        </table>
+    `;
+
+    const printWindow = window.open("", "_blank");
+    printWindow.document.write(`
+        <html>
+            <head>
+                <title>Print Data</title>
+                <style>
+                    table {
+                        font-family: Arial, sans-serif;
+                        border-collapse: collapse;
+                        width: 100%;
+                    }
+                    th, td {
+                        border: 1px solid #dddddd;
+                        text-align: left;
+                        padding: 8px;
+                    }
+                    th {
+                        background-color: #f2f2f2;
+                    }
+                </style>
+            </head>
+            <body>
+                ${tableContent}
+            </body>
+        </html>
+    `);
+    printWindow.document.close();
+    printWindow.print();
+}
 
 
 $(document).ready(function () {

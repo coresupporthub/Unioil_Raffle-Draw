@@ -170,72 +170,75 @@ class RaffleController extends Controller
     }
 
     public function getallentry(Request $request)
-{
-    $start = $request->input('start', 0);
-    $length = $request->input('length', 10);
-    $search = $request->input('search')['value'];
+    {
+        $allDataFlag = $request->input('allData', false); // Check if all data is requested
 
-    $events = !empty($request->event_id)
-        ? Event::where('event_id', $request->event_id)->get()
-        : Event::all();
+        $start = $request->input('start', 0);
+        $length =  $request->input('length', 10);
+        $search = $allDataFlag ? null : $request->input('search')['value'];
 
-    $allData = [];
-    foreach ($events as $event) {
+        $events = !empty($request->event_id)
+            ? Event::where('event_id', $request->event_id)->get()
+            : Event::all();
 
-        $query = RaffleEntries::where('event_id', $event->event_id);
+        $allData = [];
+        foreach ($events as $event) {
+            $query = RaffleEntries::where('event_id', $event->event_id);
 
+            if (!empty($request->region)) {
+                $retailData = RetailStore::where('cluster_id', $request->region)->pluck('rto_code');
+                $query->whereIn('retail_store_code', $retailData);
+            }
 
-        if (!empty($request->region)) {
-            $retailData = RetailStore::where('cluster_id', $request->region)->pluck('rto_code');
-            $query->whereIn('retail_store_code', $retailData);
-        }
+            $raffleData = $query->get();
 
-        $raffleData = $query->get();
+            foreach ($raffleData as $raffle) {
+                $retailStores = RetailStore::where('rto_code', $raffle->retail_store_code)->first();
+                $cluster = $retailStores
+                    ? RegionalCluster::where('cluster_id', $retailStores->cluster_id)->first()?->cluster_name
+                    : null;
 
-        foreach ($raffleData as $raffle) {
-            $retailStores = RetailStore::where('rto_code', $raffle->retail_store_code)->first();
-            $cluster = $retailStores
-                ? RegionalCluster::where('cluster_id', $retailStores->cluster_id)->first()?->cluster_name
-                : null;
+                $customer = Customers::where('customer_id', $raffle->customer_id)
+                    ->join('product_lists', 'product_lists.product_id', '=', 'customers.product_purchased')
+                    ->first();
 
-            $customer = Customers::where('customer_id', $raffle->customer_id)
-                ->join('product_lists', 'product_lists.product_id', '=', 'customers.product_purchased')
-                ->first();
-
-            if ($retailStores && $cluster && $customer) {
-                $allData[] = [
-                    'cluster' => $cluster,
-                    'area' => $retailStores->area,
-                    'address' => $retailStores->address,
-                    'distributor' => $retailStores->distributor,
-                    'retail_name' => $retailStores->retail_station,
-                    'serial_number' => $raffle->serial_number,
-                    'product_type' => $customer->product_name,
-                    'customer_name' => $customer->full_name,
-                    'customer_email' => $customer->email,
-                    'customer_phone' => $customer->mobile_number,
-                ];
+                if ($retailStores && $cluster && $customer) {
+                    $allData[] = [
+                        'cluster' => $cluster,
+                        'area' => $retailStores->area,
+                        'address' => $retailStores->address,
+                        'distributor' => $retailStores->distributor,
+                        'retail_name' => $retailStores->retail_station,
+                        'serial_number' => $raffle->serial_number,
+                        'product_type' => $customer->product_name,
+                        'customer_name' => $customer->full_name,
+                        'customer_email' => $customer->email,
+                        'customer_phone' => $customer->mobile_number,
+                    ];
+                }
             }
         }
+
+        if (!empty($search)) {
+            $allData = Tools::searchInArray($allData, $search);
+        }
+
+        if ($allDataFlag) {
+            return response()->json(['data' => $allData]);
+        }
+
+        // Paginate for normal requests
+        $totalRecords = count($allData);
+        $filteredRecords = count($allData);
+        $paginatedData = array_slice($allData, $start, $length);
+
+        return response()->json([
+            'draw' => intval($request->input('draw')),
+            'recordsTotal' => $totalRecords,
+            'recordsFiltered' => $filteredRecords,
+            'data' => $paginatedData,
+        ]);
     }
-
-    if (!empty($search)) {
-        $allData = Tools::searchInArray($allData, $search);
-    }
-
-    $totalRecords = count($allData);
-    $filteredRecords = $totalRecords;
-
-    $paginatedData = array_slice($allData, $start, $length);
-
-    return response()->json([
-        'draw' => intval($request->input('draw')),
-        'recordsTotal' => $totalRecords,
-        'recordsFiltered' => $filteredRecords,
-        'data' => $paginatedData,
-    ]);
-}
-
     public function getallevent()
     {
         $data = Event::orderBy('created_at', 'desc')->get(); // Order by latest created_at
