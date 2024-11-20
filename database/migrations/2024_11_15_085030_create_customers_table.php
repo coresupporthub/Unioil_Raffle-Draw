@@ -13,15 +13,15 @@ return new class extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->uuid('customer_id')->primary();
-            $table->string('full_name');
-            $table->string('age');
-            $table->string('region');
-            $table->string('province')->nullable();
-            $table->string('city');
-            $table->string('brgy');
-            $table->string('street')->nullable();
-            $table->string('mobile_number');
-            $table->string('email');
+            $table->longText('full_name');
+            $table->longText('age');
+            $table->longText('region');
+            $table->longText('province')->nullable();
+            $table->longText('city');
+            $table->longText('brgy');
+            $table->longText('street')->nullable();
+            $table->longText('mobile_number');
+            $table->longText('email');
             $table->uuid('qr_id');
             $table->foreign('qr_id')->references('qr_id')->on('qr_codes');
             $table->string('product_purchased');

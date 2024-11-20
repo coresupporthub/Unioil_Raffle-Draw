@@ -229,3 +229,9 @@ function viewQR(id){
         }, error: xhr=> console.log(xhr.responseText)
     })
 }
+
+document.getElementById('openExportBtn').addEventListener('click', async ()=> {
+    const response = await fetch();
+    
+    const result = await response.json();
+});
