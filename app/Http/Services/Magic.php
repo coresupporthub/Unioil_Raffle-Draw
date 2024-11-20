@@ -10,4 +10,7 @@ class Magic{
 
     const ACTIVE_EVENT = 'Active';
     const INACTIVE_EVENT = 'Inactive';
+
+    const QUEUE_QR = 'QR Generation';
+    const QUEUE_PDF = 'PDF Export';
 }

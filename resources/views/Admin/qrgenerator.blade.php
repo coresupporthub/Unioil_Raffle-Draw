@@ -46,7 +46,7 @@
                                     </svg>
                                     Generate QR
                                 </button>
-                                <button class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal"
+                                <button id="openExportBtn" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal"
                                     data-bs-target="#export">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
