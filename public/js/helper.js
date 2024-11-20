@@ -227,11 +227,11 @@ function hide(id){
     }
 }
 
-function show(id){
+function show(id, type = 'block'){
     const element = document.getElementById(id);
 
     if(element){
         element.classList.remove('d-none');
-        element.classList.add('d-flex');
+        type == 'block' ? null : element.classList.add('d-flex');
     }
 }

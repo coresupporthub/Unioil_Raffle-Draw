@@ -98,14 +98,14 @@ function startRaffle() {
                     clearInterval(shuffleInterval);
                     raffleInput.value = response.winner_serial_number;
                     drawButton.disabled = false;
-                    show('confetti');
+                    show('confetti', 'flex');
                     drumrolls.pause();
                     setText('winner-name', response.winner_details.full_name);
                     setText('serial-number-winner', response.winner_serial_number);
                     setText('product-purchased-winner', response.product.product_name);
                     setText('cluster-winner', response.cluster_name.cluster_name);
                     GetAllWinner();
-                    
+
                     celebrate.play();
                     stopRandomizing();
                 }, 5000);

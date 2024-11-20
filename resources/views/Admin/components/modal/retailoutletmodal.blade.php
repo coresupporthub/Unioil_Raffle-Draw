@@ -23,13 +23,30 @@
                     </div>
                     </form>
 
+                    <form action="" method="post" id="clusterFormUpdate" class="d-none">
+                        @csrf
+                        <input type="hidden" name="cluster_id" id="updateClusterId">
+                    <div class="row">
+                        <div class="col-12 col-md-8 mb-3">
+                            <label for="editRegionalCluster">Regional Cluster (Update)</label>
+                            <input type="text" name="cluster_name" id="editRegionalCluster" class="form-control">
+                            <small class="d-none text-danger" id="editRegionalClusterE">This is a required field</small>
+                        </div>
+                        <div class="col-12 col-md-4 mb-3 d-flex align-items-end">
+                            <button class="btn btn-info w-100" type="submit">Update</button>
+                        </div>
+
+                    </div>
+                    </form>
+
+
                     <div id="table-default" class="table-responsive">
                                     <table class="table" id="clusterTable">
                                         <thead>
                                             <tr>
                                                 <th>Cluster</th>
                                                 <th>Status</th>
-                                                <th>Action</th>
+                                                <th style="width:10%">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody class="table-tbody">
