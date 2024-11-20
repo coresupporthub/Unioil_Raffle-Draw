@@ -9,11 +9,11 @@
 @endphp
 
 @if($event)
-    <style>
+    {{-- <style>
         .hide-me{
             display: none;
         }
-    </style>
+    </style> --}}
 @endif
 <body>
     <script src="{{ asset('./dist/js/demo-theme.min.js?1692870487') }}"></script>

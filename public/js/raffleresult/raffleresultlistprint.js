@@ -156,6 +156,11 @@ function getevent() {
         processData: false,
         contentType: false,
         success: function (response) {
+            if (response.event_status == "Inactive") {
+                document.querySelectorAll(".hide-me").forEach((element) => {
+                    element.style.display = "none";
+                });
+            }
             document.getElementById("title_event_name").textContent =
                 response.event_name;
             document.getElementById("title_start").textContent =
