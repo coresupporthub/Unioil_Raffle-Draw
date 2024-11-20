@@ -1,20 +1,5 @@
 @include('Admin.components.head', ['title' => 'Raffle Event Results'])
-                        @php
-    $eventId = request()->query('event'); // Use request() to retrieve the query parameter
-    $event = null;
 
-    if ($eventId) {
-        $event = App\Models\Event::where('event_id', $eventId)->where('event_status','Inactive')->first();
-    }
-@endphp
-
-@if($event)
-    {{-- <style>
-        .hide-me{
-            display: none;
-        }
-    </style> --}}
-@endif
 <body>
     <script src="{{ asset('./dist/js/demo-theme.min.js?1692870487') }}"></script>
     <div class="page">
