@@ -34,21 +34,50 @@ function GetAllEntry() {
         ],
         dom: "Bfrtip",
         buttons: [
-            "copy",
             {
-                extend: "csv",
-                text: "Export All to CSV",
+                extend: 'copy',
+                className: 'dt-button copy-btn',
+                text: '<i class="fas fa-clipboard"></i> Copy',
+                attr: {
+                    style: 'background-color: #34bfa3; color: white; border: none; padding: 5px 10px; border-radius: 4px; font-size: 14px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: background-color 0.3s ease, transform 0.3s ease;',
+                }
+
+            },            // {
+            //     extend: "csv",
+            //     text: "Export All to CSV",
+            //     action: function (e, dt, button, config) {
+            //         fetchAllData("/api/get-all-entry", "csv");
+            //     },
+            // },
+            {
+                extend: 'csv',
+                className: 'dt-button csv-btn',
+                text: '<i class="fas fa-file-csv"></i> Export All to CSV',
+                attr: {
+                    style: 'background-color: #ffc107; color: black; border: none; padding: 5px 10px; border-radius: 4px; font-size: 14px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: background-color 0.3s ease, transform 0.3s ease;',
+                },
                 action: function (e, dt, button, config) {
                     fetchAllData("/api/get-all-entry", "csv");
                 },
             },
+            // {
+            //     extend: "print",
+            //     text: "Print All",
+            //     action: function (e, dt, button, config) {
+            //         fetchAllData("/api/get-all-entry", "print");
+            //     },
+            // },
             {
-                extend: "print",
-                text: "Print All",
+                extend: 'print',
+                className: 'dt-button print-btn',
+                text: '<i class="fas fa-print"></i> Print',
+                attr: {
+                    style: 'background-color: #007bff; color: white; border: none; padding: 5px 10px; border-radius: 4px; font-size: 14px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: background-color 0.3s ease, transform 0.3s ease;',
+                },
                 action: function (e, dt, button, config) {
                     fetchAllData("/api/get-all-entry", "print");
                 },
-            },
+            }
         ],
         paging: true,
         searching: true,
