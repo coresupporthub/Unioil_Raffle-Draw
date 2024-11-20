@@ -124,6 +124,31 @@ class RaffleController extends Controller
         return response()->json($data);
     }
 
+    public function geteventunclaim(Request $request)
+    {
+
+        $event = Event::where('event_id', $request->event_id)->first();
+        $raffleEntries = RaffleEntries::where('winner_status', 'false')
+        ->where('winner_record','true')
+        ->where('event_id', $event->event_id)
+            ->get();
+        $data = [];
+        foreach ($raffleEntries as $entry) {
+            $retailStores = RetailStore::where('rto_code', $entry->retail_store_code)->first();
+            $cluster = RegionalCluster::where('cluster_id', $retailStores->cluster_id)->first()->cluster_name;
+            $customer = Customers::where('customer_id', $entry->customer_id)->first();
+            $data[] = [
+                'event_prize' => $event->event_prize,
+                'serial_number' => $entry->serial_number,
+                'customer_name' => $customer->full_name,
+                'customer_email' => $customer->email,
+                'customer_number' => $customer->mobile_number,
+                'cluster' => $cluster
+            ];
+        }
+        return response()->json($data);
+    }
+
     public function validateclusterwinner($id){
 
         $event = Event::where('event_status', 'Active')->first();

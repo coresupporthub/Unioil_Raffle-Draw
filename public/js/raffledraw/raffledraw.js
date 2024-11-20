@@ -61,7 +61,7 @@ function SelectEntry(id){
 
 const raffleInput = document.getElementById("raffleInput");
 const drawButton = document.getElementById("drawButton");
-
+let interval;
 function startRaffle() {
     drawButton.disabled = true;
     let counter = 0;
@@ -83,6 +83,9 @@ function startRaffle() {
     formData.append("id", cluster_id);
     let celebrate = new Audio("/sounds/winning.mp3");
     celebrate.volume = 1;
+
+    startRandomizing();
+
     $.ajax({
         url: "/api/raffle-draw",
         type: "POST",
@@ -104,10 +107,12 @@ function startRaffle() {
                     GetAllWinner();
                     
                     celebrate.play();
+                    stopRandomizing();
                 }, 5000);
             }else{
                 alertify.alert('Warning',response.message, function () {
                 });
+                stopRandomizing();
                 drumrolls.pause();
                 drawButton.disabled = false;
                 clearInterval(shuffleInterval);
@@ -118,6 +123,44 @@ function startRaffle() {
         },
     });
 
+}
+
+ function getRandomColor() {
+     return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+ }
+
+ // Generate random horizontal and vertical shadow offsets
+ function getRandomOffset() {
+     return Math.floor(Math.random() * 20) - 10; // Offset range (-10 to 10)
+ }
+
+ // Generate a random shadow including horizontal and vertical offsets
+ function getRandomShadow() {
+     const hOffset = getRandomOffset(); // Horizontal offset
+     const vOffset = getRandomOffset(); // Vertical offset
+     const blur = Math.floor(Math.random() * 30); // Blur radius (0 to 30)
+     const spread = Math.floor(Math.random() * 20) - 10; // Spread radius (-10 to 10)
+     const color = getRandomColor(); // Shadow color
+     return `${hOffset}px ${vOffset}px ${blur}px ${spread}px ${color}`;
+ }
+
+function startRandomizing() {
+    if (!interval) {
+        interval = setInterval(() => {
+            raffleInput.style.color = getRandomColor(); // Randomize text color
+            raffleInput.style.borderColor = getRandomColor(); // Randomize border color
+            raffleInput.style.boxShadow = getRandomShadow(); // Randomize shadow
+        }, 100); // Change properties every 500ms
+    }
+}
+
+function stopRandomizing() {
+    clearInterval(interval);
+    interval = null;
+    // Reset styles to default
+    raffleInput.style.color = "black";
+    raffleInput.style.borderColor = "black";
+    raffleInput.style.boxShadow = "none";
 }
 
 function GetAllWinner() {
