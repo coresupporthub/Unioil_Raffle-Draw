@@ -141,12 +141,9 @@
 
         .nav-item.active~.navbar::after {
             width: 100px;
-            /* Adjust based on nav item width */
             transform: translateX(calc(100px * var(--nav-index)));
-            /* Slide smoothly */
         }
 
-        /* CSS variables for index */
         .nav-item:nth-child(1) {
             --nav-index: 0;
         }
