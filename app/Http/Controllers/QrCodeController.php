@@ -220,6 +220,10 @@ class QrCodeController extends Controller
             $qrCode = QrCode::where('export_status', Magic::EXPORT_FALSE)->where('status', Magic::QR_UNUSED)->where("entry_type", Magic::QR_ENTRY_DOUBLE)->get()->count();
         }
 
+        if($qrCode == 0){
+            return response()->json(['page'=> 0]);
+        }
+
         if($qrCode < Magic::MAX_QR_PER_PAGE && $qrCode < Magic::MINIMUM_COUNT_FOR_EXPORT){
             return response()->json(['page'=> 1]);
         }

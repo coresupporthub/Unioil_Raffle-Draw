@@ -240,7 +240,7 @@ document.getElementById('openExportBtn').addEventListener('click', async ()=> {
 
     const result = await response.json();
 
-    setValue('export_pages', result.page);
+    suggestExport(result.page);
 });
 
 document.getElementById('selectExportQRType').addEventListener('change', async (e)=> {
@@ -248,7 +248,20 @@ document.getElementById('selectExportQRType').addEventListener('change', async (
 
     const response = await fetch(`/api/get-export-page-num?filter=${filter}`);
 
-    const result = response.json();
+    const result = await response.json();
 
-    setValue('export_pages', result.page);
+    suggestExport(result.page);
 });
+
+function suggestExport(data){
+
+    if(data == 0){
+        enable('exportQrBtn', true);
+        enable('export_pages', true);
+    }else{
+        enable('exportQrBtn', false);
+        enable('export_pages', false);
+    }
+
+    setValue('export_pages', data);
+}
