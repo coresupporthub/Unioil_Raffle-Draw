@@ -91,7 +91,7 @@ class QrCodeController extends Controller
         $checkQRCodes = QrCode::where('export_status', 'none')->where('status', 'unused')->get()->count();
 
         if($limit > $checkQRCodes){
-            return response()->json(['success'=> false, 'message'=> 'The QR Codes is not enough for the pages']);
+            return response()->json(['success'=> false, 'message'=> 'The QR Codes is not enough for the pages'], 403);
         }
 
         $qrCodes = QrCode::where('export_status', 'none')->where('status', 'unused')->take($limit)->select('image', 'qr_id')->get();
