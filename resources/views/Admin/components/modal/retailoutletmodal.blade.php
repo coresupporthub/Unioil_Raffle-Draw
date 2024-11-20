@@ -1,5 +1,5 @@
         @php
-            $cluster = App\Models\RegionalCluster::all();
+            $cluster = App\Models\RegionalCluster::where('cluster_status', 'Enable')->get();
         @endphp
         <div class="modal modal-blur fade" id="addClusterModal" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
@@ -129,7 +129,7 @@
                         @csrf
                         <div class="mb-3">
                             <label for="clusterCSV">Select a Cluster</label>
-                            <select name="cluster" id="clusterCSV" class="form-select">
+                            <select name="cluster" required id="clusterCSV" class="form-select">
                                 <option value="" disabled selected>-----Select a cluster----</option>
                                 @foreach ($cluster as $clust)
                                     <option value="{{ $clust->cluster_id }}">{{ $clust->cluster_name }}</option>
@@ -138,7 +138,7 @@
                         </div>
                         <div class="mb-3">
                             <div class="form-label">Upload CSV File</div>
-                            <input type="file" name="csv_file" id="csv_file" class="form-control">
+                            <input required type="file" name="csv_file" id="csv_file" class="form-control">
                         </div>
 
                     </form>

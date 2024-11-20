@@ -1,6 +1,6 @@
 @include('Admin.components.head', ['title' => 'Retail Outlet Management'])
 @php
-$cluster = App\Models\RegionalCluster::all();
+$cluster = App\Models\RegionalCluster::where('cluster_status', 'Enable')->get();
 @endphp
 <body>
     <script src="{{ asset('./dist/js/demo-theme.min.js?1692870487') }}"></script>
