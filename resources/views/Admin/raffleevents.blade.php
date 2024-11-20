@@ -14,7 +14,7 @@
     <div class="page">
 
         @include('Admin.components.header', ['active' => 'raffleevents'])
-
+        @include('Admin.components.loader')
         <div class="page-wrapper">
             <div class="page-header d-print-none">
                 <div class="container-xl">

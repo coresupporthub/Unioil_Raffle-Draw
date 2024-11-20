@@ -10,9 +10,9 @@
     <script src="{{ asset('./dist/js/demo-theme.min.js?1692870487') }}"></script>
     <div class="page">
 
-     
+
         <div class="page-wrapper">
-           
+
             <!-- Page body -->
             <div class="page-body">
                 <div class="container-xl d-flex flex-column justify-content-center">
@@ -22,12 +22,12 @@
 
                             <!-- Raffle Draw Details -->
                             <div class="text-center mb-5">
-                                 
+
                                 <h1 class="fw-bold display-6 position-relative"
                                     style="color: #f75a04; padding-left: 20px; font-family: 'Poppins', sans-serif;">
                                     <span
                                         style=" margin-right: 10px; padding-left: 10px;" id="title_event_name">
-                                        
+
                                     </span>
                                 </h1>
                                 <p class="text-secondary fs-5">Start Date: <strong id="title_start"> </strong> - End Date: <strong id="title_end"> </strong></p>
@@ -54,7 +54,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody id="winnerListTable">
-                                               
+
                                             </tbody>
                                         </table>
                                     </div>
@@ -72,10 +72,10 @@
             </div>
         </div>
 
-    
 
 
-       
+
+
         @include('Admin.components.loader')
     </div>
     </div>

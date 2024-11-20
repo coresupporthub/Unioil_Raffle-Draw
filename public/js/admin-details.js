@@ -13,18 +13,40 @@ window.onload = async () => {
 }
 
 function adminLogout(){
-    loading(true);
 
-    const csrf = getCsrf();
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: "btn btn-success",
+          cancelButton: "btn btn-danger"
+        },
+        buttonsStyling: false
+      });
+      swalWithBootstrapButtons.fire({
+        title: "Are you sure?",
+        text: "Do you want to log out?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Log out!",
+        cancelButtonText: "No, cancel!",
+        reverseButtons: true
+      }).then((result) => {
+        if (result.isConfirmed) {
+            loading(true);
 
-    $.ajax({
-        type: "POST",
-        url: "/api/logout",
-        data: {"_token": csrf},
-        success: res=> {
-            if(res.success){
-                window.location.href = "/admin/sign-in"
-            }
-        }, error: xhr=> console.log(xhr.responseText)
-    })
+            const csrf = getCsrf();
+
+            $.ajax({
+                type: "POST",
+                url: "/api/logout",
+                data: {"_token": csrf},
+                success: res=> {
+                    if(res.success){
+                        window.location.href = "/admin/sign-in"
+                    }
+                }, error: xhr=> console.log(xhr.responseText)
+            })
+        }
+      });
+
+
 }

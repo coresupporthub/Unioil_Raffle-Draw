@@ -51,3 +51,6 @@
       transform: rotate(-360deg);
     }
   }
+  .swal2-actions {
+    gap: 15px; /* Adjust spacing as needed */
+  }
