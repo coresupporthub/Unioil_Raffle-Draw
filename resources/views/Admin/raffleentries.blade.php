@@ -56,6 +56,7 @@
                                         @foreach ($events as $event)
                                              <option value="{{$event->event_id}}"> {{$event->event_name}} </option>
                                         @endforeach
+                                    </select>
                                 </div>
 
                                 <div class="col-6 mb-3">

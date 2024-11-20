@@ -189,5 +189,59 @@ class AnalyticsController extends Controller
             'data' => $clusterData,
         ]);
     }
+
+    public function entriesByProductTypeAndCluster($eventId)
+    {
+        if ($eventId == 'active') {
+            $activeEvent = Event::where('event_status', 'Active')->first();
+    
+            if (!$activeEvent) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'No active event found.',
+                ]);
+            }
+    
+            $eventId = $activeEvent->event_id;
+        }
+    
+        $clusters = RegionalCluster::all();
+        $clusterData = [];
+       
+    
+        foreach ($clusters as $cluster) {
+            $full = 0;
+            $semi = 0;
+            $stores = RetailStore::where('cluster_id',$cluster->cluster_id)->get();
+            $productData = [];
+            foreach($stores as $store){
+                $customers = Customers::where('store_id',$store->store_id)->get();
+                foreach($customers as $customer){
+                    $product = ProductList::where('product_id',$customer->product_purchased)->first();
+                    if($product->entries == 2){
+                        $full += 2;
+                    }else{
+                        $semi += 1;
+                    }
+                    
+                }
+                
+            }
+            $productData[]=[
+                'Fully Synthetic'=>$full,
+                'Semi Synthetic'=>$semi,
+            ];
+            $clusterData[]=[
+                'cluster'=>$cluster->cluster_name,
+                'product'=>$productData
+            ];
+        }
+    
+        return response()->json([
+            'success' => true,
+            'message' => 'Entries by product type and cluster fetched successfully.',
+            'data' => $clusterData,
+        ]);
+    }
     
 }

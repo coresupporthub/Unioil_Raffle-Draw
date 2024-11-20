@@ -71,6 +71,7 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('/entry/issuance/{filter}', [AnalyticsController::class, 'entryissuance']);
         Route::get('/entry/product-type/{event}', [AnalyticsController::class, 'entriesbyproducttype']);
         Route::get('/clusters/data/{eventId}', [AnalyticsController::class, 'getClusterData']);
+        Route::get('/entries/productcluster/{eventId}', [AnalyticsController::class, 'entriesByProductTypeAndCluster']);
 
     });
 
