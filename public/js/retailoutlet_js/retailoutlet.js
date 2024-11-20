@@ -96,8 +96,8 @@ function CancelUpdate(btn){
 
 function EnableCluster(id){
     Swal.fire({
-        title: "Are you sure?",
-        text: "Do you want to enable this back this cluster",
+        title: "Are you sure to enable this cluster back?",
+        text: "This will able you to add more retail store to this cluster",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -299,9 +299,17 @@ function SubmitData(formID, route) {
 }
 
 function ChangeStatus(id, route) {
-    alertify.confirm(
-        "Warning", "Are you sure you want to disable this cluster?",
-        function () {
+
+    Swal.fire({
+        title: "Are you sure to disable this?",
+        text: "The data attach to this cluster will not be remove but you cannot add any retail store to this cluster until you enable it back",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, disable it!"
+      }).then((result) => {
+        if (result.isConfirmed) {
             loading(true);
             const csrfToken = $('meta[name="csrf-token"]').attr("content");
             const formData = new FormData();
@@ -324,11 +332,10 @@ function ChangeStatus(id, route) {
                     console.error("Error posting data:", error);
                 },
             });
-        },
-        function () {
-            return;
         }
-    );
+      });
+
+
 }
 
 function LoadAll() {
