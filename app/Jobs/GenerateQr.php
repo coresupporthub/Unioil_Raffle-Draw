@@ -55,7 +55,7 @@ class GenerateQr implements ShouldQueue
         $qrCodeModel->save();
 
         // $urlConstruct = route('customer_registrations', ['code' => $code, 'uuid' => $qrCodeModel->qr_id]);
-        $urlConstruct = "promo.uniol.com/registration/page/$code/$qrCodeModel->qr_id";
+        $urlConstruct = "promo.unioil.com/registration/page/$code/$qrCodeModel->qr_id";
 
         $builder = new Builder(
             writer: new PngWriter(),
