@@ -99,7 +99,6 @@ function addUnclaimrRow() {
         processData: false,
         contentType: false,
         success: function (response) {
-            console.log(response)
             const tableBody = document.getElementById("unclaim-table");
             while (tableBody.firstChild) {
                 tableBody.removeChild(tableBody.firstChild);
