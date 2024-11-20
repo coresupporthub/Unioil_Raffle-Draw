@@ -42,11 +42,34 @@ class RetailStoreController extends Controller
     }
 
 
-    public function getallstore(){
-        $data = RetailStore::join('regional_cluster', 'retail_store.cluster_id', '=', 'regional_cluster.cluster_id')
-        ->select('regional_cluster.cluster_name', 'retail_store.*')
-        ->get();
-        return response()->json(['data'=>$data]);
+    public function getallstore(Request $request){
+        $start = $request->input('start', 0);
+        $length = $request->input('length', 10);
+        $search = $request->input('search')['value'];
+
+        $query = RetailStore::join('regional_cluster', 'retail_store.cluster_id', '=', 'regional_cluster.cluster_id')
+        ->select('regional_cluster.cluster_name', 'retail_store.*');
+
+          if (!empty($search)) {
+            $query->where('address', 'like', "%$search%")
+                ->orWhere('cluster_name', 'like', "%$search%")
+                ->orWhere('retail_station', 'like', "%$search%")
+                ->orWhere('rto_code', 'like', "%$search%")
+                ->orWhere('distributor', 'like', "%$search%");
+        }
+
+        $totalRecords = RetailStore::count();
+
+        $filteredRecords = $query->count();
+
+        $data = $query->skip($start)->take($length)->get();
+
+        return response()->json([
+            'draw' => intval($request->input('draw')),
+            'recordsTotal' => $totalRecords,
+            'recordsFiltered' => $filteredRecords,
+            'data' => $data
+        ]);
     }
 
     public function removeretailstore(Request $request){
@@ -120,10 +143,33 @@ class RetailStoreController extends Controller
     }
 
     public function filtercluster(Request $req){
-        $store = RetailStore::where('retail_store.cluster_id', $req->filter)->join('regional_cluster', 'retail_store.cluster_id', '=', 'regional_cluster.cluster_id')
-        ->select('regional_cluster.cluster_name', 'retail_store.*')->get();
+        $start = $req->input('start', 0);
+        $length = $req->input('length', 10);
+        $search = $req->input('search')['value'];
 
-        return response()->json(['success'=> true, 'data'=> $store]);
+        $store = RetailStore::where('retail_store.cluster_id', $req->filter)->join('regional_cluster', 'retail_store.cluster_id', '=', 'regional_cluster.cluster_id')
+        ->select('regional_cluster.cluster_name', 'retail_store.*');
+
+        if (!empty($search)) {
+            $store->where('address', 'like', "%$search%")
+            ->orWhere('cluster_name', 'like', "%$search%")
+            ->orWhere('retail_station', 'like', "%$search%")
+            ->orWhere('rto_code', 'like', "%$search%")
+            ->orWhere('distributor', 'like', "%$search%");
+        }
+
+        $totalRecords = RetailStore::count();
+
+        $filteredRecords = $store->count();
+
+        $data = $store->skip($start)->take($length)->get();
+
+        return response()->json([
+            'draw' => intval($req->input('draw')),
+            'recordsTotal' => $totalRecords,
+            'recordsFiltered' => $filteredRecords,
+            'data' => $data
+        ]);
     }
 
     public function addretailstore(Request $req){
