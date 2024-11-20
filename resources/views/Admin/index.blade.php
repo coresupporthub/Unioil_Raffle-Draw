@@ -26,7 +26,7 @@
     <div class="page">
 
         @include('Admin.components.header', ['active' => 'dashboard'])
-
+        @include('Admin.components.loader')
         <div class="page-wrapper">
             <div class="page-header d-print-none">
                 <div class="container-xl">
@@ -62,9 +62,9 @@
                                         $events = Event::all();
                                     @endphp
                                     <div class="form-group mx-auto" style="max-width: 400px;">
-                                        <select class="form-select border-primary fw-semibold" 
-                                                style="color: #ff3300;" 
-                                                id="event-dropdown" 
+                                        <select class="form-select border-primary fw-semibold"
+                                                style="color: #ff3300;"
+                                                id="event-dropdown"
                                                 onchange="updateCharts(this.value)">
                                             <option selected disabled value="">Choose an Event</option>
                                             @if ($events->isEmpty())
@@ -80,7 +80,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="row m-2">
                         {{-- DONUT CHART --}}
                         <div class="col-lg-4 col-xl-4">
@@ -91,7 +91,7 @@
                                 </div>
                             </div>
                         </div>
-                    
+
                         {{-- BAR GRAPH --}}
                         <div class="col-lg-8 col-xl-8">
                             <div class="card">
@@ -102,7 +102,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="row m-2">
                         {{-- AREA CHART --}}
                         <div class="col-lg-7 col-xl7">
@@ -113,7 +113,7 @@
                                 </div>
                             </div>
                         </div>
-                    
+
                         {{-- REGIONAL CLUSTER PARTICIPATION --}}
                         <div class="col-lg-5 col-xl-5">
                             <div class="card">

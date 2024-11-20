@@ -153,9 +153,14 @@ document.getElementById('exportQrForm').addEventListener('submit', (e)=> {
            window.open(url, '_blank');
 
         }, error: xhr=> {
-            console.log(xhr.responseText);
+            console.log(xhr.status);
             loading(false);
-            dataParser({'success': false, 'message': 'No Unexported qr code images are available for export! Please add atleast 3'});
+            if(xhr.status == 403){
+                dataParser({'success': false, 'message':'The QR Codes is not enough for the pages'})
+            }else{
+                dataParser({'success': false, 'message': 'No Unexported qr code images are available for export! Please add atleast 3'});
+            }
+
             exec('closeExportModal');
         }
     });
@@ -229,3 +234,11 @@ function viewQR(id){
         }, error: xhr=> console.log(xhr.responseText)
     })
 }
+
+document.getElementById('openExportBtn').addEventListener('click', async ()=> {
+    const response = await fetch('/api/get-export-page-num');
+
+    const result = await response.json();
+
+    setValue('export_pages', result.page);
+});

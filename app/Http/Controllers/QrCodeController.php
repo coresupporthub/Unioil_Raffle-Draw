@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Services\Magic;
 use Illuminate\Http\Request;
 use App\Jobs\GenerateQr;
 use App\Models\QrCode;
@@ -85,17 +86,17 @@ class QrCodeController extends Controller
         $latestQueue = QueueingStatusModel::latest()->first();
         $queue = new QueueingStatusModel();
 
-        $limit = 36 * $req->page_number;
+        $limit = Magic::MAX_QR_PER_PAGE * $req->page_number;
 
         $checkQRCodes = QrCode::where('export_status', 'none')->where('status', 'unused')->get()->count();
 
         if($limit > $checkQRCodes){
-            return response()->json(['success'=> false, 'message'=> 'The QR Codes is not enough for the pages']);
+            return response()->json(['success'=> false, 'message'=> 'The QR Codes is not enough for the pages'], 403);
         }
 
         $qrCodes = QrCode::where('export_status', 'none')->where('status', 'unused')->take($limit)->select('image', 'qr_id')->get();
 
-        if($qrCodes->count() < 3){
+        if($qrCodes->count() < Magic::MINIMUM_COUNT_FOR_EXPORT){
             return response()->json(['success'=> false, 'message'=> 'No Unexported qr code images are available for export! Please add atleast 3 codes'], 404);
         }
 
@@ -123,7 +124,7 @@ class QrCodeController extends Controller
             return $qrCode;
         });
 
-        $chunkedQrCodes = $qrCodes->chunk(36)->map(function ($chunk) {
+        $chunkedQrCodes = $qrCodes->chunk(Magic::MAX_QR_PER_PAGE)->map(function ($chunk) {
             return $chunk->chunk(4);
         });
 
@@ -208,5 +209,18 @@ class QrCodeController extends Controller
         }
 
         return response()->json(['success'=> true, 'entry_type'=> $entry_type, 'customer'=> $customer, 'entries'=> $entry, 'product'=> $product, 'qr'=> $qrCode]);
+    }
+
+
+    public function checkexportnum(Request $req){
+        $qrCode = QrCode::where('export_status', Magic::EXPORT_FALSE)->where('status', Magic::QR_UNUSED)->get()->count();
+
+        if($qrCode < Magic::MAX_QR_PER_PAGE && $qrCode < Magic::MINIMUM_COUNT_FOR_EXPORT){
+            return response()->json(['page'=> 1]);
+        }
+
+        $page = floor($qrCode / Magic::MAX_QR_PER_PAGE);
+
+        return response()->json(['page'=> $page]);
     }
 }

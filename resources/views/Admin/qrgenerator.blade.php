@@ -46,7 +46,7 @@
                                     </svg>
                                     Generate QR
                                 </button>
-                                <button class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal"
+                                <button id="openExportBtn" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal"
                                     data-bs-target="#export">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -252,7 +252,7 @@
                             <div class="mb-3">
 
                                 <label class="form-label">How many pages?</label>
-                                <input type="number" class="form-control" required name="page_number"
+                                <input type="number" class="form-control" id="export_pages" required name="page_number"
                                     value="1" placeholder="# of pages">
                             </div>
                             <div class="mb-3">

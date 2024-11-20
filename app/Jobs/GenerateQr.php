@@ -14,7 +14,7 @@ use Endroid\QrCode\Writer\PngWriter;
 use App\Models\QrCode;
 use App\Http\Services\Tools;
 use App\Models\QueueingStatusModel;
-use Illuminate\Support\Facades\Storage;
+use App\Http\Services\Magic;
 
 class GenerateQr implements ShouldQueue
 {
@@ -54,8 +54,8 @@ class GenerateQr implements ShouldQueue
         $qrCodeModel->export_status = 'none';
         $qrCodeModel->save();
 
-        $urlConstruct = route('customer_registrations', ['code' => $code, 'uuid' => $qrCodeModel->qr_id]);
-
+        // $urlConstruct = route('customer_registrations', ['code' => $code, 'uuid' => $qrCodeModel->qr_id]);
+        $urlConstruct = "promo.unioil.com/registration/page/$code/$qrCodeModel->qr_id";
 
         $builder = new Builder(
             writer: new PngWriter(),
@@ -84,7 +84,7 @@ class GenerateQr implements ShouldQueue
 
         $result->saveToFile($qrCodePath);
 
-        $q = QueueingStatusModel::where('status', 'inprogress')->first();
+        $q = QueueingStatusModel::where('status', 'inprogress')->where('type', Magic::QUEUE_QR)->first();
 
         if ($q) {
             if ($q->items + 1 != $q->total_items) {
