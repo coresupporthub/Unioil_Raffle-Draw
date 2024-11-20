@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     shade: "dark",
                     type: "diagonal1",
                     shadeIntensity: 0.7,
-                    gradientToColors: ["#137f13", "#fd7e14"],
+                    gradientToColors: ["#137f13", tabler.getColor("primary")],
                     inverseColors: false,
                     opacityFrom: 1,
                     opacityTo: 0.9,
@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
             tooltip: { theme: "dark", enabled: false }, 
             grid: { strokeDashArray: 4 },
             colors: ["#B0B0B0", "#B0B0B0"], 
-            legend: { show: true, position: "bottom", offsetY: 12 },
+            legend: { show: true, position: "bottom", offsetY: 8 },
         });
 
         chartInstance.render();
@@ -61,10 +61,10 @@ document.addEventListener("DOMContentLoaded", function () {
             fill: { type: "solid" },
             series: [{ name: "Fully Synthetic", data: [] }, { name: "Semi Synthetic", data: [] }],
             tooltip: { theme: 'dark' },
-            grid: { padding: { top: -20, right: 0, left: -4, bottom: -4 }, strokeDashArray: 4 },
+            grid: { padding: { top: -20, right: 0, left: -4, bottom: -2 }, strokeDashArray: 4 },
             xaxis: { labels: { padding: 0 }, tooltip: { enabled: false }, axisBorder: { show: false }, categories: [] },
             yaxis: { labels: { padding: 4 } },
-            colors: ['#137f13', '#fd7e14'],
+            colors: ['#137f13', tabler.getColor("primary")],
             legend: { show: true, position: 'top' },
         });
 
@@ -110,7 +110,7 @@ function updateChart(semiSynthetic, fullySynthetic, noData = false) {
 }
 
 // Fetch the data for raffle entries issued by product type
-function fetchEntriesData(eventId) {
+function fetchEntriesData(eventId) { 
     if (!eventId) return;
 
     $.ajax({
@@ -119,7 +119,17 @@ function fetchEntriesData(eventId) {
         dataType: 'json',
         success: function (data) {
             if (Array.isArray(data)) {
-                const months = data.map(item => item.month);
+
+                const monthNames = [
+                    "January", "February", "March", "April", "May", "June",
+                    "July", "August", "September", "October", "November", "December"
+                ];
+
+                const months = data.map(item => {
+                    const [year, month] = item.month.split('-');
+                    return `${monthNames[parseInt(month) - 1]} ${year}`;
+                });
+
                 const fullySynthetic = data.map(item => item.fully_synthetic);
                 const semiSynthetic = data.map(item => item.semi_synthetic);
 
@@ -139,6 +149,7 @@ function fetchEntriesData(eventId) {
         }
     });
 }
+
 
 // Fetch active event data
 function fetchActiveEventData() {
@@ -250,7 +261,20 @@ function fetchEventDataarea(eventId) {
             chartElement.innerHTML = "";
             
             if (data.success && data.eventData.length > 0) {
-                const labels = data.eventData.map(entry => entry.date);
+                // Sort the eventData array by date in ascending order
+                data.eventData.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+                // Convert dates to a readable format
+                const monthNames = [
+                    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+                ];
+
+                const labels = data.eventData.map(entry => {
+                    const [year, month, day] = entry.date.split("-");
+                    return `${day} ${monthNames[parseInt(month) - 1]} ${year}`;
+                });
+
                 const counts = data.eventData.map(entry => entry.count);
 
                 new ApexCharts(chartElement, {
@@ -291,11 +315,11 @@ function fetchEventDataarea(eventId) {
                         }
                     },
                     stroke: { width: 2, curve: 'smooth' },
-                    colors: ['#fd7e14'],
+                    colors: [tabler.getColor("primary")],
                     dataLabels: { enabled: false },
                     tooltip: {
                         x: {
-                            format: 'dd MMM yyyy'
+                            format: 'dd MMM yyyy' 
                         }
                     },
                     grid: {
@@ -314,3 +338,109 @@ function fetchEventDataarea(eventId) {
     });
 }
 
+
+document.addEventListener("DOMContentLoaded", function () {
+    var eventId = "{{ $activeEventId }}";
+
+    $.ajax({
+        url: `/api/entries/productcluster/${eventId}`,
+        method: 'GET',
+        success: function (data) {
+            if (data.success) {
+                let seriesData = [];
+                let categories = [];
+        
+                data.data.forEach((cluster, index) => {
+
+                    categories.push(cluster.cluster);
+        
+                    cluster.product.forEach(product => {
+                        console.log(product);
+                        
+                        for (let productType in product) {
+
+                            let productIndex = seriesData.findIndex(item => item.name === productType);
+        
+                            if (productIndex === -1) {
+
+                                seriesData.push({
+                                    name: productType,
+                                    data: Array(data.data.length).fill(0)
+                                });
+                                productIndex = seriesData.length - 1;
+                            }
+        
+                            seriesData[productIndex].data[index] = product[productType];
+                        }
+                    });
+                });
+
+                new ApexCharts(document.getElementById('chart-combination'), {
+                    chart: {
+                        type: "bar",
+                        fontFamily: 'inherit',
+                        height: 240,
+                        parentHeightOffset: 0,
+                        toolbar: {
+                            show: false,
+                        },
+                        animations: {
+                            enabled: false
+                        },
+                    },
+                    plotOptions: {
+                        bar: {
+                            columnWidth: '50%',
+                        }
+                    },
+                    dataLabels: {
+                        enabled: false,
+                    },
+                    fill: {
+                        opacity: 1,
+                    },
+                    series: seriesData,
+                    tooltip: {
+                        theme: 'dark'
+                    },
+                    grid: {
+                        padding: {
+                            top: -20,
+                            right: 0,
+                            left: -4,
+                            bottom: -4
+                        },
+                        strokeDashArray: 4,
+                    },
+                    xaxis: {
+                        labels: {
+                            padding: 0,
+                        },
+                        tooltip: {
+                            enabled: false
+                        },
+                        axisBorder: {
+                            show: false,
+                        },
+                        categories: categories,
+                    },
+                    yaxis: {
+                        labels: {
+                            padding: 4
+                        },
+                    },
+                    colors: [tabler.getColor("success"), tabler.getColor("primary")],
+                    legend: {
+                        show: true,
+                    },
+                }).render();
+
+            } else {
+                console.error("Error fetching data: " + data.message);
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error("AJAX request failed: " + error);
+        }
+    });
+});
