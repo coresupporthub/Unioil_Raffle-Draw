@@ -76,24 +76,11 @@
             box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
         }
 
-        .navbar {
-            display: flex;
-            align-items: center;
-            justify-content: space-around;
-            position: relative;
-            overflow: hidden;
-            padding: 10px 20px;
-        }
-
         .nav-item {
             position: relative;
             margin: 0 10px;
             cursor: pointer;
             transition: transform 0.3s ease, background 0.4s ease;
-        }
-
-        .nav-item:hover {
-            transform: scale(1.1);
         }
 
         .nav-item .nav-link {
