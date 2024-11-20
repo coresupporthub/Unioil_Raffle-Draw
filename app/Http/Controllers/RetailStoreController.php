@@ -22,9 +22,14 @@ class RetailStoreController extends Controller
         return response()->json($response);
     }
 
-    public function getcluster()
+    public function getcluster($type)
     {
-        $data = RegionalCluster::orderBy('created_at', 'asc')->get(); // Order by 'created_at' in ascending order
+        if($type == 'all'){
+            $data = RegionalCluster::orderBy('created_at', 'asc')->get();
+        }else{
+            $data = RegionalCluster::where('cluster_status', 'Enable')->orderBy('created_at', 'asc')->get(); // Order by 'created_at' in ascending order
+        }
+
         return response()->json(['data' => $data]);
     }
 

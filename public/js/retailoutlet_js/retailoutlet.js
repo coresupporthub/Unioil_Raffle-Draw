@@ -1,6 +1,6 @@
 function GetAllCluster() {
     $.ajax({
-        url: "/api/get-cluster",
+        url: "/api/get-cluster/all",
         type: "GET",
         success: function (response) {
             const data = response.data;
@@ -29,7 +29,7 @@ function GetAllCluster() {
                             <path d="M18 6l-12 12" />
                             <path d="M6 6l12 12" />
                             </svg> Cancel </button>
-                            <button class="btn btn-danger" onclick="ChangeStatus('${row.cluster_id}','/api/cluster-status')">
+                            <button class="btn btn-danger" onclick="DisableCluster('${row.cluster_id}','/api/cluster-status')">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                             <path d="M4 7l16 0" />
@@ -121,6 +121,7 @@ function EnableCluster(id){
                 loading(false);
                 dataParser(res);
                 GetAllCluster();
+                GetAllClusterSelect();
             }, error: xhr=> console.log(xhr.responseText)
           });
 
@@ -199,16 +200,26 @@ function LoadAllRetailStore() {
 
 function GetAllClusterSelect() {
     $.ajax({
-        url: "/api/get-cluster",
+        url: "/api/get-cluster/draw",
         type: "GET",
         success: function (response) {
             const data = response.data;
 
             const selectElement2 = document.getElementById("cluster_id2");
+            const selectFilter = document.getElementById("clusterFilter");
 
             while (selectElement2.firstChild) {
                 selectElement2.removeChild(selectElement2.firstChild);
             }
+
+            while (selectFilter.firstChild) {
+                selectFilter.removeChild(selectFilter.firstChild);
+            }
+
+            const allFilter = document.createElement("option");
+            allFilter.text = "All";
+            allFilter.value = "all";
+            selectFilter.appendChild(allFilter);
 
             const defaultOption2 = document.createElement("option");
             defaultOption2.text = "Select a cluster";
@@ -220,6 +231,8 @@ function GetAllClusterSelect() {
                 newOption.value = element.cluster_id;
                 newOption.text = element.cluster_name;
                 selectElement2.appendChild(newOption);
+                selectFilter.appendChild(newOption);
+
             });
 
         },
@@ -290,7 +303,7 @@ function SubmitData(formID, route) {
 
 }
 
-function ChangeStatus(id, route) {
+function DisableCluster(id, route) {
 
     Swal.fire({
         title: "Are you sure to disable this?",
@@ -319,6 +332,7 @@ function ChangeStatus(id, route) {
                     dynamicCall(response.reload);
                     loading(false);
                     LoadAllRetailStore();
+                    GetAllClusterSelect();
                 },
                 error: function (xhr, status, error) {
                     console.error("Error posting data:", error);

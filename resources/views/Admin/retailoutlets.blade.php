@@ -1,7 +1,5 @@
 @include('Admin.components.head', ['title' => 'Retail Outlet Management'])
-@php
-$cluster = App\Models\RegionalCluster::where('cluster_status', 'Enable')->get();
-@endphp
+
 <body>
     <script src="{{ asset('./dist/js/demo-theme.min.js?1692870487') }}"></script>
     <div class="page">
@@ -29,9 +27,7 @@ $cluster = App\Models\RegionalCluster::where('cluster_status', 'Enable')->get();
                             <label for="clusterFilter" class="d-flex gap-1 fs-3">Cluster <span>Filter</span></label>
                             <select class="form-select" id="clusterFilter">
                                 <option value="all">All</option>
-                                @foreach ($cluster as $clust)
-                                    <option value="{{ $clust->cluster_id }}">{{ $clust->cluster_name }}</option>
-                                @endforeach
+                               
                             </select>
                         </div>
                         <button class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#importCsvModal">

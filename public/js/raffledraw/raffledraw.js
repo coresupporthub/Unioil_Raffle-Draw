@@ -1,6 +1,6 @@
 function GetAllClusterSelect() {
     $.ajax({
-        url: "/api/get-cluster", // Replace with your endpoint URL
+        url: "/api/get-cluster/draw", // Replace with your endpoint URL
         type: "GET",
         success: function (response) {
             const data = response.data;

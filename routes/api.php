@@ -26,7 +26,7 @@ Route::group(['middleware' => ['web']], function () {
 
         // Retail Store Controller
         Route::post('/add-retail-store', [RetailStoreController::class, 'addcluster']);
-        Route::get('/get-cluster', [RetailStoreController::class, 'getcluster']);
+        Route::get('/get-cluster/{type}', [RetailStoreController::class, 'getcluster']);
         Route::post('/cluster-status', [RetailStoreController::class, 'clusterstatus']);
         Route::post('/update-store', [RetailStoreController::class, 'updatestore']);
         Route::get('/get-all-store', [RetailStoreController::class, 'getallstore']);
