@@ -472,9 +472,7 @@ document.getElementById('addRetailStationForm').addEventListener('submit', e => 
 
     const inputs = [
         ['clusterAddStore', 'clusterAddStoreE'],
-        ['addressAdd', 'addressAddE'],
         ['retailStationAdd', 'retailStationAddE'],
-        ['distributorAdd', 'distributorAddE'],
         ['rtoCodeAdd', 'rtoCodeAddE']
     ];
 
@@ -490,6 +488,7 @@ document.getElementById('addRetailStationForm').addEventListener('submit', e => 
                 dataParser(res);
                 exec('closeAddRetailStation');
                 LoadAllRetailStore();
+                clearForm('addRetailStationForm');
             }, error: xhr => console.log(xhr.responseText)
         })
     }
