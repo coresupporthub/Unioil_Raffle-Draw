@@ -231,7 +231,9 @@ function viewQR(id){
 }
 
 document.getElementById('openExportBtn').addEventListener('click', async ()=> {
-    const response = await fetch();
-    
+    const response = await fetch('/api/get-export-page-num');
+
     const result = await response.json();
+
+    setValue('export_pages', result.page);
 });

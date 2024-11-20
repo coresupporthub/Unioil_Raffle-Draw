@@ -252,7 +252,7 @@
                             <div class="mb-3">
 
                                 <label class="form-label">How many pages?</label>
-                                <input type="number" class="form-control" required name="page_number"
+                                <input type="number" class="form-control" id="export_pages" required name="page_number"
                                     value="1" placeholder="# of pages">
                             </div>
                             <div class="mb-3">
