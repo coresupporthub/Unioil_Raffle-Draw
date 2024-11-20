@@ -91,7 +91,7 @@ class QrCodeController extends Controller
         $checkQRCodes = QrCode::where('export_status', 'none')->where('status', 'unused')->get()->count();
 
         if($limit > $checkQRCodes){
-            return response()->json(['success'=> false, 'message'=> 'The QR Codes is not enough for the pages']);
+            return response()->json(['success'=> false, 'message'=> 'The QR Codes is not enough for the pages'], 403);
         }
 
         $qrCodes = QrCode::where('export_status', 'none')->where('status', 'unused')->take($limit)->select('image', 'qr_id')->get();
@@ -213,7 +213,7 @@ class QrCodeController extends Controller
 
 
     public function checkexportnum(Request $req){
-        $qrCode = QrCode::where('export_status', Magic::EXPORT_TRUE)->where('status', Magic::QR_UNUSED)->get()->count();
+        $qrCode = QrCode::where('export_status', Magic::EXPORT_FALSE)->where('status', Magic::QR_UNUSED)->get()->count();
 
         if($qrCode < Magic::MAX_QR_PER_PAGE && $qrCode < Magic::MINIMUM_COUNT_FOR_EXPORT){
             return response()->json(['page'=> 1]);

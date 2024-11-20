@@ -11,7 +11,7 @@
     <div class="page">
 
         @include('Admin.components.header', ['active' => 'raffleentries'])
-
+        @include('Admin.components.loader')
         <div class="page-wrapper">
             <div class="page-header d-print-none">
                 <div class="container-xl">
@@ -26,24 +26,24 @@
                       </h2>
                     </div>
                     <!-- Page title actions -->
-                   
+
                   </div>
                 </div>
               </div>
             <!-- Page body -->
-            
+
             <div class="page-body">
-                
+
                 <div class="container-xl d-flex flex-column justify-content-center">
-                    
+
                     <div class="page-body">
                         <div class="container-xl">
 
                             <div class="card">
-                                
+
                                 <div class="card-body">
                            <form action="" id="searchEntry" method="post">
-                                    @csrf      
+                                    @csrf
                             <div class="card mb-2">
                             <div class="row p-2" style="background-color: #fd7e14">
                                 <div class="col-6 mb-3">
@@ -88,10 +88,10 @@
                                                 </tr>
                                             </thead>
                                             <tbody class="table-tbody">
-                                                
+
                                             </tbody>
                                         </table>
-                                        
+
                                     </div>
                                 </div>
                             </div>

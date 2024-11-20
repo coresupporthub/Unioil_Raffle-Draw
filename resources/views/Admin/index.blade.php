@@ -26,7 +26,7 @@
     <div class="page">
 
         @include('Admin.components.header', ['active' => 'dashboard'])
-
+        @include('Admin.components.loader')
         <div class="page-wrapper">
             <div class="page-header d-print-none">
                 <div class="container-xl">
@@ -74,6 +74,32 @@
 
                     <div class="row m-2">
                         {{-- Event Selection Card --}}
+
+                        {{-- <div class="col-12">
+                            <div class="card shadow">
+                                <div class="card-body text-center">
+                                    <h4 class="fw-bold mb-1">Select an Event to View Insights</h4>
+                                    @php
+                                        $events = App\Models\Event::all();
+                                    @endphp
+                                    <div class="form-group mx-auto" style="max-width: 400px;">
+                                        <select class="form-select border-primary fw-semibold"
+                                                style="color: #ff3300;"
+                                                id="event-dropdown"
+                                                onchange="updateCharts(this.value)">
+                                            <option selected disabled value="">Choose an Event</option>
+                                            @if ($events->isEmpty())
+                                                <option value="#" disabled>No events available</option>
+                                            @else
+                                                @foreach ($events as $event)
+                                                    <option value="{{ $event->event_id }}">{{ $event->event_name }}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> --}}
 
                     </div>
 
