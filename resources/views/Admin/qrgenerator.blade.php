@@ -21,7 +21,7 @@
                         </div>
                         <!-- Page title actions -->
                         <div class="col-auto ms-auto d-print-none gap-2 d-flex">
-                            <button id="resetTable" class="btn btn-vk btn-icon" data-bs-toggle="tooltip"
+                            <button id="resetTable" class="btn btn-dark btn-icon" data-bs-toggle="tooltip"
                                 data-bs-placement="top" aria-label="Refresh Tables"
                                 data-bs-original-title="Refresh Tables" aria-label="Refresh Tables">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -71,7 +71,7 @@
                 <div class="container-xl">
                     <div class="card">
                         <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-center mb-4">
+                            <div class="d-flex justify-content-between align-items-center mb-4"> 
                                 <!-- Card Title aligned to the left -->
                                 <h5 class="card-title mb-0">Queue List & Exported QR Code</h5>
                             </div>
@@ -104,9 +104,9 @@
                 <div class="container-xl">
                     <div class="card">
                         <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-center mb-4">
+                            <div class="d-flex justify-content-between align-items-center mb-4 ">
                                 <!-- Card Title aligned to the left -->
-                                <h5 class="card-title mb-0">Generated QR Codes</h5>
+                                <h5 class="card-title mb-0 ">Generated QR Codes</h5>
 
                                 <!-- Dropdown aligned to the right -->
                                 <div class="d-flex align-items-center gap-2">
@@ -147,7 +147,7 @@
             <div class="modal modal-blur fade" id="generateqr" tabindex="-1" role="dialog" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
-                        <div class="modal-header">
+                        <div class="modal-header Unioil-header">
                             <h5 class="modal-title">Generate QR</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
@@ -188,7 +188,7 @@
             <div class="modal modal-blur fade" id="viewQR" tabindex="-1" role="dialog"  aria-hidden="true">
                 <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                     <div class="modal-content">
-                        <div class="modal-header">
+                        <div class="modal-header Unioil-header">
                             <h5 class="modal-title">View QR Code Details</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
@@ -239,7 +239,7 @@
             <div class="modal modal-blur fade" id="export" tabindex="-1" role="dialog" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
-                        <div class="modal-header">
+                        <div class="modal-header Unioil-header">
                             <h5 class="modal-title">Export to PDF</h5>
 
                             <button type="button" class="btn-close" data-bs-dismiss="modal"
