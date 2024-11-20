@@ -43,6 +43,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
     <script src="https://cdn.datatables.net/buttons/3.2.0/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/3.2.0/js/buttons.print.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <style>
         @import url('https://rsms.me/inter/inter.css');
@@ -61,10 +64,18 @@
             padding: 15px;
             border-bottom: 1px solid #ddd;
         }
+
         .unioil-info {
             background-color: #0052cc;
             color: white;
 
         }
+
+        .dt-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        
     </style>
 </head>

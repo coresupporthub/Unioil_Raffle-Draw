@@ -40,13 +40,55 @@ function GetAllEntry() {
                     },
                     { data: "product" },
                 ],
-                dom: "Bfrtip", // Enables buttons layout
-                buttons: ["copy", "csv", "excel", "pdf", "print"],
-                paging: false, // Disable pagination
-                scrollY: "400px", // Set vertical scroll height (adjust as needed)
-                scrollCollapse: true, // Allow table height to shrink if fewer rows
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'copy',
+                        className: 'dt-button copy-btn',
+                        text: '<i class="fas fa-clipboard"></i> Copy',
+                        attr: {
+                            style: 'background-color: #34bfa3; color: white; border: none; padding: 5px 10px; border-radius: 4px; font-size: 14px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: background-color 0.3s ease, transform 0.3s ease;',
+                        }
+
+                    },
+                    {
+                        extend: 'csv',
+                        className: 'dt-button csv-btn',
+                        text: '<i class="fas fa-file-csv"></i> CSV',
+                        attr: {
+                            style: 'background-color: #ffc107; color: black; border: none; padding: 5px 10px; border-radius: 4px; font-size: 14px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: background-color 0.3s ease, transform 0.3s ease;',
+                        }
+                    },
+                    {
+                        extend: 'excel',
+                        className: 'dt-button excel-btn',
+                        text: '<i class="fas fa-file-excel"></i> Excel',
+                        attr: {
+                            style: 'background-color: #28a745; color: white; border: none; padding: 5px 10px; border-radius: 4px; font-size: 14px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: background-color 0.3s ease, transform 0.3s ease;',
+                        }
+                    },
+                    {
+                        extend: 'pdf',
+                        className: 'dt-button pdf-btn',
+                        text: '<i class="fas fa-file-pdf"></i> PDF',
+                        attr: {
+                            style: 'background-color: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 4px; font-size: 14px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: background-color 0.3s ease, transform 0.3s ease;',
+                        }
+                    },
+                    {
+                        extend: 'print',
+                        className: 'dt-button print-btn',
+                        text: '<i class="fas fa-print"></i> Print',
+                        attr: {
+                            style: 'background-color: #007bff; color: white; border: none; padding: 5px 10px; border-radius: 4px; font-size: 14px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: background-color 0.3s ease, transform 0.3s ease;',
+                        }
+                    }
+                ],          
+                paging: false, 
+                scrollY: "400px", 
+                scrollCollapse: true, 
                 searching: true,
-                info: true, // Show table info
+                info: true, 
                 footerCallback: function (row, data, start, end, display) {
                     const totalRows = data.length;
                     $("#total-rows").html("Total Products: " + totalRows);
