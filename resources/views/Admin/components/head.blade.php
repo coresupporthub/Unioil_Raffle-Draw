@@ -54,5 +54,17 @@
         body {
             font-feature-settings: "cv03", "cv04", "cv11";
         }
+
+        .Unioil-header {
+            background: linear-gradient(135deg, #ff6f00, #d43f00);
+            color: white;
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        .unioil-info {
+            background-color: #0052cc;
+            color: white;
+
+        }
     </style>
 </head>

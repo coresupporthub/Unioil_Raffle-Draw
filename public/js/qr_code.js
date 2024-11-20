@@ -50,7 +50,7 @@ function GetGeneratedQr() {
             {
                 data: null,
                 render: data => {
-                    return `<button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#viewQR" onclick="viewQR('${data.qr_id}')">View</button>`;
+                    return `<button class="btn unioil-info" data-bs-toggle="modal" data-bs-target="#viewQR" onclick="viewQR('${data.qr_id}')">View</button>`;
                 }
             }
         ],
