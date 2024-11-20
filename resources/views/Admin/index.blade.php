@@ -2,7 +2,7 @@
 
 <style>
     .form-select:focus {
-        border-color: #ff2600;
+        border-color: #ffffff;
         box-shadow: 0 0 0 0.25rem rgba(255, 136, 38, 0.25);
     }
 
@@ -16,7 +16,7 @@
     }
 
     .form-select option:hover {
-        background-color: #e7f1ff;
+        background-color: #ffffff;
     }
 </style>
 
@@ -41,7 +41,28 @@
                             </h2>
                         </div>
                         <!-- Page title actions -->
-                        <div class="col-auto ms-auto d-print-none">
+                        <div class="col-auto ms-auto d-print-none me-3">
+                            <div class="card-body text-center">
+                                <h4 class="fw-bold mb-1">Select an Event to View Insights</h4>
+                                @php
+                                    use App\Models\Event;
+                                    $events = Event::all();
+                                @endphp
+                                <div class="form-group mx-auto" style="max-width: 400px;">
+                                    <select class="form-select fw-semibold" style="border-color:#fd7e14; #fd7e14;"
+                                        id="event-dropdown" onchange="updateCharts(this.value)">
+                                        <option selected disabled value="">Choose an Event</option>
+                                        @if ($events->isEmpty())
+                                            <option value="#" disabled>No events available</option>
+                                        @else
+                                            @foreach ($events as $event)
+                                                <option value="{{ $event->event_id }}">{{ $event->event_name }}
+                                                </option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -53,34 +74,9 @@
 
                     <div class="row m-2">
                         {{-- Event Selection Card --}}
-                        <div class="col-12">
-                            <div class="card shadow">
-                                <div class="card-body text-center">
-                                    <h4 class="fw-bold mb-1">Select an Event to View Insights</h4>
-                                    @php
-                                        use App\Models\Event;
-                                        $events = Event::all();
-                                    @endphp
-                                    <div class="form-group mx-auto" style="max-width: 400px;">
-                                        <select class="form-select border-primary fw-semibold" 
-                                                style="color: #ff3300;" 
-                                                id="event-dropdown" 
-                                                onchange="updateCharts(this.value)">
-                                            <option selected disabled value="">Choose an Event</option>
-                                            @if ($events->isEmpty())
-                                                <option value="#" disabled>No events available</option>
-                                            @else
-                                                @foreach ($events as $event)
-                                                    <option value="{{ $event->event_id }}">{{ $event->event_name }}</option>
-                                                @endforeach
-                                            @endif
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+
                     </div>
-                    
+
                     <div class="row m-2">
                         {{-- DONUT CHART --}}
                         <div class="col-lg-4 col-xl-4">
@@ -91,18 +87,18 @@
                                 </div>
                             </div>
                         </div>
-                    
+
                         {{-- BAR GRAPH --}}
                         <div class="col-lg-8 col-xl-8">
                             <div class="card">
                                 <div class="card-body">
-                                    <h3 class="text-center">Raffle Entries Issued by Product Type</h3>
-                                    <div id="chart-tasks-overview1"></div>
+                                    <h3 class="text-center">Regional Cluster Raffle Participation</h3>
+                                    <div id="chart-tasks-overview"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="row m-2">
                         {{-- AREA CHART --}}
                         <div class="col-lg-7 col-xl7">
@@ -113,13 +109,14 @@
                                 </div>
                             </div>
                         </div>
-                    
+
                         {{-- REGIONAL CLUSTER PARTICIPATION --}}
+
                         <div class="col-lg-5 col-xl-5">
                             <div class="card">
                                 <div class="card-body">
-                                    <h3 class="text-center">Regional Cluster Raffle Participation</h3>
-                                    <div id="chart-tasks-overview"></div>
+                                    <h3 class="text-center">Raffle Entries Issued by Product Type</h3>
+                                    <div id="chart-tasks-overview1"></div>
                                 </div>
                             </div>
                         </div>
@@ -135,9 +132,7 @@
 
     @include('Admin.components.scripts')
 
-
     <script src="/js/analytics.js"></script>
-
 
 </body>
 

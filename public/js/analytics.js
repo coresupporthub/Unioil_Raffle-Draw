@@ -196,7 +196,7 @@ function fetchClusterData(eventId) {
                     chart: {
                         type: "bar",
                         fontFamily: 'inherit',
-                        height: 302,
+                        height: 314,
                         parentHeightOffset: 0,
                         toolbar: { show: true }, 
                         animations: { enabled: false },
@@ -247,7 +247,7 @@ function fetchEventDataarea(eventId) {
         method: 'GET',
         success: function (data) {
             const chartElement = document.getElementById('chart-completion-tasks-10');
-            chartElement.innerHTML = ""; // Clear previous chart if any
+            chartElement.innerHTML = "";
             
             if (data.success && data.eventData.length > 0) {
                 const labels = data.eventData.map(entry => entry.date);
