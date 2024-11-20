@@ -213,7 +213,7 @@ class QrCodeController extends Controller
 
 
     public function checkexportnum(Request $req){
-        $qrCode = QrCode::where('export_status', Magic::EXPORT_TRUE)->where('status', Magic::QR_UNUSED)->get()->count();
+        $qrCode = QrCode::where('export_status', Magic::EXPORT_FALSE)->where('status', Magic::QR_UNUSED)->get()->count();
 
         if($qrCode < Magic::MAX_QR_PER_PAGE && $qrCode < Magic::MINIMUM_COUNT_FOR_EXPORT){
             return response()->json(['page'=> 1]);
