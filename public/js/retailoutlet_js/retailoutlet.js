@@ -1,6 +1,6 @@
 function GetAllCluster() {
     $.ajax({
-        url: "/api/get-cluster", // Replace with your endpoint URL
+        url: "/api/get-cluster",
         type: "GET",
         success: function (response) {
             const data = response.data;
@@ -8,6 +8,7 @@ function GetAllCluster() {
             $("#clusterTable").DataTable({
                 data: data,
                 destroy: true,
+                autoWidth: true,
                 columns: [
                     { data: "cluster_name" },
                     { data: "cluster_status" },
@@ -15,7 +16,29 @@ function GetAllCluster() {
                         // Define the Action button column
                         data: null,
                         render: function (data, type, row) {
-                            return `<button class="btn btn-danger" onclick="ChangeStatus('${row.cluster_id}','/api/cluster-status')">Delete</button>`;
+                            return `<div class="d-flex gap-1">
+                            <button class="btn btn-success activeEdit" id="updateCluster${data.cluster_id}" onclick="UpdateCluster('${row.cluster_id}', this, '${data.cluster_name}')">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-pencil">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+                            <path d="M13.5 6.5l4 4" />
+                            </svg> Update</button>
+                            <button onclick="CancelUpdate(this)" class="btn btn-warning d-none cancelEdit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-x">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M18 6l-12 12" />
+                            <path d="M6 6l12 12" />
+                            </svg> Cancel </button>
+                            <button class="btn btn-danger" onclick="ChangeStatus('${row.cluster_id}','/api/cluster-status')">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M4 7l16 0" />
+                            <path d="M10 11l0 6" />
+                            <path d="M14 11l0 6" />
+                            <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                            <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                            </svg> Delete</button>
+                            </div>`;
                         },
                     },
                 ],
@@ -27,6 +50,70 @@ function GetAllCluster() {
     });
 }
 
+let updateClusterId;
+
+function UpdateCluster(id, btn, name) {
+    hide('clusterForm');
+    show('clusterFormUpdate');
+    const allCancel = document.querySelectorAll('.cancelEdit');
+
+    allCancel.forEach(d => {
+        d.classList.add('d-none');
+    });
+
+    const allEdit = document.querySelectorAll('.activeEdit');
+
+    allEdit.forEach(e => {
+        e.classList.remove('d-none');
+    });
+
+    const cancelBtn = btn.nextElementSibling;
+    btn.classList.add('d-none');
+    cancelBtn.classList.remove('d-none');
+
+    updateClusterId = `updateCluster${id}`;
+
+    setValue('editRegionalCluster', name);
+    setValue('updateClusterId', id);
+}
+
+function CancelUpdate(btn){
+
+
+
+    show('clusterForm');
+    hide('clusterFormUpdate');
+
+    btn.classList.add('d-none');
+
+    const updateBtn = document.getElementById(updateClusterId);
+
+    updateBtn.classList.remove('d-none');
+}
+
+
+document.getElementById('clusterFormUpdate').addEventListener('submit', e => {
+    e.preventDefault();
+
+    const inputs = [
+        ['editRegionalCluster', 'editRegionalClusterE']
+    ];
+
+    if(checkValidity(inputs)){
+        loading(true);
+
+        $.ajax({
+            type: "POST",
+            url: "",
+            data: $('#clusterFormUpdate').serialize(),
+            success: res=> {
+                
+            }, error: xhr=> console.log(xhr.response)
+        })
+    }
+});
+
+
 function LoadAllRetailStore() {
     const tableId = "#ratailOutletTable";
 
@@ -35,41 +122,41 @@ function LoadAllRetailStore() {
 
         $(tableId).DataTable().destroy();
     }
-        $(tableId).DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: {
-                url: '/api/get-all-store',
-                dataSrc: 'data'
-            },
-            destroy: true,
-            columns: [
-                { data: "cluster_name" },
-                { data: "address" },
-                { data: "distributor" },
-                { data: "retail_station" },
-                { data: "rto_code" },
-                {
-                    data: null,
-                    render: function (data, type, row) {
-                        return (
-                            `<div class="d-flex gap-1"><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal-update-retail" onclick="updateRetail('${row.store_id}','${row.cluster_id}','${row.address}','${row.area}','${row.distributor}','${row.retail_station}', '${row.rto_code}')">Update</button>` +
-                            ` ` +
-                            `<button class="btn btn-danger" onclick="ChangeStatus('${row.store_id}','/api/remove-retail')">Delete</button></div>`
-                        );
-                    },
+    $(tableId).DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: '/api/get-all-store',
+            dataSrc: 'data'
+        },
+        destroy: true,
+        columns: [
+            { data: "cluster_name" },
+            { data: "address" },
+            { data: "distributor" },
+            { data: "retail_station" },
+            { data: "rto_code" },
+            {
+                data: null,
+                render: function (data, type, row) {
+                    return (
+                        `<div class="d-flex gap-1"><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal-update-retail" onclick="updateRetail('${row.store_id}','${row.cluster_id}','${row.address}','${row.area}','${row.distributor}','${row.retail_station}', '${row.rto_code}')">Update</button>` +
+                        ` ` +
+                        `<button class="btn btn-danger" onclick="ChangeStatus('${row.store_id}','/api/remove-retail')">Delete</button></div>`
+                    );
                 },
-            ],
-            paging: true,
-            lengthChange: true,
-            pageLength: 10,
-            destroy: true
-        });
+            },
+        ],
+        paging: true,
+        lengthChange: true,
+        pageLength: 10,
+        destroy: true
+    });
 }
 
 function GetAllClusterSelect() {
     $.ajax({
-        url: "/api/get-cluster", // Replace with your endpoint URL
+        url: "/api/get-cluster",
         type: "GET",
         success: function (response) {
             const data = response.data;
@@ -171,7 +258,7 @@ function SubmitData(formID, route) {
 
 function ChangeStatus(id, route) {
     alertify.confirm(
-        "Warning","Are you sure you want to remove this data?",
+        "Warning", "Are you sure you want to remove this data?",
         function () {
             loading(true);
             const csrfToken = $('meta[name="csrf-token"]').attr("content");
@@ -202,18 +289,18 @@ function ChangeStatus(id, route) {
     );
 }
 
-function LoadAll(){
-     GetAllCluster();
-     GetAllClusterSelect();
-     LoadAllRetailStore();
+function LoadAll() {
+    GetAllCluster();
+    GetAllClusterSelect();
+    LoadAllRetailStore();
 }
 $(document).ready(function () {
-   LoadAll();
+    LoadAll();
 
 });
 
 
-document.getElementById('uploadBtn').addEventListener('click', ()=> {
+document.getElementById('uploadBtn').addEventListener('click', () => {
     document.getElementById('uploadCsvForm').requestSubmit();
 });
 
@@ -229,17 +316,17 @@ document.getElementById('uploadCsvForm').addEventListener('submit', e => {
         data: formData,
         contentType: false,
         processData: false,
-        success: res=> {
+        success: res => {
             loading(false);
             LoadAllRetailStore();
             clearForm('uploadCsvForm');
             exec('closeUploadModal');
             dataParser(res);
-        }, error: xhr=> console.log(xhr.responseText)
+        }, error: xhr => console.log(xhr.responseText)
     })
 });
 
-function FilterRetailStore(filter){
+function FilterRetailStore(filter) {
     const tableId = "#ratailOutletTable";
 
 
@@ -280,12 +367,12 @@ function FilterRetailStore(filter){
     });
 }
 
-document.getElementById('clusterFilter').addEventListener('change', (e)=> {
+document.getElementById('clusterFilter').addEventListener('change', (e) => {
     const filter = e.target.value;
 
-    if(filter == 'all'){
+    if (filter == 'all') {
         LoadAllRetailStore();
-    }else{
+    } else {
         FilterRetailStore(filter);
     }
 });
@@ -302,19 +389,19 @@ document.getElementById('addRetailStationForm').addEventListener('submit', e => 
         ['rtoCodeAdd', 'rtoCodeAddE']
     ];
 
-    if(checkValidity(inputs)){
+    if (checkValidity(inputs)) {
         loading(true);
 
         $.ajax({
             type: "POST",
             url: "/api/add-single-retail-store",
             data: $('#addRetailStationForm').serialize(),
-            success: res=> {
+            success: res => {
                 loading(false);
                 dataParser(res);
                 exec('closeAddRetailStation');
                 LoadAllRetailStore();
-            }, error: xhr=> console.log(xhr.responseText)
+            }, error: xhr => console.log(xhr.responseText)
         })
     }
 

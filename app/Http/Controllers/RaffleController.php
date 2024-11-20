@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 
+
 class RaffleController extends Controller
 {
     public function getraffleentry(Request $request){
@@ -302,40 +303,35 @@ class RaffleController extends Controller
 
     public function productreport(Request $request)
     {
-        // Fetch all events or filter by event_id
-        $events = !empty($request->event_id)
-            ? Event::where('event_id', $request->event_id)->get()
-            : Event::all();
+        // Fetch all data or apply filters
+        $query = Event::query();
+        if (!empty($request->event_id)) {
+            $query->where('event_id', $request->event_id);
+        }
+        $events = $query->get();
 
         $data = [];
-
         foreach ($events as $event) {
-            // Fetch all customers for the event
             $customers = Customers::where('event_id', $event->event_id)->get();
-
             foreach ($customers as $customer) {
-                // Filter RetailStore by region if provided
                 $retailStoreQuery = RetailStore::where('store_id', $customer->store_id);
                 if (!empty($request->region)) {
                     $retailStoreQuery->where('cluster_id', $request->region);
                 }
                 $retailStore = $retailStoreQuery->first();
 
-                if (!$retailStore) continue; // Skip if no retail store matches
+                if (!$retailStore) continue;
 
-                // Fetch the cluster name
                 $cluster = RegionalCluster::where('cluster_id', $retailStore->cluster_id)->first()?->cluster_name;
 
-                // Filter ProductList by product type if provided
                 $productQuery = ProductList::where('product_id', $customer->product_purchased);
                 if (!empty($request->producttype)) {
                     $productQuery->where('product_id', $request->producttype);
                 }
                 $product = $productQuery->first();
 
-                if (!$product) continue; // Skip if no product matches
+                if (!$product) continue;
 
-                // Add data to the result
                 $data[] = [
                     'cluster' => $cluster,
                     'area' => $retailStore->area ?? 'N/A',
@@ -348,7 +344,11 @@ class RaffleController extends Controller
             }
         }
 
-        return response()->json($data);
+        return response()->json([
+            'data' => $data,
+            'recordsTotal' => count($data),  // Total records (not filtered)
+            'recordsFiltered' => count($data), // After filter (same as total here)
+        ]);
     }
 
 }
