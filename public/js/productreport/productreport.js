@@ -42,7 +42,6 @@ function GetAllEntry() {
                 ],
                 dom: "Bfrtip", // Enables buttons layout
                 buttons: ["copy", "csv", "excel", "pdf", "print"],
-                paging: false, // Disable pagination
                 scrollY: "400px", // Set vertical scroll height (adjust as needed)
                 scrollCollapse: true, // Allow table height to shrink if fewer rows
                 searching: true,
