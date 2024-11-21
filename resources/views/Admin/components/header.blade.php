@@ -36,7 +36,7 @@
         </div>
     </header>
 
-    <header class="navbar-expand-md">
+    <header class="navbar-expand-md" id="second-navbar">
         <div class="collapse navbar-collapse" id="navbar-menu">
             <div class="navbar">
                 <div class="container-xl">

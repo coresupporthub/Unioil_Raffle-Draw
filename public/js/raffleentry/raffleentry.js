@@ -182,9 +182,7 @@ function exportToCSV(data, filename) {
     }
 }
 
-
 function printData(data) {
-
     const headers = Object.keys(data[0]);
     const tableHeader = headers.map(header => `<th>${header}</th>`).join("");
 
@@ -208,16 +206,31 @@ function printData(data) {
         </table>
     `;
 
+    const headerContent = `
+        <div class="header">
+            <img src="/unioil_images/unioil_logo.png" alt="Unioil Logo" style="max-height: 50px; width: auto; margin-bottom: 2px;">
+            <div style="font-size: 12px; color: gray;"> <span style="font-size: 12px"> Printed on: </span> ${new Date().toLocaleString()}</div>
+        </div>
+    `;
+
     const printWindow = window.open("", "_blank");
     printWindow.document.write(`
         <html>
             <head>
                 <title>Print Data</title>
                 <style>
-                    table {
+                    body {
                         font-family: Arial, sans-serif;
-                        border-collapse: collapse;
+                        margin: 0;
+                        padding: 0;
+                    }
+                    .content {
+                        padding: 20px;
+                        margin-top: 100px; 
+                    }
+                    table {
                         width: 100%;
+                        border-collapse: collapse;
                     }
                     th, td {
                         border: 1px solid #dddddd;
@@ -227,16 +240,170 @@ function printData(data) {
                     th {
                         background-color: #f2f2f2;
                     }
+                    @media print {
+                        body {
+                            margin: 0;
+                            padding: 0;
+                        }
+                        .header {
+                            position: fixed;
+                            top: 0;
+                            width: 100%;
+                            text-align: center;
+                            padding: 10px;
+                            background-color: #ffffff;
+                            border-bottom: 1px solid #ccc;
+                            z-index: 10;
+                        }
+                        .content {
+                            margin-top: 120px; /* Make sure the content is below the fixed header */
+                        }
+                        table {
+                            page-break-before: always;
+                        }
+                        .page-break {
+                            page-break-before: always;
+                        }
+                    }
                 </style>
             </head>
             <body>
-                ${tableContent}
+                <div class="header">${headerContent}</div>
+                <div class="content">${tableContent}</div>
             </body>
         </html>
     `);
     printWindow.document.close();
     printWindow.print();
 }
+
+
+// function printData(data) {
+//     const headers = Object.keys(data[0]);
+//     const tableHeader = headers.map(header => `<th>${header}</th>`).join("");
+
+//     const tableRows = data
+//         .map(row => {
+//             const rowData = Object.values(row)
+//                 .map(value => `<td>${value || "N/A"}</td>`)
+//                 .join("");
+//             return `<tr>${rowData}</tr>`;
+//         })
+//         .join("");
+
+//     const tableContent = `
+//         <table border="1" style="width: 100%; border-collapse: collapse;">
+//             <thead>
+//                 <tr>${tableHeader}</tr>
+//             </thead>
+//             <tbody>
+//                 ${tableRows}
+//             </tbody>
+//         </table>
+//     `;
+
+//     // Get the current date
+//     const currentDate = new Date().toLocaleDateString();
+
+//     const printWindow = window.open("", "_blank");
+//     printWindow.document.write(`
+//         <html>
+//             <head>
+//                 <title>Print Data</title>
+//                 <style>
+//                     table {
+//                         font-family: Arial, sans-serif;
+//                         border-collapse: collapse;
+//                         width: 100%;
+//                     }
+//                     th, td {
+//                         border: 1px solid #dddddd;
+//                         text-align: left;
+//                         padding: 8px;
+//                     }
+//                     th {
+//                         background-color: #f2f2f2;
+//                     }
+//                     .header {
+//                         text-align: center;
+//                         margin-bottom: 20px;
+//                     }
+//                     .date {
+//                         text-align: right;
+//                         font-size: 12px;
+//                         margin-top: 10px;
+//                     }
+//                 </style>
+//             </head>
+//             <body>
+//                 <div class="header">
+//                     <img src="/unioil_images/unioil_logo.png" alt="Logo" style="max-width: 200px; height: auto; margin-bottom: 10px" />
+//                     <p>Report Generated on: ${currentDate}</p>
+//                     <hr> 
+//                 </div>
+//                 ${tableContent}
+//             </body>
+//         </html>
+//     `);
+//     printWindow.document.close();
+//     printWindow.print();
+// }
+
+
+// function printData(data) {
+
+//     const headers = Object.keys(data[0]);
+//     const tableHeader = headers.map(header => `<th>${header}</th>`).join("");
+
+//     const tableRows = data
+//         .map(row => {
+//             const rowData = Object.values(row)
+//                 .map(value => `<td>${value || "N/A"}</td>`)
+//                 .join("");
+//             return `<tr>${rowData}</tr>`;
+//         })
+//         .join("");
+
+//     const tableContent = `
+//         <table border="1" style="width: 100%; border-collapse: collapse;">
+//             <thead>
+//                 <tr>${tableHeader}</tr>
+//             </thead>
+//             <tbody>
+//                 ${tableRows}
+//             </tbody>
+//         </table>
+//     `;
+
+//     const printWindow = window.open("", "_blank");
+//     printWindow.document.write(`
+//         <html>
+//             <head>
+//                 <title>Print Data</title>
+//                 <style>
+//                     table {
+//                         font-family: Arial, sans-serif;
+//                         border-collapse: collapse;
+//                         width: 100%;
+//                     }
+//                     th, td {
+//                         border: 1px solid #dddddd;
+//                         text-align: left;
+//                         padding: 8px;
+//                     }
+//                     th {
+//                         background-color: #f2f2f2;
+//                     }
+//                 </style>
+//             </head>
+//             <body>
+//                 ${tableContent}
+//             </body>
+//         </html>
+//     `);
+//     printWindow.document.close();
+//     printWindow.print();
+// }
 
 
 $(document).ready(function () {
