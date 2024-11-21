@@ -3,6 +3,8 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Console\Scheduling\Schedule;
+use App\Models\User;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -18,6 +20,18 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withExceptions(function (Exceptions $exceptions) {
         //
     })->withProviders([
-        \Barryvdh\DomPDF\ServiceProvider::class,  // Register DomPDF provider here
-    ])
+        \Barryvdh\DomPDF\ServiceProvider::class,  
+    ])->withSchedule(function (Schedule $schedule) {
+        $schedule->call(function () {
+            $user = User::all();
+
+            foreach($user as $u){
+                $u->update([
+                    'verification_token'=> null,
+                    'authenticated'=> 'false'
+                ]);
+            }
+
+        })->timezone('Asia/Manila')->daily()->at('23:59');
+    })
     ->create();
