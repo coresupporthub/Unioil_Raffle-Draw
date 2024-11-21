@@ -153,7 +153,7 @@
                                                             <div></div>
                                                         </div>
                                                         <div class="decos">
-                                                            <div class="line-bot"></div>
+                                                            <div class="line-bot" style="font-size: 3px; padding-left: 5px; display: flex; justify-content:space-between"><span>coresupporthub</span><span>JPRheyanTishaHazel</span></div>
                                                             <div class="door">
                                                                 <div class="handle"></div>
                                                                 <div class="bottom"></div>
