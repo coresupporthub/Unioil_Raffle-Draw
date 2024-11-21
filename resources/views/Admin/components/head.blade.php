@@ -76,6 +76,79 @@
             box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
         }
 
-        
+        .nav-item {
+            position: relative;
+            margin: 0 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease, background 0.4s ease;
+        }
+
+        .nav-item .nav-link {
+            text-decoration: none;
+            color: #333;
+            padding: 5px 10px;
+            display: flex;
+            align-items: center;
+            transition: color 0.3s ease;
+        }
+
+        .nav-item .nav-link-icon svg {
+            margin-right: 5px;
+            transition: fill 0.3s ease, stroke 0.3s ease;
+        }
+
+        .nav-item.active .nav-link {
+            color: white;
+        }
+
+        .nav-item.active .nav-link-icon svg {
+            margin-right: 5px;
+            transition: stroke 0.3s ease;
+            stroke: #ffffff;
+        }
+
+        .nav-item.active {
+            background: linear-gradient(135deg, #ff7c00, #f36f6f);
+            border-radius: 5px;
+        }
+
+        .nav-item.active:hover {
+            background: linear-gradient(135deg, #f36f6f, #ff7c00);
+        }
+
+        .navbar::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            height: 3px;
+            background-color: #ff6600;
+            width: 0;
+            transition: width 0.4s ease, transform 0.4s ease;
+        }
+
+        .nav-item.active~.navbar::after {
+            width: 100px;
+            transform: translateX(calc(100px * var(--nav-index)));
+        }
+
+        .nav-item:nth-child(1) {
+            --nav-index: 0;
+        }
+
+        .nav-item:nth-child(2) {
+            --nav-index: 1;
+        }
+
+        .nav-item:nth-child(3) {
+            --nav-index: 2;
+        }
+
+        .nav-item:nth-child(4) {
+            --nav-index: 3;
+        }
+
+        .nav-item:nth-child(5) {
+            --nav-index: 4;
+        }
     </style>
 </head>

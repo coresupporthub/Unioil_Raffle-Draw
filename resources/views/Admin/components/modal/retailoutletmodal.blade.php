@@ -4,8 +4,8 @@
         <div class="modal modal-blur fade" id="addClusterModal" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
                 <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Add Cluster</h5>
+                    <div class="modal-header Unioil-header">
+                        <h5 class="modal-title">Add Cluster</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -58,7 +58,7 @@
               </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-outline-dark me-auto" data-bs-dismiss="modal">Close</button>
 
                 </div>
                 </div>
@@ -69,8 +69,8 @@
             <div class="modal modal-blur fade" id="modal-update-retail" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
                 <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Update Retail Outlet</h5>
+                    <div class="modal-header Unioil-header">
+                        <h5 class="modal-title">Update Retail Outlet</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -112,7 +112,7 @@
                         </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="closeRetail" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+                    <button type="button" id="closeRetail" class="btn btn-outline-dark me-auto" data-bs-dismiss="modal">Close</button>
                     <button class="btn btn-primary " type="button" onclick="SubmitData('updateregionForm','/api/update-store')">Update</button>
                 </div>
                 </div>
@@ -122,9 +122,9 @@
 
 
             <div class="modal modal-blur fade" id="importCsvModal" tabindex="-1" role="dialog" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                     <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header Unioil-header">
                         <h5 class="modal-title">Import Retail Outlets</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
@@ -146,7 +146,7 @@
 
                     </form>
                     <div class="modal-footer">
-                        <button type="button" id="closeUploadModal" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+                        <button type="button" id="closeUploadModal" class="btn btn-outline-dark me-auto" data-bs-dismiss="modal">Close</button>
                         <button type="button" id="uploadBtn" class="btn btn-primary" >Upload</button>
                     </div>
                     </div>
@@ -157,8 +157,8 @@
                 <div class="modal modal-blur fade" id="modal-update-retail" tabindex="-1" role="dialog" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
                     <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Update Retail Outlet</h5>
+                        <div class="modal-header Unioil-header">
+                            <h5 class="modal-title">Update Retail Outlet</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -194,7 +194,7 @@
                             </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-outline-dark me-auto" data-bs-dismiss="modal">Close</button>
 
                     </div>
                     </div>
@@ -204,7 +204,7 @@
                 <div class="modal modal-blur fade" id="addRetailStore" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
                         <div class="modal-content">
-                        <div class="modal-header">
+                        <div class="modal-header Unioil-header">
                             <h5 class="modal-title">Add Retail Outlet</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
@@ -260,7 +260,7 @@
                       </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" id="closeAddRetailStation" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+                            <button type="button" id="closeAddRetailStation" class="btn btn-outline-dark me-auto" data-bs-dismiss="modal">Close</button>
 
                         </div>
                         </div>
