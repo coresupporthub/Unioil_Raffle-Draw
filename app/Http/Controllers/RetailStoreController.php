@@ -123,8 +123,9 @@ class RetailStoreController extends Controller
                                     ->where('rto_code', $data[4])
                                     ->first();
 
+                $codeChecker = RetailStore::where('rto_code', $data[4])->first();
 
-                if($checker){
+                if($checker || $codeChecker){
                     continue;
                 }
 
