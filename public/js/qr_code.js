@@ -136,7 +136,7 @@ document.getElementById('exportQrForm').addEventListener('submit', (e)=> {
             document.getElementById("exportQrForm").reset();
            const blob = new Blob([res], { type: 'application/pdf' });
            const url = URL.createObjectURL(blob);
-
+           exec('closeExportModal');
            window.open(url, '_blank');
 
         }, error: xhr=> {
