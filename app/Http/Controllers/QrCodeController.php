@@ -115,13 +115,13 @@ class QrCodeController extends Controller
 
         $limit = Magic::MAX_QR_PER_PAGE * $req->page_number;
 
-        $checkQRCodes = QrCode::where('export_status', 'none')->where('status', 'unused')->get()->count();
+        $checkQRCodes = QrCode::where('export_status', 'none')->where('status', 'unused')->where('entry_type', $req->qrtype)->get()->count();
 
         if ($limit > $checkQRCodes) {
             return response()->json(['success' => false, 'message' => 'The QR Codes is not enough for the pages'], 403);
         }
 
-        $qrCodes = QrCode::where('export_status', 'none')->where('status', 'unused')->take($limit)->select('image', 'qr_id')->get();
+        $qrCodes = QrCode::where('export_status', 'none')->where('status', 'unused')->where('entry_type', $req->qrtype)->take($limit)->select('image', 'qr_id')->get();
 
         if ($qrCodes->count() < Magic::MINIMUM_COUNT_FOR_EXPORT) {
             return response()->json(['success' => false, 'message' => 'No Unexported qr code images are available for export! Please add atleast 3 codes'], 404);
