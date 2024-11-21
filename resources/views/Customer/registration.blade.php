@@ -124,7 +124,7 @@
                                 <div class="input-group has-validation">
                                     <span class="input-group-text" id="inputGroupPrepend">@</span>
                                     <input name="email_address" type="text" class="form-control" id="validationCustomUsername"
-                                        aria-describedby="inputGroupPrepend" required>
+                                        aria-describedby="inputGroupPrepend">
                                     <div class="invalid-feedback">
                                         Please enter email.
                                     </div>

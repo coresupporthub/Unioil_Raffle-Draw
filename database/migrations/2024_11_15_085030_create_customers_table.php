@@ -21,7 +21,7 @@ return new class extends Migration
             $table->longText('brgy');
             $table->longText('street')->nullable();
             $table->longText('mobile_number');
-            $table->longText('email');
+            $table->longText('email')->nullable();
             $table->uuid('qr_id');
             $table->foreign('qr_id')->references('qr_id')->on('qr_codes');
             $table->string('product_purchased');
