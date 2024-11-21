@@ -11,14 +11,14 @@ class UnauthenticateUser extends Command
      *
      * @var string
      */
-    protected $signature = 'app:unauthenticate-user';
+    protected $signature = 'unauthenticate-user';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Unauthenticate all admin users after a day';
 
     /**
      * Execute the console command.
