@@ -34,7 +34,9 @@ window.onload = () => {
                 });
             }
         }, error: xhr => console.log(xhr.responseText)
-    })
+    });
+
+    adminDetails();
 }
 
 
@@ -54,4 +56,18 @@ async function viewLogDetails(id){
     setText('logSessionID', result.logs.session_id);
     setText('logSentData', JSON.stringify(result.logs.sent_data));
     setText('logResponseData', JSON.stringify(result.logs.response_data));
+}
+
+async function adminDetails (){
+    const response = await fetch('/api/get-admin-details');
+
+    const result = await response.json();
+
+    setText('administrator_name', result.info.name);
+
+    setValue('adminEmail', result.info.email);
+    setValue('adminName', result.info.name);
+
+    enable('adminEmail', false);
+    enable('adminName', false);
 }
