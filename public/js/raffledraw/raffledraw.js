@@ -110,8 +110,9 @@ function startRaffle() {
                     stopRandomizing();
                 }, 5000);
             }else{
-                alertify.alert('Warning',response.message, function () {
-                });
+                $('#RedrawPrompt').modal('show');
+                // alertify.alert('Warning',response.message, function () {
+                // });
                 stopRandomizing();
                 drumrolls.pause();
                 drawButton.disabled = false;
