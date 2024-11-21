@@ -218,13 +218,13 @@
                 @csrf
                 <input type="hidden" id="event_idInactive" name="event_id">
                 <label for="adminPassword">Admin Password</label>
-                <input type="password" id="adminPassword" name="password" class="form-control" placeholder="Enter your admin password here">
+                <input type="password" id="adminPassword" name="password" required class="form-control" placeholder="Enter your admin password here">
                 <small class="text-danger d-none" id="adminPasswordE">This is a required field</small>
               </form>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary" id="confirmInactiveBtn" data-bs-dismiss="modal">Proceed</button>
+              <button type="button" class="btn me-auto" id="closeAdminPasswordModal" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" id="confirmInactiveBtn">Proceed</button>
             </div>
           </div>
         </div>

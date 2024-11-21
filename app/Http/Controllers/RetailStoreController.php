@@ -106,6 +106,10 @@ class RetailStoreController extends Controller
     public function uploadcsv(Request $req){
         $csv = $req->csv_file;
 
+        if(empty($req->cluster)){
+            return response()->json(['success' => false, 'message' => 'Please select a cluster']);
+        }
+
         $csvData = Tools::readCSV($csv);
 
 

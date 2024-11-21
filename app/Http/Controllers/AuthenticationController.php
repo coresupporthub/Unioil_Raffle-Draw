@@ -40,7 +40,7 @@ class AuthenticationController extends Controller
             $user = User::where('id', Auth::id())->first();
 
             if ($user->authenticated == 'true') {
-                return response()->json(['status' => true, 'message' => 'Authentication is successful', 'redirect' => true]);
+                return response()->json(['success' => true, 'message' => 'Authentication is successful', 'redirect' => true]);
             }
 
             $verificationCode = Tools::genCode(6, 'numeric');

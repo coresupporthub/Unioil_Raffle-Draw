@@ -283,13 +283,14 @@ $(document).ready(function () {
 
 
 document.getElementById('confirmInactiveBtn').addEventListener('click', ()=> {
-   loading(true);
 
    const inputs = [
     ['adminPassword', 'adminPasswordE']
    ];
 
    if(checkValidity(inputs)){
+    loading(true);
+
     $.ajax({
         type: "POST",
         url: "/api/inactive-event",
@@ -299,6 +300,7 @@ document.getElementById('confirmInactiveBtn').addEventListener('click', ()=> {
             addWinnerRow();
             dataParser(res);
             getevent();
+            exec('closeAdminPasswordModal');
         }, error: xhr=> console.log(xhr.responseText)
     });
    }

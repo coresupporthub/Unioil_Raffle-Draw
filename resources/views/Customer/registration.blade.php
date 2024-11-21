@@ -73,103 +73,108 @@
                             </div>
                         </div>
 
-                        <div class="col-md-3">
-                            <input type="hidden" name="city" id="cityId">
-                            <label for="city" class="form-label">CITY</label>
-                            <select class="form-control select2" id="city" required>
-                                <option value="">Select a City</option>
+                            <div class="col-md-3">
+                                <input type="hidden" name="city" id="cityId">
+                                <label for="city" class="form-label">CITY</label>
+                                <select class="form-control select2" id="city" required>
+                                    <option value="">Select a City</option>
 
-                            </select>
-                            <div class="valid-feedback">
-                                Looks good!
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <input type="hidden" name="baranggay" id="baranggayId">
-                            <label for="barangay" class="form-label">BARANGAY</label>
-                            <select class="form-control select2" id="baranggay" required>
-                                <option value="">Select a Barangay</option>
-
-                            </select>
-                            <div class="valid-feedback">
-                                Looks good!
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-
-                            <label for="validationCustom02" class="form-label">STREET ADDRESS</label>
-                            <input type="text" name="street" class="form-control" id="validationCustom02" value="" placeholder="Enter Street Address">
-                            <div class="valid-feedback">
-                                Looks good!
-                            </div>
-                        </div>
-                        {{-- ADDRESS --}}
-
-                        <div class="col-md-6">
-                            <label for="validationCustomUsername" class="form-label">MOBILE NUMBER</label>
-                            <div class="input-group has-validation">
-                                <span class="input-group-text" id="inputGroupPrepend">+63</span>
-                                <input name="mobile_number" type="text" class="form-control" id="validationCustomUsername" maxlength="10" aria-describedby="inputGroupPrepend" required oninput="validatePhoneNumber(this)" placeholder="Enter your phone number">
-
-                                <div class="invalid-feedback" id="phoneError" style="display: none;">Please enter a
-                                    valid phone
-                                    number starting with 9.</div>
-
+                                </select>
                                 <div class="valid-feedback">
                                     Looks good!
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="col-md-6">
-                            <label for="validationCustomUsername" class="form-label">EMAIL ADDRESS</label>
-                            <div class="input-group has-validation">
-                                <span class="input-group-text" id="inputGroupPrepend">@</span>
-                                <input name="email_address" type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
-                                <div class="invalid-feedback">
-                                    Please enter email.
+                            <div class="col-md-3">
+                                <input type="hidden" name="baranggay" id="baranggayId">
+                                <label for="barangay" class="form-label">BARANGAY</label>
+                                <select class="form-control select2" id="baranggay" required>
+                                    <option value="">Select a Barangay</option>
+
+                                </select>
+                                <div class="valid-feedback">
+                                    Looks good!
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="col-md-6">
-                            <label for="validationCustom04" class="form-label">PRODUCT PURCHASED ({{ $product_type }})</label>
-                            <select type="text" name="product" class="form-select" id="validationCustom02" required>
-                                <option value="" selected disabled>Select Product</option>
-                                @foreach ($products as $product)
-                                <option value="{{ $product->product_id }}">{{ $product->product_name }}
-                                    ({{ $product->product_type }})</option>
-                                @endforeach
-                            </select>
-                            <div class="valid-feedback">
-                                Looks good!
-                            </div>
-                        </div>
+                            <div class="col-md-3">
 
-                        <div class="col-md-6">
-                            <label class="form-label">STORE ALPHANUMERIC CODE</label>
-                            <div class="row g-2">
-                                <div class="col">
-                                    <input type="text" name="store_code" id="store_code" class="form-control" placeholder="" required>
+                                <label for="validationCustom02" class="form-label">STREET ADDRESS</label>
+                                <input type="text" name="street" class="form-control" id="validationCustom02" value=""
+                                    placeholder="Enter Street Address">
+                                <div class="valid-feedback">
+                                    Looks good!
                                 </div>
-
                             </div>
-                        </div>
+                            {{-- ADDRESS --}}
 
-                        <div class="col-12">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="privacyConsent" required>
-                                <label class="form-check-label" for="privacyConsent">
-                                    I have read and agree to the <a href="/privacy/policy">Privacy Policy. </a>
-                                </label>
+                            <div class="col-md-6">
+                                <label for="validationCustomUsername"  class="form-label">MOBILE NUMBER</label>
+                                <div class="input-group has-validation">
+                                    <span class="input-group-text" id="inputGroupPrepend">+63</span>
+                                    <input name="mobile_number" type="text" class="form-control" id="validationCustomUsername"
+                                        maxlength="10" aria-describedby="inputGroupPrepend" required
+                                        oninput="validatePhoneNumber(this)" placeholder="Enter your phone number">
+
+                                    <div class="invalid-feedback" id="phoneError" style="display: none;">Please enter a
+                                        valid phone
+                                        number starting with 9.</div>
+
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-12">
-                            <button class="btn btn-primary col-12" type="submit">Submit form</button>
-                        </div>
-                    </form>
+
+                            <div class="col-md-6">
+                                <label for="validationCustomUsername" class="form-label">EMAIL ADDRESS</label>
+                                <div class="input-group has-validation">
+                                    <span class="input-group-text" id="inputGroupPrepend">@</span>
+                                    <input name="email_address" type="text" class="form-control" id="validationCustomUsername"
+                                        aria-describedby="inputGroupPrepend">
+                                    <div class="invalid-feedback">
+                                        Please enter email.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="validationCustom04" class="form-label">PRODUCT PURCHASED ({{ $product_type }})</label>
+                                <select type="text" name="product" class="form-select" id="validationCustom02" required>
+                                    <option value="" selected disabled>Select Product</option>
+                                    @foreach ($products as $product)
+                                        <option value="{{ $product->product_id }}">{{ $product->product_name }}
+                                            ({{ $product->product_type }})</option>
+                                    @endforeach
+                                </select>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">STORE ALPHANUMERIC CODE</label>
+                                <div class="row g-2">
+                                    <div class="col">
+                                        <input type="text" name="store_code" id="store_code" class="form-control" placeholder="" required>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="privacyConsent" required>
+                                    <label class="form-check-label" for="privacyConsent">
+                                        I have read and agree to the <a href="/privacy/policy">Privacy Policy. </a>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <button class="btn btn-primary col-12" type="submit">Submit form</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
