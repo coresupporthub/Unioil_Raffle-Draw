@@ -60,11 +60,17 @@ class CustomerRegistration extends Controller
 
         if($productEntry->entries == 1){
             $code = Tools::CreateEntries($customer, $req);
-            SendEntryCoupon::dispatch(Magic::RAFFLE_ENTRY_SINGLE, $code, $req->email_address);
+            if(!empty($req->email_address)){
+                SendEntryCoupon::dispatch(Magic::RAFFLE_ENTRY_SINGLE, $code, $req->email_address);
+            }
+
         }else{
             $code1 = Tools::CreateEntries($customer, $req);
             $code2 = Tools::CreateEntries($customer, $req);
-            SendEntryCoupon::dispatch(Magic::RAFFLE_ENTRY_DOUBLE, [$code1, $code2], $req->email_address);
+
+            if(!empty($req->email_address)){
+                SendEntryCoupon::dispatch(Magic::RAFFLE_ENTRY_DOUBLE, [$code1, $code2], $req->email_address);
+            }
         }
 
         $qrCode->update([
