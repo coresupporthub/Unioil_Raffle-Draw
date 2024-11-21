@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     shade: "dark",
                     type: "diagonal1",
                     shadeIntensity: 0.7,
-                    gradientToColors: ["#137f13", tabler.getColor("primary")],
+                    gradientToColors: [tabler.getColor("primary"),"#137f13"],
                     inverseColors: false,
                     opacityFrom: 1,
                     opacityTo: 0.9,
@@ -97,7 +97,7 @@ function fetchEventData(eventId) {
 function updateChart(semiSynthetic, fullySynthetic, noData = false) {
     if (chartInstance) {
         const chartData = noData ? [0, 0] : [semiSynthetic, fullySynthetic];
-        const chartColors = noData ? ["#B0B0B0", "#B0B0B0"] : ["#137f13", "#fd7e14"];
+        const chartColors = noData ? ["#B0B0B0", "#B0B0B0"] : [ tabler.getColor("primary"), "#137f13"];
 
         chartInstance.updateSeries(chartData);
         chartInstance.updateOptions({
