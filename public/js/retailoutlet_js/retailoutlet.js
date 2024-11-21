@@ -230,7 +230,11 @@ function GetAllClusterSelect() {
                 const newOption = document.createElement("option");
                 newOption.value = element.cluster_id;
                 newOption.text = element.cluster_name;
-                selectElement2.appendChild(newOption);
+
+                const newOption2 = document.createElement("option");
+                newOption2.value = element.cluster_id;
+                newOption2.text = element.cluster_name;
+                selectElement2.appendChild(newOption2);
                 selectFilter.appendChild(newOption);
 
             });
