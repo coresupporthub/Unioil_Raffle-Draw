@@ -83,6 +83,10 @@
             transition: transform 0.3s ease, background 0.4s ease;
         }
 
+        .nav-item:hover {
+            transform: scale(1.0);
+        }
+
         .nav-item .nav-link {
             text-decoration: none;
             color: #333;
@@ -150,5 +154,6 @@
         .nav-item:nth-child(5) {
             --nav-index: 4;
         }
+
     </style>
 </head>
