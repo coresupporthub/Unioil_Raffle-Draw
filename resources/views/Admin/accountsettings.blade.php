@@ -88,9 +88,14 @@
     <div class="modal modal-blur fade" id="changepasswordModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
             <div class="modal-content">
+
+                <div class="modal-header Unioil-header">
+                    <h5 class="modal-title">Change Admin Password</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+
                 <form id="changePasswordForm" class="modal-body">
                     @csrf
-                    <div class="modal-title">Change Admin Password</div>
                     <div class="mb-3">
                         <label for="currentPassword" class="form-label">Current Password</label>
                         <input type="password" required name="currentPassword" class="form-control" id="currentPassword"
