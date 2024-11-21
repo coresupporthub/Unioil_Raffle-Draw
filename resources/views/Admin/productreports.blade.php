@@ -87,7 +87,7 @@
                         </div>
                          </form>
                                     <div id="table-default" class="table-responsive">
-                                        <table class="table" id="product-table">
+                                        <table class="table table-hover" id="product-table">
                                             <thead>
                                                 <tr>
                                                     <th>Regional Cluster</th>

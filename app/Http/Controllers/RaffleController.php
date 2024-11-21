@@ -273,7 +273,7 @@ class RaffleController extends Controller
         $raffleEntries->winner_status = 'false';
         $raffleEntries->save();
 
-        $response = ['message' => 'Cluster winner disqialified. Prize will be redrawn on ' . $raffleEntries->updated_at, 'reload' => 'addWinnerRow', 'success' => true];
+        $response = ['message' => 'Cluster winner disqualified. Prize will be redrawn on ' . $raffleEntries->updated_at, 'reload' => 'addWinnerRow', 'success' => true];
         Tools::Logger($request, ['Disqualify Customer', "A winner is unable to claim the prize and successfully remove its winner status"], $response);
 
         return response()->json($response);

@@ -3,17 +3,15 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\VerificationCode;
 
-class SendMail extends Command
+class UnauthenticateUser extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'test-mail';
+    protected $signature = 'app:unauthenticate-user';
 
     /**
      * The console command description.
@@ -27,6 +25,6 @@ class SendMail extends Command
      */
     public function handle()
     {
-        Mail::to('rheyanjohnblancogwapo@gmail.com')->send(new VerificationCode('234234'));
+        //
     }
 }
