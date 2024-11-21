@@ -66,6 +66,8 @@
                                 <div class="card-body" id="cardbg"
                                     style="background: linear-gradient(to right, #FF7F00, #FFFFFF);">
                                     @include('Admin.components.winnermodal')
+                                    <div id="colorOverlay" class="position-fixed w-100 h-100 d-none left-0 top-0" style="opacity: 0.6; left: 0"></div>
+
                                     <div class="row g-0 p-5 w-100">
 
                                         <div class="col-12 col-lg-7 col-xl-9 border-end">
@@ -151,7 +153,7 @@
                                                             <div></div>
                                                         </div>
                                                         <div class="decos">
-                                                            <div class="line-bot"></div>
+                                                            <div class="line-bot" style="font-size: 3px; padding-left: 5px; display: flex; justify-content:space-between"><span>coresupporthub</span><span>JPRheyanTishaHazel</span></div>
                                                             <div class="door">
                                                                 <div class="handle"></div>
                                                                 <div class="bottom"></div>
@@ -208,7 +210,7 @@
                                                         <path d="M12 17h.01" />
                                                     </svg>
                                                     <h3>Redraw Not Permitted</h3>
-                                                    <div class="text-secondary">A winner has already been declared for this regional cluster.</div>                            
+                                                    <div class="text-secondary">A winner has already been declared for this regional cluster.</div>
                                                 </div>
                                             </div>
                                         </div>

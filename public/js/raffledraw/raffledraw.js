@@ -65,7 +65,7 @@ let interval;
 function startRaffle() {
     drawButton.disabled = true;
     let counter = 0;
-
+    exec('fullscreenButton');
     const drumrolls = new Audio("/sounds/machine.mp3");
     drumrolls.loop = true;
     drumrolls.volume = 1;
@@ -151,6 +151,9 @@ function startRandomizing() {
             raffleInput.style.color = getRandomColor(); // Randomize text color
             raffleInput.style.borderColor = getRandomColor(); // Randomize border color
             raffleInput.style.boxShadow = getRandomShadow(); // Randomize shadow
+            const colorOverlay = document.getElementById('colorOverlay');
+            show('colorOverlay');
+            colorOverlay.style.backgroundColor = getRandomColor();
         }, 100); // Change properties every 500ms
     }
 }
@@ -164,6 +167,8 @@ function stopRandomizing() {
     raffleInput.style.boxShadow = "none";
 }
 
+
+
 function GetAllWinner() {
     $.ajax({
         url: "/api/get-all-winner", // Replace with your endpoint URL
@@ -173,11 +178,30 @@ function GetAllWinner() {
             while (tableBody.firstChild) {
                 tableBody.removeChild(tableBody.firstChild);
             }
+
+            const colors = [
+                "#4A4A4A", // Dark gray
+                "#B24C63", // Muted rose
+                "#3E8E41", // Fresh green
+                "#28527A", // Deep blue
+                "#D2691E", // Rustic chestnut brown
+                "#1C1C1C", // Deep onyx black
+                "#6D6D6D", // Medium gray
+                "#FFD700", // Vibrant gold
+                "#FF6347", // Tomato red
+                "#87CEEB", // Sky blue
+            ]
+            const randomizer = array => {
+                return Math.floor(Math.random() * array.length);
+            };
+            
             response.forEach((element) => {
 
                 var newRow = document.createElement("tr");
 
                 var clusterCell = document.createElement("td");
+                newRow.style.color = colors[randomizer(colors)];
+                newRow.style.width = '100%';
                 clusterCell.textContent = element.cluster;
                 newRow.appendChild(clusterCell);
 
@@ -234,4 +258,5 @@ $(document).ready(function () {
 
 document.getElementById('confetti').addEventListener('click', ()=> {
     hide('confetti');
+    hide('colorOverlay');
 });
