@@ -272,6 +272,7 @@ function SubmitData(formID, route) {
         ['retail_store', 'retail_storeE'],
         ['rto_code', 'rto_codeE'],
     ];
+    const clusterinputs = [["cluster_name", "cluster_nameE"]];
 
     if(checkValidity(inputs)){
         loading(true);
@@ -294,6 +295,32 @@ function SubmitData(formID, route) {
                 loading(false);
                 exec('closeRetail');
                 setValue('clusterFilter', 'all');
+            },
+            error: function (xhr, status, error) {
+                console.error("Error posting data:", error);
+            },
+        });
+    }else if (checkValidity(clusterinputs)) {
+        loading(true);
+
+        const form = document.getElementById(formID);
+        const csrfToken = $('meta[name="csrf-token"]').attr("content");
+        const formData = new FormData(form);
+        formData.append("_token", csrfToken);
+
+        $.ajax({
+            url: route,
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                alertify.success(response.message);
+                document.getElementById(formID).reset();
+                dynamicCall(response.reload);
+                loading(false);
+                exec("closeRetail");
+                setValue("clusterFilter", "all");
             },
             error: function (xhr, status, error) {
                 console.error("Error posting data:", error);

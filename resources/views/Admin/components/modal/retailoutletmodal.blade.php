@@ -14,8 +14,9 @@
                         @csrf
                     <div class="row">
                         <div class="col-12 col-md-6 mb-3">
-                            <label for="regionalCluster">Regional Cluster</label>
-                            <input type="text" name="cluster_name" id="regionalCluster" class="form-control">
+                            <label for="regionalCluster">Regional Cluster  <small id="cluster_nameE" class="text-danger d-none"> (Please add a cluster name)</small> </label>
+                            <input type="text" name="cluster_name" id="cluster_name" class="form-control">
+                            
                         </div>
                         <div class="col-12 col-md-6 mb-3 d-flex align-items-end">
                             <button class="btn btn-primary w-100" type="button" onclick="SubmitData('clusterForm','/api/add-retail-store')">Submit</button>
