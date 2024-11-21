@@ -30,7 +30,7 @@
 
     </script>
 
-    <script>
+    {{-- <script>
         document.addEventListener("DOMContentLoaded", () => {
             const navbar = document.querySelector(".navbar");
             const navItems = document.querySelectorAll(".nav-item");
@@ -56,4 +56,4 @@
             });
         });
 
-    </script>
+    </script> --}}
