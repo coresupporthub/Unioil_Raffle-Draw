@@ -240,6 +240,39 @@ function validateForm(formID) {
     return !emptyField;
 }
 
+function SubmitData(formID, route) {
+    if (!validateForm(formID)) {
+        alertify.error("Please fill in all required fields.");
+        return;
+    }
+    loading(true);
+    const form = document.getElementById(formID);
+    const csrfToken = $('meta[name="csrf-token"]').attr("content");
+    const formData = new FormData(form);
+    formData.append("_token", csrfToken);
+
+    $.ajax({
+        url: route,
+        type: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (response) {
+            loading(false);
+            if (response.success) {
+                dynamicCall(response.reload);
+                addWinnerRow();
+                alertify.success(response.message);
+            } else {
+                alertify.alert("Warning", response.message, function () {});
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error("Error posting data:", error);
+        },
+    });
+}
+
 $(document).ready(function () {
 
     addWinnerRow();

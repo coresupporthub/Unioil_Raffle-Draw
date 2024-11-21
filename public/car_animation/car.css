@@ -385,6 +385,7 @@
   z-index: 4;
   width: 100%;
   height: auto;
+  margin-bottom: 40px;
 }
 
 @keyframes carMove {
