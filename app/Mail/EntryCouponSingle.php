@@ -28,7 +28,7 @@ class EntryCouponSingle extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Entry Coupon Single',
+            subject: 'Single Entry Coupon',
         );
     }
 
