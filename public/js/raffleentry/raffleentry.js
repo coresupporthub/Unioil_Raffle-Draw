@@ -89,7 +89,6 @@ function GetAllEntry() {
 
     $("#entryTable").on("click", "tbody tr", function () {
         const rowData = table.row(this).data(); // Get data for the clicked row
-
         if (rowData) {
             // Populate modal content only if rowData exists
             $("#regiondisplay").text(rowData.cluster || "N/A");
@@ -102,6 +101,7 @@ function GetAllEntry() {
             $("#name").text(rowData.customer_name || "N/A");
             $("#email").text(rowData.customer_email || "N/A");
             $("#phone").text(rowData.customer_phone || "N/A");
+             $("#age").text(rowData.customer_age || "N/A");
 
             // Show the modal
             $("#viewModal").modal("show");

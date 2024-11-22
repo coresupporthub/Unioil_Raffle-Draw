@@ -213,6 +213,7 @@ class RaffleController extends Controller
                         'product_type' => $customer->product_name,
                         'customer_name' => $customer->full_name,
                         'customer_email' => $customer->email,
+                        'customer_age' => $customer->age,
                         'customer_phone' => $customer->mobile_number,
                     ];
                 }
