@@ -1,3 +1,5 @@
+
+
 (function() {
     'use strict';
     window.addEventListener('load', function() {
@@ -87,7 +89,8 @@ let brgyId;
 
 document.addEventListener("DOMContentLoaded", function() {
 
-    dataGetter('https://psgc.cloud/api/regions').then( data => {
+
+    dataGetter('/js/address_json/region.json').then( data => {
         const regionSelect = document.getElementById("region");
 
         const province = document.getElementById('province');

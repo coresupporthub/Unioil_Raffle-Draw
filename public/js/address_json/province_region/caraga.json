@@ -1,0 +1,42 @@
+[
+  {
+    "id": 72,
+    "created_at": "2023-05-02T19:39:25.000000Z",
+    "updated_at": "2023-05-02T19:39:25.000000Z",
+    "name": "Agusan del Norte",
+    "code": "1600200000",
+    "region_id": 16
+  },
+  {
+    "id": 73,
+    "created_at": "2023-05-02T19:39:26.000000Z",
+    "updated_at": "2023-05-02T19:39:26.000000Z",
+    "name": "Agusan del Sur",
+    "code": "1600300000",
+    "region_id": 16
+  },
+  {
+    "id": 74,
+    "created_at": "2023-05-02T19:39:26.000000Z",
+    "updated_at": "2023-05-02T19:39:26.000000Z",
+    "name": "Surigao del Norte",
+    "code": "1606700000",
+    "region_id": 16
+  },
+  {
+    "id": 75,
+    "created_at": "2023-05-02T19:39:27.000000Z",
+    "updated_at": "2023-05-02T19:39:27.000000Z",
+    "name": "Surigao del Sur",
+    "code": "1606800000",
+    "region_id": 16
+  },
+  {
+    "id": 76,
+    "created_at": "2023-05-02T19:39:27.000000Z",
+    "updated_at": "2023-05-02T19:39:27.000000Z",
+    "name": "Dinagat Islands",
+    "code": "1608500000",
+    "region_id": 16
+  }
+]
