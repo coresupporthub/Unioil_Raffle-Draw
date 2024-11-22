@@ -147,6 +147,13 @@
                                 <p id="store"></p>
                             </div>
                         </div>
+                        <!-- Store Code -->
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="rto">Rto Code</label>
+                                <p id="rto"></p>
+                            </div>
+                        </div>
                         <!-- Coupon -->
                         <div class="col-md-4">
                             <div class="form-group">
@@ -161,22 +168,30 @@
                                 <p id="product"></p>
                             </div>
                         </div>
+                        <hr>
                         <!-- Full Name -->
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="name">Full Name</label>
                                 <p id="name"></p>
                             </div>
                         </div>
+                         <!-- Age -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="age">Age</label>
+                                <p id="age"></p>
+                            </div>
+                        </div>
                         <!-- Email -->
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="email">Email</label>
                                 <p id="email"></p>
                             </div>
                         </div>
                         <!-- Phone Number -->
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="phone">Phone Number</label>
                                 <p id="phone"></p>
@@ -197,8 +212,7 @@
 
         </div>
     </div>
-
-    @include('Admin.components.scripts')
+    @include('Admin.components.scripts', ['loc'=> 'admin'])
     <script src="{{ asset('js/raffleentry/raffleentry.js') }}"></script>
 </body>
 </html>

@@ -102,8 +102,7 @@
             <script src="/js/verify.js"></script>
         </div>
     </div>
-
-    @include('Admin.components.scripts')
+    @include('Admin.components.scripts', ['loc'=> 'signin'])
 
 
 </body>

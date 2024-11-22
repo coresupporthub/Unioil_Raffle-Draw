@@ -27,7 +27,7 @@
                             <label for="clusterFilter" class="d-flex gap-1 fs-3">Cluster <span>Filter</span></label>
                             <select class="form-select" id="clusterFilter">
                                 <option value="all">All</option>
-                               
+
                             </select>
                         </div>
                         <button class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#importCsvModal">
@@ -101,7 +101,7 @@
         </div>
     </div>
 
-    @include('Admin.components.scripts')
+    @include('Admin.components.scripts', ['loc'=> 'admin'])
     <script src="{{asset('js/retailoutlet_js/retailoutlet.js')}}"></script>
 
 </body>

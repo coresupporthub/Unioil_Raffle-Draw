@@ -1,0 +1,26 @@
+[
+    {
+      "id": 49,
+      "created_at": "2023-05-02T19:39:14.000000Z",
+      "updated_at": "2023-05-02T19:39:14.000000Z",
+      "name": "Zamboanga del Norte",
+      "code": "0907200000",
+      "region_id": 10
+    },
+    {
+      "id": 50,
+      "created_at": "2023-05-02T19:39:15.000000Z",
+      "updated_at": "2023-05-02T19:39:15.000000Z",
+      "name": "Zamboanga del Sur",
+      "code": "0907300000",
+      "region_id": 10
+    },
+    {
+      "id": 51,
+      "created_at": "2023-05-02T19:39:16.000000Z",
+      "updated_at": "2023-05-02T19:39:16.000000Z",
+      "name": "Zamboanga Sibugay",
+      "code": "0908300000",
+      "region_id": 10
+    }
+  ]

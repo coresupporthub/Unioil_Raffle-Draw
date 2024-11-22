@@ -73,7 +73,7 @@
         </div>
       </div>
 
-    @include('Admin.components.scripts')
+      @include('Admin.components.scripts', ['loc'=> 'admin'])
     <script src="/js/activitylogs.js"></script>
 
 </body>

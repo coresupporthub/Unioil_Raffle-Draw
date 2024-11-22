@@ -267,7 +267,7 @@ fullscreenButton.addEventListener('click', () => {
     </script>
 
 
-    @include('Admin.components.scripts')
+@include('Admin.components.scripts', ['loc'=> 'admin'])
     <script src="{{ asset('js/raffledraw/raffledraw.js') }}"></script>
     <script src="/js/confetti.js"></script>
 

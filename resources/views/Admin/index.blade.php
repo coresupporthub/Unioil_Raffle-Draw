@@ -137,8 +137,7 @@
         @include('Admin.components.footer')
     </div>
     </div>
-
-    @include('Admin.components.scripts')
+    @include('Admin.components.scripts', ['loc'=> 'admin'])
 
     <script src="/js/analytics.js"></script>
 

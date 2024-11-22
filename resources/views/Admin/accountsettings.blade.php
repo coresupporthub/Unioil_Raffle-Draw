@@ -79,8 +79,7 @@
 
         </div>
     </div>
-
-    @include('Admin.components.scripts')
+    @include('Admin.components.scripts', ['loc'=> 'admin'])
 
     {{-- modals --}}
 

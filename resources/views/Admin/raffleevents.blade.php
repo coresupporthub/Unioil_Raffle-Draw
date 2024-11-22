@@ -75,7 +75,7 @@
         </div>
     </div>
 
-    @include('Admin.components.scripts')
+    @include('Admin.components.scripts', ['loc'=> 'admin'])
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="{{asset('js/raffleresult/raffleresult.js')}}"></script>
 

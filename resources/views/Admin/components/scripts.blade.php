@@ -7,7 +7,9 @@
     <script src="{{asset('./dist/js/tabler.min.js?1692870487')}}" defer></script>
     <script src="{{asset('./dist/js/demo.min.js?1692870487')}}" defer></script>
     <script src="{{asset('/js/helper.js')}}" defer></script>
+    @if ($loc== 'admin')
     <script src="/js/admin-details.js"></script>
+    @endif
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {

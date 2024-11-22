@@ -69,7 +69,7 @@
         </div>
     </div>
     <script src="/js/auth.js"></script>
-    @include('Admin.components.scripts')
+    @include('Admin.components.scripts', ['loc'=> 'signin'])
 
 
 </body>

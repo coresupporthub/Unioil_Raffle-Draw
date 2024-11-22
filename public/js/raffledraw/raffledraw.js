@@ -65,7 +65,11 @@ let interval;
 function startRaffle() {
     drawButton.disabled = true;
     let counter = 0;
-    exec('fullscreenButton');
+
+    if (!document.fullscreenElement) {
+        exec('fullscreenButton');
+    }
+
     const drumrolls = new Audio("/sounds/machine.mp3");
     drumrolls.loop = true;
     drumrolls.volume = 1;
@@ -104,8 +108,9 @@ function startRaffle() {
                     setText('serial-number-winner', response.winner_serial_number);
                     setText('product-purchased-winner', response.product.product_name);
                     setText('cluster-winner', response.cluster_name.cluster_name);
+                    setText('retail-station', response.cluster_name.retail_station);
+                    setText('distributor', response.cluster_name.distributor);
                     GetAllWinner();
-
                     celebrate.play();
                     stopRandomizing();
                 }, 5000);
@@ -114,6 +119,7 @@ function startRaffle() {
                 // alertify.alert('Warning',response.message, function () {
                 // });
                 stopRandomizing();
+                hide('colorOverlay');
                 drumrolls.pause();
                 drawButton.disabled = false;
                 clearInterval(shuffleInterval);
@@ -194,7 +200,7 @@ function GetAllWinner() {
             const randomizer = array => {
                 return Math.floor(Math.random() * array.length);
             };
-            
+
             response.forEach((element) => {
 
                 var newRow = document.createElement("tr");

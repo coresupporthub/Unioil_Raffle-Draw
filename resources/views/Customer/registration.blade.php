@@ -24,7 +24,7 @@
                         </div>
 
                 </div>
-                <div class="container m-0 p-3 md:m-5 md:p-7">
+                <div class="container m-auto p-3 md:m-5 md:p-7">
                     <form class="row g-3 needs-validation" id="registrationForm" novalidate>
                         @csrf
 
