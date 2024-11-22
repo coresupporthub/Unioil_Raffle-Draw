@@ -105,7 +105,6 @@ function startRaffle() {
                     setText('product-purchased-winner', response.product.product_name);
                     setText('cluster-winner', response.cluster_name.cluster_name);
                     GetAllWinner();
-                    hide('colorOverlay');
                     celebrate.play();
                     stopRandomizing();
                 }, 5000);
@@ -114,6 +113,7 @@ function startRaffle() {
                 // alertify.alert('Warning',response.message, function () {
                 // });
                 stopRandomizing();
+                hide('colorOverlay');
                 drumrolls.pause();
                 drawButton.disabled = false;
                 clearInterval(shuffleInterval);
