@@ -71,7 +71,7 @@
                 <div class="container-xl">
                     <div class="card">
                         <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-center mb-4"> 
+                            <div class="d-flex justify-content-between align-items-center mb-4">
                                 <!-- Card Title aligned to the left -->
                                 <h5 class="card-title mb-0">Queue List & Exported QR Code</h5>
                             </div>
@@ -286,7 +286,7 @@
         }, 200);
     </script> --}}
     <input type="hidden" id="pdfFiles" value="{{ Storage::url('pdf_files') }}/qr_codes_export_1.pdf">
-    @include('Admin.components.scripts')
+    @include('Admin.components.scripts', ['loc'=> 'admin'])
     <script src="{{ asset('/js/qr_code.js') }}"></script>
     <script>
         function enforceLimit(input) {

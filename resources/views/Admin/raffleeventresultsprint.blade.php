@@ -106,8 +106,7 @@
         @include('Admin.components.loader')
     </div>
     </div>
-
-    @include('Admin.components.scripts')
+    @include('Admin.components.scripts', ['loc'=> 'admin'])
     <script src="{{asset('js/raffleresult/raffleresultlistprint.js')}}"></script>
 </body>
 

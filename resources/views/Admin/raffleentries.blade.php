@@ -197,8 +197,7 @@
 
         </div>
     </div>
-
-    @include('Admin.components.scripts')
+    @include('Admin.components.scripts', ['loc'=> 'admin'])
     <script src="{{ asset('js/raffleentry/raffleentry.js') }}"></script>
 </body>
 </html>

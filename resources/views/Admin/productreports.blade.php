@@ -123,8 +123,7 @@
 
         </div>
     </div>
-
-    @include('Admin.components.scripts')
+    @include('Admin.components.scripts', ['loc'=> 'admin'])
     <script src="{{asset('js/productreport/productreport.js')}}"></script>
 </body>
 </html>
