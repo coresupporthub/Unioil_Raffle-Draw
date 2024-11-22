@@ -31,7 +31,7 @@ class EntryCouponDouble extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Double Entry Coupon',
+            subject: 'Raffle Entry Coupons - 2 Entries',
         );
     }
 
