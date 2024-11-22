@@ -105,7 +105,7 @@ function startRaffle() {
                     setText('product-purchased-winner', response.product.product_name);
                     setText('cluster-winner', response.cluster_name.cluster_name);
                     GetAllWinner();
-
+                    hide('colorOverlay');
                     celebrate.play();
                     stopRandomizing();
                 }, 5000);
@@ -194,7 +194,7 @@ function GetAllWinner() {
             const randomizer = array => {
                 return Math.floor(Math.random() * array.length);
             };
-            
+
             response.forEach((element) => {
 
                 var newRow = document.createElement("tr");
