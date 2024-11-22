@@ -28,9 +28,14 @@ function addWinnerRow() {
              response.forEach((element) => {
                  let newRow = document.createElement("tr");
 
+                 // Add a click event to display the modal
+                 newRow.addEventListener("click", function () {
+                     showModal(element); // Pass the row data to the modal function
+                 });
+
                  // Create table cells for each column and add content
                  let tdIndex = document.createElement("td");
-                 tdIndex.textContent = element.serial_number; // Example: index or serial number
+                 tdIndex.textContent = element.serial_number;
                  newRow.appendChild(tdIndex);
 
                  let tdCluster = document.createElement("td");
@@ -54,7 +59,8 @@ function addWinnerRow() {
                  deleteButton.textContent = "Redraw";
                  deleteButton.className = "hide-me";
                  deleteButton.classList.add("btn", "btn-warning");
-                 deleteButton.addEventListener("click", function () {
+                 deleteButton.addEventListener("click", function (event) {
+                     event.stopPropagation(); // Prevent the row click event from triggering
                      alertify.confirm(
                          "Warning",
                          "Are you sure you want to redraw for this regional cluster?",
@@ -71,12 +77,30 @@ function addWinnerRow() {
 
                  tableBody.appendChild(newRow);
              });
+
          },
          error: function (xhr, status, error) {
              console.error("Error fetching data:", error);
          },
      });
 }
+
+function showModal(data) {
+     $("#regiondisplay").text(data.cluster || "N/A");
+     $("#area").text(data.retail_area || "N/A");
+     $("#address").text(data.address || "N/A");
+     $("#distributor").text(data.retail_distributor || "N/A");
+     $("#store").text(data.retail_name || "N/A");
+     $("#coupon").text(data.serial_number || "N/A");
+     $("#name").text(data.customer_name || "N/A");
+     $("#email").text(data.customer_email || "N/A");
+     $("#phone").text(data.customer_number || "N/A");
+     $("#age").text(data.customer_age || "N/A");
+
+    const myModal = new bootstrap.Modal(document.getElementById("viewModal"));
+    myModal.show();
+}
+
 
 function addUnclaimrRow() {
     const queryString = window.location.search;

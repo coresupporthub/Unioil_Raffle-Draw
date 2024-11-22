@@ -44,7 +44,7 @@
                                     @csrf
                             <div class="card mb-2">
                             <div class="row p-2" style="background-color: #fd7e14">
-                                <div class="col-4 mb-3">
+                                <div class="col-3 mb-3">
                                     <h4 class="mb-2 ms-2 text-white" for="">Raffle Events </h4>
                                     <select class="form-select" name="event_id" id="event_id" onchange="GetAllEntry()">
                                          <option value="" selected> All Raffle Events </option>
@@ -57,7 +57,7 @@
                                     </select>
                                 </div>
 
-                                <div class="col-4 mb-3">
+                                <div class="col-3 mb-3">
                                     <h4 class="mb-2 ms-2 text-white" for=""> Regional Cluster </h4>
                                     <select class="form-select" name="region" id="region" onchange=" GetAllEntry()">
                                          <option value="" selected> All Clusters </option>
@@ -70,8 +70,17 @@
                                     </select>
                                 </div>
 
-                                <div class="col-4 mb-3">
+                                <div class="col-3 mb-3">
                                     <h4 class="mb-2 ms-2 text-white" for=""> Product Type </h4>
+                                    <select class="form-select" name="ptype" id="ptype" onchange=" GetAllEntry()">
+                                       <option value="">All Type</option>
+                                       <option value="1">Fully Synthetic</option>
+                                       <option value="2">Semi Synthetic</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-3 mb-3">
+                                    <h4 class="mb-2 ms-2 text-white" for=""> Products </h4>
                                     <select class="form-select" name="producttype" id="producttype" onchange=" GetAllEntry()">
                                          <option value="" selected> All Products </option>
                                          @php

@@ -114,6 +114,7 @@ class RaffleController extends Controller
         foreach ($raffleEntries as $entry) {
             $retailStores = RetailStore::where('rto_code', $entry->retail_store_code)->first();
             $cluster = RegionalCluster::where('cluster_id', $retailStores->cluster_id)->first()->cluster_name;
+
             $customer = Customers::where('customer_id', $entry->customer_id)->first();
             $data[] = [
                 'event_prize' => $event->event_prize,
@@ -121,7 +122,14 @@ class RaffleController extends Controller
                 'customer_name' => $customer->full_name,
                 'customer_email' => $customer->email,
                 'customer_number' => $customer->mobile_number,
-                'cluster' => $cluster
+                'customer_age' => $customer->age,
+                'cluster' => $cluster,
+                'retail_code' => $retailStores->rto_code,
+                'retail_area' => $retailStores->area,
+                'retail_address'=> $retailStores->address,
+                'retail_distributor' => $retailStores->distributor,
+                'retail_name' => $retailStores->retail_station
+
             ];
         }
         return response()->json($data);
@@ -209,6 +217,7 @@ class RaffleController extends Controller
                         'address' => $retailStores->address,
                         'distributor' => $retailStores->distributor,
                         'retail_name' => $retailStores->retail_station,
+                        'retail_code' => $retailStores->rto_code,
                         'serial_number' => $raffle->serial_number,
                         'product_type' => $customer->product_name,
                         'customer_name' => $customer->full_name,
@@ -352,11 +361,15 @@ class RaffleController extends Controller
                 $cluster = RegionalCluster::where('cluster_id', $retailStore->cluster_id)->first()?->cluster_name;
 
                 // Filter ProductList by product type if provided
-                $productQuery = ProductList::where('product_id', $customer->product_purchased);
-                if (!empty($request->producttype)) {
-                    $productQuery->where('product_id', $request->producttype);
-                }
-                $product = $productQuery->first();
+                $product = ProductList::where('product_id', $customer->product_purchased)
+                ->when(!empty($request->ptype), function ($query) use ($request) {
+                    $query->where('entries', $request->ptype);
+                })
+                ->when(!empty($request->producttype), function ($query) use ($request) {
+                    $query->where('product_id', $request->producttype);
+                })
+                ->first();
+
 
                 if (!$product) continue; // Skip if no product matches
 
