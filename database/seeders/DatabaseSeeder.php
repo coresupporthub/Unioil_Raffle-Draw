@@ -19,7 +19,8 @@ class DatabaseSeeder extends Seeder
             ['Rheyan' , 'rheyanjohnblancogwapo@gmail.com'],
             ['JP', 'jpubas@gmail.com'],
             ['Tisha', 'tishtizon@gmail.com'],
-            ['Hazel', 'santiago.hazel03@gmail.com']
+            ['Hazel', 'santiago.hazel03@gmail.com'],
+            ['Faith Cipriano', 'emfscipriano@unioil.com'],
         ];
 
         foreach($users as $user){
