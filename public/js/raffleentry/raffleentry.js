@@ -96,6 +96,7 @@ function GetAllEntry() {
             $("#address").text(rowData.address || "N/A");
             $("#distributor").text(rowData.distributor || "N/A");
             $("#store").text(rowData.retail_name || "N/A");
+             $("#rto").text(rowData.retail_code || "N/A");
             $("#coupon").text(rowData.serial_number || "N/A");
             $("#product").text(rowData.product_type || "N/A");
             $("#name").text(rowData.customer_name || "N/A");

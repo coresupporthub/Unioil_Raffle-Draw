@@ -147,6 +147,13 @@
                                 <p id="store"></p>
                             </div>
                         </div>
+                        <!-- Store Code -->
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="rto">Rto Code</label>
+                                <p id="rto"></p>
+                            </div>
+                        </div>
                         <!-- Coupon -->
                         <div class="col-md-4">
                             <div class="form-group">

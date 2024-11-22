@@ -230,6 +230,96 @@
         </div>
       </div>
 
+      <div class="modal fade" id="viewModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                <div class="modal-header" style="background-color: #fd7e14">
+                    <h5 class="modal-title text-white" id="staticBackdropLabel">Winner Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                   <div class="row">
+                        <!-- Regional Cluster -->
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="region">Regional Cluster</label>
+                                <p id="regiondisplay"></p>
+                            </div>
+                        </div>
+                        <!-- Area -->
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="area">Area</label>
+                                <p id="area"></p>
+                            </div>
+                        </div>
+                        <!-- Address -->
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="address">Address</label>
+                                <p id="address"></p>
+                            </div>
+                        </div>
+                        <!-- Distributor -->
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="distributor">Distributor</label>
+                                <p id="distributor"></p>
+                            </div>
+                        </div>
+                        <!-- Retail Store -->
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="store">Retail Store</label>
+                                <p id="store"></p>
+                            </div>
+                        </div>
+                        <!-- Coupon -->
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="coupon">Coupon</label>
+                                <p id="coupon"></p>
+                            </div>
+                        </div>
+                        <hr>
+                        <!-- Full Name -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="name">Full Name</label>
+                                <p id="name"></p>
+                            </div>
+                        </div>
+                         <!-- Age -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="age">Age</label>
+                                <p id="age"></p>
+                            </div>
+                        </div>
+                        <!-- Email -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <p id="email"></p>
+                            </div>
+                        </div>
+                        <!-- Phone Number -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="phone">Phone Number</label>
+                                <p id="phone"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+                </div>
+            </div>
+            </div>
+
         @include('Admin.components.footer')
         @include('Admin.components.loader')
     </div>
