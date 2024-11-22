@@ -361,11 +361,15 @@ class RaffleController extends Controller
                 $cluster = RegionalCluster::where('cluster_id', $retailStore->cluster_id)->first()?->cluster_name;
 
                 // Filter ProductList by product type if provided
-                $productQuery = ProductList::where('product_id', $customer->product_purchased);
-                if (!empty($request->producttype)) {
-                    $productQuery->where('product_id', $request->producttype);
-                }
-                $product = $productQuery->first();
+                $product = ProductList::where('product_id', $customer->product_purchased)
+                ->when(!empty($request->ptype), function ($query) use ($request) {
+                    $query->where('entries', $request->ptype);
+                })
+                ->when(!empty($request->producttype), function ($query) use ($request) {
+                    $query->where('product_id', $request->producttype);
+                })
+                ->first();
+
 
                 if (!$product) continue; // Skip if no product matches
 
