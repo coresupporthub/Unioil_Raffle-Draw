@@ -64,7 +64,7 @@ class RaffleController extends Controller
 
         $customerWinner = Customers::where('customer_id', $winnerRaffleEntry->customer_id)->first();
         $store = RetailStore::where('store_id', $customerWinner->store_id)->join('regional_cluster', 'retail_store.cluster_id', '=', 'regional_cluster.cluster_id')
-            ->select('cluster_name')->first();
+            ->select('cluster_name', 'retail_station', 'distributor')->first();
 
         $product = ProductList::where('product_id', $customerWinner->product_purchased)->select('product_name')->first();
 

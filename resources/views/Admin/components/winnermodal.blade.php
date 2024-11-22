@@ -17,6 +17,8 @@ style="z-index: 999999999; background-color: rgba(0,0,0,0.4); width: 100vw !impo
             <h2> <span id="cluster-winner"></span> Cluster Winner</h2>
             <h2 id="winner-name">User Name</h2>
             <p class="fs-3"><strong>Serial No: </strong><span id="serial-number-winner"></span></p>
+            <p class="fs-3 mb-1"><strong>Retail Station: </strong><span id="retail-station"></span></p>
+            <p class="fs-3 mb-1"><strong>Distributor: </strong><span id="distributor"></span></p>
             <p class="fs-3"><strong>Product Purchased: </strong><span id="product-purchased-winner"></span></p>
         </div>
 
