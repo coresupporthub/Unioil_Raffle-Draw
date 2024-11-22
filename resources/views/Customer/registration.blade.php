@@ -3,68 +3,75 @@
 <body>
     <script src="{{ asset('./dist/js/demo-theme.min.js?1692870487') }}"></script>
     @include('Admin.components.loader')
-    <div class="page">
+    <div class="page" >
+
+
         <div class="page-wrapper">
             <!-- Page body -->
             <div class="page-body">
                 <div class="container-xl d-flex flex-column justify-content-center">
-                    <div class="d-flex justify-content-center align-items-center w-100 flex-column gap-1">
-                        <img src="/unioil_images/unioil_logo.png" alt="unioil logo" class="mb-4">
-                        <h1>Raffle Entry</h1>
-                        <h1>{{ $code }}</h1>
+                    <div class="row w-100 justify-content-center align-items-center" style="text-align: center;">
+                        <img src="/unioil_images/unioil_bg.png" alt="unioil logo" style="width: 70%; height: auto; max-height: 200px;" class="mb-4">
                     </div>
-                    <div class="container m-0 p-3 md:m-5 md:p-7">
-                        <form class="row g-3 needs-validation" id="registrationForm" novalidate>
-                            @csrf
+                        {{-- <div class="row w-100">
+                            <h1 class="col-12 text-center" style="color: #ff5722; font-size: 2rem; font-weight: 600;">Your Raffle Entry</h1>
+                        </div> --}}
+                        <div class="row w-100 justify-content-center align-items-center">
+                            <h1 class="col-12 text-center" style="font-size: 1.2rem; font-weight: 500; color: #ff5722;">Raffle Entry Code:</h1>
+                            <h1 class="col-6 text-center" style="font-size: 1rem; font-weight: 700; color: #4CAF50; background-color: #e8f5e9; padding: 5px 10px; border-radius: 5px;">
+                                {{ $code }}
+                            </h1>
+                        </div>
 
-                            <input type="hidden" name="qr_code" value="{{ $code }}">
-                            <input type="hidden" name="unique_identifier" value="{{ $uuid }}">
+                </div>
+                <div class="container m-0 p-3 md:m-5 md:p-7">
+                    <form class="row g-3 needs-validation" id="registrationForm" novalidate>
+                        @csrf
 
-                            <div class="col-md-6">
-                                <label for="validationCustom01" class="form-label">FULL NAME</label>
-                                <input type="text" name="fullname" placeholder="Full Name Indicated on Valid ID" class="form-control"
-                                    id="validationCustom01" value="" required
-                                    oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');">
+                        <input type="hidden" name="qr_code" value="{{ $code }}">
+                        <input type="hidden" name="unique_identifier" value="{{ $uuid }}">
 
-                                <div class="valid-feedback">
-                                    Looks good!
-                                </div>
+                        <div class="col-md-6">
+                            <label for="validationCustom01" class="form-label">FULL NAME</label>
+                            <input type="text" name="fullname" placeholder="Full Name Indicated on Valid ID" class="form-control" id="validationCustom01" value="" required oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');">
+
+                            <div class="valid-feedback">
+                                Looks good!
                             </div>
-                            <div class="col-md-3">
-                                <label for="validationCustom02"  class="form-label">AGE</label>
-                                <input type="text" name="age" class="form-control" id="validationCustom02" value=""
-                                    maxlength="3" placeholder="Enter Age" required
-                                    oninput="this.value = this.value.replace(/[^0-9]/g, '');" />
-                                <div class="valid-feedback">
-                                    Looks good!
-                                </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="validationCustom02" class="form-label">AGE</label>
+                            <input type="text" name="age" class="form-control" id="validationCustom02" value="" maxlength="3" placeholder="Enter Age" required oninput="this.value = this.value.replace(/[^0-9]/g, '');" />
+                            <div class="valid-feedback">
+                                Looks good!
                             </div>
+                        </div>
 
-                            {{-- ADDRESS --}}
-                            <div class="col-md-3">
-                                <input type="hidden" name="region" id="regionId">
-                                <label for="region" class="form-label">REGION</label>
-                                <select class="form-control select2" id="region" required>
-                                    <option value="" disabled selected>Select a Region</option>
-                                </select>
-                                <div class="valid-feedback">
-                                    Looks good!
-                                </div>
+                        {{-- ADDRESS --}}
+                        <div class="col-md-3">
+                            <input type="hidden" name="region" id="regionId">
+                            <label for="region" class="form-label">REGION</label>
+                            <select class="form-control select2" id="region" required>
+                                <option value="" disabled selected>Select a Region</option>
+                            </select>
+                            <div class="valid-feedback">
+                                Looks good!
                             </div>
+                        </div>
 
 
 
-                            <div class="col-md-3">
-                                <input type="hidden" name="province" id="provinceId">
-                                <label for="province" id="provinceLable" class="form-label">PROVINCE</label>
-                                <select class="form-control select2" id="province" required>
-                                    <option value="">Select a Province</option>
+                        <div class="col-md-3">
+                            <input type="hidden" name="province" id="provinceId">
+                            <label for="province" id="provinceLable" class="form-label">PROVINCE</label>
+                            <select class="form-control select2" id="province" required>
+                                <option value="">Select a Province</option>
 
-                                </select>
-                                <div class="valid-feedback">
-                                    Looks good!
-                                </div>
+                            </select>
+                            <div class="valid-feedback">
+                                Looks good!
                             </div>
+                        </div>
 
                             <div class="col-md-3">
                                 <input type="hidden" name="city" id="cityId">
@@ -170,40 +177,44 @@
                     </div>
                 </div>
             </div>
-            @include('Customer.components.footer')
         </div>
+        @include('Customer.components.footer')
+    </div>
     </div>
 
     <div class="modal modal-blur fade" id="confirmStore" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            <div class="modal-status bg-success"></div>
-            <div class="modal-body text-center py-4">
-              <!-- Download SVG icon from http://tabler-icons.io/i/circle-check -->
-              <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-green icon-lg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M9 12l2 2l4 -4" /></svg>
-              <h3>Please Confirm Retail Store Code</h3>
+            <div class="modal-content">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-status bg-success"></div>
+                <div class="modal-body text-center py-4">
+                    <!-- Download SVG icon from http://tabler-icons.io/i/circle-check -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-green icon-lg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+                        <path d="M9 12l2 2l4 -4" /></svg>
+                    <h3>Please Confirm Retail Store Code</h3>
 
-              <h4>Retail Station: <span id="retailStationConfirm"></span></h4>
-              <h4>Distributor: <span id="distributorConfirm"></span></h4>
-              <h4>RTO CODE: <span id="rtoCodeConfirm"></span></h4>
-              <div class="text-muted">If you verify that this is the right store code you may now press confirm to proceed with the registration or press return if not.</div>
-            </div>
-            <div class="modal-footer">
-              <div class="w-100">
-                <div class="row">
-                  <div class="col"><a href="#" class="btn w-100" data-bs-dismiss="modal">
-                      Return
-                    </a></div>
-                  <div class="col"><button id="confirmRegistrationBtn" class="btn btn-success w-100" data-bs-dismiss="modal">
-                      Confirm
-                    </button></div>
+                    <h4>Retail Station: <span id="retailStationConfirm"></span></h4>
+                    <h4>Distributor: <span id="distributorConfirm"></span></h4>
+                    <h4>RTO CODE: <span id="rtoCodeConfirm"></span></h4>
+                    <div class="text-muted">If you verify that this is the right store code you may now press confirm to proceed with the registration or press return if not.</div>
                 </div>
-              </div>
+                <div class="modal-footer">
+                    <div class="w-100">
+                        <div class="row">
+                            <div class="col"><a href="#" class="btn w-100" data-bs-dismiss="modal">
+                                    Return
+                                </a></div>
+                            <div class="col"><button id="confirmRegistrationBtn" class="btn btn-success w-100" data-bs-dismiss="modal">
+                                    Confirm
+                                </button></div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
+    </div>
 
     @include('Customer.components.scripts')
 
