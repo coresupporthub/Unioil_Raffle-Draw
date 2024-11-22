@@ -235,3 +235,43 @@ function show(id, type = 'block'){
         type == 'block' ? null : element.classList.add('d-flex');
     }
 }
+
+
+function getFile(code){
+    switch(code){
+        case '0100000000':
+            return 'region1.json';
+        case '0200000000':
+            return 'region2.json';
+        case '0300000000':
+            return 'region3.json';
+        case '0400000000':
+            return 'region4a.json';
+        case '1700000000':
+            return 'mimaropa.json';
+        case '0500000000':
+            return 'region5.json';
+        case '0600000000':
+            return 'region6.json';
+        case '0700000000':
+            return 'region7.json';
+        case '0800000000':
+            return 'region8.json';
+        case '0900000000':
+            return 'region9.json'; 
+        case '1000000000':
+            return 'region10.json';
+        case '1100000000':
+            return 'region11.json';
+        case '1200000000':
+            return 'region12.json';
+        case '1300000000':
+            return 'ncr.json';
+        case '1400000000':
+            return 'car.json';
+        case '1600000000':
+            return 'caraga.json';
+        case '1900000000':
+            return 'barmm.json';
+    }
+}

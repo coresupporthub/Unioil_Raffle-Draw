@@ -116,7 +116,7 @@ document.getElementById('region').addEventListener('change', (e)=> {
     regionCode = regionValue[0];
     regionId = regionValue[1];
 
-    dataGetter(`https://psgc.cloud/api/regions/${regionCode}/provinces`).then(data=> {
+    dataGetter(`/js/address_json/province_region/${getFile(regionCode)}`).then(data=> {
         const province = document.getElementById('province');
 
         const city = document.getElementById('city');
@@ -159,7 +159,7 @@ document.getElementById('province').addEventListener('change', e => {
 
 
 function loadCity(prov_id){
-    dataGetter(`https://psgc.cloud/api/regions/${regionCode}/cities-municipalities`).then(data => {
+    dataGetter(`/js/address_json/city_region/${getFile(regionCode)}`).then(data => {
         const filterCityProvince = data.filter(x => x.province_id == prov_id);
 
         const city = document.getElementById('city');
@@ -205,7 +205,7 @@ document.getElementById('city').addEventListener('click', e => {
     const cityValue = e.target.value.split('-');
     cityId = cityValue[0];
 
-    dataGetter(`https://psgc.cloud/api/regions/${regionCode}/barangays`).then(data => {
+    dataGetter(`/js/address_json/brgy_region/${getFile(regionCode)}`).then(data => {
         setValue('cityId', cityValue[1]);
         setValue('baranggayId', '');
 
