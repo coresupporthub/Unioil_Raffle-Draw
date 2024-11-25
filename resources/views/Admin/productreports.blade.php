@@ -1,11 +1,13 @@
 @include('Admin.components.head', ['title' => 'Product Reports'])
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
 <style>
     #product-table tbody tr:hover {
         cursor: pointer;
         background-color: #fcbc9e;
     }
   </style>
-
 <body>
     <script src="{{ asset('./dist/js/demo-theme.min.js?1692870487') }}"></script>
     <div class="page">
