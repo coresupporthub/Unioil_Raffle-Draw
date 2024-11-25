@@ -25,9 +25,13 @@
 
                                 <h1 class="fw-bold display-6 position-relative"
                                     style="color: #f75a04; padding-left: 20px; font-family: 'Poppins', sans-serif;">
+
+                                    <div class="header mb-4">
+                                        <img src="/unioil_images/unioil_logo.png" alt="Unioil Logo" style="max-height: 100px; width: auto; ">
+                                    </div>
+
                                     <span
                                         style=" margin-right: 10px; padding-left: 10px;" id="title_event_name">
-
                                     </span>
                                 </h1>
                                 <p class="text-secondary fs-5">Start Date: <strong id="title_start"> </strong> - End Date: <strong id="title_end"> </strong></p>

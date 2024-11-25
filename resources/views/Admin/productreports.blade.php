@@ -1,10 +1,13 @@
 @include('Admin.components.head', ['title' => 'Product Reports'])
-<!-- jsPDF library -->
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
-<!-- jsPDF autoTable plugin -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
-
+<style>
+    #product-table tbody tr:hover {
+        cursor: pointer;
+        background-color: #fcbc9e;
+    }
+  </style>
 <body>
     <script src="{{ asset('./dist/js/demo-theme.min.js?1692870487') }}"></script>
     <div class="page">
@@ -48,18 +51,22 @@
                                   <form action="" id="searchEntry" method="post">
                                     @csrf
                             <div class="card mb-2">
-                            <div class="row p-2" style="background-color: #fd7e14">
-                                <div class="col-3 mb-3">
+                                <div class="row p-2 Unioil-header">
+                                    <div class="col-3 mb-3">
                                     <h4 class="mb-2 ms-2 text-white" for="">Raffle Events </h4>
                                     <select class="form-select" name="event_id" id="event_id" onchange="GetAllEntry()">
-                                         <option value="" selected> All Raffle Events </option>
+                                        {{-- <option value="" selected> Select Event </option> --}}
                                         @php
                                             $events = App\Models\Event::all();
                                         @endphp
                                         @foreach ($events as $event)
-                                             <option value="{{$event->event_id}}"> {{$event->event_name}} </option>
+                                            <option value="{{ $event->event_id }}" 
+                                                @if($event->event_status === 'Active') selected @endif>
+                                                {{ $event->event_name }}
+                                            </option>
                                         @endforeach
                                     </select>
+                                    
                                 </div>
 
                                 <div class="col-3 mb-3">

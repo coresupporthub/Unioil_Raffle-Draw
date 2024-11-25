@@ -1,0 +1,34 @@
+[
+  {
+    "id": 62,
+    "created_at": "2023-05-02T19:39:20.000000Z",
+    "updated_at": "2023-05-02T19:39:20.000000Z",
+    "name": "Cotabato",
+    "code": "1204700000",
+    "region_id": 13
+  },
+  {
+    "id": 63,
+    "created_at": "2023-05-02T19:39:21.000000Z",
+    "updated_at": "2023-05-02T19:39:21.000000Z",
+    "name": "South Cotabato",
+    "code": "1206300000",
+    "region_id": 13
+  },
+  {
+    "id": 64,
+    "created_at": "2023-05-02T19:39:21.000000Z",
+    "updated_at": "2023-05-02T19:39:21.000000Z",
+    "name": "Sultan Kudarat",
+    "code": "1206500000",
+    "region_id": 13
+  },
+  {
+    "id": 65,
+    "created_at": "2023-05-02T19:39:22.000000Z",
+    "updated_at": "2023-05-02T19:39:22.000000Z",
+    "name": "Sarangani",
+    "code": "1208000000",
+    "region_id": 13
+  }
+]

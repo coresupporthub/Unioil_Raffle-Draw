@@ -1,0 +1,50 @@
+[
+    {
+      "id": 43,
+      "created_at": "2023-05-02T19:39:09.000000Z",
+      "updated_at": "2023-05-02T19:39:09.000000Z",
+      "name": "Eastern Samar",
+      "code": "0802600000",
+      "region_id": 9
+    },
+    {
+      "id": 44,
+      "created_at": "2023-05-02T19:39:09.000000Z",
+      "updated_at": "2023-05-02T19:39:09.000000Z",
+      "name": "Leyte",
+      "code": "0803700000",
+      "region_id": 9
+    },
+    {
+      "id": 45,
+      "created_at": "2023-05-02T19:39:11.000000Z",
+      "updated_at": "2023-05-02T19:39:11.000000Z",
+      "name": "Northern Samar",
+      "code": "0804800000",
+      "region_id": 9
+    },
+    {
+      "id": 46,
+      "created_at": "2023-05-02T19:39:12.000000Z",
+      "updated_at": "2023-05-02T19:39:12.000000Z",
+      "name": "Samar",
+      "code": "0806000000",
+      "region_id": 9
+    },
+    {
+      "id": 47,
+      "created_at": "2023-05-02T19:39:13.000000Z",
+      "updated_at": "2023-05-02T19:39:13.000000Z",
+      "name": "Southern Leyte",
+      "code": "0806400000",
+      "region_id": 9
+    },
+    {
+      "id": 48,
+      "created_at": "2023-05-02T19:39:14.000000Z",
+      "updated_at": "2023-05-02T19:39:14.000000Z",
+      "name": "Biliran",
+      "code": "0807800000",
+      "region_id": 9
+    }
+  ]

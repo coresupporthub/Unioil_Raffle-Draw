@@ -1,4 +1,10 @@
 @include('Admin.components.head', ['title' => 'Raffle Event Results'])
+<style>
+    tbody tr:hover {
+        cursor: pointer;
+        background-color: #fcbc9e;
+    }
+  </style>
 
 <body>
     <script src="{{ asset('./dist/js/demo-theme.min.js?1692870487') }}"></script>
@@ -206,7 +212,7 @@
     <div class="modal modal-blur fade" id="confirmInactive" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
           <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header Unioil-header">
               <h5 class="modal-title">Authentication Needed</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -233,88 +239,105 @@
       <div class="modal fade" id="viewModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content">
-                <div class="modal-header" style="background-color: #fd7e14">
+                <div class="modal-header Unioil-header">
                     <h5 class="modal-title text-white" id="staticBackdropLabel">Winner Details</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                   <div class="row">
+                    <div class="row">
                         <!-- Regional Cluster -->
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="region">Regional Cluster</label>
+                                <label class="fw-bold" for="region">Regional Cluster</label>
                                 <p id="regiondisplay"></p>
                             </div>
                         </div>
                         <!-- Area -->
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="area">Area</label>
+                                <label class="fw-bold" for="area">Area</label>
                                 <p id="area"></p>
                             </div>
                         </div>
                         <!-- Address -->
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="address">Address</label>
+                                <label class="fw-bold" for="address">Address</label>
                                 <p id="address"></p>
                             </div>
                         </div>
                         <!-- Distributor -->
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="distributor">Distributor</label>
+                                <label class="fw-bold" for="distributor">Distributor</label>
                                 <p id="distributor"></p>
                             </div>
                         </div>
                         <!-- Retail Store -->
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="store">Retail Store</label>
+                                <label class="fw-bold" for="store">Retail Store</label>
                                 <p id="store"></p>
                             </div>
                         </div>
-                        <!-- Coupon -->
+                        <!-- Store Code -->
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="coupon">Coupon</label>
-                                <p id="coupon"></p>
+                                <label class="fw-bold" for="rto">Rto Code</label>
+                                <p id="rto"></p>
                             </div>
                         </div>
+
                         <hr>
+
                         <!-- Full Name -->
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
-                                <label for="name">Full Name</label>
+                                <label class="fw-bold" for="name">Full Name</label>
                                 <p id="name"></p>
                             </div>
                         </div>
-                         <!-- Age -->
-                        <div class="col-md-6">
+                        <!-- Age -->
+                        <div class="col-md-4">
                             <div class="form-group">
-                                <label for="age">Age</label>
+                                <label class="fw-bold" for="age">Age</label>
                                 <p id="age"></p>
                             </div>
                         </div>
                         <!-- Email -->
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
-                                <label for="email">Email</label>
+                                <label class="fw-bold" for="email">Email</label>
                                 <p id="email"></p>
                             </div>
                         </div>
                         <!-- Phone Number -->
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
-                                <label for="phone">Phone Number</label>
+                                <label class="fw-bold" for="phone">Phone Number</label>
                                 <p id="phone"></p>
+                            </div>
+                        </div>
+
+                        <!-- Coupon -->
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="fw-bold" for="coupon">Coupon</label>
+                                <p class="text-warning" id="coupon"></p>
+                            </div>
+                        </div>
+                        <!-- Product -->
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="fw-bold" for="product">Product</label>
+                                <p id="product"></p>
                             </div>
                         </div>
                     </div>
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
                 </div>
                 </div>
             </div>

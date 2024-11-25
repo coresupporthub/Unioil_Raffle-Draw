@@ -1,5 +1,10 @@
 @include('Admin.components.head', ['title' => 'Retail Outlet Management'])
-
+<style>
+  #ratailOutletTable tbody tr:hover {
+      cursor: pointer;
+      background-color: #fcbc9e;
+  }
+</style>
 <body>
     <script src="{{ asset('./dist/js/demo-theme.min.js?1692870487') }}"></script>
     <div class="page">
@@ -67,6 +72,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div id="table-default" class="table-responsive">
+
                                         <table class="table" id="ratailOutletTable">
                                             <thead>
                                                 <tr>

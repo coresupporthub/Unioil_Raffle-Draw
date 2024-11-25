@@ -92,10 +92,6 @@ Route::get('/registration/page/{code}/{uuid}', function ($code, $uuid) {
     return view('Customer.registration', ['code'=> $code, 'uuid'=> $uuid, 'products'=> $product, 'product_type'=> $productType]);
 })->name('customer_registrations');
 
-Route::get('/privacy/policy', function () {
-    return view('Customer.privacypolicy');
-})->name('privacypolicy');
-
 Route::get('/registration-complete/coupon-serial-number/{customer_id}', function ($customer_id){
 
     $customers = Customers::where('customer_id', $customer_id)->first();

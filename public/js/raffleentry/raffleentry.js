@@ -218,7 +218,8 @@ function printData(data) {
     printWindow.document.write(`
         <html>
             <head>
-                <title>Print Data</title>
+                <title>Raffle Entries Report</title>
+
                 <style>
                     body {
                         font-family: Arial, sans-serif;
@@ -230,21 +231,25 @@ function printData(data) {
                         margin-top: 100px; 
                     }
                     table {
+                        table-layout: auto;
                         width: 100%;
                         border-collapse: collapse;
                     }
                     th, td {
                         border: 1px solid #dddddd;
                         text-align: left;
-                        padding: 8px;
+                        word-wrap: break-word;
+                        max-width: 100px; 
+                        white-space: normal;
                     }
                     th {
-                        background-color: #f2f2f2;
+                        background-color: #fcbc9e;
                     }
                     @media print {
                         body {
                             margin: 0;
                             padding: 0;
+                            zoom: 80%;
                         }
                         .header {
                             position: fixed;
