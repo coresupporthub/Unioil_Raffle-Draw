@@ -43,8 +43,8 @@
                                   <form action="" id="searchEntry" method="post">
                                     @csrf
                             <div class="card mb-2">
-                            <div class="row p-2" style="background-color: #fd7e14">
-                                <div class="col-3 mb-3">
+                                <div class="row p-2 Unioil-header">
+                                    <div class="col-3 mb-3">
                                     <h4 class="mb-2 ms-2 text-white" for="">Raffle Events </h4>
                                     <select class="form-select" name="event_id" id="event_id" onchange="GetAllEntry()">
                                          <option value="" selected> All Raffle Events </option>

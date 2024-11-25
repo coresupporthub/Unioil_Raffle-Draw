@@ -47,7 +47,7 @@
                                     <form action="" id="searchEntry" method="post">
                                         @csrf
                                         <div class="card mb-2">
-                                            <div class="row p-2" style="background-color: #fd7e14">
+                                            <div class="row p-2 Unioil-header">
                                                 <div class="col-6 mb-3">
                                                     <h4 class="mb-2 ms-2 text-white" for="">Raffle Events </h4>
                                                     <select class="form-select" name="event_id" id="event_id" onchange=" GetAllEntry()">
@@ -108,7 +108,7 @@
             <div class="modal fade" id="viewModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg modal-dialog-centered">
                     <div class="modal-content">
-                        <div class="modal-header" style="background-color: #fd7e14">
+                        <div class="modal-header Unioil-header">
                             <h5 class="modal-title text-white" id="staticBackdropLabel">Entry Details</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
@@ -206,7 +206,7 @@
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
                         </div>
                     </div>
                 </div>
