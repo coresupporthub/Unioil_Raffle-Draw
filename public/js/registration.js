@@ -29,7 +29,6 @@
                                 const storeModal = document.getElementById('confirmStore');
                                 const modal = new bootstrap.Modal(storeModal);
                                 setText('retailStationConfirm', res.store.retail_station);
-                                setText('distributorConfirm', res.store.distributor);
                                 setText('rtoCodeConfirm', res.store.rto_code);
 
                                 modal.show();

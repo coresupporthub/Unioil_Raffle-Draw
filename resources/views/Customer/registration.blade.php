@@ -161,12 +161,12 @@
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="privacyConsent" required>
                                 <label class="form-check-label" for="privacyConsent">
-                                    I have read and agree to the 
+                                    I have read and agree to the
                                     <a href="" data-bs-toggle="modal" data-bs-target="#privacypolicy">Privacy Policy.</a>
                                 </label>
                             </div>
                         </div>
-                        
+
                         <div class="col-12">
                             <button class="btn btn-primary col-12" type="submit">Submit form</button>
                         </div>
@@ -257,7 +257,6 @@
                     <h3>Please Confirm Retail Store Code</h3>
 
                     <h4>Retail Station: <span id="retailStationConfirm"></span></h4>
-                    <h4>Distributor: <span id="distributorConfirm"></span></h4>
                     <h4>RTO CODE: <span id="rtoCodeConfirm"></span></h4>
                     <div class="text-muted">If you verify that this is the right store code you may now press confirm to proceed with the registration or press return if not.</div>
                 </div>
@@ -285,7 +284,7 @@
     <script>
         const agreeButton = document.getElementById('agreeButton');
         const privacyConsent = document.getElementById('privacyConsent');
-    
+
         agreeButton.addEventListener('click', function () {
 
             privacyConsent.checked = true;
