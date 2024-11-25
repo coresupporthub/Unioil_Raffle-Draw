@@ -1,4 +1,10 @@
 @include('Admin.components.head', ['title' => 'Product Reports'])
+<style>
+    #product-table tbody tr:hover {
+        cursor: pointer;
+        background-color: #fcbc9e;
+    }
+  </style>
 
 <body>
     <script src="{{ asset('./dist/js/demo-theme.min.js?1692870487') }}"></script>
