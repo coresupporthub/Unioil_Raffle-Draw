@@ -82,19 +82,19 @@ function fetchEventData(eventId) {
         dataType: 'json',
         success: function (data) {
             if (data.success) {
-                updateChart(data.semiSynthetic, data.fullySynthetic);
+                updateCharts(data.semiSynthetic, data.fullySynthetic);
             } else {
-                updateChart(0, 0, true);
+                updateCharts(0, 0, true);
             }
         },
         error: function () {
-            updateChart(0, 0, true);
+            updateCharts(0, 0, true);
         }
     });
 }
 
 // Update the pie chart with new data
-function updateChart(semiSynthetic, fullySynthetic, noData = false) {
+function updateCharts(semiSynthetic, fullySynthetic, noData = false) {
     if (chartInstance) {
         const chartData = noData ? [0, 0] : [semiSynthetic, fullySynthetic];
         const chartColors = noData ? ["#B0B0B0", "#B0B0B0"] : [ tabler.getColor("primary"), "#137f13"];
@@ -179,12 +179,12 @@ function fetchActiveEventData() {
                 fetchEventDataarea(activeEventId);
             } else {
                 console.warn('No active event found.');
-                updateChart(0, 0, true);
+                updateCharts(0, 0, true);
             }
         },
         error: function () {
             console.error('Failed to fetch active event data.');
-            updateChart(0, 0, true);
+            updateCharts(0, 0, true);
         }
     });
 }
@@ -289,7 +289,6 @@ function fetchEventDataarea(eventId) {
                     xaxis: {
                         categories: labels,
                         title: {
-                            text: 'Date',
                             style: {
                                 color: '#333',
                                 fontWeight: 'bold',
@@ -307,7 +306,6 @@ function fetchEventDataarea(eventId) {
                     },
                     yaxis: {
                         title: {
-                            text: 'Count',
                             style: {
                                 color: '#333',
                                 fontWeight: 'bold',
