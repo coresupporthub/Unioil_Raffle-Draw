@@ -32,13 +32,13 @@
         <div style="font-weight: 800; font-size: 1.5rem; margin-top: 10px; color: #048500;">
             {{ $code->serial_number }}
         </div>
-        <div style="font-size: 1rem; color: #555;">Serial Number</div>
+        <div style="font-size: 1rem; color: #555;">Raffle Entry Details</div>
         @else
         @foreach ($code as $c)
         <div style="font-weight: 800; font-size: 1.5rem; margin-top: 10px; color: #048500;">
             {{ $c->serial_number }}
         </div>
-        <div style="font-size: 1rem; color: #555;">Serial Number</div>
+        <div style="font-size: 1rem; color: #555;">Raffle Entry Details</div>
         @endforeach
         @endif
     </div>
