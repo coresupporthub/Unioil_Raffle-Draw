@@ -89,6 +89,17 @@ function GetAllEntry() {
                         }
                     },
                     {
+                        text: "PDF",
+                        className: "dt-button pdf-btn",
+                        action: function () {
+                            const totalRows = data.length; // Get total rows
+                            generatePDF(data, totalRows); // Pass data and totalRows
+                        },
+                        attr: {
+                            style: "background-color: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 4px; font-size: 14px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: background-color 0.3s ease, transform 0.3s ease;",
+                        },
+                    },
+                    {
                         extend: "print",
                         className: "dt-button print-btn",
                         text: '<i class="fas fa-print"></i> Print',
@@ -102,6 +113,8 @@ function GetAllEntry() {
                                 "Arial, sans-serif"
                             );
 
+                            $(win.document.body).find('h1').remove();
+
                             // Add header image and text
                             $(win.document.body).prepend(`
                                 <div style="text-align: center; padding: 20px;">
@@ -114,33 +127,25 @@ function GetAllEntry() {
                             $(win.document.body).find("table").css({
                                 "border-collapse": "collapse",
                                 width: "100%",
+
                             });
 
                             $(win.document.body).find("th, td").css({
                                 border: "1px solid #dddddd",
                                 "text-align": "left",
                                 padding: "8px",
+                                "font-size": "12px",
                             });
 
                             $(win.document.body).find("th").css({
-                                "background-color": "#f2f2f2",
+                                "background-color": "#fcbc9e",
+                                "color": "black"
                             });
 
                             // Adjust the content position to avoid overlap with the header
                             $(win.document.body).find("table").css({
-                                "margin-top": "100px",
+                                "margin-top": "30px",
                             });
-                        },
-                    },
-                    {
-                        text: "PDF",
-                        className: "dt-button pdf-btn",
-                        action: function () {
-                            const totalRows = data.length; // Get total rows
-                            generatePDF(data, totalRows); // Pass data and totalRows
-                        },
-                        attr: {
-                            style: "background-color: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 4px; font-size: 14px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: background-color 0.3s ease, transform 0.3s ease;",
                         },
                     },
                 ],
@@ -166,42 +171,53 @@ function generatePDF(data, totalRows) {
 
     const headers = Object.keys(data[0]);
     const doc = new jsPDF();
-
+    
     // Set the page size to a smaller value to simulate zooming out
     const scale = 0.8; // 80% scale
-
-    // Header with Image
+    
+    // Calculate center position for logo (based on page width)
+    const pageWidth = doc.internal.pageSize.width;
+    const logoWidth = 50 * scale; // Width of the logo
+    const logoX = (pageWidth - logoWidth) / 2;
+    
+    // Add the logo centered on the page
     doc.setFontSize(16);
     doc.addImage(
         "/unioil_images/unioil_logo.png",
         "PNG",
+        logoX,
         10,
-        10,
-        50 * scale,
+        logoWidth,
         15 * scale
     ); // Adjust image size based on scale
-
-    // Adjust the "Printed on" text size and position
+    
+    // Adjust the "Printed on" text size and position (centered)
     doc.setFontSize(8); // Smaller font size for "Printed on"
-    doc.text("Printed on: " + new Date().toLocaleString(), 10, 30 * scale + 2); // Adjust Y position (2 units lower)
+    const printedText = "Printed on: " + new Date().toLocaleString();
+    const textWidth = doc.getStringUnitWidth(printedText) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+    const textX = (pageWidth - textWidth) / 2;
+    doc.text(printedText, textX, 30 * scale + 2); // Adjust Y position (2 units lower)
+    
 
     // Adding Table Content
-    const tableStartY = 50 * scale + 2; // Start Y position for the table
+    const tableStartY = 40 * scale + 2; // Start Y position for the table
+    const headerBgColor = [252, 188, 158];
     doc.autoTable({
         head: [headers],
         body: data.map((row) => Object.values(row)),
         startY: tableStartY, // Set startY to a position after the header and "Printed on" text
-        theme: "striped",
+        theme: "grid",
         styles: {
             fontSize: 10 * scale, // Scale down the font size for table content
         },
         headStyles: {
-            fillColor: [169, 169, 169], // Light gray color for the header
-            textColor: 255, // White text color
+            fillColor: headerBgColor, // Set header background color
+            textColor: 0, // Black text color
         },
         bodyStyles: {
-            fillColor: [245, 245, 245], // Change row background color if needed
+            textColor: 0, // Black text color
         },
+
     });
 
     // Footer Design: Add a background, border, and total rows text
@@ -209,7 +225,7 @@ function generatePDF(data, totalRows) {
     const footerHeight = 10; // Height of the footer box
 
     // Draw a rectangle for the footer background
-    doc.setFillColor(169, 169, 169); // Set footer background color (blue)
+    doc.setFillColor(252, 188, 158); // Set footer background color (blue)
     doc.rect(
         0,
         footerY - footerHeight,
@@ -220,7 +236,7 @@ function generatePDF(data, totalRows) {
 
     // Footer text
     doc.setFontSize(8); // Font size for footer text
-    doc.setTextColor(255, 255, 255); // Set text color to white
+    doc.setTextColor(0); // Set text color to white
     doc.text(`Total Products: ${totalRows}`, 10, footerY - 3); // Display total rows in the footer
 
     // Optional: Add a border line at the top of the footer
@@ -243,7 +259,7 @@ function generatePDF(data, totalRows) {
     );
 
     // Save the generated PDF
-    doc.save("data-report.pdf");
+    doc.save("product-report.pdf");
 }
 
 
