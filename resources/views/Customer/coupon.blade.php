@@ -43,7 +43,7 @@
         @endif
     </div>
 
-    <div style="font-weight: bold; font-size:2rem">Grand Prize: New Honda Click 125 Standard</div>
+    <div style="font-weight: bold; font-size:2rem">Grand Prize: New Honda Click 125 (Standard)</div>
     <div style="font-size:1rem"> <strong>Promo Duration: <br> </strong> December 1, 2024 - January 31, 2025</div>
 
     <img src="/unioil_images/hondaclick.png" alt="hondaclick">
