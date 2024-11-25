@@ -327,7 +327,7 @@ class RaffleController extends Controller
         $event->event_status = 'Inactive';
         $event->save();
 
-        $response = ['message' => 'Event successfully inactive', 'success' => true];
+        $response = ['message' => 'Event has been successfully set to inactive.', 'success' => true];
         Tools::Logger($request, ['Event Close', "Event is successfully set to inactive status"], $response);
 
         return response()->json($response);

@@ -53,14 +53,18 @@
                                     <div class="col-3 mb-3">
                                     <h4 class="mb-2 ms-2 text-white" for="">Raffle Events </h4>
                                     <select class="form-select" name="event_id" id="event_id" onchange="GetAllEntry()">
-                                         <option value="" selected> All Raffle Events </option>
+                                        {{-- <option value="" selected> Select Event </option> --}}
                                         @php
                                             $events = App\Models\Event::all();
                                         @endphp
                                         @foreach ($events as $event)
-                                             <option value="{{$event->event_id}}"> {{$event->event_name}} </option>
+                                            <option value="{{ $event->event_id }}" 
+                                                @if($event->event_status === 'Active') selected @endif>
+                                                {{ $event->event_name }}
+                                            </option>
                                         @endforeach
                                     </select>
+                                    
                                 </div>
 
                                 <div class="col-3 mb-3">

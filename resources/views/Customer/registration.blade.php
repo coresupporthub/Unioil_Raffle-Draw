@@ -33,8 +33,12 @@
                         <div class="col-md-6">
                             <label for="validationCustom01" class="form-label">FULL NAME <span class="text-danger">*</span> </label>
                             <input type="text" name="fullname" placeholder="Full Name Indicated on Valid ID" class="form-control" id="validationCustom01" value="" required oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');">
-
-                            <div class="valid-feedback">
+                            <span>
+                                <small class="text-warning">
+                                    The name on the raffle entry must match the valid ID presented when claiming the prize.
+                                </small>
+                            </span>
+                                                        <div class="valid-feedback">
                                 Looks good!
                             </div>
                         </div>
