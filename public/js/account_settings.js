@@ -1,3 +1,4 @@
+let userid;
 function previewImage(event) {
     const file = event.target.files[0];
     const reader = new FileReader();
@@ -125,7 +126,174 @@ document.getElementById('addAdmin').addEventListener('click', ()=> {
             success: res=> {
                 loading(false);
                 dataParser(res);
+                loadAdmins();
             },error: xhr=> console.log(xhr.responseText)
         })
+    }
+});
+
+
+function deleteAdmin(id){
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+            loading(true);
+
+            const csrf = getCsrf();
+
+            $.ajax({
+                type: "POST",
+                url: "/api/delete-admin",
+                data: {"_token": csrf, "id": id},
+                success: res=> {
+                    loading(false);
+                    dataParser(res);
+                    loadAdmins();
+                }, error: xhr=> console.log(xhr.responseText)
+            })
+        }
+      });
+}
+
+function changeToUpdate(id, name, email){
+    userid = id;
+
+    restartBtns('.updBtn', 'remove');
+    restartBtns('.cancelBtn', 'add');
+    restartBtns('.changePassBtn', 'remove');
+    restartBtns('.deleteAdminBtn', 'remove');
+
+    hide('saveAdminDiv');
+    show('updateAdminDiv');
+    hide('changePassAdminDiv');
+    hide(`updBtn${id}`);
+    show(`cancelBtn${id}`);
+    hide(`changePassBtn${id}`);
+    hide(`deleteAdminBtn${id}`);
+
+    show('adminNameDiv');
+    show('adminEmailDiv');
+    hide('newPassDiv');
+
+    setValue('m_name', name);
+    setValue('m_email', email);
+}
+
+
+function cancelUpdate(id){
+    show('saveAdminDiv');
+    hide('updateAdminDiv');
+    hide('changePassAdminDiv');
+    show(`updBtn${id}`);
+    hide(`cancelBtn${id}`);
+    show(`changePassBtn${id}`);
+    show(`deleteAdminBtn${id}`);
+
+    show('adminNameDiv');
+    show('adminEmailDiv');
+    hide('newPassDiv');
+
+    clearVal('m_name');
+    clearVal('m_email');
+    clearVal('m_newpass');
+}
+
+function restartBtns(id, type){
+    const btns = document.querySelectorAll(id);
+
+    btns.forEach(btn => {
+        if(type == 'add'){
+            btn.classList.add('d-none');
+        }else{
+            btn.classList.remove('d-none');
+        }
+    });
+}
+
+document.getElementById('updateAdminBtn').addEventListener('click', ()=> {
+    const inputs =  [
+        ['m_name', 'm_name_e'],
+        ['m_email', 'm_email_e']
+    ];
+
+    if(checkValidity(inputs)){
+        loading(true);
+        const csrf = getCsrf();
+
+        $.ajax({
+            type: "POST",
+            url: "/api/update-admin",
+            data: {"_token": csrf, "id": userid, "name": getValue('m_name'), "email": getValue('m_email')},
+            success: res=> {
+                loading(false);
+                dataParser(res);
+                loadAdmins();
+                clearVal('m_name');
+                clearVal('m_email');
+                cancelUpdate(userid);
+            }, error: xhr=> console.log(xhr.responseText)
+        })
+    }
+});
+
+function changePassAction(id){
+    userid = id;
+    restartBtns('.updBtn', 'remove');
+    restartBtns('.cancelBtn', 'add');
+    restartBtns('.changePassBtn', 'remove');
+    restartBtns('.deleteAdminBtn', 'remove');
+
+    hide('saveAdminDiv');
+    hide('updateAdminDiv');
+    show('changePassAdminDiv');
+    hide(`updBtn${id}`);
+    show(`cancelBtn${id}`);
+    hide(`changePassBtn${id}`);
+    hide(`deleteAdminBtn${id}`);
+
+    hide('adminNameDiv');
+    hide('adminEmailDiv');
+    show('newPassDiv');
+}
+
+document.getElementById('changePassAdminBtn').addEventListener('click', ()=> {
+    const inputs =  [
+        ['m_newpass', 'm_newpass_e'],
+    ];
+
+    if(checkValidity(inputs)){
+        Swal.fire({
+            title: "Are you sure?",
+            text: "Do you want to update this admin's password",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, change pass it"
+          }).then((result) => {
+            if (result.isConfirmed) {
+              loading(true);
+
+              const csrf = getCsrf();
+              $.ajax({
+                type: "POST",
+                url: "/api/changepass-admin",
+                data: {"_token": csrf, "id": userid, "password": getValue('m_newpass')},
+                success: res=> {
+                    loading(false);
+                    dataParser(res);
+                    loadAdmins();
+                    clearVal('m_newpass');
+                }, error: xhr=> console.log(xhr.responseText)
+              })
+            }
+          });
     }
 });
