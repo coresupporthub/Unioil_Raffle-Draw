@@ -3,7 +3,7 @@ let barChart;
 
 document.addEventListener("DOMContentLoaded", function () {
     if (window.ApexCharts) {
-        // Initialize the pie chart
+
         chartInstance = new ApexCharts(document.getElementById('chart-demo-pie'), {
             chart: {
                 type: "donut",
@@ -35,10 +35,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
         chartInstance.render();
         
-        // Fetch the active event data
         fetchActiveEventData();
 
-        // Handle dropdown change
         document.getElementById('event-dropdown').addEventListener('change', function () {
             const eventId = this.value;
             loadbarchart(eventId)
@@ -49,7 +47,6 @@ document.addEventListener("DOMContentLoaded", function () {
             
         });
 
-        // Initialize the bar chart for raffle entries issued by product type
         barChart = new ApexCharts(document.getElementById('chart-tasks-overview1'), {
             chart: {
                 type: "bar",
@@ -74,7 +71,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-// Fetch event data based on event ID
 function fetchEventData(eventId) {
     if (!eventId) return;
 
@@ -95,7 +91,6 @@ function fetchEventData(eventId) {
     });
 }
 
-// Update the pie chart with new data
 function updateCharts(semiSynthetic, fullySynthetic, noData = false) {
     if (chartInstance) {
         const chartData = noData ? [0, 0] : [semiSynthetic, fullySynthetic];
@@ -111,7 +106,6 @@ function updateCharts(semiSynthetic, fullySynthetic, noData = false) {
     }
 }
 
-// Fetch the data for raffle entries issued by product type
 function fetchEntriesData(eventId) { 
     if (!eventId) return;
 
@@ -152,8 +146,6 @@ function fetchEntriesData(eventId) {
     });
 }
 
-
-// Fetch active event data
 function fetchActiveEventData() {
     $.ajax({
         url: '/api/events/datas/active', 
@@ -192,8 +184,6 @@ function fetchActiveEventData() {
     });
 }
 
-
-// Fetch regional cluster raffle data
 function fetchClusterData(eventId) {
     if (!eventId) return;
 
@@ -229,7 +219,6 @@ function fetchClusterData(eventId) {
 
                 chart.render();
 
-                // Add a download button for exporting the chart
                 const downloadButton = document.createElement('button');
                 downloadButton.textContent = 'Download Chart';
                 downloadButton.style.marginTop = '10px';
@@ -252,7 +241,6 @@ function fetchClusterData(eventId) {
     });
 }
 
-// Fetch issuance data for the event
 function fetchEventDataarea(eventId) {
     if (!eventId) return;
 
@@ -261,14 +249,11 @@ function fetchEventDataarea(eventId) {
         method: 'GET',
         success: function (data) {
             const chartElement = document.getElementById('chart-completion-tasks-10');
-            chartElement.innerHTML = ""; // Clear any existing chart
+            chartElement.innerHTML = ""; 
             
-            // If data is available, proceed with processing and rendering the chart
             if (data.success && data.eventData.length > 0) {
-                // Sort the eventData array by date in ascending order
                 data.eventData.sort((a, b) => new Date(a.date) - new Date(b.date));
 
-                // Convert dates to a readable format
                 const monthNames = [
                     "Jan", "Feb", "Mar", "Apr", "May", "Jun",
                     "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
@@ -281,7 +266,6 @@ function fetchEventDataarea(eventId) {
 
                 const counts = data.eventData.map(entry => entry.count);
 
-                // Render the chart with the actual data
                 new ApexCharts(chartElement, {
                     chart: {
                         type: 'area',
@@ -331,7 +315,6 @@ function fetchEventDataarea(eventId) {
                     }
                 }).render();
             } else {
-                // Render an empty chart if no data is available
                 new ApexCharts(chartElement, {
                     chart: {
                         type: 'area',
@@ -339,7 +322,7 @@ function fetchEventDataarea(eventId) {
                     },
                     series: [{
                         name: 'Raffle Entries',
-                        data: [] // No data in the series
+                        data: [] 
                     }],
                     xaxis: {
                         categories: [],
@@ -384,9 +367,8 @@ function fetchEventDataarea(eventId) {
         },
         error: function () {
             const chartElement = document.getElementById('chart-completion-tasks-10');
-            chartElement.innerHTML = ""; // Clear the chart element before rendering the blank chart
+            chartElement.innerHTML = ""; 
 
-            // Render an empty chart on error
             new ApexCharts(chartElement, {
                 chart: {
                     type: 'area',
@@ -394,7 +376,7 @@ function fetchEventDataarea(eventId) {
                 },
                 series: [{
                     name: 'Raffle Entries',
-                    data: [] // No data in the series
+                    data: [] 
                 }],
                 xaxis: {
                     categories: [],
@@ -440,7 +422,7 @@ function fetchEventDataarea(eventId) {
 }
 
 
-var chart; // Declare chart variable outside to keep reference
+var chart; 
 
 function loadbarchart(id) {
     $.ajax({
@@ -468,11 +450,9 @@ function loadbarchart(id) {
                         }
                     });
                 });
-                // Destroy the existing chart instance if it exists
                 if (chart !== undefined) {
                     chart.destroy();
                 }
-                // Create a new ApexCharts instance
                 chart = new ApexCharts(document.getElementById('chart-combination'), {
                     chart: {
                         type: "bar",
