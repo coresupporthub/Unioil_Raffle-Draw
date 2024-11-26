@@ -189,6 +189,9 @@ class QrCodeController extends Controller
 
         if (!file_exists(storage_path('app/pdf_files'))) {
             mkdir(storage_path('app/pdf_files'), 0777, true);
+
+            chown(storage_path('app/pdf_files'), 'www-data');
+            chgrp(storage_path('app/pdf_files'), 'www-data');
         }
 
         $pdf->save($pdfFilePath);
