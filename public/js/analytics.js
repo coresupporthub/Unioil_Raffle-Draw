@@ -3,7 +3,7 @@ let barChart;
 
 document.addEventListener("DOMContentLoaded", function () {
     if (window.ApexCharts) {
-        // Initialize the pie chart
+
         chartInstance = new ApexCharts(document.getElementById('chart-demo-pie'), {
             chart: {
                 type: "donut",
@@ -35,19 +35,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
         chartInstance.render();
         
-        // Fetch the active event data
         fetchActiveEventData();
 
-        // Handle dropdown change
         document.getElementById('event-dropdown').addEventListener('change', function () {
             const eventId = this.value;
+            loadbarchart(eventId)
             fetchEventData(eventId); 
             fetchEntriesData(eventId); 
             fetchClusterData(eventId); 
             fetchEventDataarea(eventId);
+            
         });
 
-        // Initialize the bar chart for raffle entries issued by product type
         barChart = new ApexCharts(document.getElementById('chart-tasks-overview1'), {
             chart: {
                 type: "bar",
@@ -72,7 +71,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-// Fetch event data based on event ID
 function fetchEventData(eventId) {
     if (!eventId) return;
 
@@ -82,19 +80,18 @@ function fetchEventData(eventId) {
         dataType: 'json',
         success: function (data) {
             if (data.success) {
-                updateChart(data.semiSynthetic, data.fullySynthetic);
+                updateCharts(data.semiSynthetic, data.fullySynthetic);
             } else {
-                updateChart(0, 0, true);
+                updateCharts(0, 0, true);
             }
         },
         error: function () {
-            updateChart(0, 0, true);
+            updateCharts(0, 0, true);
         }
     });
 }
 
-// Update the pie chart with new data
-function updateChart(semiSynthetic, fullySynthetic, noData = false) {
+function updateCharts(semiSynthetic, fullySynthetic, noData = false) {
     if (chartInstance) {
         const chartData = noData ? [0, 0] : [semiSynthetic, fullySynthetic];
         const chartColors = noData ? ["#B0B0B0", "#B0B0B0"] : [ tabler.getColor("primary"), "#137f13"];
@@ -109,7 +106,6 @@ function updateChart(semiSynthetic, fullySynthetic, noData = false) {
     }
 }
 
-// Fetch the data for raffle entries issued by product type
 function fetchEntriesData(eventId) { 
     if (!eventId) return;
 
@@ -150,8 +146,6 @@ function fetchEntriesData(eventId) {
     });
 }
 
-
-// Fetch active event data
 function fetchActiveEventData() {
     $.ajax({
         url: '/api/events/datas/active', 
@@ -172,25 +166,24 @@ function fetchActiveEventData() {
                     const newOption = new Option(activeEventName, activeEventId, true, true);
                     dropdown.add(newOption);
                 }
-
+                loadbarchart(activeEventId)
                 fetchEventData(activeEventId); 
                 fetchEntriesData(activeEventId); 
                 fetchClusterData(activeEventId); 
                 fetchEventDataarea(activeEventId);
+                
             } else {
                 console.warn('No active event found.');
-                updateChart(0, 0, true);
+                updateCharts(0, 0, true);
             }
         },
         error: function () {
             console.error('Failed to fetch active event data.');
-            updateChart(0, 0, true);
+            updateCharts(0, 0, true);
         }
     });
 }
 
-
-// Fetch regional cluster raffle data
 function fetchClusterData(eventId) {
     if (!eventId) return;
 
@@ -226,7 +219,6 @@ function fetchClusterData(eventId) {
 
                 chart.render();
 
-                // Add a download button for exporting the chart
                 const downloadButton = document.createElement('button');
                 downloadButton.textContent = 'Download Chart';
                 downloadButton.style.marginTop = '10px';
@@ -249,7 +241,6 @@ function fetchClusterData(eventId) {
     });
 }
 
-// Fetch issuance data for the event
 function fetchEventDataarea(eventId) {
     if (!eventId) return;
 
@@ -258,13 +249,11 @@ function fetchEventDataarea(eventId) {
         method: 'GET',
         success: function (data) {
             const chartElement = document.getElementById('chart-completion-tasks-10');
-            chartElement.innerHTML = "";
+            chartElement.innerHTML = ""; 
             
             if (data.success && data.eventData.length > 0) {
-                // Sort the eventData array by date in ascending order
                 data.eventData.sort((a, b) => new Date(a.date) - new Date(b.date));
 
-                // Convert dates to a readable format
                 const monthNames = [
                     "Jan", "Feb", "Mar", "Apr", "May", "Jun",
                     "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
@@ -289,7 +278,6 @@ function fetchEventDataarea(eventId) {
                     xaxis: {
                         categories: labels,
                         title: {
-                            text: 'Date',
                             style: {
                                 color: '#333',
                                 fontWeight: 'bold',
@@ -307,7 +295,6 @@ function fetchEventDataarea(eventId) {
                     },
                     yaxis: {
                         title: {
-                            text: 'Count',
                             style: {
                                 color: '#333',
                                 fontWeight: 'bold',
@@ -328,58 +315,149 @@ function fetchEventDataarea(eventId) {
                     }
                 }).render();
             } else {
-                chartElement.innerHTML = "<p>No data available for this event.</p>";
+                new ApexCharts(chartElement, {
+                    chart: {
+                        type: 'area',
+                        height: 302,
+                    },
+                    series: [{
+                        name: 'Raffle Entries',
+                        data: [] 
+                    }],
+                    xaxis: {
+                        categories: [],
+                        title: {
+                            style: {
+                                color: '#333',
+                                fontWeight: 'bold',
+                            }
+                        },
+                        labels: {
+                            rotate: -45,
+                            style: {
+                                colors: '#333',
+                                fontSize: '12px',
+                            }
+                        },
+                        axisBorder: { show: true },
+                        axisTicks: { show: true },
+                    },
+                    yaxis: {
+                        title: {
+                            style: {
+                                color: '#333',
+                                fontWeight: 'bold',
+                            }
+                        }
+                    },
+                    stroke: { width: 2, curve: 'smooth' },
+                    colors: [tabler.getColor("primary")],
+                    dataLabels: { enabled: false },
+                    tooltip: {
+                        x: {
+                            format: 'dd MMM yyyy' 
+                        }
+                    },
+                    grid: {
+                        borderColor: '#e7e7e7',
+                        strokeDashArray: 4
+                    }
+                }).render();
             }
         },
         error: function () {
             const chartElement = document.getElementById('chart-completion-tasks-10');
-            chartElement.innerHTML = "<p>Error loading data.</p>";
+            chartElement.innerHTML = ""; 
+
+            new ApexCharts(chartElement, {
+                chart: {
+                    type: 'area',
+                    height: 302,
+                },
+                series: [{
+                    name: 'Raffle Entries',
+                    data: [] 
+                }],
+                xaxis: {
+                    categories: [],
+                    title: {
+                        style: {
+                            color: '#333',
+                            fontWeight: 'bold',
+                        }
+                    },
+                    labels: {
+                        rotate: -45,
+                        style: {
+                            colors: '#333',
+                            fontSize: '12px',
+                        }
+                    },
+                    axisBorder: { show: true },
+                    axisTicks: { show: true },
+                },
+                yaxis: {
+                    title: {
+                        style: {
+                            color: '#333',
+                            fontWeight: 'bold',
+                        }
+                    }
+                },
+                stroke: { width: 2, curve: 'smooth' },
+                colors: [tabler.getColor("primary")],
+                dataLabels: { enabled: false },
+                tooltip: {
+                    x: {
+                        format: 'dd MMM yyyy' 
+                    }
+                },
+                grid: {
+                    borderColor: '#e7e7e7',
+                    strokeDashArray: 4
+                }
+            }).render();
         }
     });
 }
 
 
-document.addEventListener("DOMContentLoaded", function () {
-    var eventId = "{{ $activeEventId }}";
+var chart; 
 
+function loadbarchart(id) {
     $.ajax({
-        url: `/api/entries/productcluster/${eventId}`,
+        url: `/api/entries/productcluster/${id}`,
         method: 'GET',
         success: function (data) {
+            console.log(data)
             if (data.success) {
                 let seriesData = [];
                 let categories = [];
-        
                 data.data.forEach((cluster, index) => {
-
                     categories.push(cluster.cluster);
-        
                     cluster.product.forEach(product => {
-                        console.log(product);
-                        
                         for (let productType in product) {
-
                             let productIndex = seriesData.findIndex(item => item.name === productType);
-        
                             if (productIndex === -1) {
-
                                 seriesData.push({
                                     name: productType,
                                     data: Array(data.data.length).fill(0)
                                 });
                                 productIndex = seriesData.length - 1;
                             }
-        
+
                             seriesData[productIndex].data[index] = product[productType];
                         }
                     });
                 });
-
-                new ApexCharts(document.getElementById('chart-combination'), {
+                if (chart !== undefined) {
+                    chart.destroy();
+                }
+                chart = new ApexCharts(document.getElementById('chart-combination'), {
                     chart: {
                         type: "bar",
                         fontFamily: 'inherit',
-                        height: 240,
+                        height: 302,
                         parentHeightOffset: 0,
                         toolbar: {
                             show: false,
@@ -433,7 +511,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     legend: {
                         show: true,
                     },
-                }).render();
+                });
+                chart.render();
 
             } else {
                 console.error("Error fetching data: " + data.message);
@@ -443,4 +522,4 @@ document.addEventListener("DOMContentLoaded", function () {
             console.error("AJAX request failed: " + error);
         }
     });
-});
+}

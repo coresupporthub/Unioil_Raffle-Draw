@@ -192,18 +192,7 @@ class AnalyticsController extends Controller
 
     public function entriesByProductTypeAndCluster($eventId)
     {
-        if ($eventId == 'active') {
-            $activeEvent = Event::where('event_status', 'Active')->first();
-    
-            if (!$activeEvent) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'No active event found.',
-                ]);
-            }
-    
-            $eventId = $activeEvent->event_id;
-        }
+        
     
         $clusters = RegionalCluster::all();
         $clusterData = [];
@@ -215,7 +204,7 @@ class AnalyticsController extends Controller
             $stores = RetailStore::where('cluster_id',$cluster->cluster_id)->get();
             $productData = [];
             foreach($stores as $store){
-                $customers = Customers::where('store_id',$store->store_id)->get();
+                $customers = Customers::where('store_id',$store->store_id)->where('event_id',$eventId)->get();
                 foreach($customers as $customer){
                     $product = ProductList::where('product_id',$customer->product_purchased)->first();
                     if($product->entries == 2){

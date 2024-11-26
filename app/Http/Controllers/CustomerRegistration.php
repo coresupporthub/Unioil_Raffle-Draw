@@ -11,6 +11,7 @@ use App\Models\ProductList;
 use App\Http\Services\Magic;
 use App\Models\RetailStore;
 use App\Models\Event;
+use App\Models\RegionalCluster;
 
 class CustomerRegistration extends Controller
 {
@@ -31,6 +32,13 @@ class CustomerRegistration extends Controller
 
         if(!$retailStore){
             return response()->json(['success'=> false, 'message'=> 'Retail Store Code is invalid please confirm the code to the store owner']);
+        }
+
+        if($retailStore){
+            $checkClusterId = RegionalCluster::where('cluster_id', $retailStore->cluster_id)->where('cluster_status', 'Disable')->first();
+            if($checkClusterId){
+                return response()->json(['success'=> false, 'message'=>'This store is not participating in the raffle']);
+            }
         }
 
         $currentActiveEvent = Event::where('event_status', Magic::ACTIVE_EVENT)->first();
@@ -84,7 +92,7 @@ class CustomerRegistration extends Controller
         $store = RetailStore::where('rto_code', $req->rto_code)->first();
 
         if(!$store){
-            return response()->json(['success'=> false, 'message'=> 'Retail code is invalid please ask the store owner for there code']);
+            return response()->json(['success'=> false, 'message'=> 'The retail code is invalid. Please verify the entered code with the store owner.']);
         }
 
         return response()->json(['success'=> true, 'message'=> 'Verify Retail Code', 'store'=>$store]);

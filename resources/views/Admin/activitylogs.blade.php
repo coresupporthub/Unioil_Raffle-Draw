@@ -1,5 +1,10 @@
 @include('Admin.components.head', ['title' => 'Activity Logs'])
-
+<style>
+  #activityLogsTable tbody tr:hover {
+      cursor: pointer;
+      background-color: #fcbc9e;
+  }
+</style>
 <body>
     <script src="{{asset('./dist/js/demo-theme.min.js?1692870487')}}"></script>
     <div class="page">
@@ -66,7 +71,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-outline-dark me-auto" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-dark me-auto" data-bs-dismiss="modal">Close</button>
 
             </div>
           </div>
