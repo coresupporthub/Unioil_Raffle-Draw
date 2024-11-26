@@ -41,10 +41,12 @@ document.addEventListener("DOMContentLoaded", function () {
         // Handle dropdown change
         document.getElementById('event-dropdown').addEventListener('change', function () {
             const eventId = this.value;
+            loadbarchart(eventId)
             fetchEventData(eventId); 
             fetchEntriesData(eventId); 
             fetchClusterData(eventId); 
             fetchEventDataarea(eventId);
+            
         });
 
         // Initialize the bar chart for raffle entries issued by product type
@@ -172,11 +174,12 @@ function fetchActiveEventData() {
                     const newOption = new Option(activeEventName, activeEventId, true, true);
                     dropdown.add(newOption);
                 }
-
+                loadbarchart(activeEventId)
                 fetchEventData(activeEventId); 
                 fetchEntriesData(activeEventId); 
                 fetchClusterData(activeEventId); 
                 fetchEventDataarea(activeEventId);
+                
             } else {
                 console.warn('No active event found.');
                 updateCharts(0, 0, true);
@@ -258,8 +261,9 @@ function fetchEventDataarea(eventId) {
         method: 'GET',
         success: function (data) {
             const chartElement = document.getElementById('chart-completion-tasks-10');
-            chartElement.innerHTML = "";
+            chartElement.innerHTML = ""; // Clear any existing chart
             
+            // If data is available, proceed with processing and rendering the chart
             if (data.success && data.eventData.length > 0) {
                 // Sort the eventData array by date in ascending order
                 data.eventData.sort((a, b) => new Date(a.date) - new Date(b.date));
@@ -277,6 +281,7 @@ function fetchEventDataarea(eventId) {
 
                 const counts = data.eventData.map(entry => entry.count);
 
+                // Render the chart with the actual data
                 new ApexCharts(chartElement, {
                     chart: {
                         type: 'area',
@@ -326,58 +331,153 @@ function fetchEventDataarea(eventId) {
                     }
                 }).render();
             } else {
-                chartElement.innerHTML = "<p>No data available for this event.</p>";
+                // Render an empty chart if no data is available
+                new ApexCharts(chartElement, {
+                    chart: {
+                        type: 'area',
+                        height: 302,
+                    },
+                    series: [{
+                        name: 'Raffle Entries',
+                        data: [] // No data in the series
+                    }],
+                    xaxis: {
+                        categories: [],
+                        title: {
+                            style: {
+                                color: '#333',
+                                fontWeight: 'bold',
+                            }
+                        },
+                        labels: {
+                            rotate: -45,
+                            style: {
+                                colors: '#333',
+                                fontSize: '12px',
+                            }
+                        },
+                        axisBorder: { show: true },
+                        axisTicks: { show: true },
+                    },
+                    yaxis: {
+                        title: {
+                            style: {
+                                color: '#333',
+                                fontWeight: 'bold',
+                            }
+                        }
+                    },
+                    stroke: { width: 2, curve: 'smooth' },
+                    colors: [tabler.getColor("primary")],
+                    dataLabels: { enabled: false },
+                    tooltip: {
+                        x: {
+                            format: 'dd MMM yyyy' 
+                        }
+                    },
+                    grid: {
+                        borderColor: '#e7e7e7',
+                        strokeDashArray: 4
+                    }
+                }).render();
             }
         },
         error: function () {
             const chartElement = document.getElementById('chart-completion-tasks-10');
-            chartElement.innerHTML = "<p>Error loading data.</p>";
+            chartElement.innerHTML = ""; // Clear the chart element before rendering the blank chart
+
+            // Render an empty chart on error
+            new ApexCharts(chartElement, {
+                chart: {
+                    type: 'area',
+                    height: 302,
+                },
+                series: [{
+                    name: 'Raffle Entries',
+                    data: [] // No data in the series
+                }],
+                xaxis: {
+                    categories: [],
+                    title: {
+                        style: {
+                            color: '#333',
+                            fontWeight: 'bold',
+                        }
+                    },
+                    labels: {
+                        rotate: -45,
+                        style: {
+                            colors: '#333',
+                            fontSize: '12px',
+                        }
+                    },
+                    axisBorder: { show: true },
+                    axisTicks: { show: true },
+                },
+                yaxis: {
+                    title: {
+                        style: {
+                            color: '#333',
+                            fontWeight: 'bold',
+                        }
+                    }
+                },
+                stroke: { width: 2, curve: 'smooth' },
+                colors: [tabler.getColor("primary")],
+                dataLabels: { enabled: false },
+                tooltip: {
+                    x: {
+                        format: 'dd MMM yyyy' 
+                    }
+                },
+                grid: {
+                    borderColor: '#e7e7e7',
+                    strokeDashArray: 4
+                }
+            }).render();
         }
     });
 }
 
 
-document.addEventListener("DOMContentLoaded", function () {
-    var eventId = "{{ $activeEventId }}";
+var chart; // Declare chart variable outside to keep reference
 
+function loadbarchart(id) {
     $.ajax({
-        url: `/api/entries/productcluster/${eventId}`,
+        url: `/api/entries/productcluster/${id}`,
         method: 'GET',
         success: function (data) {
+            console.log(data)
             if (data.success) {
                 let seriesData = [];
                 let categories = [];
-        
                 data.data.forEach((cluster, index) => {
-
                     categories.push(cluster.cluster);
-        
                     cluster.product.forEach(product => {
-                        console.log(product);
-                        
                         for (let productType in product) {
-
                             let productIndex = seriesData.findIndex(item => item.name === productType);
-        
                             if (productIndex === -1) {
-
                                 seriesData.push({
                                     name: productType,
                                     data: Array(data.data.length).fill(0)
                                 });
                                 productIndex = seriesData.length - 1;
                             }
-        
+
                             seriesData[productIndex].data[index] = product[productType];
                         }
                     });
                 });
-
-                new ApexCharts(document.getElementById('chart-combination'), {
+                // Destroy the existing chart instance if it exists
+                if (chart !== undefined) {
+                    chart.destroy();
+                }
+                // Create a new ApexCharts instance
+                chart = new ApexCharts(document.getElementById('chart-combination'), {
                     chart: {
                         type: "bar",
                         fontFamily: 'inherit',
-                        height: 240,
+                        height: 302,
                         parentHeightOffset: 0,
                         toolbar: {
                             show: false,
@@ -431,7 +531,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     legend: {
                         show: true,
                     },
-                }).render();
+                });
+                chart.render();
 
             } else {
                 console.error("Error fetching data: " + data.message);
@@ -441,4 +542,4 @@ document.addEventListener("DOMContentLoaded", function () {
             console.error("AJAX request failed: " + error);
         }
     });
-});
+}

@@ -50,7 +50,7 @@
                                 @endphp
                                 <div class="form-group mx-auto" style="max-width: 400px;">
                                     <select class="form-select fw-semibold" style="border-color:#fd7e14; #fd7e14;"
-                                        id="event-dropdown" onchange="updateCharts(this.value)">
+                                        id="event-dropdown">
                                         <option selected disabled value="">Choose an Event</option>
                                         @if ($events->isEmpty())
                                             <option value="#" disabled>No events available</option>
