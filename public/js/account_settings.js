@@ -106,3 +106,26 @@ document.getElementById('adminDetailsForm').addEventListener('submit', e => {
         }, error: xhr=> console.log(xhr.responseText)
     })
 });
+
+
+//Adminstrator Management
+document.getElementById('addAdmin').addEventListener('click', ()=> {
+    const inputs =  [
+        ['m_name', 'm_name_e'],
+        ['m_email', 'm_email_e']
+    ];
+
+    if(checkValidity(inputs)){
+        loading(true);
+        const csrf = getCsrf();
+        $.ajax({
+            type: "POST",
+            url: "/api/add-admin",
+            data: {"_token": csrf, "name": getValue('m_name'), "email": getValue('m_email')},
+            success: res=> {
+                loading(false);
+                dataParser(res);
+            },error: xhr=> console.log(xhr.responseText)
+        })
+    }
+});

@@ -82,16 +82,16 @@
                                                     <h2 class="mb-4">Administrators</h2>
                                                     <div class="row">
                                                         <div class="mb-3 col-5">
-                                                            <label class="form-label required">Name</label>
-                                                            <input type="text" class="form-control" name="example-required-input" placeholder="Required...">
+                                                            <label class="form-label required">Name <span class="text-danger d-none" id="m_name_e">(This Field is Required)</span></label>
+                                                            <input type="text" class="form-control" id="m_name" placeholder="Enter Name">
                                                         </div>
                                                         <div class="mb-3 col-5">
-                                                            <label class="form-label required">Email</label>
-                                                            <input type="text" class="form-control" name="example-required-input" placeholder="Required...">
+                                                            <label class="form-label required">Email <span class="text-danger d-none" id="m_email_e">(This Field is Required)</span></label>
+                                                            <input type="text" class="form-control" id="m_email" placeholder="Enter email">
                                                         </div>
                                                         <div class="mb-3 col-2">
                                                             <label class="form-label text-white"> . </label>
-                                                            <button class="btn btn-primary"> Submit </button>
+                                                            <button id="addAdmin" class="btn btn-primary"> Submit </button>
                                                         </div>
                                                     </div>
                                                     <div id="table-default" class="table-responsive mt-2">
