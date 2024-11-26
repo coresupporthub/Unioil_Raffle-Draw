@@ -80,6 +80,9 @@ class GenerateQr implements ShouldQueue
 
         if (!file_exists(storage_path('app/qr-codes'))) {
             mkdir(storage_path('app/qr-codes'), 0777, true);
+
+            chown(storage_path('app/qr-codes'), 'www-data');
+            chgrp(storage_path('app/qr-codes'), 'www-data');
         }
 
         $result->saveToFile($qrCodePath);
