@@ -6,7 +6,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <form action="" method="post" id="add-event-form" class="row g-3">
+            <form action="" method="post" id="add-event-form" class="row g-3" enctype="multipart/form-data">
                 <!-- Event Name -->
                 <div class="col-md-6 col-12">
                     <label for="event_name" class="form-label">Event Name</label>
@@ -16,7 +16,7 @@
                 <!-- Event Price -->
                 <div class="col-md-6 col-12">
                     <label for="event_price" class="form-label">Event Prize</label>
-                    <input type="text" class="form-control" name="event_price" id="event_price" placeholder="Enter event prize"  maxlength="50">
+                    <input type="text" class="form-control" name="event_prize" id="event_price" placeholder="Enter event prize"  maxlength="50">
                 </div>
 
                 <!-- Event Start -->
@@ -31,6 +31,15 @@
                     <input type="text" class="form-control" name="event_end" id="event_end" placeholder="Enter event end">
                 </div>
 
+                <div class="col-12">
+                    <label for="event_end" class="form-label">Event Prize Image</label>
+                    <input type="file" class="form-control" name="image" id="image" placeholder="Enter event end">
+                </div>
+
+                <div class="col-12">
+                    <label for="event_end" class="form-label">Event Banner</label>
+                    <input type="file" class="form-control" name="banner" id="banner" placeholder="Enter event end">
+                </div>
                 <!-- Event Description -->
                 <div class="col-12">
                     <label for="event_description" class="form-label">Event Description</label>

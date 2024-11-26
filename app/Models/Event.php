@@ -17,6 +17,8 @@ class Event extends Model
         'event_start',
         'event_end',
         'event_prize',
+        'event_prize_image',
+        'event_banner',
         'event_description',
         'event_status',
     ];

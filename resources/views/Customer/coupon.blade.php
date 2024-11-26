@@ -17,7 +17,7 @@
     <a href="unioil.com" style="border:0; outline:0;">
         {{-- <img src="/unioil_images/unioil_logo.png" width="151" style="margin:20px auto; display:block; border:0;"> --}}
         <div class="row w-100 justify-content-center align-items-center" style="text-align: center;">
-            <img src="/unioil_images/unioil_bg.png" alt="unioil logo" style="width: 100vh; height: auto; max-height: 200px;" class="mb-4">
+            <img src="data:image/png;base64,{{ $banner }}" alt="unioil logo" style="width: 100vh; height: auto; max-height: 200px;" class="mb-4">
         </div>
     </a>
     <h2>Great! Your entry has been saved for the raffle draw</h2>
@@ -43,10 +43,10 @@
         @endif
     </div>
 
-    <div style="font-weight: bold; font-size:2rem">Grand Prize: New Honda Click 125 (Standard)</div>
-    <div style="font-size:1rem"> <strong>Promo Duration: <br> </strong> December 1, 2024 - January 31, 2025</div>
+    <div style="font-weight: bold; font-size:2rem">Grand Prize: {{ $prize }}</div>
+    <div style="font-size:1rem"> <strong>Promo Duration: <br> </strong> {{ $duration }}</div>
 
-    <img src="/unioil_images/hondaclick.png" alt="hondaclick">
+    <img src="data:image/png;base64,{{ $prize_image }}" alt="hondaclick">
     @include('Customer.components.scripts')
 </body>
 </html>
