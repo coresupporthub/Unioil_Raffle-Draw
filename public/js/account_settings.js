@@ -161,6 +161,7 @@ function deleteAdmin(id){
                     loading(false);
                     dataParser(res);
                     loadAdmins();
+                    cancelUpdate(userid);
                 }, error: xhr=> console.log(xhr.responseText)
             })
         }
