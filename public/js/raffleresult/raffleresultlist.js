@@ -224,7 +224,8 @@ function getevent(){
                 response.event_start;
             document.getElementById("title_end").textContent =
                 response.event_end;
-
+            document.getElementById("prize_label").textContent =
+                response.event_prize;
             document.getElementById("event_id").value = response.event_id;
             setValue('event_idInactive', response.event_id);
             document.getElementById("event_name").value = response.event_name;
@@ -234,6 +235,8 @@ function getevent(){
             document.getElementById("event_description").value =
                 response.event_description;
 
+            document.getElementById("event-image").src = "data:image/png;base64," + response.event_prize_image;
+            document.getElementById("event-banner").src = "data:image/png;base64," + response.event_banner;
                 if(response.event_status == 'Inactive'){
                     hide('inactiveBtn');
                 }

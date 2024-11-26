@@ -50,8 +50,13 @@ function loadCard() {
                 cardParagraph.classList.add("text-secondary");
                 cardParagraph.textContent = element.event_description;
 
+                 let eventDate = document.createElement("p");
+                 eventDate.classList.add("text-primary");
+                 eventDate.textContent = element.event_start + " - " + element.event_end;
+
                 cardBodyDiv.appendChild(cardTitle);
                 cardBodyDiv.appendChild(cardParagraph);
+                cardBodyDiv.appendChild(eventDate);
                 cardDiv.appendChild(ribbonDiv);
                 cardDiv.appendChild(cardBodyDiv);
                 // colDiv.appendChild(cardDiv);

@@ -78,7 +78,9 @@
 
                     <div class="page-body">
                         <div class="container-xl">
-
+                            <div class="d-flex justify-content-center">
+                                <img src="" id="event-banner" alt="Event Banner" class="img-fluid" style="max-width: 40%; height: auto;">
+                            </div>
                             <!-- Raffle Draw Details -->
                             <div class="text-center mb-5">
 
@@ -91,7 +93,7 @@
                                 </h1>
                                 <p class="text-secondary fs-5">Start Date: <strong id="title_start"> </strong> - End Date: <strong id="title_end"> </strong></p>
                             </div>
-
+                           
                             <!-- Winners Table -->
                             <div class="card shadow mb-4">
                                 <div class="card-header text-white d-flex justify-content-center align-items-center"
@@ -120,6 +122,12 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="d-flex flex-column justify-content-center align-items-center text-center">
+                                <h1>Grand Prize ( <span id="prize_label"></span> )</h1>
+                                <img src="" id="event-image" alt="Event Image" class="img-fluid" style="max-width: 40%; height: auto;">
+                            </div>
+
 
                             <div class="card shadow">
                                 <div class="card-header text-white d-flex justify-content-center align-items-center"
@@ -166,7 +174,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
             <div class="modal-body">
-                <form action="" method="post" id="update-event-form" class="row g-3">
+                <form action="" method="post" id="update-event-form" class="row g-3" enctype="multipart/form-data">
                 <!-- Event Name -->
                 <div class="col-md-6 col-12">
                     <input type="text" name="event_id" id="event_id" class="form-control" placeholder="Event ID" readonly hidden>
@@ -190,6 +198,16 @@
                 <div class="col-md-6 col-12">
                     <label for="event_end" class="form-label">Event End</label>
                     <input type="date" class="form-control" name="event_end" id="event_end">
+                </div>
+                
+                <div class="col-12">
+                    <label for="event_end" class="form-label">Event Prize Image</label>
+                    <input type="file" class="form-control" name="image" id="image" placeholder="Enter event end">
+                </div>
+
+                <div class="col-12">
+                    <label for="event_end" class="form-label">Event Banner</label>
+                    <input type="file" class="form-control" name="banner" id="banner" placeholder="Enter event end">
                 </div>
 
                 <!-- Event Description -->

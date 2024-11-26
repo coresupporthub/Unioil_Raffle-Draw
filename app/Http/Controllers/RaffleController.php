@@ -13,7 +13,7 @@ use App\Http\Services\Tools;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-
+use Illuminate\Support\Str;
 
 
 class RaffleController extends Controller
@@ -262,11 +262,22 @@ class RaffleController extends Controller
         if ($check) {
             return response()->json(['message' => 'There is still an ongoing raffle promo', 'success' => false]);
         }
+
+        // Define the storage path
+        $folderPath = 'event_images';
+
+        // Call the reusable function to handle the upload
+        $imageFileName = $this->storeFile($request->file('image'), $folderPath);
+        $bannerFileName = $this->storeFile($request->file('banner'), $folderPath);
+
+        // Create a new event
         $event = new Event();
         $event->event_name = $request->event_name;
-        $event->event_prize = $request->event_price;
+        $event->event_prize = $request->event_prize;
         $event->event_start = $request->event_start;
         $event->event_end = $request->event_end;
+        $event->event_prize_image = $imageFileName; // Save only the file name
+        $event->event_banner = $bannerFileName; // Save only the file name
         $event->event_description = $request->event_description;
         $event->event_status = 'Active';
         $event->save();
@@ -277,6 +288,30 @@ class RaffleController extends Controller
         return response()->json($response);
     }
 
+    public function storeFile($file, $folder)
+    {
+        // Define the full storage path
+        $storagePath = storage_path("app/$folder");
+
+        // Check if the directory exists; if not, create it
+        if (!file_exists($storagePath)) {
+            mkdir($storagePath, 0777, true);
+
+            // Set permissions and ownership
+            chown($storagePath, 'www-data'); // Replace 'www-data' with the correct user
+            chgrp($storagePath, 'www-data'); // Replace 'www-data' with the correct group
+        }
+
+        // Generate a random file name with the original file extension
+        $randomName = Str::random(10) . '.' . $file->getClientOriginalExtension(); // Random 10-character name
+
+        // Store the file
+        $file->move($storagePath, $randomName); // Move the file to the directory
+
+        // Return only the random file name with extension (without the folder path)
+        return $randomName;
+    }
+    
     public function redraw(Request $request)
     {
         $raffleEntries = RaffleEntries::where('serial_number', $request->serial)->first();
@@ -291,18 +326,37 @@ class RaffleController extends Controller
 
     public function getaselectedevent(Request $request)
     {
+        // Retrieve the event data
         $data = Event::where('event_id', $request->event_id)->first();
+
+        if ($data) {
+            $prizeImagePath = storage_path('app/event_images/' . $data->event_prize_image);
+            $data->event_prize_image = base64_encode(file_get_contents($prizeImagePath));
+            $bannerImagePath = storage_path('app/event_images/' . $data->event_banner);
+            $data->event_banner = base64_encode(file_get_contents($bannerImagePath));
+        }
+
+        // Return the event data as JSON
         return response()->json($data);
     }
+
     public function updateevent(Request $request)
     {
 
         $event = Event::where('event_id', $request->event_id)->where('event_status', 'Active')->first();
         if ($event) {
+            $folderPath = 'event_images';
+
+            // Call the reusable function to handle the upload
+            $imageFileName = $this->storeFile($request->file('image'), $folderPath);
+            $bannerFileName = $this->storeFile($request->file('banner'), $folderPath);
+
             $event->event_name = $request->event_name;
             $event->event_prize = $request->event_price;
             $event->event_start = $request->event_start;
             $event->event_end = $request->event_end;
+            $event->event_prize_image = $imageFileName; // Save only the file name
+            $event->event_banner = $bannerFileName; // Save only the file name
             $event->event_description = $request->event_description;
             $event->save();
 

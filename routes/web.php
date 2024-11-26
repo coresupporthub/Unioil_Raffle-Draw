@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\Customers;
 use App\Models\ProductList;
 use App\Models\RaffleEntries;
-
+use App\Models\Event;
 
 Route::middleware([AuthMiddleware::class])->group(function () {
     Route::get('/', function () {
@@ -108,5 +108,16 @@ Route::get('/registration-complete/coupon-serial-number/{customer_id}', function
         $raffleEntries = RaffleEntries::where('customer_id', $customers->customer_id)->get();
     }
 
-    return view('Customer.coupon', ['entries' => $productPurchased->entries, 'code' => $raffleEntries, 'customers'=> $customers]);
+    $event = Event::where('event_status', 'Active')->first();
+    $prizeImagePath = storage_path('app/event_images/' . $event->event_prize_image);
+    $event->event_prize_image = base64_encode(file_get_contents($prizeImagePath));
+    $bannerImagePath = storage_path('app/event_images/' . $event->event_banner);
+    $event->event_banner = base64_encode(file_get_contents($bannerImagePath));
+
+    return view('Customer.coupon', ['entries' => $productPurchased->entries, 'code' => $raffleEntries, 'customers'=> $customers,
+    'banner'=>$event->event_banner,
+    'prize_image'=>$event->event_prize_image,
+    'prize'=> $event->event_prize,
+    'duration'=>$event->event_start.' - '.$event->event_end
+]);
 });
