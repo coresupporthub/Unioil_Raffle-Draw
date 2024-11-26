@@ -1,5 +1,7 @@
 @include('Admin.components.head', ['title' => 'Account Settings'])
-
+@php
+    $user = auth()->user()->user_type;
+@endphp
 <style>
     .list-group-item.active {
         background-image: linear-gradient(45deg, #F75A04, #ffffff) !important;
@@ -84,6 +86,7 @@
 
                                             <!-- Empty Page Content (Administrators) -->
                                             <div class="tab-pane fade" id="emptyPageContent" role="tabpanel" aria-labelledby="emptyPageTab">
+                                                @if ($user == 'Super Admin')
                                                 <div class="card-body">
                                                     <h2 class="mb-4">Administrators</h2>
                                                     <div class="row">
@@ -137,6 +140,12 @@
                                                         </table>
                                                     </div>
                                                 </div>
+                                                @else
+                                                <div class="card-body d-flex justify-content-center align-items-center flex-column gap-4">
+                                                    <img src="/unioil_images/warning.svg" alt="not-admin" class="w-25">
+                                                    <h4>Only a Super Admin can access the list</h4>
+                                                </div>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
