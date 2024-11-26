@@ -200,7 +200,7 @@ function loadCity(prov_id){
     });
 }
 
-document.getElementById('city').addEventListener('click', e => {
+document.getElementById('city').addEventListener('change', e => {
     const cityValue = e.target.value.split('-');
     cityId = cityValue[0];
 
