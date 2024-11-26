@@ -261,8 +261,9 @@ function fetchEventDataarea(eventId) {
         method: 'GET',
         success: function (data) {
             const chartElement = document.getElementById('chart-completion-tasks-10');
-            chartElement.innerHTML = "";
+            chartElement.innerHTML = ""; // Clear any existing chart
             
+            // If data is available, proceed with processing and rendering the chart
             if (data.success && data.eventData.length > 0) {
                 // Sort the eventData array by date in ascending order
                 data.eventData.sort((a, b) => new Date(a.date) - new Date(b.date));
@@ -280,6 +281,7 @@ function fetchEventDataarea(eventId) {
 
                 const counts = data.eventData.map(entry => entry.count);
 
+                // Render the chart with the actual data
                 new ApexCharts(chartElement, {
                     chart: {
                         type: 'area',
@@ -329,15 +331,114 @@ function fetchEventDataarea(eventId) {
                     }
                 }).render();
             } else {
-                chartElement.innerHTML = "<p>No data available for this event.</p>";
+                // Render an empty chart if no data is available
+                new ApexCharts(chartElement, {
+                    chart: {
+                        type: 'area',
+                        height: 302,
+                    },
+                    series: [{
+                        name: 'Raffle Entries',
+                        data: [] // No data in the series
+                    }],
+                    xaxis: {
+                        categories: [],
+                        title: {
+                            style: {
+                                color: '#333',
+                                fontWeight: 'bold',
+                            }
+                        },
+                        labels: {
+                            rotate: -45,
+                            style: {
+                                colors: '#333',
+                                fontSize: '12px',
+                            }
+                        },
+                        axisBorder: { show: true },
+                        axisTicks: { show: true },
+                    },
+                    yaxis: {
+                        title: {
+                            style: {
+                                color: '#333',
+                                fontWeight: 'bold',
+                            }
+                        }
+                    },
+                    stroke: { width: 2, curve: 'smooth' },
+                    colors: [tabler.getColor("primary")],
+                    dataLabels: { enabled: false },
+                    tooltip: {
+                        x: {
+                            format: 'dd MMM yyyy' 
+                        }
+                    },
+                    grid: {
+                        borderColor: '#e7e7e7',
+                        strokeDashArray: 4
+                    }
+                }).render();
             }
         },
         error: function () {
             const chartElement = document.getElementById('chart-completion-tasks-10');
-            chartElement.innerHTML = "<p>Error loading data.</p>";
+            chartElement.innerHTML = ""; // Clear the chart element before rendering the blank chart
+
+            // Render an empty chart on error
+            new ApexCharts(chartElement, {
+                chart: {
+                    type: 'area',
+                    height: 302,
+                },
+                series: [{
+                    name: 'Raffle Entries',
+                    data: [] // No data in the series
+                }],
+                xaxis: {
+                    categories: [],
+                    title: {
+                        style: {
+                            color: '#333',
+                            fontWeight: 'bold',
+                        }
+                    },
+                    labels: {
+                        rotate: -45,
+                        style: {
+                            colors: '#333',
+                            fontSize: '12px',
+                        }
+                    },
+                    axisBorder: { show: true },
+                    axisTicks: { show: true },
+                },
+                yaxis: {
+                    title: {
+                        style: {
+                            color: '#333',
+                            fontWeight: 'bold',
+                        }
+                    }
+                },
+                stroke: { width: 2, curve: 'smooth' },
+                colors: [tabler.getColor("primary")],
+                dataLabels: { enabled: false },
+                tooltip: {
+                    x: {
+                        format: 'dd MMM yyyy' 
+                    }
+                },
+                grid: {
+                    borderColor: '#e7e7e7',
+                    strokeDashArray: 4
+                }
+            }).render();
         }
     });
 }
+
 
 var chart; // Declare chart variable outside to keep reference
 
@@ -376,7 +477,7 @@ function loadbarchart(id) {
                     chart: {
                         type: "bar",
                         fontFamily: 'inherit',
-                        height: 240,
+                        height: 302,
                         parentHeightOffset: 0,
                         toolbar: {
                             show: false,
