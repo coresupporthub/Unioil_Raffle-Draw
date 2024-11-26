@@ -25,7 +25,8 @@ class User extends Authenticatable
         'authenticated',
         'login_attempt',
         'resend_attempt',
-        'verification_attempt'
+        'verification_attempt',
+        'user_type'
     ];
 
     /**

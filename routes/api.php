@@ -10,6 +10,7 @@ use App\Http\Middleware\ApiAuthentication;
 use App\Http\Controllers\CustomerRegistration;
 use App\Http\Controllers\ActivityLogsController;
 use App\Http\Controllers\AnalyticsController;
+use App\Http\Controllers\AdministratorsController;
 
 Route::group(['middleware' => ['web']], function () {
 
@@ -74,6 +75,12 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('/clusters/data/{eventId}', [AnalyticsController::class, 'getClusterData']);
         Route::get('/entries/productcluster/{eventId}', [AnalyticsController::class, 'entriesByProductTypeAndCluster']);
 
+        //Administrator Management
+        Route::post('/add-admin', [AdministratorsController::class, 'add']);
+        Route::post('/update-admin', [AdministratorsController::class, 'update']);
+        Route::post('/delete-admin', [AdministratorsController::class, 'delete']);
+        Route::post('/changepass-admin', [AdministratorsController::class, 'changepass']);
+        Route::get('/list-admin', [AdministratorsController::class, 'list']);
     });
 
     //Authentication
