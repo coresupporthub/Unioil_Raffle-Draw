@@ -46,6 +46,7 @@
                                                     Logout
                                                 </button>
                                             </div>
+                                            
                                         </div>
                                     </div>
 
@@ -72,6 +73,11 @@
                                                     <h3 class="card-title mt-4">Password</h3>
                                                     <div>
                                                         <a href="" data-bs-toggle="modal" data-bs-target="#changepasswordModal" class="btn">Set new password</a>
+                                                    </div>
+                                                </div>
+                                                <div class="card-footer bg-transparent mt-auto">
+                                                    <div class="btn-list justify-content-end">
+                                                        <button id="adminDetailsBtn" class="btn btn-primary">Submit</button>
                                                     </div>
                                                 </div>
                                             </div>
