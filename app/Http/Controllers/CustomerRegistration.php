@@ -37,7 +37,7 @@ class CustomerRegistration extends Controller
         if($retailStore){
             $checkClusterId = RegionalCluster::where('cluster_id', $retailStore->cluster_id)->where('cluster_status', 'Disable')->first();
             if($checkClusterId){
-                return response()->json(['success'=> false, 'This store is not participating in the raffle']);
+                return response()->json(['success'=> false, 'message'=>'This store is not participating in the raffle']);
             }
         }
 
