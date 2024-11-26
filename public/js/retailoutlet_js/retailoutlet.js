@@ -160,11 +160,10 @@ document.getElementById('clusterFormUpdate').addEventListener('submit', e => {
 function LoadAllRetailStore() {
     const tableId = "#ratailOutletTable";
 
-
     if ($.fn.DataTable.isDataTable(tableId)) {
-
         $(tableId).DataTable().destroy();
     }
+
     $(tableId).DataTable({
         processing: true,
         serverSide: true,
@@ -196,6 +195,7 @@ function LoadAllRetailStore() {
         destroy: true
     });
 }
+
 
 
 function GetAllClusterSelect() {

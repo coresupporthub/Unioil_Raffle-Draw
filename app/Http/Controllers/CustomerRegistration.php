@@ -84,7 +84,7 @@ class CustomerRegistration extends Controller
         $store = RetailStore::where('rto_code', $req->rto_code)->first();
 
         if(!$store){
-            return response()->json(['success'=> false, 'message'=> 'Retail code is invalid please ask the store owner for there code']);
+            return response()->json(['success'=> false, 'message'=> 'The retail code is invalid. Please verify the entered code with the store owner.']);
         }
 
         return response()->json(['success'=> true, 'message'=> 'Verify Retail Code', 'store'=>$store]);

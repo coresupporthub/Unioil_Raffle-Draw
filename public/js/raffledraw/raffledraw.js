@@ -186,17 +186,18 @@ function GetAllWinner() {
             }
 
             const colors = [
-                "#4A4A4A", // Dark gray
-                "#B24C63", // Muted rose
-                "#3E8E41", // Fresh green
-                "#28527A", // Deep blue
-                "#D2691E", // Rustic chestnut brown
-                "#1C1C1C", // Deep onyx black
-                "#6D6D6D", // Medium gray
-                "#FFD700", // Vibrant gold
-                "#FF6347", // Tomato red
-                "#87CEEB", // Sky blue
-            ]
+                "#2E2E2E", // Charcoal (Dark gray for contrast)
+                "#C0003C", // Crimson (Bright, eye-catching red)
+                "#008000", // Forest Green (Rich, noticeable green)
+                "#003366", // Navy Blue (Deep, contrasting blue)
+                "#8B4513", // Saddle Brown (Warm, earthy tone)
+                "#000000", // Black (Highest contrast for readability)
+                "#505050", // Slate Gray (Neutral, soft gray)
+                "#FFA500", // Bright Orange (Blends subtly but visible)
+                "#FF4500", // Orange Red (Vibrant and striking)
+                "#4682B4", // Steel Blue (Muted yet clear)
+            ];
+            
             const randomizer = array => {
                 return Math.floor(Math.random() * array.length);
             };
