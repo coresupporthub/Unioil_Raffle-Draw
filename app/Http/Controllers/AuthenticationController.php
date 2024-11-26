@@ -19,21 +19,6 @@ class AuthenticationController extends Controller
             'password' => $req->password
         ];
 
-        $check = User::where('email', $req->email)->first();
-
-        if ($check) {
-            if (Magic::MAX_LOGIN_ATTEMPT > $check->login_attempt) {
-                $check->update([
-                    'login_attempt' => $check->login_attempt + 1
-                ]);
-            } else {
-                $response = ['success' => false, 'message'=>"You have reached your max login attempt with incorrect password", 'redirect' => false];
-                Tools::Logger($req, ['Login Attempt', "Has Reached Attempt Maximum Limit"], $response);
-
-                return response()->json($response);
-            }
-        }
-
         if (Auth::attempt($data)) {
             $req->session()->regenerate();
 
@@ -56,6 +41,21 @@ class AuthenticationController extends Controller
 
             return response()->json($response);
         } else {
+
+            $check = User::where('email', $req->email)->first();
+
+            if ($check) {
+                if (Magic::MAX_LOGIN_ATTEMPT > $check->login_attempt) {
+                    $check->update([
+                        'login_attempt' => $check->login_attempt + 1
+                    ]);
+                } else {
+                    $response = ['success' => false, 'message'=>"You have reached your max login attempt with incorrect password or email", 'redirect' => false];
+                    Tools::Logger($req, ['Login Attempt', "Has Reached Attempt Maximum Limit"], $response);
+
+                    return response()->json($response);
+                }
+            }
 
 
 
