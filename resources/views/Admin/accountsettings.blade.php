@@ -32,7 +32,7 @@
                                             <h4 class="subheader mt-4">Account</h4>
                                             <div class="list-group list-group-transparent">
                                                 <!-- Account Settings Tab (Active by default) -->
-                                                <a href="#accountContent" class="list-group-item list-group-item-action d-flex align-items-center rounded-pill" id="accountTab" data-bs-toggle="list" role="tab" aria-controls="accountContent" aria-selected="true">
+                                                <a href="#accountContent" class="list-group-item list-group-item-action d-flex align-items-center rounded-pill active" id="accountTab" data-bs-toggle="list" role="tab" aria-controls="accountContent" aria-selected="true">
                                                     Account Settings
                                                 </a>
 
@@ -91,7 +91,8 @@
                                                         </div>
                                                         <div class="mb-3 col-2">
                                                             <label class="form-label text-white"> . </label>
-                                                            <button class="btn btn-primary"> Submit </button> </div>
+                                                            <button class="btn btn-primary"> Submit </button>
+                                                        </div>
                                                     </div>
                                                     <div id="table-default" class="table-responsive mt-2">
                                                         <table class="table table-hover" id="product-table">
