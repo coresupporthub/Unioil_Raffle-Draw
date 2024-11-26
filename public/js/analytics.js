@@ -41,10 +41,12 @@ document.addEventListener("DOMContentLoaded", function () {
         // Handle dropdown change
         document.getElementById('event-dropdown').addEventListener('change', function () {
             const eventId = this.value;
+            loadbarchart(eventId)
             fetchEventData(eventId); 
             fetchEntriesData(eventId); 
             fetchClusterData(eventId); 
             fetchEventDataarea(eventId);
+            
         });
 
         // Initialize the bar chart for raffle entries issued by product type
@@ -172,11 +174,12 @@ function fetchActiveEventData() {
                     const newOption = new Option(activeEventName, activeEventId, true, true);
                     dropdown.add(newOption);
                 }
-
+                loadbarchart(activeEventId)
                 fetchEventData(activeEventId); 
                 fetchEntriesData(activeEventId); 
                 fetchClusterData(activeEventId); 
                 fetchEventDataarea(activeEventId);
+                
             } else {
                 console.warn('No active event found.');
                 updateCharts(0, 0, true);
@@ -336,44 +339,40 @@ function fetchEventDataarea(eventId) {
     });
 }
 
+var chart; // Declare chart variable outside to keep reference
 
-document.addEventListener("DOMContentLoaded", function () {
-    var eventId = "{{ $activeEventId }}";
-
+function loadbarchart(id) {
     $.ajax({
-        url: `/api/entries/productcluster/${eventId}`,
+        url: `/api/entries/productcluster/${id}`,
         method: 'GET',
         success: function (data) {
+            console.log(data)
             if (data.success) {
                 let seriesData = [];
                 let categories = [];
-        
                 data.data.forEach((cluster, index) => {
-
                     categories.push(cluster.cluster);
-        
                     cluster.product.forEach(product => {
-                        console.log(product);
-                        
                         for (let productType in product) {
-
                             let productIndex = seriesData.findIndex(item => item.name === productType);
-        
                             if (productIndex === -1) {
-
                                 seriesData.push({
                                     name: productType,
                                     data: Array(data.data.length).fill(0)
                                 });
                                 productIndex = seriesData.length - 1;
                             }
-        
+
                             seriesData[productIndex].data[index] = product[productType];
                         }
                     });
                 });
-
-                new ApexCharts(document.getElementById('chart-combination'), {
+                // Destroy the existing chart instance if it exists
+                if (chart !== undefined) {
+                    chart.destroy();
+                }
+                // Create a new ApexCharts instance
+                chart = new ApexCharts(document.getElementById('chart-combination'), {
                     chart: {
                         type: "bar",
                         fontFamily: 'inherit',
@@ -431,7 +430,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     legend: {
                         show: true,
                     },
-                }).render();
+                });
+                chart.render();
 
             } else {
                 console.error("Error fetching data: " + data.message);
@@ -441,4 +441,4 @@ document.addEventListener("DOMContentLoaded", function () {
             console.error("AJAX request failed: " + error);
         }
     });
-});
+}
