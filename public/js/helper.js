@@ -258,7 +258,7 @@ function getFile(code){
         case '0800000000':
             return 'region8.json';
         case '0900000000':
-            return 'region9.json'; 
+            return 'region9.json';
         case '1000000000':
             return 'region10.json';
         case '1100000000':
@@ -273,5 +273,12 @@ function getFile(code){
             return 'caraga.json';
         case '1900000000':
             return 'barmm.json';
+    }
+}
+
+function clearVal(id){
+    const element = document.getElementById(id);
+    if(element){
+        element.value = '';
     }
 }

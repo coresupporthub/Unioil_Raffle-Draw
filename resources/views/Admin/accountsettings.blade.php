@@ -46,7 +46,7 @@
                                                     Logout
                                                 </button>
                                             </div>
-                                            
+
                                         </div>
                                     </div>
 
@@ -87,26 +87,40 @@
                                                 <div class="card-body">
                                                     <h2 class="mb-4">Administrators</h2>
                                                     <div class="row">
-                                                        <div class="mb-3 col-5">
+                                                        <div class="mb-3 col-5" id="adminNameDiv">
                                                             <label class="form-label required">Name <span class="text-danger d-none" id="m_name_e">(This Field is Required)</span></label>
                                                             <input type="text" class="form-control" id="m_name" placeholder="Enter Name">
                                                         </div>
-                                                        <div class="mb-3 col-5">
+                                                        <div class="mb-3 col-5" id="adminEmailDiv">
                                                             <label class="form-label required">Email <span class="text-danger d-none" id="m_email_e">(This Field is Required)</span></label>
                                                             <input type="text" class="form-control" id="m_email" placeholder="Enter email">
                                                         </div>
-                                                        <div class="mb-3 col-2">
+
+                                                        <div class="mb-3 col-10 d-none" id="newPassDiv">
+                                                            <label class="form-label required">Type New Password <span class="text-danger d-none" id="m_newpass_e">(This Field is Required)</span></label>
+                                                            <input type="text" class="form-control" id="m_newpass" placeholder="Enter new password">
+                                                        </div>
+
+                                                        <div class="mb-3 col-2" id="saveAdminDiv">
                                                             <label class="form-label text-white"> . </label>
                                                             <button id="addAdmin" class="btn btn-primary"> Submit </button>
                                                         </div>
+                                                        <div class="mb-3 col-2 d-none" id="updateAdminDiv">
+                                                            <label class="form-label text-white"> . </label>
+                                                            <button id="updateAdminBtn" class="btn btn-info"> Update </button>
+                                                        </div>
+                                                        <div class="mb-3 col-2 d-none" id="changePassAdminDiv">
+                                                            <label class="form-label text-white"> . </label>
+                                                            <button id="changePassAdminBtn" class="btn btn-info"> Change Pass </button>
+                                                        </div>
                                                     </div>
                                                     <div id="table-default" class="table-responsive mt-2">
-                                                        <table class="table table-hover" id="product-table">
+                                                        <table class="table table-hover" id="admin-list">
                                                             <thead>
                                                                 <tr>
                                                                     <th>Name</th>
                                                                     <th>Email</th>
-                                                                    <th>Action</th>
+                                                                    <th style="width: 10%">Action</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody class="table-tbody">
