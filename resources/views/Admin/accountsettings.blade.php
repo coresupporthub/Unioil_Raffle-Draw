@@ -58,7 +58,7 @@
                                             <!-- Account Content (Active by default) -->
                                             <div class="tab-pane fade show active" id="accountContent" role="tabpanel" aria-labelledby="accountTab">
                                                 <div class="card-body" style="max-height: 500px; overflow-y: auto;">
-                                                    <h2 class="mb-4">My Account</h2>
+                                                    <h2 class="mb-4">My Account @if($user == 'Super Admin') (Super Admin) @endif</h2>
                                                     <h3 class="card-title">Profile Details</h3>
                                                     <form id="adminDetailsForm" class="row g-3">
                                                         @csrf
@@ -73,8 +73,11 @@
                                                     </form>
 
                                                     <h3 class="card-title mt-4">Password</h3>
-                                                    <div>
+                                                    <div class="w-100 d-flex justify-content-between">
                                                         <a href="" data-bs-toggle="modal" data-bs-target="#changepasswordModal" class="btn">Set new password</a>
+                                                        @if ($user == 'Super Admin')
+                                                        <a href="" onclick="loadTransferAdmin()" data-bs-toggle="modal" data-bs-target="#transfer-status" class="btn btn-success">Transfer Super Admin Status</a>
+                                                        @endif
                                                     </div>
                                                 </div>
                                                 <div class="card-footer bg-transparent mt-auto">
@@ -117,7 +120,7 @@
                                                             <button id="changePassAdminBtn" class="btn btn-info"> Change Pass </button>
                                                         </div>
                                                     </div>
-                                                    <div id="table-default" class="table-responsive mt-2">
+                                                    <div id="admin-list-table" class="table-responsive mt-2">
                                                         <table class="table table-hover" id="admin-list">
                                                             <thead>
                                                                 <tr>
@@ -127,15 +130,7 @@
                                                                 </tr>
                                                             </thead>
                                                             <tbody class="table-tbody">
-                                                                <tr>
-                                                                    <td>John Doe</td>
-                                                                    <td>john.doe@example.com</td>
-                                                                    <td>
-                                                                        <button class="btn btn-primary">Update Info</button>
-                                                                        <button class="btn btn-success">Change Password</button>
-                                                                        <button class="btn btn-danger">Demote</button>
-                                                                    </td>
-                                                                </tr>
+
                                                             </tbody>
                                                         </table>
                                                     </div>
@@ -202,7 +197,71 @@
         </div>
     </div>
 
+    @if ($user == 'Super Admin')
+    <div class="modal modal-blur fade" id="transfer-status" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Transfer Super Admin Status</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="admin-transfer-table" class="table-responsive mt-2">
+                    <table class="table table-hover" id="admin-transfer">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th style="width: 10%">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-tbody">
 
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal modal-blur fade" id="need-password" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" id="closeConfirm" aria-label="Close"></button>
+            <div class="modal-status bg-success"></div>
+            <div class="modal-body text-center py-4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="icon mb-2 text-green icon-lg"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-lock">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M5 13a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-6z" />
+                    <path d="M11 16a1 1 0 1 0 2 0a1 1 0 0 0 -2 0" />
+                    <path d="M8 11v-4a4 4 0 1 1 8 0v4" />
+                  </svg>
+              <h3>Authenticate this transfer</h3>
+              <div class="text-muted">Please enter your password to proceed</div>
+              <input type="password" id="authPassInput" class="form-control mt-2" placeholder="Enter you password">
+              <small class="text-danger d-none" id="authPassInputE">You did not enter any password</small>
+            </div>
+            <div class="modal-footer">
+              <div class="w-100">
+                <div class="row">
+                  <div class="col"><a href="#" class="btn w-100" data-bs-toggle="modal" data-bs-target="#transfer-status">
+                      Go back
+                    </a></div>
+                  <div class="col"><a href="#" id="confirmTransferBtn" class="btn btn-success w-100" >
+                     Confirm
+                    </a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    @endif
     {{-- modals --}}
 
     <script src="/js/account_settings.js"></script>

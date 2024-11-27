@@ -311,3 +311,72 @@ if(changePassAdminBtn){
     });
 
 }
+
+function loadTransferAdmin(){
+    const tableId = "#admin-transfer";
+
+    if ($.fn.DataTable.isDataTable(tableId)) {
+        $(tableId).DataTable().clear().destroy();
+    }
+
+    $(tableId).DataTable({
+        ajax: {
+            url: '/api/list-admin',
+            type: 'GET',
+            dataSrc: 'data'
+        },
+        columns: [
+            { data: "name" },
+            { data: "email" },
+
+            {
+                data: null,
+                render: data => {
+                    return `
+                    <button data-bs-toggle="modal" data-bs-target="#need-password" onclick="SelectTransfer('${data.id}')" class="btn btn-success updBtn">Transfer Status</button>
+                   `;
+                },
+                width: '5%'
+            }
+        ],
+        paging: true,
+        lengthChange: true,
+        pageLength: 10,
+        destroy: true
+    });
+}
+
+function SelectTransfer(id){
+    userid = id;
+}
+
+const confirmPasswordBtn = document.getElementById('confirmTransferBtn');
+
+if(confirmPasswordBtn){
+    confirmPasswordBtn.addEventListener('click', ()=> {
+        const inputs = [
+            ['authPassInput', 'authPassInputE']
+        ];
+
+        if(checkValidity(inputs)){
+            loading(true);
+
+            const csrf = getCsrf();
+
+            $.ajax({
+                type: "POST",
+                url: "/api/admin-transfer-status",
+                data: {"_token": csrf, "id": userid, "password": getValue('authPassInput')},
+                success: res=> {
+                    loading(false);
+                    dataParser(res);
+                    if(res.success){
+                        exec('closeConfirm');
+                        location.reload();
+                    }
+                }, error: xhr=> console.log(xhr.responseText)
+            });
+        }
+
+    });
+}

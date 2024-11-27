@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Psr\Http\Message\ResponseInterface;
+
 class AdministratorsController extends Controller
 {
     public function add(Request $req){
@@ -87,8 +89,34 @@ class AdministratorsController extends Controller
 
         return response()->json(['success'=> true, 'data'=> $users]);
     }
+    public function transferstatus(Request $req){
+        if(!$this->levelCheck()){
+            return response()->json(['success'=> false, 'message'=> 'You are not eligible for this action']);
+        }
 
-    public function levelCheck(){
+        $user = User::where('id', Auth::id())->first();
+        if(!$user){
+            return response()->json(['success'=> false, 'message'=> 'User not found']);
+        }
+
+        if(Hash::check($req->password, $user->password)){
+            $user->update([
+                'user_type' => 'Admin',
+            ]);
+
+            $newSuperAdmin = User::where('id', $req->id)->first();
+
+            $newSuperAdmin->update([
+                'user_type'=> 'Super Admin',
+            ]);
+
+            return response()->json(['success'=> true, 'message'=> 'Super Admin Status is successfully transferred']);
+        }else{
+            return response()->json(['success'=> false, 'message'=> 'You entered an incorrect password']);
+        }
+    }
+
+    private function levelCheck(){
         $check = Auth::id();
 
         $checkUser = User::where('id', $check)->where('user_type', 'Super Admin')->first();
@@ -99,4 +127,6 @@ class AdministratorsController extends Controller
 
         return true;
     }
+
+
 }

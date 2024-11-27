@@ -81,6 +81,7 @@ Route::group(['middleware' => ['web']], function () {
         Route::post('/delete-admin', [AdministratorsController::class, 'delete']);
         Route::post('/changepass-admin', [AdministratorsController::class, 'changepass']);
         Route::get('/list-admin', [AdministratorsController::class, 'list']);
+        Route::post('/admin-transfer-status', [AdministratorsController::class, 'transferstatus']);
     });
 
     //Authentication
