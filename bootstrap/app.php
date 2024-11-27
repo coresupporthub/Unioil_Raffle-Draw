@@ -20,7 +20,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withExceptions(function (Exceptions $exceptions) {
         //
     })->withProviders([
-        \Barryvdh\DomPDF\ServiceProvider::class,  
+        \Barryvdh\DomPDF\ServiceProvider::class,
     ])->withSchedule(function (Schedule $schedule) {
         $schedule->call(function () {
             $user = User::all();
@@ -28,7 +28,10 @@ return Application::configure(basePath: dirname(__DIR__))
             foreach($user as $u){
                 $u->update([
                     'verification_token'=> null,
-                    'authenticated'=> 'false'
+                    'authenticated'=> 'false',
+                    'login_attempt' => 0,
+                    'resend_attempt' => 0,
+                    'verification_attempt' => 0
                 ]);
             }
 

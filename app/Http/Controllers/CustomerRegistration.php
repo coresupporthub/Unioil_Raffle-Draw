@@ -12,10 +12,11 @@ use App\Http\Services\Magic;
 use App\Models\RetailStore;
 use App\Models\Event;
 use App\Models\RegionalCluster;
+use Illuminate\Http\JsonResponse;
 
 class CustomerRegistration extends Controller
 {
-    public function register(Request $req){
+    public function register(Request $req): JsonResponse{
         $qrCode = QrCode::where('code', $req->qr_code)->where('qr_id', $req->unique_identifier)->first();
 
         if(!$qrCode){
@@ -88,7 +89,7 @@ class CustomerRegistration extends Controller
         return response()->json(['success'=> true, 'customer_id'=> $customer->customer_id, 'entry'=> $productEntry->entries]);
     }
 
-    public function checkretailstore(Request $req){
+    public function checkretailstore(Request $req) : JsonResponse{
         $store = RetailStore::where('rto_code', $req->rto_code)->first();
 
         if(!$store){

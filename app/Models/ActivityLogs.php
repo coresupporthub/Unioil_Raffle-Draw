@@ -5,6 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
+/**
+ * @extends Model<ActivityLogs>
+ */
 class ActivityLogs extends Model
 {
     protected $table = 'activity_logs';

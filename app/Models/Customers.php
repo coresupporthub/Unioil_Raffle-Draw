@@ -4,6 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+
+/**
+ * @extends Model<Customers>
+ */
 class Customers extends Model
 {
     public $incrementing = false;

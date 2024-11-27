@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @extends Model<ExportFilesModel>
+ */
 class ExportFilesModel extends Model
 {
     protected $table = 'export_files';
