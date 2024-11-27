@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Psr\Http\Message\ResponseInterface;
+use App\Http\Services\Tools;
 
 class AdministratorsController extends Controller
 {
@@ -24,7 +24,10 @@ class AdministratorsController extends Controller
 
         $user->save();
 
-        return response()->json(['success'=> true, 'message'=> 'New Admin is successfully Created', 'pass'=> '12345678']);
+        $response = ['success'=> true, 'message'=> 'New Admin is successfully Created', 'pass'=> '12345678'];
+        Tools::Logger($req, ['Add New Administrator', "Successfully added {$req->name} in the admin list"], $response);
+
+        return response()->json($response);
     }
 
     public function update(Request $req){
@@ -43,7 +46,10 @@ class AdministratorsController extends Controller
             'email'=> $req->email
         ]);
 
-        return response()->json(['success'=> true, 'message'=> 'User Successfully Updated']);
+        $response = ['success'=> true, 'message'=> 'User Successfully Updated'];
+        Tools::Logger($req, ['Update Administrator', "Update admin details"], $response);
+
+        return response()->json($response);
     }
 
     public function delete(Request $req){
@@ -59,7 +65,10 @@ class AdministratorsController extends Controller
 
         $user->delete();
 
-        return response()->json(['success'=> true, 'message'=> 'User is successfully deleted']);
+        $response = ['success'=> true, 'message'=> 'User is successfully deleted'];
+        Tools::Logger($req, ['Delete Admin', "Admin has been deleted"], $response);
+
+        return response()->json($response);
     }
 
     public function changepass(Request $req){
@@ -77,7 +86,10 @@ class AdministratorsController extends Controller
             'password'=> Hash::make($req->password)
         ]);
 
-        return response()->json(['success'=> true, 'message'=> 'User password has been changed successfully']);
+        $response = ['success'=> true, 'message'=> 'User password has been changed successfully'];
+        Tools::Logger($req, ['Change Password Admin', "Admin {$user->name}'s password is changed"], $response);
+
+        return response()->json($response);
     }
 
     public function list(){
@@ -110,9 +122,14 @@ class AdministratorsController extends Controller
                 'user_type'=> 'Super Admin',
             ]);
 
-            return response()->json(['success'=> true, 'message'=> 'Super Admin Status is successfully transferred']);
+            $response = ['success'=> true, 'message'=> 'Super Admin Status is successfully transferred'];
+            Tools::Logger($req, ['Super Admin Status Transfer', "Super Admin Status is transferred to {$newSuperAdmin->name}"], $response);
+
+            return response()->json($response);
         }else{
-            return response()->json(['success'=> false, 'message'=> 'You entered an incorrect password']);
+            $response = ['success'=> false, 'message'=> 'You entered an incorrect password'];
+            Tools::Logger($req, ['Super Admin Status Transfer', "Super Admin Status Transfer Failed: Incorrect Admin Password"], $response);
+            return response()->json($response);
         }
     }
 
