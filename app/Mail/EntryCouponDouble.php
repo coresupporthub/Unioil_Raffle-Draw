@@ -17,9 +17,9 @@ class EntryCouponDouble extends Mailable
      * Create a new message instance.
      */
 
-    private $code1;
-    private $code2;
-    public function __construct($code1, $code2)
+    private string $code1;
+    private string $code2;
+    public function __construct(string $code1, string $code2)
     {
         $this->code1 = $code1;
         $this->code2 = $code2;

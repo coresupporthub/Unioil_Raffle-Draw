@@ -16,8 +16,8 @@ class EntryCouponSingle extends Mailable
     /**
      * Create a new message instance.
      */
-    private $code;
-    public function __construct($code)
+    private string $code;
+    public function __construct(string $code)
     {
         $this->code = $code;
     }
