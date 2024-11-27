@@ -4,9 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-/**
- * @extends Model<QueueingStatusModel>
- */
+
 class QueueingStatusModel extends Model
 {
     public $incrementing = false;

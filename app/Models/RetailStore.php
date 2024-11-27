@@ -2,17 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-/**
- * @extends Model<RetailStore>
- */
 class RetailStore extends Model
 {
-    use HasFactory;
-
     protected $table = 'retail_store';
 
     protected $primaryKey = 'store_id';
@@ -43,11 +37,4 @@ class RetailStore extends Model
         });
     }
 
-    /**
-     * Relationship with Street model
-     */
-    public function street()
-    {
-        return $this->belongsTo(RegionalCluster::class, 'cluster_id', 'cluster_id');
-    }
 }
