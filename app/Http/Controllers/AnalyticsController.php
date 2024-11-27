@@ -8,11 +8,11 @@ use App\Models\ProductList;
 use App\Models\RetailStore;
 use App\Models\Event;
 use App\Models\RegionalCluster;
-
+use Illuminate\Http\JsonResponse;
 
 class AnalyticsController extends Controller
 {
-    public function getEventData($eventId)
+    public function getEventData($eventId): JsonResponse
     {
         $activeEvent = Event::where('event_status', 'Active')->first();
 
@@ -46,7 +46,7 @@ class AnalyticsController extends Controller
     }
 
 
-    public function getActiveEvent()
+    public function getActiveEvent(): JsonResponse
     {
         $activeEvent = Event::where('event_status', 'Active')->first();
 
@@ -63,7 +63,7 @@ class AnalyticsController extends Controller
         ]);
     }
 
-    public function entryissuance(Request $req, $filter)
+    public function entryissuance(Request $req, $filter): JsonResponse
     {
         if ($filter == 'active') {
             $event = Event::where('event_status', 'Active')->first();
@@ -99,7 +99,7 @@ class AnalyticsController extends Controller
     }
     
 
-    public function entriesbyproducttype(Request $req, $event)
+    public function entriesbyproducttype(Request $req, $event): JsonResponse
     {
         if ($event == 'active') {
             $eventData = Event::where('event_status', 'Active')->first();
@@ -141,7 +141,7 @@ class AnalyticsController extends Controller
         return response()->json($groupedByMonth);
     }
 
-    public function getClusterData($eventId)
+    public function getClusterData($eventId): JsonResponse
     {
         if ($eventId == 'active') {
             $activeEvent = Event::where('event_status', 'Active')->first();
@@ -190,7 +190,7 @@ class AnalyticsController extends Controller
         ]);
     }
 
-    public function entriesByProductTypeAndCluster($eventId)
+    public function entriesByProductTypeAndCluster($eventId): JsonResponse
     {
         
     

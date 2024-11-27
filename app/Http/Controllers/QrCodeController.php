@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Symfony\Component\HttpFoundation\Response;
 use App\Http\Services\Magic;
 use Illuminate\Http\Request;
 use App\Jobs\GenerateQr;
@@ -13,10 +14,11 @@ use App\Models\Customers;
 use App\Models\ProductList;
 use App\Models\RaffleEntries;
 use App\Http\Services\Tools;
+use Illuminate\Http\JsonResponse;
 
 class QrCodeController extends Controller
 {
-    public function generate(Request $req)
+    public function generate(Request $req): JsonResponse
     {
         $latestQueue = QueueingStatusModel::latest()->first();
         $queue = new QueueingStatusModel();
@@ -43,7 +45,7 @@ class QrCodeController extends Controller
         return response()->json($response);
     }
 
-    public function getqrcodegenerated(Request $request)
+    public function getqrcodegenerated(Request $request): JsonResponse
     {
         $start = $request->input('start', 0);
         $length = $request->input('length', 10);
@@ -76,7 +78,7 @@ class QrCodeController extends Controller
         ]);
     }
 
-    public function queueProgress(Request $req)
+    public function queueProgress(Request $req): JsonResponse
     {
         $queue = QueueingStatusModel::all();
 
@@ -108,7 +110,7 @@ class QrCodeController extends Controller
         return response()->json(['queue' => $queue]);
     }
 
-    public function exportQR(Request $req)
+    public function exportQR(Request $req): Response
     {
         $latestQueue = QueueingStatusModel::latest()->first();
         $queue = new QueueingStatusModel();
@@ -201,7 +203,7 @@ class QrCodeController extends Controller
         return $pdf->stream('qr_codes.pdf');
     }
 
-    public function filterqr(Request $request)
+    public function filterqr(Request $request): JsonResponse
     {
         $start = $request->input('start', 0);
         $length = $request->input('length', 10);
@@ -231,7 +233,7 @@ class QrCodeController extends Controller
         ]);
     }
 
-    public function viewqrdetails(Request $req)
+    public function viewqrdetails(Request $req): JsonResponse
     {
         $customer = Customers::where('qr_id', $req->id)->first();
 
@@ -266,7 +268,7 @@ class QrCodeController extends Controller
     }
 
 
-    public function checkexportnum(Request $req)
+    public function checkexportnum(Request $req): JsonResponse
     {
 
         if ($req->filter == Magic::QR_ENTRY_SINGLE) {

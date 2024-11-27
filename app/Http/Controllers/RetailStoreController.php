@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Services\Tools;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Models\RegionalCluster;
 use App\Models\RetailStore;
@@ -10,7 +11,7 @@ use App\Models\RetailStore;
 class RetailStoreController extends Controller
 {
 
-    public function addcluster(Request $request){
+    public function addcluster(Request $request): JsonResponse{
 
         $data =  new RegionalCluster();
         $data->cluster_name = $request->cluster_name;
@@ -22,7 +23,7 @@ class RetailStoreController extends Controller
         return response()->json($response);
     }
 
-    public function getcluster($type)
+    public function getcluster($type): JsonResponse
     {
         if($type == 'all'){
             $data = RegionalCluster::orderBy('created_at', 'asc')->get();
@@ -34,7 +35,7 @@ class RetailStoreController extends Controller
     }
 
 
-    public function clusterstatus(Request $request){
+    public function clusterstatus(Request $request): JsonResponse{
         $data = RegionalCluster::where('cluster_id', $request->id)->first();
 
         $data->update([
@@ -45,7 +46,7 @@ class RetailStoreController extends Controller
     }
 
 
-    public function getallstore(Request $request){
+    public function getallstore(Request $request): JsonResponse{
         $start = $request->input('start', 0);
         $length = $request->input('length', 10);
         $search = $request->input('search')['value'];
@@ -75,7 +76,7 @@ class RetailStoreController extends Controller
         ]);
     }
 
-    public function removeretailstore(Request $request){
+    public function removeretailstore(Request $request): JsonResponse{
         $data = RetailStore::find($request->id);
 
         $response = ['success' => true, 'message' => 'Store status successfully delete'];
@@ -86,7 +87,7 @@ class RetailStoreController extends Controller
         return response()->json($response);
     }
 
-    public function updatestore(Request $request)
+    public function updatestore(Request $request): JsonResponse
     {
         $data = RetailStore::where('store_id',$request->store_id)->first();
         $data->cluster_id = $request->cluster_id;
@@ -103,7 +104,7 @@ class RetailStoreController extends Controller
         return response()->json($response);
     }
 
-    public function uploadcsv(Request $req){
+    public function uploadcsv(Request $req): JsonResponse{
         $csv = $req->csv_file;
 
         if(empty($req->cluster)){
@@ -150,7 +151,7 @@ class RetailStoreController extends Controller
         return response()->json($response);
     }
 
-    public function filtercluster(Request $req){
+    public function filtercluster(Request $req): JsonResponse{
         $start = $req->input('start', 0);
         $length = $req->input('length', 10);
         $search = $req->input('search')['value'];
@@ -180,7 +181,7 @@ class RetailStoreController extends Controller
         ]);
     }
 
-    public function addretailstore(Request $req){
+    public function addretailstore(Request $req): JsonResponse{
         $store = new RetailStore();
 
         $store->cluster_id = $req->cluster;
@@ -198,7 +199,7 @@ class RetailStoreController extends Controller
         return response()->json($response);
     }
 
-    public function updatecluster(Request $req){
+    public function updatecluster(Request $req): JsonResponse{
         $cluster = RegionalCluster::where('cluster_id', $req->cluster_id)->first();
 
         if(!$cluster){
@@ -212,7 +213,7 @@ class RetailStoreController extends Controller
         return response()->json(['success'=> true, 'message'=> 'Regional Cluster Name Updated']);
     }
 
-    public function enablecluster(Request $req){
+    public function enablecluster(Request $req): JsonResponse{
         $cluster = RegionalCluster::where('cluster_id', $req->id)->first();
 
         if(!$cluster){
