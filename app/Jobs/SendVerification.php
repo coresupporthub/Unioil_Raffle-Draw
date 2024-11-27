@@ -14,9 +14,9 @@ class SendVerification implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    private $code;
-    private $email;
-    public function __construct($email, $code)
+    private string $code;
+    private string $email;
+    public function __construct(string $email, string $code)
     {
         $this->code = $code;
         $this->email = $email;

@@ -16,10 +16,10 @@ class SendEntryCoupon implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    private $type;
-    private $code;
-    private $email;
-    public function __construct($type, $code, $email)
+    private string $type;
+    private string $code;
+    private string $email;
+    public function __construct(string $type, string $code, string $email)
     {
         $this->type = $type;
         $this->code = $code;
