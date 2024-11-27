@@ -2,16 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-/**
- * @extends Model<RegionalCluster>
- */
+
+
 class RegionalCluster extends Model
 {
-    use HasFactory;
 
     protected $table = 'regional_cluster';
 

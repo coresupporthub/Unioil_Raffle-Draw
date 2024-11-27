@@ -4,9 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-/**
- * @extends Model<RaffleEntries>
- */
+
 class RaffleEntries extends Model
 {
     public $incrementing = false;
