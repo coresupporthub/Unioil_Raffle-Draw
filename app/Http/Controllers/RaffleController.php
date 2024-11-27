@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Models\RaffleEntries;
 use App\Models\Event;
@@ -18,7 +19,7 @@ use Illuminate\Support\Str;
 
 class RaffleController extends Controller
 {
-    public function getraffleentry(Request $request)
+    public function getraffleentry(Request $request): JsonResponse
     {
 
         $event = Event::where('event_status', 'Active')->first();
@@ -31,7 +32,7 @@ class RaffleController extends Controller
         return response()->json($raffleEntries);
     }
 
-    public function raffledraw(Request $request)
+    public function raffledraw(Request $request): JsonResponse
     {
 
         $check = $this->validateclusterwinner($request->id);
@@ -79,7 +80,7 @@ class RaffleController extends Controller
         return response()->json($response);
     }
 
-    public function getallwinner()
+    public function getallwinner(): JsonResponse
     {
 
         $event = Event::where('event_status', 'Active')->first();
@@ -103,7 +104,7 @@ class RaffleController extends Controller
         return response()->json($data);
     }
 
-    public function geteventwinner(Request $request)
+    public function geteventwinner(Request $request): JsonResponse
     {
 
         $event = Event::where('event_id', $request->event_id)->first();
@@ -135,7 +136,7 @@ class RaffleController extends Controller
         return response()->json($data);
     }
 
-    public function geteventunclaim(Request $request)
+    public function geteventunclaim(Request $request): JsonResponse
     {
 
         $event = Event::where('event_id', $request->event_id)->first();
@@ -160,7 +161,7 @@ class RaffleController extends Controller
         return response()->json($data);
     }
 
-    public function validateclusterwinner($id)
+    public function validateclusterwinner($id): bool
     {
 
         $event = Event::where('event_status', 'Active')->first();
@@ -177,7 +178,7 @@ class RaffleController extends Controller
         }
     }
 
-    public function getallentry(Request $request)
+    public function getallentry(Request $request): JsonResponse
     {
         $allDataFlag = $request->input('allData', false); // Check if all data is requested
 
@@ -249,14 +250,14 @@ class RaffleController extends Controller
             'data' => $paginatedData,
         ]);
     }
-    public function getallevent()
+    public function getallevent(): JsonResponse
     {
         $data = Event::orderBy('created_at', 'desc')->get(); // Order by latest created_at
         return response()->json($data);
     }
 
 
-    public function addevent(Request $request)
+    public function addevent(Request $request): JsonResponse
     {
         $check = Event::where('event_status', 'Active')->first();
         if ($check) {
@@ -288,7 +289,7 @@ class RaffleController extends Controller
         return response()->json($response);
     }
 
-    public function storeFile($file, $folder)
+    public function storeFile($file, $folder): string
     {
         // Define the full storage path
         $storagePath = storage_path("app/$folder");
@@ -312,7 +313,7 @@ class RaffleController extends Controller
         return $randomName;
     }
     
-    public function redraw(Request $request)
+    public function redraw(Request $request): JsonResponse
     {
         $raffleEntries = RaffleEntries::where('serial_number', $request->serial)->first();
         $raffleEntries->winner_status = 'false';
@@ -324,7 +325,7 @@ class RaffleController extends Controller
         return response()->json($response);
     }
 
-    public function getaselectedevent(Request $request)
+    public function getaselectedevent(Request $request): JsonResponse
     {
         // Retrieve the event data
         $data = Event::where('event_id', $request->event_id)->first();
@@ -340,14 +341,14 @@ class RaffleController extends Controller
         return response()->json($data);
     }
 
-    public function updateevent(Request $request)
+    public function updateevent(Request $request): JsonResponse
     {
 
         $event = Event::where('event_id', $request->event_id)->where('event_status', 'Active')->first();
         if ($event) {
             $folderPath = 'event_images';
 
-            // Call the reusable function to handle the upload
+            
             $imageFileName = $this->storeFile($request->file('image'), $folderPath);
             $bannerFileName = $this->storeFile($request->file('banner'), $folderPath);
 
@@ -355,8 +356,8 @@ class RaffleController extends Controller
             $event->event_prize = $request->event_price;
             $event->event_start = $request->event_start;
             $event->event_end = $request->event_end;
-            $event->event_prize_image = $imageFileName; // Save only the file name
-            $event->event_banner = $bannerFileName; // Save only the file name
+            $event->event_prize_image = $imageFileName; 
+            $event->event_banner = $bannerFileName; 
             $event->event_description = $request->event_description;
             $event->save();
 
@@ -368,7 +369,7 @@ class RaffleController extends Controller
         return response()->json(['message' => 'This event is currently inactive, and its details cannot be edited.', 'success' => false]);
     }
 
-    public function inactiveevent(Request $request)
+    public function inactiveevent(Request $request): JsonResponse
     {
 
         $user = User::where('id', Auth::id())->first();
@@ -388,7 +389,7 @@ class RaffleController extends Controller
     }
 
 
-    public function productreport(Request $request)
+    public function productreport(Request $request): JsonResponse
     {
         // Fetch all events or filter by event_id
         $events = !empty($request->event_id)
@@ -398,23 +399,23 @@ class RaffleController extends Controller
         $data = [];
 
         foreach ($events as $event) {
-            // Fetch all customers for the event
+            
             $customers = Customers::where('event_id', $event->event_id)->get();
 
             foreach ($customers as $customer) {
-                // Filter RetailStore by region if provided
+                
                 $retailStoreQuery = RetailStore::where('store_id', $customer->store_id);
                 if (!empty($request->region)) {
                     $retailStoreQuery->where('cluster_id', $request->region);
                 }
                 $retailStore = $retailStoreQuery->first();
 
-                if (!$retailStore) continue; // Skip if no retail store matches
+                if (!$retailStore) continue; 
 
-                // Fetch the cluster name
+                
                 $cluster = RegionalCluster::where('cluster_id', $retailStore->cluster_id)->first()?->cluster_name;
 
-                // Filter ProductList by product type if provided
+               
                 $product = ProductList::where('product_id', $customer->product_purchased)
                 ->when(!empty($request->ptype), function ($query) use ($request) {
                     $query->where('entries', $request->ptype);
@@ -425,9 +426,9 @@ class RaffleController extends Controller
                 ->first();
 
 
-                if (!$product) continue; // Skip if no product matches
+                if (!$product) continue; 
 
-                // Add data to the result
+               
                 $data[] = [
                     'cluster' => $cluster,
                     'area' => $retailStore->area ?? 'N/A',

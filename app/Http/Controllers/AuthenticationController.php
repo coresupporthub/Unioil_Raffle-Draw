@@ -9,10 +9,10 @@ use App\Http\Services\Tools;
 use App\Jobs\SendVerification;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Services\Magic;
-
+use Illuminate\Http\JsonResponse;
 class AuthenticationController extends Controller
 {
-    public function signin(Request $req)
+    public function signin(Request $req): JsonResponse
     {
         $data = [
             'email' => $req->email,
@@ -66,7 +66,7 @@ class AuthenticationController extends Controller
         }
     }
 
-    public function getauth(Request $req)
+    public function getauth(Request $req): JsonResponse
     {
         $auth = Auth::id();
 
@@ -112,7 +112,7 @@ class AuthenticationController extends Controller
         }
     }
 
-    public function logout(Request $req)
+    public function logout(Request $req): JsonResponse
     {
         $user = User::where('id', Auth::id())->first();
 
@@ -131,7 +131,7 @@ class AuthenticationController extends Controller
         return response()->json($response);
     }
 
-    public function resendcode(Request $req)
+    public function resendcode(Request $req): JsonResponse
     {
 
         $user = User::where('id', Auth::id())->first();
@@ -153,14 +153,14 @@ class AuthenticationController extends Controller
         }
     }
 
-    public function getadmindetails(Request $req)
+    public function getadmindetails(Request $req): JsonResponse
     {
         $user = User::where('id', Auth::id())->first();
 
         return response()->json(['info' => $user]);
     }
 
-    public function changepassword(Request $req)
+    public function changepassword(Request $req): JsonResponse
     {
         if ($req->confirmPassword != $req->newPassword) {
             return response()->json(['success' => false, 'message' => 'New Password and Confirm Password does not match']);
@@ -182,7 +182,7 @@ class AuthenticationController extends Controller
         }
     }
 
-    public function updateadmin(Request $req)
+    public function updateadmin(Request $req): JsonResponse
     {
         $user = User::where('id', Auth::id())->first();
 

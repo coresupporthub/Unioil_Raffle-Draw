@@ -7,10 +7,10 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Services\Tools;
-
+use Illuminate\Http\JsonResponse;
 class AdministratorsController extends Controller
 {
-    public function add(Request $req){
+    public function add(Request $req): JsonResponse{
 
         if(!$this->levelCheck()){
             return response()->json(['success'=> false, 'message'=> 'You are not eligible for this action']);
@@ -30,7 +30,7 @@ class AdministratorsController extends Controller
         return response()->json($response);
     }
 
-    public function update(Request $req){
+    public function update(Request $req): JsonResponse{
         if(!$this->levelCheck()){
             return response()->json(['success'=> false, 'message'=> 'You are not eligible for this action']);
         }
@@ -52,7 +52,7 @@ class AdministratorsController extends Controller
         return response()->json($response);
     }
 
-    public function delete(Request $req){
+    public function delete(Request $req): JsonResponse{
         if(!$this->levelCheck()){
             return response()->json(['success'=> false, 'message'=> 'You are not eligible for this action']);
         }
@@ -71,7 +71,7 @@ class AdministratorsController extends Controller
         return response()->json($response);
     }
 
-    public function changepass(Request $req){
+    public function changepass(Request $req): JsonResponse{
         if(!$this->levelCheck()){
             return response()->json(['success'=> false, 'message'=> 'You are not eligible for this action']);
         }
@@ -92,7 +92,7 @@ class AdministratorsController extends Controller
         return response()->json($response);
     }
 
-    public function list(){
+    public function list(): JsonResponse{
         if(!$this->levelCheck()){
             return response()->json(['success'=> false, 'message'=> 'You are not eligible for this action']);
         }
@@ -101,7 +101,7 @@ class AdministratorsController extends Controller
 
         return response()->json(['success'=> true, 'data'=> $users]);
     }
-    public function transferstatus(Request $req){
+    public function transferstatus(Request $req): JsonResponse{
         if(!$this->levelCheck()){
             return response()->json(['success'=> false, 'message'=> 'You are not eligible for this action']);
         }
@@ -133,7 +133,7 @@ class AdministratorsController extends Controller
         }
     }
 
-    private function levelCheck(){
+    private function levelCheck(): bool{
         $check = Auth::id();
 
         $checkUser = User::where('id', $check)->where('user_type', 'Super Admin')->first();
