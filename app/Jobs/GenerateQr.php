@@ -24,8 +24,8 @@ class GenerateQr implements ShouldQueue
      * Create a new job instance.
      */
 
-    private $entry_type;
-    public function __construct($entry_type)
+    private string $entry_type;
+    public function __construct(string $entry_type)
     {
         $this->entry_type = $entry_type;
     }
