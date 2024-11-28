@@ -23,7 +23,7 @@ class RetailStoreController extends Controller
         return response()->json($response);
     }
 
-    public function getcluster($type): JsonResponse
+    public function getcluster(string $type): JsonResponse
     {
         if($type == 'all'){
             $data = RegionalCluster::orderBy('created_at', 'asc')->get();
@@ -80,7 +80,7 @@ class RetailStoreController extends Controller
         $data = RetailStore::find($request->id);
 
         $response = ['success' => true, 'message' => 'Store status successfully delete'];
-        Tools::Logger($request, ['Remove Retail Store', "Successfully deleted {$data->retail_station} in the Retail Store List"], $response);
+        Tools::Logger($request, ['Remove Retail Store', "Successfully deleted ".$data->retail_station. "in the Retail Store List"], $response);
 
         $data->delete();
 
