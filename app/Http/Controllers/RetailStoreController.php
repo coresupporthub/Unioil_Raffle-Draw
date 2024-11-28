@@ -18,7 +18,15 @@ class RetailStoreController extends Controller
         $data->save();
 
         $response = ['success' => true , 'message'=>'Regional cluster successfully added', 'reload'=> 'LoadAll'];
-        Tools::Logger($request, ['Add Regional Cluster', "Successfully add {$request->cluster_name} in the regional Cluster List"], $response);
+        $req = [
+            'user_agent' => $request->userAgent(),
+            'page_route' => $request->headers->get('referer'),
+            'api_path' => $request->path(),
+            'method' => $request->method(),
+            'session_id' => $request->session()->getId(),
+            'sent_data' => $request->all()
+        ];
+        Tools::Logger($req, ['Add Regional Cluster', "Successfully add {$request->cluster_name} in the regional Cluster List"], $response);
 
         return response()->json($response);
     }
@@ -80,7 +88,15 @@ class RetailStoreController extends Controller
         $data = RetailStore::where('store_id', $request->id)->first();
 
         $response = ['success' => true, 'message' => 'Store status successfully delete'];
-        Tools::Logger($request, ['Remove Retail Store', "Successfully deleted ".$data->retail_station. "in the Retail Store List"], $response);
+        $req = [
+            'user_agent' => $request->userAgent(),
+            'page_route' => $request->headers->get('referer'),
+            'api_path' => $request->path(),
+            'method' => $request->method(),
+            'session_id' => $request->session()->getId(),
+            'sent_data' => $request->all()
+        ];
+        Tools::Logger($req, ['Remove Retail Store', "Successfully deleted ".$data->retail_station. "in the Retail Store List"], $response);
 
         $data->delete();
 
@@ -99,7 +115,15 @@ class RetailStoreController extends Controller
 
 
         $response = ['success' => true, 'message' => 'Store status successfully update', 'reload' => 'LoadAll'];
-        Tools::Logger($request, ['Update Retail Store', "Successfully updated from {$data->retail_station} to {$request->retail_store} in the Retail Store List"], $response);
+        $req = [
+            'user_agent' => $request->userAgent(),
+            'page_route' => $request->headers->get('referer'),
+            'api_path' => $request->path(),
+            'method' => $request->method(),
+            'session_id' => $request->session()->getId(),
+            'sent_data' => $request->all()
+        ];
+        Tools::Logger($req, ['Update Retail Store', "Successfully updated from {$data->retail_station} to {$request->retail_store} in the Retail Store List"], $response);
         $data->save();
         return response()->json($response);
     }
@@ -146,7 +170,15 @@ class RetailStoreController extends Controller
         }
 
         $response = ['success'=> true, 'message'=> 'All data are uploaded in the database'];
-        Tools::Logger($req, ['Upload CSV File ', "Successfully Uploaded a CSV File in retail Store List"], $response);
+        $request = [
+            'user_agent' => $req->userAgent(),
+            'page_route' => $req->headers->get('referer'),
+            'api_path' => $req->path(),
+            'method' => $req->method(),
+            'session_id' => $req->session()->getId(),
+            'sent_data' => $req->all()
+        ];
+        Tools::Logger($request, ['Upload CSV File ', "Successfully Uploaded a CSV File in retail Store List"], $response);
 
         return response()->json($response);
     }
@@ -194,7 +226,15 @@ class RetailStoreController extends Controller
         $store->save();
 
         $response = ['success'=> true, 'message'=> "Retail station has been successfully added"];
-        Tools::Logger($req, ['Added A Retail Store', "Successfully added a retail store"], $response);
+        $request = [
+            'user_agent' => $req->userAgent(),
+            'page_route' => $req->headers->get('referer'),
+            'api_path' => $req->path(),
+            'method' => $req->method(),
+            'session_id' => $req->session()->getId(),
+            'sent_data' => $req->all()
+        ];
+        Tools::Logger($request, ['Added A Retail Store', "Successfully added a retail store"], $response);
 
         return response()->json($response);
     }

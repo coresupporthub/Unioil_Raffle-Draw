@@ -76,7 +76,16 @@ class RaffleController extends Controller
             'cluster_name' => $store,
             'product' => $product
         ];
-        Tools::Logger($request, ['Raffle Draw Stated', "Raffle Draw Selected a winner"], $response);
+
+        $req = [
+            'user_agent' => $request->userAgent(),
+            'page_route' => $request->headers->get('referer'),
+            'api_path' => $request->path(),
+            'method' => $request->method(),
+            'session_id' => $request->session()->getId(),
+            'sent_data' => $request->all()
+        ];
+        Tools::Logger($req, ['Raffle Draw Stated', "Raffle Draw Selected a winner"], $response);
         return response()->json($response);
     }
 
@@ -287,7 +296,15 @@ class RaffleController extends Controller
         $event->save();
 
         $response = ['message' => 'Event added successfully', 'reload' => 'loadCard', 'success' => true];
-        Tools::Logger($request, ['Added an Event', "Event {$request->event_name} has been added"], $response);
+        $req = [
+            'user_agent' => $request->userAgent(),
+            'page_route' => $request->headers->get('referer'),
+            'api_path' => $request->path(),
+            'method' => $request->method(),
+            'session_id' => $request->session()->getId(),
+            'sent_data' => $request->all()
+        ];
+        Tools::Logger($req, ['Added an Event', "Event {$request->event_name} has been added"], $response);
 
         return response()->json($response);
     }
@@ -321,7 +338,15 @@ class RaffleController extends Controller
         $raffleEntries->save();
 
         $response = ['message' => 'Cluster winner disqualified. Prize will be redrawn on ' . $raffleEntries->updated_at, 'reload' => 'addWinnerRow', 'success' => true];
-        Tools::Logger($request, ['Disqualify Customer', "A winner is unable to claim the prize and successfully remove its winner status"], $response);
+        $req = [
+            'user_agent' => $request->userAgent(),
+            'page_route' => $request->headers->get('referer'),
+            'api_path' => $request->path(),
+            'method' => $request->method(),
+            'session_id' => $request->session()->getId(),
+            'sent_data' => $request->all()
+        ];
+        Tools::Logger($req, ['Disqualify Customer', "A winner is unable to claim the prize and successfully remove its winner status"], $response);
 
         return response()->json($response);
     }
@@ -347,16 +372,24 @@ class RaffleController extends Controller
 
         $event = Event::where('event_id', $request->event_id)->where('event_status', 'Active')->first();
         if ($event) {
-            
+
             $event->event_name = $request->event_name;
             $event->event_prize = $request->event_price;
             $event->event_start = $request->event_start;
-            $event->event_end = $request->event_end; 
+            $event->event_end = $request->event_end;
             $event->event_description = $request->event_description;
             $event->save();
 
             $response = ['message' => 'Event successfully update', 'reload' => 'getevent', 'success' => true];
-            Tools::Logger($request, ['Update Event Details', "Event is successfully Updated"], $response);
+            $req = [
+                'user_agent' => $request->userAgent(),
+                'page_route' => $request->headers->get('referer'),
+                'api_path' => $request->path(),
+                'method' => $request->method(),
+                'session_id' => $request->session()->getId(),
+                'sent_data' => $request->all()
+            ];
+            Tools::Logger($req, ['Update Event Details', "Event is successfully Updated"], $response);
 
             return response()->json($response);
         }
@@ -374,7 +407,15 @@ class RaffleController extends Controller
             $event->save();
 
             $response = ['message' => 'Event successfully update', 'reload' => 'getevent', 'success' => true];
-            Tools::Logger($request, ['Update Event Images', "Event is successfully Updated"], $response);
+            $req = [
+                'user_agent' => $request->userAgent(),
+                'page_route' => $request->headers->get('referer'),
+                'api_path' => $request->path(),
+                'method' => $request->method(),
+                'session_id' => $request->session()->getId(),
+                'sent_data' => $request->all()
+            ];
+            Tools::Logger($req, ['Update Event Images', "Event is successfully Updated"], $response);
 
             return response()->json($response);
         }
@@ -393,7 +434,15 @@ class RaffleController extends Controller
             $event->save();
 
             $response = ['message' => 'Event successfully update', 'reload' => 'getevent', 'success' => true];
-            Tools::Logger($request, ['Update Event Images', "Event is successfully Updated"], $response);
+            $req = [
+                'user_agent' => $request->userAgent(),
+                'page_route' => $request->headers->get('referer'),
+                'api_path' => $request->path(),
+                'method' => $request->method(),
+                'session_id' => $request->session()->getId(),
+                'sent_data' => $request->all()
+            ];
+            Tools::Logger($req, ['Update Event Images', "Event is successfully Updated"], $response);
 
             return response()->json($response);
         }
@@ -414,7 +463,15 @@ class RaffleController extends Controller
         $event->save();
 
         $response = ['message' => 'Event has been successfully set to inactive.', 'success' => true];
-        Tools::Logger($request, ['Event Close', "Event is successfully set to inactive status"], $response);
+        $req = [
+            'user_agent' => $request->userAgent(),
+            'page_route' => $request->headers->get('referer'),
+            'api_path' => $request->path(),
+            'method' => $request->method(),
+            'session_id' => $request->session()->getId(),
+            'sent_data' => $request->all()
+        ];
+        Tools::Logger($req, ['Event Close', "Event is successfully set to inactive status"], $response);
 
         return response()->json($response);
     }
