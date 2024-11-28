@@ -344,23 +344,36 @@ class RaffleController extends Controller
 
         $event = Event::where('event_id', $request->event_id)->where('event_status', 'Active')->first();
         if ($event) {
-            $folderPath = 'event_images';
-
-
-            $imageFileName = $this->storeFile($request->file('image'), $folderPath);
-            $bannerFileName = $this->storeFile($request->file('banner'), $folderPath);
-
+            
             $event->event_name = $request->event_name;
             $event->event_prize = $request->event_price;
             $event->event_start = $request->event_start;
-            $event->event_end = $request->event_end;
-            $event->event_prize_image = $imageFileName;
-            $event->event_banner = $bannerFileName;
+            $event->event_end = $request->event_end; 
             $event->event_description = $request->event_description;
             $event->save();
 
             $response = ['message' => 'Event successfully update', 'reload' => 'getevent', 'success' => true];
             Tools::Logger($request, ['Update Event Details', "Event is successfully Updated"], $response);
+
+            return response()->json($response);
+        }
+        return response()->json(['message' => 'This event is currently inactive, and its details cannot be edited.', 'success' => false]);
+    }
+    public function updateeventimages(Request $request): JsonResponse
+    {
+        $event = Event::where('event_id', $request->event_id)->where('event_status', 'Active')->first();
+        if ($event) {
+            $folderPath = 'event_images';
+
+            $imageFileName = $this->storeFile($request->file('image'), $folderPath);
+            $bannerFileName = $this->storeFile($request->file('banner'), $folderPath);
+
+            $event->event_prize_image = $imageFileName;
+            $event->event_banner = $bannerFileName;
+            $event->save();
+
+            $response = ['message' => 'Event successfully update', 'reload' => 'getevent', 'success' => true];
+            Tools::Logger($request, ['Update Event Images', "Event is successfully Updated"], $response);
 
             return response()->json($response);
         }

@@ -199,15 +199,19 @@
                     <label for="event_end" class="form-label">Event End</label>
                     <input type="date" class="form-control" name="event_end" id="event_end">
                 </div>
-                
-                <div class="col-12">
-                    <label for="event_end" class="form-label">Event Prize Image</label>
-                    <input type="file" class="form-control" name="image" id="image" placeholder="Enter event end">
-                </div>
 
-                <div class="col-12">
-                    <label for="event_end" class="form-label">Event Banner</label>
-                    <input type="file" class="form-control" name="banner" id="banner" placeholder="Enter event end">
+                <div class="col-12 d-flex justify-content-between align-items-start">
+                    <div class="text-center w-50 ">
+                        <label for="event-banner-modal" class="form-label d-block">Event Banner</label>
+                        <img src="" id="event-banner-modal" alt="Event Banner" class="img-fluid banner-image">
+                    </div>
+                    <div class="text-center w-50">
+                        <label for="event-prize-modal" class="form-label d-block">Event Prize</label>
+                        <img src="" id="event-prize-modal" alt="Event Prize" class="img-fluid banner-image">
+                    </div>
+                </div>
+                <div class="col-12 text-center mt-3">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#update-event-image">Update Event Images</button>
                 </div>
 
                 <!-- Event Description -->
@@ -226,6 +230,40 @@
         </div>
       </div>
     </div>
+
+
+    <div class="modal modal-blur fade" id="update-event-image" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header Unioil-header">
+            <h5 class="modal-title">Update Event Raffle Images</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+            <div class="modal-body">
+
+                <form action="" method="post" id="update-event-image-form" class="row g-3" enctype="multipart/form-data">
+                <input type="text" name="event_id" id="event_id2" class="form-control" placeholder="Event ID" readonly hidden>
+                <div class="col-12">
+                    <label for="event_end" class="form-label">Event Prize Image</label>
+                    <input type="file" class="form-control" name="image" id="image" placeholder="Enter event end">
+                </div>
+
+                <div class="col-12">
+                    <label for="event_end" class="form-label">Event Banner</label>
+                    <input type="file" class="form-control" name="banner" id="banner" placeholder="Enter event end">
+                </div>
+
+                </form>  
+
+            </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-dark me-auto" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick=" SubmitData('update-event-image-form', '/api/update-event-images')">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
 
     <div class="modal modal-blur fade" id="confirmInactive" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">

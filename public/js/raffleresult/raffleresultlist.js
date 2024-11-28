@@ -227,6 +227,7 @@ function getevent(){
             document.getElementById("prize_label").textContent =
                 response.event_prize;
             document.getElementById("event_id").value = response.event_id;
+            document.getElementById("event_id2").value = response.event_id;
             setValue('event_idInactive', response.event_id);
             document.getElementById("event_name").value = response.event_name;
             document.getElementById("event_price").value = response.event_prize;
@@ -237,6 +238,8 @@ function getevent(){
 
             document.getElementById("event-image").src = "data:image/png;base64," + response.event_prize_image;
             document.getElementById("event-banner").src = "data:image/png;base64," + response.event_banner;
+            document.getElementById("event-banner-modal").src ="data:image/png;base64," + response.event_banner;
+             document.getElementById("event-prize-modal").src = "data:image/png;base64," + response.event_prize_image;
                 if(response.event_status == 'Inactive'){
                     hide('inactiveBtn');
                 }
