@@ -6,12 +6,14 @@ use App\Models\RaffleEntries;
 use App\Models\Event;
 use App\Http\Services\Magic;
 use App\Models\ActivityLogs;
+use App\Models\Customers;
+use Clue\Redis\Protocol\Model\Request;
 use Illuminate\Support\Facades\Auth;
 
 class Tools
 {
 
-    public static function genCode($length = 15, $type = "alphanumeric")
+    public static function genCode(int $length = 15, string $type = "alphanumeric"): string
     {
         switch ($type) {
             case 'numeric':
@@ -32,7 +34,7 @@ class Tools
         return $randomString;
     }
 
-    public static function CreateEntries($customer, $req)
+    public static function CreateEntries(string $customer_id , string $qr_id, string $store_code): string
     {
         $serialNumber = Tools::genCode();
 
@@ -49,16 +51,16 @@ class Tools
 
         $entry->event_id = $currentActiveEvent->event_id;
 
-        $entry->customer_id = $customer->customer_id;
+        $entry->customer_id = $customer_id;
         $entry->serial_number = $serialNumber;
-        $entry->qr_id = $req->unique_identifier;
-        $entry->retail_store_code = $req->store_code;
+        $entry->qr_id = $qr_id;
+        $entry->retail_store_code = $store_code;
         $entry->save();
 
         return $serialNumber;
     }
 
-    public static function readCSV($file)
+    public static function readCSV($file): array
     {
         $rows = [];
         if (($handle = fopen($file, 'r')) !== false) {
@@ -67,10 +69,11 @@ class Tools
             }
             fclose($handle);
         }
+
         return $rows;
     }
 
-    public static function Logger($request, array $actions, $response){
+    public static function Logger($request, array $actions, array $response){
         $logs = new ActivityLogs();
 
         $logs->user_id = Auth::id();
@@ -92,4 +95,3 @@ class Tools
         });
     }
 }
- 

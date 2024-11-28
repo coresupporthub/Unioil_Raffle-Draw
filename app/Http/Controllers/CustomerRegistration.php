@@ -68,14 +68,14 @@ class CustomerRegistration extends Controller
         $productEntry = ProductList::where('product_id', $req->product)->first();
 
         if($productEntry->entries == 1){
-            $code = Tools::CreateEntries($customer, $req);
+            $code = Tools::CreateEntries($customer->customer_id, $req->unique_identifier, $req->store_code);
             if(!empty($req->email_address)){
                 SendEntryCoupon::dispatch(Magic::RAFFLE_ENTRY_SINGLE, $code, $req->email_address);
             }
 
         }else{
-            $code1 = Tools::CreateEntries($customer, $req);
-            $code2 = Tools::CreateEntries($customer, $req);
+            $code1 = Tools::CreateEntries($customer->customer_id, $req->unique_identifier, $req->store_code);
+            $code2 = Tools::CreateEntries($customer->customer_id, $req->unique_identifier, $req->store_code);
 
             if(!empty($req->email_address)){
                 SendEntryCoupon::dispatch(Magic::RAFFLE_ENTRY_DOUBLE, [$code1, $code2], $req->email_address);
