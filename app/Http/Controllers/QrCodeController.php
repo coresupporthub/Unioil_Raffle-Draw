@@ -81,39 +81,43 @@ class QrCodeController extends Controller
     public function queueProgress(Request $req): JsonResponse
     {
         $queue = QueueingStatusModel::all();
+        $queueWithExportData = []; // Array to hold data
 
         foreach ($queue as $q) {
             $export = ExportFilesModel::where('queue_id', $q->queue_id)->first();
 
-            if (!$export) {
-                $q->export = null;
-                continue;
-            }
+            $queueItem = [
+                'queue' => $q,
+                'export' => $export ? $this->getExportData($export) : null, // Add export data
+            ];
 
-            $filePath = storage_path('app/pdf_files/' . $export->file_name);
-
-            if (!file_exists($filePath)) {
-                $export->base64File = null;
-                $q->export = $export;
-                continue;
-            }
-
-            $fileContent = file_get_contents($filePath);
-
-            if ($fileContent === false) {
-                $export->base64File = null;
-                $q->export = $export;
-                continue;
-            }
-
-            $base64Encoded = base64_encode($fileContent);
-            $mimeType = mime_content_type($filePath);
-            $export->base64File = 'data:' . $mimeType . ';base64,' . $base64Encoded;
-
-            $q->export = $export;
+            $queueWithExportData[] = $queueItem;
         }
 
-        return response()->json(['queue' => $queue]);
+        return response()->json(['queue' => $queueWithExportData]);
+    }
+
+    private function getExportData($export): array
+    {
+        $filePath = storage_path('app/pdf_files/' . $export->file_name);
+
+        if (!file_exists($filePath)) {
+            $export->base64File = null;
+            return $export;
+        }
+
+        $fileContent = file_get_contents($filePath);
+
+        if ($fileContent === false) {
+            $export->base64File = null;
+            return $export;
+        }
+
+        $base64Encoded = base64_encode($fileContent);
+        $mimeType = mime_content_type($filePath);
+        $export->base64File = 'data:' . $mimeType . ';base64,' . $base64Encoded;
+
+        return $export;
     }
 
     public function exportQR(Request $req): Response

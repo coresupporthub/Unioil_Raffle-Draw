@@ -184,7 +184,7 @@ class RaffleController extends Controller
 
         $start = $request->input('start', 0);
         $length =  $request->input('length', 10);
-        $search = $allDataFlag ? null : $request->input('search')['value'];
+        $search =  $request->input('search')['value'];
 
         $events = !empty($request->event_id)
             ? Event::where('event_id', $request->event_id)->get()
@@ -277,8 +277,8 @@ class RaffleController extends Controller
         $event->event_prize = $request->event_prize;
         $event->event_start = $request->event_start;
         $event->event_end = $request->event_end;
-        $event->event_prize_image = $imageFileName; // Save only the file name
-        $event->event_banner = $bannerFileName; // Save only the file name
+        $event->event_prize_image = $imageFileName;
+        $event->event_banner = $bannerFileName;
         $event->event_description = $request->event_description;
         $event->event_status = 'Active';
         $event->save();
@@ -291,25 +291,23 @@ class RaffleController extends Controller
 
     public function storeFile($file, string $folder): string
     {
-        // Define the full storage path
+
         $storagePath = storage_path("app/$folder");
 
-        // Check if the directory exists; if not, create it
         if (!file_exists($storagePath)) {
             mkdir($storagePath, 0777, true);
 
-            // Set permissions and ownership
-            chown($storagePath, 'www-data'); // Replace 'www-data' with the correct user
-            chgrp($storagePath, 'www-data'); // Replace 'www-data' with the correct group
+
+            chown($storagePath, 'www-data');
+            chgrp($storagePath, 'www-data');
         }
 
-        // Generate a random file name with the original file extension
-        $randomName = Str::random(10) . '.' . $file->getClientOriginalExtension(); // Random 10-character name
+        $randomName = Str::random(10) . '.' . $file->getClientOriginalExtension();
 
-        // Store the file
-        $file->move($storagePath, $randomName); // Move the file to the directory
 
-        // Return only the random file name with extension (without the folder path)
+        $file->move($storagePath, $randomName);
+
+
         return $randomName;
     }
 
@@ -332,9 +330,9 @@ class RaffleController extends Controller
 
         if ($data) {
             $prizeImagePath = storage_path('app/event_images/' . $data->event_prize_image);
-            $data->event_prize_image = base64_encode(file_get_contents($prizeImagePath));
+            $data->event_prize_image = base64_encode(file_get_contents((string)$prizeImagePath));
             $bannerImagePath = storage_path('app/event_images/' . $data->event_banner);
-            $data->event_banner = base64_encode(file_get_contents($bannerImagePath));
+            $data->event_banner = base64_encode(file_get_contents((string)$bannerImagePath));
         }
 
         // Return the event data as JSON
