@@ -107,7 +107,14 @@ class Tools
     public static function searchInArray(array $data, string $searchValue): array
     {
         return array_filter($data, function ($item) use ($searchValue) {
-            return in_array($searchValue, $item);
+
+            foreach ($item as $key => $value) {
+
+                if (is_string($value) && stripos($value, $searchValue) !== false) {
+                    return true;
+                }
+            }
+            return false;
         });
     }
 }
