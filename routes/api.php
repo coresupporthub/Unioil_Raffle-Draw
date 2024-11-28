@@ -48,6 +48,7 @@ Route::group(['middleware' => ['web']], function () {
         Route::post('/raffle-redraw', [RaffleController::class, 'redraw']);
         Route::post('/update-event', [RaffleController::class, 'updateevent']);
         Route::post('/update-event-images', [RaffleController::class, 'updateeventimages']);
+        Route::post('/update-event-banner', [RaffleController::class, 'updateeventbanner']);
         Route::post('/inactive-event', [RaffleController::class, 'inactiveevent']);
         Route::post('/event-selected', [RaffleController::class, 'getaselectedevent']);
 
