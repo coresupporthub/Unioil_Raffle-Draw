@@ -41,7 +41,15 @@ class QrCodeController extends Controller
         }
 
         $response = ['success' => true];
-        Tools::Logger($req, ['Generate QR Code', 'QR Code generation is successfully in progress'], $response);
+        $request = [
+            'user_agent' => $req->userAgent(),
+            'page_route' => $req->headers->get('referer'),
+            'api_path' => $req->path(),
+            'method' => $req->method(),
+            'session_id' => $req->session()->getId(),
+            'sent_data' => $req->all()
+        ];
+        Tools::Logger($request, ['Generate QR Code', 'QR Code generation is successfully in progress'], $response);
         return response()->json($response);
     }
 
@@ -219,8 +227,15 @@ class QrCodeController extends Controller
         }
 
         $pdf->save($pdfFilePath);
-
-        Tools::Logger($req, ['Export QR Code', 'Successfully Exported QR Coupons in the PDF File'], ['open_pdf_file' => $fileName]);
+        $request = [
+            'user_agent' => $req->userAgent(),
+            'page_route' => $req->headers->get('referer'),
+            'api_path' => $req->path(),
+            'method' => $req->method(),
+            'session_id' => $req->session()->getId(),
+            'sent_data' => $req->all()
+        ];
+        Tools::Logger($request, ['Export QR Code', 'Successfully Exported QR Coupons in the PDF File'], ['open_pdf_file' => $fileName]);
 
         return $pdf->stream('qr_codes.pdf');
     }

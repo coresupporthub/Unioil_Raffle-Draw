@@ -78,10 +78,11 @@ class Tools
     }
 
         /**
-        * @param array<string> $actions
-        * @param array<string, string|bool> $response
+         * @param array<string> $request
+         * @param array<string> $actions
+         * @param array<string, string|bool> $response
         */
-    public static function Logger($request, array $actions, array $response, int $user_id = null): void
+    public static function Logger(array $request, array $actions, array $response, int $user_id = null): void
     {
 
         $logs = new ActivityLogs();
@@ -89,12 +90,12 @@ class Tools
         $logs->user_id = $user_id ? $user_id : (int)Auth::id();
         $logs->action = $actions[0];
         $logs->result = $actions[1];
-        $logs->device = $request->userAgent();
-        $logs->page_route =  $request->headers->get('referer');
-        $logs->api_calls = $request->path();
-        $logs->request_type = $request->method();
-        $logs->session_id = $request->session()->getId();
-        $logs->sent_data = $request->all();
+        $logs->device = $request['user_agent'];
+        $logs->page_route =  $request['page_route'];
+        $logs->api_calls = $request['api_path'];
+        $logs->request_type = $request['method'];
+        $logs->session_id = $request['session_id'];
+        $logs->sent_data = $request['sent_data'];
         $logs->response_data = $response;
         $logs->save();
     }

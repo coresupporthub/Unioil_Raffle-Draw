@@ -18,7 +18,7 @@ class RetailStoreController extends Controller
         $data->save();
 
         $response = ['success' => true , 'message'=>'Regional cluster successfully added', 'reload'=> 'LoadAll'];
-        Tools::Logger($request, ['Add Regional Cluster', "Successfully add {$request->cluster_name} in the regional Cluster List"],$response);
+        Tools::Logger($request, ['Add Regional Cluster', "Successfully add {$request->cluster_name} in the regional Cluster List"], $response);
 
         return response()->json($response);
     }

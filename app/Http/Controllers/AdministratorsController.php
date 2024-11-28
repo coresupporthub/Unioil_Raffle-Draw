@@ -25,7 +25,16 @@ class AdministratorsController extends Controller
         $user->save();
 
         $response = ['success'=> true, 'message'=> 'New Admin is successfully Created', 'pass'=> '12345678'];
-        Tools::Logger($req, ['Add New Administrator', "Successfully added {$req->name} in the admin list"], $response);
+        $request = [
+            'user_agent' => $req->userAgent(),
+            'page_route' => $req->headers->get('referer'),
+            'api_path' => $req->path(),
+            'method' => $req->method(),
+            'session_id' => $req->session()->getId(),
+            'sent_data' => $req->all()
+        ];
+
+        Tools::Logger($request, ['Add New Administrator', "Successfully added $req->name in the admin list"], $response);
 
         return response()->json($response);
     }
@@ -47,7 +56,17 @@ class AdministratorsController extends Controller
         ]);
 
         $response = ['success'=> true, 'message'=> 'User Successfully Updated'];
-        Tools::Logger($req, ['Update Administrator', "Update admin details"], $response);
+
+        $request = [
+            'user_agent' => $req->userAgent(),
+            'page_route' => $req->headers->get('referer'),
+            'api_path' => $req->path(),
+            'method' => $req->method(),
+            'session_id' => $req->session()->getId(),
+            'sent_data' => $req->all()
+        ];
+
+        Tools::Logger($request, ['Update Administrator', "Update admin details"], $response);
 
         return response()->json($response);
     }
@@ -66,7 +85,15 @@ class AdministratorsController extends Controller
         $user->delete();
 
         $response = ['success'=> true, 'message'=> 'User is successfully deleted'];
-        Tools::Logger($req, ['Delete Admin', "Admin has been deleted"], $response);
+        $request = [
+            'user_agent' => $req->userAgent(),
+            'page_route' => $req->headers->get('referer'),
+            'api_path' => $req->path(),
+            'method' => $req->method(),
+            'session_id' => $req->session()->getId(),
+            'sent_data' => $req->all()
+        ];
+        Tools::Logger($request , ['Delete Admin', "Admin has been deleted"], $response);
 
         return response()->json($response);
     }
@@ -87,7 +114,15 @@ class AdministratorsController extends Controller
         ]);
 
         $response = ['success'=> true, 'message'=> 'User password has been changed successfully'];
-        Tools::Logger($req, ['Change Password Admin', "Admin {$user->name}'s password is changed"], $response);
+        $request = [
+            'user_agent' => $req->userAgent(),
+            'page_route' => $req->headers->get('referer'),
+            'api_path' => $req->path(),
+            'method' => $req->method(),
+            'session_id' => $req->session()->getId(),
+            'sent_data' => $req->all()
+        ];
+        Tools::Logger($request, ['Change Password Admin', "Admin {$user->name}'s password is changed"], $response);
 
         return response()->json($response);
     }
@@ -110,7 +145,14 @@ class AdministratorsController extends Controller
         if(!$user){
             return response()->json(['success'=> false, 'message'=> 'User not found']);
         }
-
+        $request = [
+            'user_agent' => $req->userAgent(),
+            'page_route' => $req->headers->get('referer'),
+            'api_path' => $req->path(),
+            'method' => $req->method(),
+            'session_id' => $req->session()->getId(),
+            'sent_data' => $req->all()
+        ];
         if(Hash::check($req->password, $user->password)){
             $user->update([
                 'user_type' => 'Admin',
@@ -123,12 +165,13 @@ class AdministratorsController extends Controller
             ]);
 
             $response = ['success'=> true, 'message'=> 'Super Admin Status is successfully transferred'];
-            Tools::Logger($req, ['Super Admin Status Transfer', "Super Admin Status is transferred to {$newSuperAdmin->name}"], $response);
+
+            Tools::Logger($request, ['Super Admin Status Transfer', "Super Admin Status is transferred to {$newSuperAdmin->name}"], $response);
 
             return response()->json($response);
         }else{
             $response = ['success'=> false, 'message'=> 'You entered an incorrect password'];
-            Tools::Logger($req, ['Super Admin Status Transfer', "Super Admin Status Transfer Failed: Incorrect Admin Password"], $response);
+            Tools::Logger($request , ['Super Admin Status Transfer', "Super Admin Status Transfer Failed: Incorrect Admin Password"], $response);
             return response()->json($response);
         }
     }
