@@ -101,10 +101,10 @@ class Tools
 
     /**
     * @param array<mixed> $data
-    * @param mixed $searchValue
+    * @param string $searchValue
     * @return array<mixed>
     */
-    public static function searchInArray(array $data, $searchValue): array
+    public static function searchInArray(array $data, string $searchValue): array
     {
         return array_filter($data, function ($item) use ($searchValue) {
             return in_array($searchValue, $item);
