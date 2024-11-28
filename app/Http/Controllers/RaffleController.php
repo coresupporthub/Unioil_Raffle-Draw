@@ -364,8 +364,8 @@ class RaffleController extends Controller
         $data = Event::where('event_id', $request->event_id)->first();
 
         if ($data) {
-            $data->event_prize_image = base64_encode('app/event_images/' . $data->event_prize_image);
-            $data->event_banner = base64_encode('app/event_images/' . $data->event_banner);
+            $data->event_prize_image = base64_encode((string)file_get_contents(storage_path('app/event_images/' . $data->event_prize_image)));
+            $data->event_banner = base64_encode((string)file_get_contents(storage_path('app/event_images/' . $data->event_banner)));
         }
 
         // Return the event data as JSON
