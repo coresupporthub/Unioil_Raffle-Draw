@@ -82,19 +82,25 @@ function QueueStatus() {
             {
                 data: null,
                 render: data => {
-                    return `${data.type} ${data.queue_number}`;
+                    return `${data.queue.type} ${data.queue.queue_number}`;
                 }
             },
             {
-                data: "entry_type"
+                data: null,
+                render: data => {
+                    return data.queue.entry_type
+                }
             },
             {
-                data: "status"
+                data: null,
+                render: data => {
+                    return  data.queue.status
+                }
             },
             {
                 data: null,
                 render: function (data, type, row) {
-                    return `${data.items}/${data.total_items}`;
+                    return `${data.queue.items}/${data.queue.total_items}`;
                 },
             },
             {
