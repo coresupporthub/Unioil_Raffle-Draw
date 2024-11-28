@@ -47,9 +47,8 @@ class QrCodeController extends Controller
             'api_path' => $req->path(),
             'method' => $req->method(),
             'session_id' => $req->session()->getId(),
-            'sent_data' => $req->all()
         ];
-        Tools::Logger($request, ['Generate QR Code', 'QR Code generation is successfully in progress'], $response);
+        Tools::Logger($request, $req->all(), ['Generate QR Code', 'QR Code generation is successfully in progress'], $response);
         return response()->json($response);
     }
 
@@ -174,9 +173,9 @@ class QrCodeController extends Controller
 
 
         $qrCodes->transform(function ($qrCode) {
-            $imagePath = storage_path('app/qr-codes/' . $qrCode->image);
+            $imagePath = 'app/qr-codes/' . $qrCode->image;
             if (file_exists($imagePath)) {
-                $qrCode->image_base64 = 'data:image/png;base64,' . base64_encode(file_get_contents($imagePath));
+                $qrCode->image_base64 = 'data:image/png;base64,' . base64_encode($imagePath);
             } else {
                 $qrCode->image_base64 = null;
             }
@@ -233,9 +232,8 @@ class QrCodeController extends Controller
             'api_path' => $req->path(),
             'method' => $req->method(),
             'session_id' => $req->session()->getId(),
-            'sent_data' => $req->all()
         ];
-        Tools::Logger($request, ['Export QR Code', 'Successfully Exported QR Coupons in the PDF File'], ['open_pdf_file' => $fileName]);
+        Tools::Logger($request, $req->all(), ['Export QR Code', 'Successfully Exported QR Coupons in the PDF File'], ['open_pdf_file' => $fileName]);
 
         return $pdf->stream('qr_codes.pdf');
     }
@@ -277,10 +275,10 @@ class QrCodeController extends Controller
 
         $qrCode = QrCode::where('qr_id', $req->id)->first();
 
-        $imagePath = storage_path('app/qr-codes/' . $qrCode->image);
+        $imagePath = 'app/qr-codes/' . $qrCode->image;
 
         if (file_exists($imagePath)) {
-            $qrCode->image_base64 = 'data:image/png;base64,' . base64_encode(file_get_contents($imagePath));
+            $qrCode->image_base64 = 'data:image/png;base64,' . base64_encode($imagePath);
         } else {
             $qrCode->image_base64 = null;
         }

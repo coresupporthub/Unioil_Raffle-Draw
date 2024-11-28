@@ -24,9 +24,8 @@ class RetailStoreController extends Controller
             'api_path' => $request->path(),
             'method' => $request->method(),
             'session_id' => $request->session()->getId(),
-            'sent_data' => $request->all()
         ];
-        Tools::Logger($req, ['Add Regional Cluster', "Successfully add {$request->cluster_name} in the regional Cluster List"], $response);
+        Tools::Logger($req, $request->all(), ['Add Regional Cluster', "Successfully add {$request->cluster_name} in the regional Cluster List"], $response);
 
         return response()->json($response);
     }
@@ -94,9 +93,8 @@ class RetailStoreController extends Controller
             'api_path' => $request->path(),
             'method' => $request->method(),
             'session_id' => $request->session()->getId(),
-            'sent_data' => $request->all()
         ];
-        Tools::Logger($req, ['Remove Retail Store', "Successfully deleted ".$data->retail_station. "in the Retail Store List"], $response);
+        Tools::Logger($req, $request->all(), ['Remove Retail Store', "Successfully deleted ".$data->retail_station. "in the Retail Store List"], $response);
 
         $data->delete();
 
@@ -121,9 +119,8 @@ class RetailStoreController extends Controller
             'api_path' => $request->path(),
             'method' => $request->method(),
             'session_id' => $request->session()->getId(),
-            'sent_data' => $request->all()
         ];
-        Tools::Logger($req, ['Update Retail Store', "Successfully updated from {$data->retail_station} to {$request->retail_store} in the Retail Store List"], $response);
+        Tools::Logger($req, $request->all(), ['Update Retail Store', "Successfully updated from {$data->retail_station} to {$request->retail_store} in the Retail Store List"], $response);
         $data->save();
         return response()->json($response);
     }
@@ -176,9 +173,8 @@ class RetailStoreController extends Controller
             'api_path' => $req->path(),
             'method' => $req->method(),
             'session_id' => $req->session()->getId(),
-            'sent_data' => $req->all()
         ];
-        Tools::Logger($request, ['Upload CSV File ', "Successfully Uploaded a CSV File in retail Store List"], $response);
+        Tools::Logger($request, $req->all(), ['Upload CSV File ', "Successfully Uploaded a CSV File in retail Store List"], $response);
 
         return response()->json($response);
     }
@@ -232,9 +228,8 @@ class RetailStoreController extends Controller
             'api_path' => $req->path(),
             'method' => $req->method(),
             'session_id' => $req->session()->getId(),
-            'sent_data' => $req->all()
         ];
-        Tools::Logger($request, ['Added A Retail Store', "Successfully added a retail store"], $response);
+        Tools::Logger($request, $req->all(), ['Added A Retail Store', "Successfully added a retail store"], $response);
 
         return response()->json($response);
     }

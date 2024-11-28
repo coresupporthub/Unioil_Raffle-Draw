@@ -78,11 +78,12 @@ class Tools
     }
 
         /**
-         * @param array<string> $request
+         * @param array<string, string|null> $request
          * @param array<string> $actions
+         * @param array<string, string|bool> $sent_data
          * @param array<string, string|bool> $response
         */
-    public static function Logger(array $request, array $actions, array $response, int $user_id = null): void
+    public static function Logger(array $request, array $sent_data, array $actions, array $response, int $user_id = null): void
     {
 
         $logs = new ActivityLogs();
@@ -95,7 +96,7 @@ class Tools
         $logs->api_calls = $request['api_path'];
         $logs->request_type = $request['method'];
         $logs->session_id = $request['session_id'];
-        $logs->sent_data = $request['sent_data'];
+        $logs->sent_data = $sent_data;
         $logs->response_data = $response;
         $logs->save();
     }

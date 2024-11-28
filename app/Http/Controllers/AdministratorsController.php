@@ -31,10 +31,9 @@ class AdministratorsController extends Controller
             'api_path' => $req->path(),
             'method' => $req->method(),
             'session_id' => $req->session()->getId(),
-            'sent_data' => $req->all()
         ];
 
-        Tools::Logger($request, ['Add New Administrator', "Successfully added $req->name in the admin list"], $response);
+        Tools::Logger($request, $req->all(), ['Add New Administrator', "Successfully added $req->name in the admin list"], $response);
 
         return response()->json($response);
     }
@@ -63,10 +62,9 @@ class AdministratorsController extends Controller
             'api_path' => $req->path(),
             'method' => $req->method(),
             'session_id' => $req->session()->getId(),
-            'sent_data' => $req->all()
         ];
 
-        Tools::Logger($request, ['Update Administrator', "Update admin details"], $response);
+        Tools::Logger($request, $req->all(), ['Update Administrator', "Update admin details"], $response);
 
         return response()->json($response);
     }
@@ -91,9 +89,8 @@ class AdministratorsController extends Controller
             'api_path' => $req->path(),
             'method' => $req->method(),
             'session_id' => $req->session()->getId(),
-            'sent_data' => $req->all()
         ];
-        Tools::Logger($request , ['Delete Admin', "Admin has been deleted"], $response);
+        Tools::Logger($request , $req->all(), ['Delete Admin', "Admin has been deleted"], $response);
 
         return response()->json($response);
     }
@@ -120,9 +117,8 @@ class AdministratorsController extends Controller
             'api_path' => $req->path(),
             'method' => $req->method(),
             'session_id' => $req->session()->getId(),
-            'sent_data' => $req->all()
         ];
-        Tools::Logger($request, ['Change Password Admin', "Admin {$user->name}'s password is changed"], $response);
+        Tools::Logger($request, $req->all(), ['Change Password Admin', "Admin {$user->name}'s password is changed"], $response);
 
         return response()->json($response);
     }
@@ -151,7 +147,6 @@ class AdministratorsController extends Controller
             'api_path' => $req->path(),
             'method' => $req->method(),
             'session_id' => $req->session()->getId(),
-            'sent_data' => $req->all()
         ];
         if(Hash::check($req->password, $user->password)){
             $user->update([
@@ -166,12 +161,12 @@ class AdministratorsController extends Controller
 
             $response = ['success'=> true, 'message'=> 'Super Admin Status is successfully transferred'];
 
-            Tools::Logger($request, ['Super Admin Status Transfer', "Super Admin Status is transferred to {$newSuperAdmin->name}"], $response);
+            Tools::Logger($request, $req->all(), ['Super Admin Status Transfer', "Super Admin Status is transferred to {$newSuperAdmin->name}"], $response);
 
             return response()->json($response);
         }else{
             $response = ['success'=> false, 'message'=> 'You entered an incorrect password'];
-            Tools::Logger($request , ['Super Admin Status Transfer', "Super Admin Status Transfer Failed: Incorrect Admin Password"], $response);
+            Tools::Logger($request, $req->all(), ['Super Admin Status Transfer', "Super Admin Status Transfer Failed: Incorrect Admin Password"], $response);
             return response()->json($response);
         }
     }

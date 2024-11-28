@@ -83,9 +83,8 @@ class RaffleController extends Controller
             'api_path' => $request->path(),
             'method' => $request->method(),
             'session_id' => $request->session()->getId(),
-            'sent_data' => $request->all()
         ];
-        Tools::Logger($req, ['Raffle Draw Stated', "Raffle Draw Selected a winner"], $response);
+        Tools::Logger($req, $request->all(), ['Raffle Draw Stated', "Raffle Draw Selected a winner"], $response);
         return response()->json($response);
     }
 
@@ -136,7 +135,7 @@ class RaffleController extends Controller
                 'cluster' => $cluster,
                 'retail_code' => $retailStores->rto_code,
                 'retail_area' => $retailStores->area,
-                'retail_address'=> $retailStores->address,
+                'retail_address' => $retailStores->address,
                 'retail_distributor' => $retailStores->distributor,
                 'retail_name' => $retailStores->retail_station
 
@@ -240,7 +239,6 @@ class RaffleController extends Controller
 
         if (!empty($search)) {
             $allData = Tools::searchInArray($allData, $search);
-
         }
 
         if ($allDataFlag) {
@@ -273,15 +271,26 @@ class RaffleController extends Controller
             return response()->json(['message' => 'There is still an ongoing raffle promo', 'success' => false]);
         }
 
-        // Define the storage path
         $folderPath = 'event_images';
 
-        // Call the reusable function to handle the upload
-        if($request->file('image')->getSize()>10485760 || $request->file('banner')->getSize() > 10485760){
+        $imageFile = $request->file('image');
+        $bannerFile = $request->file('banner');
+
+
+        if (is_array($imageFile)) {
+            $imageFile = $imageFile[0];
+        }
+
+        if (is_array($bannerFile)) {
+            $bannerFile = $bannerFile[0];
+        }
+
+        if ($imageFile->getSize() > 10485760 || $bannerFile->getSize() > 10485760) {
             return response()->json(['message' => 'Image size should not exceed 10MB', 'success' => false]);
         }
-        $imageFileName = $this->storeFile($request->file('image'), $folderPath);
-        $bannerFileName = $this->storeFile($request->file('banner'), $folderPath);
+
+        $imageFileName = $this->storeFile($imageFile, $folderPath);
+        $bannerFileName = $this->storeFile($bannerFile, $folderPath);
 
         // Create a new event
         $event = new Event();
@@ -302,14 +311,13 @@ class RaffleController extends Controller
             'api_path' => $request->path(),
             'method' => $request->method(),
             'session_id' => $request->session()->getId(),
-            'sent_data' => $request->all()
         ];
-        Tools::Logger($req, ['Added an Event', "Event {$request->event_name} has been added"], $response);
+        Tools::Logger($req, $request->all(), ['Added an Event', "Event {$request->event_name} has been added"], $response);
 
         return response()->json($response);
     }
 
-    public function storeFile($file, string $folder): string
+    public function storeFile(UploadedFile $file, string $folder): string
     {
 
         $storagePath = storage_path("app/$folder");
@@ -344,9 +352,8 @@ class RaffleController extends Controller
             'api_path' => $request->path(),
             'method' => $request->method(),
             'session_id' => $request->session()->getId(),
-            'sent_data' => $request->all()
         ];
-        Tools::Logger($req, ['Disqualify Customer', "A winner is unable to claim the prize and successfully remove its winner status"], $response);
+        Tools::Logger($req, $request->all(), ['Disqualify Customer', "A winner is unable to claim the prize and successfully remove its winner status"], $response);
 
         return response()->json($response);
     }
@@ -357,10 +364,8 @@ class RaffleController extends Controller
         $data = Event::where('event_id', $request->event_id)->first();
 
         if ($data) {
-            $prizeImagePath = storage_path('app/event_images/' . $data->event_prize_image);
-            $data->event_prize_image = base64_encode(file_get_contents((string)$prizeImagePath));
-            $bannerImagePath = storage_path('app/event_images/' . $data->event_banner);
-            $data->event_banner = base64_encode(file_get_contents((string)$bannerImagePath));
+            $data->event_prize_image = base64_encode('app/event_images/' . $data->event_prize_image);
+            $data->event_banner = base64_encode('app/event_images/' . $data->event_banner);
         }
 
         // Return the event data as JSON
@@ -387,9 +392,8 @@ class RaffleController extends Controller
                 'api_path' => $request->path(),
                 'method' => $request->method(),
                 'session_id' => $request->session()->getId(),
-                'sent_data' => $request->all()
             ];
-            Tools::Logger($req, ['Update Event Details', "Event is successfully Updated"], $response);
+            Tools::Logger($req, $request->all(), ['Update Event Details', "Event is successfully Updated"], $response);
 
             return response()->json($response);
         }
@@ -401,7 +405,11 @@ class RaffleController extends Controller
         if ($event) {
             $folderPath = 'event_images';
 
-            $imageFileName = $this->storeFile($request->file('image'), $folderPath);
+            $image = $request->file('image');
+            if(is_array($image)){
+                $image = $image[0];
+            }
+            $imageFileName = $this->storeFile($image, $folderPath);
 
             $event->event_prize_image = $imageFileName;
             $event->save();
@@ -413,9 +421,8 @@ class RaffleController extends Controller
                 'api_path' => $request->path(),
                 'method' => $request->method(),
                 'session_id' => $request->session()->getId(),
-                'sent_data' => $request->all()
             ];
-            Tools::Logger($req, ['Update Event Images', "Event is successfully Updated"], $response);
+            Tools::Logger($req, $request->all(), ['Update Event Images', "Event is successfully Updated"], $response);
 
             return response()->json($response);
         }
@@ -429,7 +436,12 @@ class RaffleController extends Controller
 
             $folderPath = 'event_images';
 
-            $bannerFileName = $this->storeFile($request->file('banner'), $folderPath);
+            $bannerImage = $request->file('banner');
+
+            if(is_array($bannerImage)){
+                $bannerImage = $bannerImage[0];
+            }
+            $bannerFileName = $this->storeFile($bannerImage, $folderPath);
             $event->event_banner = $bannerFileName;
             $event->save();
 
@@ -440,9 +452,8 @@ class RaffleController extends Controller
                 'api_path' => $request->path(),
                 'method' => $request->method(),
                 'session_id' => $request->session()->getId(),
-                'sent_data' => $request->all()
             ];
-            Tools::Logger($req, ['Update Event Images', "Event is successfully Updated"], $response);
+            Tools::Logger($req, $request->all(), ['Update Event Images', "Event is successfully Updated"], $response);
 
             return response()->json($response);
         }
@@ -469,9 +480,8 @@ class RaffleController extends Controller
             'api_path' => $request->path(),
             'method' => $request->method(),
             'session_id' => $request->session()->getId(),
-            'sent_data' => $request->all()
         ];
-        Tools::Logger($req, ['Event Close', "Event is successfully set to inactive status"], $response);
+        Tools::Logger($req, $request->all(), ['Event Close', "Event is successfully set to inactive status"], $response);
 
         return response()->json($response);
     }
@@ -505,13 +515,13 @@ class RaffleController extends Controller
 
 
                 $product = ProductList::where('product_id', $customer->product_purchased)
-                ->when(!empty($request->ptype), function ($query) use ($request) {
-                    $query->where('entries', $request->ptype);
-                })
-                ->when(!empty($request->producttype), function ($query) use ($request) {
-                    $query->where('product_id', $request->producttype);
-                })
-                ->first();
+                    ->when(!empty($request->ptype), function ($query) use ($request) {
+                        $query->where('entries', $request->ptype);
+                    })
+                    ->when(!empty($request->producttype), function ($query) use ($request) {
+                        $query->where('product_id', $request->producttype);
+                    })
+                    ->first();
 
 
                 if (!$product) continue;

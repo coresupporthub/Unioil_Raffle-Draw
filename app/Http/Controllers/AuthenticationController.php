@@ -24,7 +24,6 @@ class AuthenticationController extends Controller
             'api_path' => $req->path(),
             'method' => $req->method(),
             'session_id' => $req->session()->getId(),
-            'sent_data' => $req->all()
         ];
         if (Auth::attempt($data)) {
             $req->session()->regenerate();
@@ -45,7 +44,7 @@ class AuthenticationController extends Controller
 
             $response = ['success' => true, 'message' => 'Authentication is successful', 'redirect' => false];
 
-            Tools::Logger($request, ['Login Attempt', "Successfully logged in to the admin dashboard"], $response);
+            Tools::Logger($request,$req->all(), ['Login Attempt', "Successfully logged in to the admin dashboard"], $response);
 
             return response()->json($response);
         } else {
@@ -59,11 +58,11 @@ class AuthenticationController extends Controller
                     ]);
                 } else {
                     $response = ['success' => false, 'message'=>"You have reached your max login attempt with incorrect password or email", 'redirect' => false];
-                    Tools::Logger($request, ['Login Attempt', "Has Reached Attempt Maximum Limit"], $response);
+                    Tools::Logger($request, $req->all(), ['Login Attempt', "Has Reached Attempt Maximum Limit"], $response);
 
                     return response()->json($response);
                 }
-                Tools::Logger($request, ['Login Attempt', "Failed to logged in to the admin dashboard"], $response, $check->id);
+                Tools::Logger($request, $req->all(), ['Login Attempt', "Failed to logged in to the admin dashboard"], $response, $check->id);
             }
 
             return response()->json($response);
@@ -90,7 +89,6 @@ class AuthenticationController extends Controller
             'api_path' => $req->path(),
             'method' => $req->method(),
             'session_id' => $req->session()->getId(),
-            'sent_data' => $req->all()
         ];
         if ($user->verification_code == $code) {
             $user->update([
@@ -99,7 +97,7 @@ class AuthenticationController extends Controller
             ]);
 
             $response = ['success' => true, 'message' => 'User authentication verified'];
-            Tools::Logger($request, ['Email Verification Attempt', "Email has been successfully Verified"], $response);
+            Tools::Logger($request, $req->all(), ['Email Verification Attempt', "Email has been successfully Verified"], $response);
 
             return response()->json($response);
         } else {
@@ -111,13 +109,13 @@ class AuthenticationController extends Controller
             }else{
 
                 $response = ['success' => false, 'message' => 'You have reached your maximum verification attempts'];
-                Tools::Logger($request, ['Email Verification Attempt', "You have reached your maximum verification attempts"], $response);
+                Tools::Logger($request, $req->all(), ['Email Verification Attempt', "You have reached your maximum verification attempts"], $response);
 
                 return response()->json($response);
             }
 
             $response = ['success' => false, 'message' => 'Verification code does not match'];
-            Tools::Logger($request, ['Email Verification Attempt', "Verification Does Not Match"], $response);
+            Tools::Logger($request, $req->all(), ['Email Verification Attempt', "Verification Does Not Match"], $response);
 
             return response()->json($response);
         }
@@ -137,11 +135,10 @@ class AuthenticationController extends Controller
             'api_path' => $req->path(),
             'method' => $req->method(),
             'session_id' => $req->session()->getId(),
-            'sent_data' => $req->all()
         ];
 
         $response = ['success' => true];
-        Tools::Logger($request, ['User Logged Out', "User has successfully Logged Out"], $response);
+        Tools::Logger($request, $req->all(), ['User Logged Out', "User has successfully Logged Out"], $response);
 
         Auth::logout();
         request()->session()->invalidate();
@@ -192,7 +189,6 @@ class AuthenticationController extends Controller
             'api_path' => $req->path(),
             'method' => $req->method(),
             'session_id' => $req->session()->getId(),
-            'sent_data' => $req->all()
         ];
         if (Hash::check($req->currentPassword, $user->password)) {
             $user->update([
@@ -200,7 +196,7 @@ class AuthenticationController extends Controller
             ]);
 
             $response = ['success' => true, 'message' => 'Password Successfully Changed'];
-            Tools::Logger($request, ['Admin Change Password', "Admin has changed the account password"], $response);
+            Tools::Logger($request, $req->all(), ['Admin Change Password', "Admin has changed the account password"], $response);
 
             return response()->json($response);
         } else {
@@ -222,10 +218,9 @@ class AuthenticationController extends Controller
             'api_path' => $req->path(),
             'method' => $req->method(),
             'session_id' => $req->session()->getId(),
-            'sent_data' => $req->all()
         ];
         $response = ['success' => true, 'message' => 'Admin Details Updated'];
-        Tools::Logger($request, ['Update Admin Details', "Admin has changed the account informations"], $response);
+        Tools::Logger($request, $req->all(), ['Update Admin Details', "Admin has changed the account informations"], $response);
 
         return response()->json($response);
     }
