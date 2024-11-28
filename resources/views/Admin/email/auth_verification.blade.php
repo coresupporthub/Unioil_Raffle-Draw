@@ -441,7 +441,7 @@
                                                                         width="144px">
                                                                         <tr>
                                                                             <td style="padding:0 2px 0 2px;"><a
-                                                                                    href="https://www.facebook.com"
+                                                                                    href="https://www.facebook.com/unioil"
                                                                                     target="_blank"><img
                                                                                         alt="Facebook" height="auto"
                                                                                         src="{{ asset('email/facebook2x.png') }}"
@@ -449,7 +449,7 @@
                                                                                         title="facebook"
                                                                                         width="32" /></a></td>
                                                                             <td style="padding:0 2px 0 2px;"><a
-                                                                                    href="https://www.twitter.com"
+                                                                                    href="https://x.com/unioil"
                                                                                     target="_blank"><img
                                                                                         alt="Twitter" height="auto"
                                                                                         src="{{ asset('email/twitter2x.png') }}"
@@ -457,15 +457,7 @@
                                                                                         title="twitter"
                                                                                         width="32" /></a></td>
                                                                             <td style="padding:0 2px 0 2px;"><a
-                                                                                    href="https://www.linkedin.com"
-                                                                                    target="_blank"><img
-                                                                                        alt="Linkedin" height="auto"
-                                                                                        src="{{ asset('email/linkedin2x.png') }}"
-                                                                                        style="display: block; height: auto; border: 0;"
-                                                                                        title="linkedin"
-                                                                                        width="32" /></a></td>
-                                                                            <td style="padding:0 2px 0 2px;"><a
-                                                                                    href="https://www.instagram.com"
+                                                                                    href="https://www.instagram.com/unioilph/"
                                                                                     target="_blank"><img
                                                                                         alt="Instagram" height="auto"
                                                                                         src="{{ asset('email/instagram2x.png') }}"
