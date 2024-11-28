@@ -85,26 +85,32 @@ class QrCodeController extends Controller
         foreach ($queue as $q) {
             $export = ExportFilesModel::where('queue_id', $q->queue_id)->first();
 
-            if ($export) {
-                $filePath = storage_path('app/pdf_files/' . $export->file_name);
-
-
-                if (file_exists($filePath)) {
-                    $fileContent = file_get_contents($filePath);
-                    $base64Encoded = base64_encode($fileContent);
-                    $mimeType = mime_content_type($filePath);
-
-                    $dataUri = 'data:' . $mimeType . ';base64,' . $base64Encoded;
-                    $export->base64File = $dataUri;
-                } else {
-
-                    $export->base64File = null;
-                }
-
-                $q->export = $export;
-            } else {
+            if (!$export) {
                 $q->export = null;
+                continue;
             }
+
+            $filePath = storage_path('app/pdf_files/' . $export->file_name);
+
+            if (!file_exists($filePath)) {
+                $export->base64File = null;
+                $q->export = $export;
+                continue;
+            }
+
+            $fileContent = file_get_contents($filePath);
+
+            if ($fileContent === false) {
+                $export->base64File = null;
+                $q->export = $export;
+                continue;
+            }
+
+            $base64Encoded = base64_encode($fileContent);
+            $mimeType = mime_content_type($filePath);
+            $export->base64File = 'data:' . $mimeType . ';base64,' . $base64Encoded;
+
+            $q->export = $export;
         }
 
         return response()->json(['queue' => $queue]);

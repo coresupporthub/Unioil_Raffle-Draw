@@ -77,7 +77,7 @@ class Tools
         return $rows;
     }
 
-    public static function Logger($request, array $actions, array $response)
+    public static function Logger($request, array $actions, array $response): void
     {
         $logs = new ActivityLogs();
 

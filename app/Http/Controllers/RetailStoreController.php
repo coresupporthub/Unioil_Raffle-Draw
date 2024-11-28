@@ -77,7 +77,7 @@ class RetailStoreController extends Controller
     }
 
     public function removeretailstore(Request $request): JsonResponse{
-        $data = RetailStore::find($request->id);
+        $data = RetailStore::where('store_id', $request->id)->first();
 
         $response = ['success' => true, 'message' => 'Store status successfully delete'];
         Tools::Logger($request, ['Remove Retail Store', "Successfully deleted ".$data->retail_station. "in the Retail Store List"], $response);

@@ -15,7 +15,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-
+use Illuminate\Http\UploadedFile;
 
 class RaffleController extends Controller
 {
@@ -289,7 +289,7 @@ class RaffleController extends Controller
         return response()->json($response);
     }
 
-    public function storeFile($file, $folder): string
+    public function storeFile($file, string $folder): string
     {
         // Define the full storage path
         $storagePath = storage_path("app/$folder");
@@ -312,7 +312,7 @@ class RaffleController extends Controller
         // Return only the random file name with extension (without the folder path)
         return $randomName;
     }
-    
+
     public function redraw(Request $request): JsonResponse
     {
         $raffleEntries = RaffleEntries::where('serial_number', $request->serial)->first();
@@ -348,7 +348,7 @@ class RaffleController extends Controller
         if ($event) {
             $folderPath = 'event_images';
 
-            
+
             $imageFileName = $this->storeFile($request->file('image'), $folderPath);
             $bannerFileName = $this->storeFile($request->file('banner'), $folderPath);
 
@@ -356,8 +356,8 @@ class RaffleController extends Controller
             $event->event_prize = $request->event_price;
             $event->event_start = $request->event_start;
             $event->event_end = $request->event_end;
-            $event->event_prize_image = $imageFileName; 
-            $event->event_banner = $bannerFileName; 
+            $event->event_prize_image = $imageFileName;
+            $event->event_banner = $bannerFileName;
             $event->event_description = $request->event_description;
             $event->save();
 
@@ -399,23 +399,23 @@ class RaffleController extends Controller
         $data = [];
 
         foreach ($events as $event) {
-            
+
             $customers = Customers::where('event_id', $event->event_id)->get();
 
             foreach ($customers as $customer) {
-                
+
                 $retailStoreQuery = RetailStore::where('store_id', $customer->store_id);
                 if (!empty($request->region)) {
                     $retailStoreQuery->where('cluster_id', $request->region);
                 }
                 $retailStore = $retailStoreQuery->first();
 
-                if (!$retailStore) continue; 
+                if (!$retailStore) continue;
 
-                
+
                 $cluster = RegionalCluster::where('cluster_id', $retailStore->cluster_id)->first()?->cluster_name;
 
-               
+
                 $product = ProductList::where('product_id', $customer->product_purchased)
                 ->when(!empty($request->ptype), function ($query) use ($request) {
                     $query->where('entries', $request->ptype);
@@ -426,9 +426,9 @@ class RaffleController extends Controller
                 ->first();
 
 
-                if (!$product) continue; 
+                if (!$product) continue;
 
-               
+
                 $data[] = [
                     'cluster' => $cluster,
                     'area' => $retailStore->area ?? 'N/A',
