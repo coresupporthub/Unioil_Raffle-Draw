@@ -31,31 +31,6 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-composer-
 
-    - name: Install MySQL
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y mysql-server  # Install MySQL
-        sudo service mysql start  # Start MySQL service
-        # Set up MySQL root password and allow root to connect without password prompt
-        sudo mysql <<EOF
-        ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root';
-        CREATE DATABASE IF NOT EXISTS test_database;
-        GRANT ALL PRIVILEGES ON test_database.* TO 'root'@'localhost';
-        FLUSH PRIVILEGES;
-        EOF
-
-    - name: Set up environment variables
-      run: |
-        echo "DB_CONNECTION=mysql" >> .env
-        echo "DB_HOST=localhost" >> .env
-        echo "DB_PORT=3306" >> .env
-        echo "DB_DATABASE=test_database" >> .env
-        echo "DB_USERNAME=root" >> .env
-        echo "DB_PASSWORD=root" >> .env  # Use the password set for the root user
-
-    - name: Run database migrations
-      run: php artisan migrate --env=testing  # Run migrations in testing environment
-
     - name: Run tests
       run: ./vendor/bin/phpstan analyse  # Run PHP Stan
 
