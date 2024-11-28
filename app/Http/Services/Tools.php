@@ -81,12 +81,12 @@ class Tools
         * @param array<string> $actions
         * @param array<string, string|bool> $response
         */
-    public static function Logger($request, array $actions, array $response): void
+    public static function Logger($request, array $actions, array $response, int $user_id = null): void
     {
 
         $logs = new ActivityLogs();
 
-        $logs->user_id = (int)Auth::id();
+        $logs->user_id = $user_id ? $user_id : (int)Auth::id();
         $logs->action = $actions[0];
         $logs->result = $actions[1];
         $logs->device = $request->userAgent();

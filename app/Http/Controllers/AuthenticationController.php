@@ -43,7 +43,7 @@ class AuthenticationController extends Controller
         } else {
 
             $check = User::where('email', $req->email)->first();
-
+            $response = ['success' => false, 'message' => "Email and password does not match", 'redirect' => false];
             if ($check) {
                 if (Magic::MAX_LOGIN_ATTEMPT > $check->login_attempt) {
                     $check->update([
@@ -55,12 +55,8 @@ class AuthenticationController extends Controller
 
                     return response()->json($response);
                 }
+                Tools::Logger($req, ['Login Attempt', "Failed to logged in to the admin dashboard"], $response, $check->id);
             }
-
-
-
-            $response = ['success' => false, 'message' => "Email and password does not match", 'redirect' => false];
-            Tools::Logger($req, ['Login Attempt', "Failed to logged in to the admin dashboard"], $response);
 
             return response()->json($response);
         }
