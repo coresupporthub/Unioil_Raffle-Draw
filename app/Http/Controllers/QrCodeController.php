@@ -275,10 +275,10 @@ class QrCodeController extends Controller
 
         $qrCode = QrCode::where('qr_id', $req->id)->first();
 
-        $imagePath = 'app/qr-codes/' . $qrCode->image;
+        $imagePath = storage_path('app/qr-codes/' . $qrCode->image);
 
         if (file_exists($imagePath)) {
-            $qrCode->image_base64 = 'data:image/png;base64,' . base64_encode($imagePath);
+            $qrCode->image_base64 = 'data:image/png;base64,' . base64_encode((string)file_get_contents($imagePath));
         } else {
             $qrCode->image_base64 = null;
         }
