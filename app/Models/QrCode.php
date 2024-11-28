@@ -4,7 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-
+/**
+ * @property string|null $image_base64
+ */
 class QrCode extends Model
 {
     public $incrementing = false;

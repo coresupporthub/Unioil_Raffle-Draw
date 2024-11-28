@@ -5,7 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 
-
+/**
+ * @property string|null $product_name
+ */
 class Customers extends Model
 {
     public $incrementing = false;

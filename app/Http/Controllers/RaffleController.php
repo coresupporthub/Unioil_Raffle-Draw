@@ -101,7 +101,7 @@ class RaffleController extends Controller
             $cluster = RegionalCluster::where('cluster_id', $retailStores->cluster_id)->first()->cluster_name;
             $customer = Customers::where('customer_id', $entry->customer_id)->first();
             $data[] = [
-                'event_prize' => $event->event_price,
+                'event_prize' => $event->event_prize,
                 'serial_number' => $entry->serial_number,
                 'customer_name' => $customer->full_name,
                 'customer_email' => $customer->email,
@@ -216,6 +216,7 @@ class RaffleController extends Controller
 
                 $customer = Customers::where('customer_id', $raffle->customer_id)
                     ->join('product_lists', 'product_lists.product_id', '=', 'customers.product_purchased')
+                    ->select('customers.*', 'product_lists.product_name as product_name')
                     ->first();
 
                 if ($retailStores && $cluster && $customer) {

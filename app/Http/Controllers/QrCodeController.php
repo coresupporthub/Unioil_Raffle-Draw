@@ -104,7 +104,13 @@ class QrCodeController extends Controller
         return response()->json(['queue' => $queueWithExportData]);
     }
 
-    private function getExportData($export): array
+    /**
+     * Get the export data for a given export model.
+     *
+     * @param ExportFilesModel $export The export model instance.
+     * @return array{exp_id: int, file_name: string, queue_id?: string, created_at?: string, updated_at?: string, base64File: ?string}
+     */
+    private function getExportData(ExportFilesModel $export): array
     {
         $filePath = storage_path('app/pdf_files/' . $export->file_name);
 
@@ -164,7 +170,7 @@ class QrCodeController extends Controller
             $queue->queue_number = 1;
         }
 
-        $queue->items = 0;
+        $queue->items = $req->page_number;
         $queue->total_items = $req->page_number;
         $queue->status = 'inprogress';
         $queue->entry_type = $req->qrtype;
