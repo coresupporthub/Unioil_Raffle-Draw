@@ -1,0 +1,62 @@
+name: Laravel CI/CD
+
+on:
+  push:
+    branches:
+      - main  # Trigger workflow on push to main
+  pull_request:
+    branches:
+      - main  # Trigger workflow for pull requests to main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Choose the OS for the build
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3  # Checkout code from GitHub repository
+
+    - name: Set up PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.2'  # Define the PHP version (adjust as needed)
+
+    - name: Install dependencies
+      run: |
+        composer install --no-progress --no-suggest --prefer-dist  # Install PHP dependencies
+
+    - name: Cache Composer dependencies
+      uses: actions/cache@v2
+      with:
+        path: ~/.composer/cache
+        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-composer-
+
+    - name: Set up MySQL
+      uses: actions/setup-mysql@v2
+      with:
+        mysql-version: '8.0'
+      env:
+        MYSQL_ROOT_PASSWORD: root  # Set the root password
+
+    - name: Set up environment variables
+      run: |
+        echo "DB_CONNECTION=mysql" >> .env
+        echo "DB_HOST=localhost" >> .env
+        echo "DB_PORT=3306" >> .env
+        echo "DB_DATABASE=test_database" >> .env
+        echo "DB_USERNAME=root" >> .env
+        echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
+
+    - name: Run database migrations
+      run: php artisan migrate --env=testing  # Run migrations in testing environment
+
+    - name: Run tests
+      run: ./vendor/bin/phpstan analyse  # Run PHP Stan
+
+    - name: Build and Deploy
+      if: github.ref == 'refs/heads/main'
+      run: |
+        echo "Deploying to Production..."
+        # Add your deployment script here (e.g., SSH deployment)
