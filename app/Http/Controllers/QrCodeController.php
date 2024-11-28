@@ -102,22 +102,34 @@ class QrCodeController extends Controller
         $filePath = storage_path('app/pdf_files/' . $export->file_name);
 
         if (!file_exists($filePath)) {
-            $export->base64File = null;
-            return $export;
+            return [
+                'exp_id' => $export->exp_id,
+                'file_name' => $export->file_name,
+                'base64File' => null,
+            ];
         }
 
         $fileContent = file_get_contents($filePath);
 
         if ($fileContent === false) {
-            $export->base64File = null;
-            return $export;
+            return [
+                'exp_id' => $export->exp_id,
+                'file_name' => $export->file_name,
+                'base64File' => null,
+            ];
         }
 
         $base64Encoded = base64_encode($fileContent);
         $mimeType = mime_content_type($filePath);
-        $export->base64File = 'data:' . $mimeType . ';base64,' . $base64Encoded;
 
-        return $export;
+        return [
+            'exp_id' => $export->exp_id,
+            'file_name' => $export->file_name,
+            'queue_id' => $export->queue_id,
+            'created_at' => $export->created_at,
+            'updated_at' => $export->updated_at,
+            'base64File' => 'data:' . $mimeType . ';base64,' . $base64Encoded,
+        ];
     }
 
     public function exportQR(Request $req): Response
