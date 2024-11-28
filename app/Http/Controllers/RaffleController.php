@@ -303,6 +303,7 @@ class RaffleController extends Controller
         $event->event_banner = $bannerFileName;
         $event->event_description = $request->event_description;
         $event->event_status = 'Active';
+        $event->event_prize_disclaimer = $request->disclaimer ?? null;
         $event->save();
 
         $response = ['message' => 'Event added successfully', 'reload' => 'loadCard', 'success' => true];

@@ -120,6 +120,7 @@ Route::get('/registration-complete/coupon-serial-number/{customer_id}', function
         'banner' => $event->event_banner,
         'prize_image' => $event->event_prize_image,
         'prize' => $event->event_prize,
-        'duration' => Tools::dateFormat($event->event_start) . ' - ' . Tools::dateFormat($event->event_end)
+        'duration' => Tools::dateFormat($event->event_start) . ' - ' . Tools::dateFormat($event->event_end),
+        'disclaimer' => $event->event_prize_disclaimer ?? null,
     ]);
 });

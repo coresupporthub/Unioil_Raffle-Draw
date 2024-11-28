@@ -158,7 +158,14 @@ function checkInp(inp, textErr){
     const inputElement = document.getElementById(inp);
     const text = document.getElementById(textErr);
 
-    if(inputElement.value == ''){
+    if(inputElement.value == '' && (inputElement.type == 'text' || inputElement.type == 'password' || inputElement.type == 'number' || inputElement.tagName.toLowerCase() == 'textarea')){
+        text.classList.remove('d-none');
+        inputElement.classList.add('border', 'border-danger');
+
+        return 0;
+    }
+
+    if(inputElement.type == 'file' && !inputElement.files.length){
         text.classList.remove('d-none');
         inputElement.classList.add('border', 'border-danger');
 

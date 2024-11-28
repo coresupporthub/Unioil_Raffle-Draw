@@ -19,6 +19,7 @@ class Event extends Model
         'event_banner',
         'event_description',
         'event_status',
+        'event_prize_disclaimer'
     ];
     protected static function boot()
     {

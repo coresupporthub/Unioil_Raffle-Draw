@@ -47,6 +47,11 @@
     <div style="font-size:1rem"> <strong>Promo Duration: <br> </strong> {{ $duration }}</div>
 
     <img src="data:image/png;base64,{{ $prize_image }}" alt="hondaclick">
+
+    @if($disclaimer)
+        <p style="margin-top: 2rem; color: #ccc">{{ $disclaimer }}</p>
+    @endif
+
     @include('Customer.components.scripts')
 </body>
 </html>

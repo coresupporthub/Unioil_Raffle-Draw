@@ -84,59 +84,51 @@ function loadCard() {
 }
 
 function submitdata(formID, route) {
-    if (!validateForm(formID)) {
-        alertify.error("Please fill in all required fields.");
-        return;
+
+    const inputs = [
+        ['event_name', 'event_name_e'],
+        ['event_prize', 'event_prize_e'],
+        ['event_start', 'event_start_e'],
+        ['event_end', 'event_end_e'],
+        ['image', 'image_e'],
+        ['banner', 'banner_e'],
+        ['event_description', 'event_description_e'],
+    ];
+
+    if(checkValidity(inputs)){
+        loading(true);
+        const form = document.getElementById(formID);
+        const csrfToken = $('meta[name="csrf-token"]').attr("content");
+        const formData = new FormData(form);
+        formData.append("_token", csrfToken);
+
+        $.ajax({
+            url: route,
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                loading(false);
+                if (response.success) {
+                    alertify.success(response.message);
+                    document.getElementById(formID).reset();
+                    dynamicCall(response.reload);
+                } else {
+                    alertify.alert("Warning", response.message, function () {});
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("Error posting data:", error);
+            },
+        });
     }
-    loading(true);
-    const form = document.getElementById(formID);
-    const csrfToken = $('meta[name="csrf-token"]').attr("content");
-    const formData = new FormData(form);
-    formData.append("_token", csrfToken);
 
-    $.ajax({
-        url: route,
-        type: "POST",
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function (response) {
-            loading(false);
-            if (response.success) {
-                alertify.success(response.message);
-                document.getElementById(formID).reset();
-                dynamicCall(response.reload);
-            } else {
-                alertify.alert("Warning", response.message, function () {});
-            }
-        },
-        error: function (xhr, status, error) {
-            console.error("Error posting data:", error);
-        },
-    });
-}
-
-function validateForm(formID) {
-    const form = document.getElementById(formID);
-    let emptyField = false;
-
-    const inputs = form.querySelectorAll("input, textarea, select");
-
-    inputs.forEach(function (input) {
-        if (input.value.trim() === "") {
-            emptyField = true;
-            input.classList.add("error");
-        } else {
-            input.classList.remove("error");
-        }
-    });
-
-    return !emptyField;
 }
 
 function dynamicCall(functionName, ...args) {
     if (typeof window[functionName] === "function") {
-        window[functionName](...args); // Call the function dynamically with any passed arguments
+        window[functionName](...args); 
     } else {
         console.error("Function not found:", functionName);
     }
