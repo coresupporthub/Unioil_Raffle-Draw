@@ -268,6 +268,9 @@ class RaffleController extends Controller
         $folderPath = 'event_images';
 
         // Call the reusable function to handle the upload
+        if($request->file('image')->getSize()>10485760 || $request->file('banner')->getSize() > 10485760){
+            return response()->json(['message' => 'Image size should not exceed 10MB', 'success' => false]);
+        }
         $imageFileName = $this->storeFile($request->file('image'), $folderPath);
         $bannerFileName = $this->storeFile($request->file('banner'), $folderPath);
 
@@ -366,9 +369,26 @@ class RaffleController extends Controller
             $folderPath = 'event_images';
 
             $imageFileName = $this->storeFile($request->file('image'), $folderPath);
-            $bannerFileName = $this->storeFile($request->file('banner'), $folderPath);
 
             $event->event_prize_image = $imageFileName;
+            $event->save();
+
+            $response = ['message' => 'Event successfully update', 'reload' => 'getevent', 'success' => true];
+            Tools::Logger($request, ['Update Event Images', "Event is successfully Updated"], $response);
+
+            return response()->json($response);
+        }
+        return response()->json(['message' => 'This event is currently inactive, and its details cannot be edited.', 'success' => false]);
+    }
+
+    public function updateeventbanner(Request $request): JsonResponse
+    {
+        $event = Event::where('event_id', $request->event_id)->where('event_status', 'Active')->first();
+        if ($event) {
+
+            $folderPath = 'event_images';
+
+            $bannerFileName = $this->storeFile($request->file('banner'), $folderPath);
             $event->event_banner = $bannerFileName;
             $event->save();
 

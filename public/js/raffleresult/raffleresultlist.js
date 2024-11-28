@@ -228,6 +228,7 @@ function getevent(){
                 response.event_prize;
             document.getElementById("event_id").value = response.event_id;
             document.getElementById("event_id2").value = response.event_id;
+             document.getElementById("event_id3").value = response.event_id;
             setValue('event_idInactive', response.event_id);
             document.getElementById("event_name").value = response.event_name;
             document.getElementById("event_price").value = response.event_prize;

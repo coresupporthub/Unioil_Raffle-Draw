@@ -4,6 +4,11 @@
         cursor: pointer;
         background-color: #fcbc9e;
     }
+      .banner-image {
+        width: 100%;   /* Set a fixed width */
+        height: 250px;  /* Set a fixed height */
+        object-fit: contain; /* Ensures images cover the set size while maintaining aspect ratio */
+    }
   </style>
 
 <body>
@@ -201,18 +206,24 @@
                 </div>
 
                 <div class="col-12 d-flex justify-content-between align-items-start">
-                    <div class="text-center w-50 ">
-                        <label for="event-banner-modal" class="form-label d-block">Event Banner</label>
-                        <img src="" id="event-banner-modal" alt="Event Banner" class="img-fluid banner-image">
+                        <!-- Event Banner -->
+                        <div class="text-center w-50">
+                            <label for="event-banner-modal" class="form-label d-block">Event Banner</label>
+                            <img src="" id="event-banner-modal" alt="Event Banner" class="banner-image">
+                            <button type="button" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#update-event-banner">
+                                Update Event Banner Image
+                            </button>
+                        </div>
+                        
+                        <!-- Event Prize -->
+                        <div class="text-center w-50">
+                            <label for="event-prize-modal" class="form-label d-block">Event Prize</label>
+                            <img src="" id="event-prize-modal" alt="Event Prize" class="banner-image">
+                            <button type="button" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#update-event-prize">
+                                Update Event Prize Image
+                            </button>
+                        </div>
                     </div>
-                    <div class="text-center w-50">
-                        <label for="event-prize-modal" class="form-label d-block">Event Prize</label>
-                        <img src="" id="event-prize-modal" alt="Event Prize" class="img-fluid banner-image">
-                    </div>
-                </div>
-                <div class="col-12 text-center mt-3">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#update-event-image">Update Event Images</button>
-                </div>
 
                 <!-- Event Description -->
                 <div class="col-12">
@@ -232,7 +243,7 @@
     </div>
 
 
-    <div class="modal modal-blur fade" id="update-event-image" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal modal-blur fade" id="update-event-prize" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header Unioil-header">
@@ -247,18 +258,38 @@
                     <label for="event_end" class="form-label">Event Prize Image</label>
                     <input type="file" class="form-control" name="image" id="image" placeholder="Enter event end">
                 </div>
-
-                <div class="col-12">
-                    <label for="event_end" class="form-label">Event Banner</label>
-                    <input type="file" class="form-control" name="banner" id="banner" placeholder="Enter event end">
-                </div>
-
                 </form>  
 
             </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-outline-dark me-auto" data-bs-dismiss="modal">Close</button>
             <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick=" SubmitData('update-event-image-form', '/api/update-event-images')">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal modal-blur fade" id="update-event-banner" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header Unioil-header">
+            <h5 class="modal-title">Update Event Raffle Images</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+            <div class="modal-body">
+
+                <form action="" method="post" id="update-event-banner-form" class="row g-3" enctype="multipart/form-data">
+                <input type="text" name="event_id" id="event_id3" class="form-control" placeholder="Event ID" readonly hidden>
+                <div class="col-12">
+                    <label for="event_end" class="form-label">Event Banner</label>
+                    <input type="file" class="form-control" name="banner" id="banner" placeholder="Enter event end">
+                </div>
+                </form>  
+
+            </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-dark me-auto" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick=" SubmitData('update-event-banner-form', '/api/update-event-banner')">Save changes</button>
           </div>
         </div>
       </div>
