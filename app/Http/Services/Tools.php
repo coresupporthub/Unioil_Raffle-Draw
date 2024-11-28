@@ -77,11 +77,16 @@ class Tools
         return $rows;
     }
 
+        /**
+        * @param array<string> $actions
+        * @param array<string, string|bool> $response
+        */
     public static function Logger($request, array $actions, array $response): void
     {
+
         $logs = new ActivityLogs();
 
-        $logs->user_id = Auth::id();
+        $logs->user_id = (int)Auth::id();
         $logs->action = $actions[0];
         $logs->result = $actions[1];
         $logs->device = $request->userAgent();
@@ -94,6 +99,11 @@ class Tools
         $logs->save();
     }
 
+    /**
+    * @param array<mixed> $data
+    * @param mixed $searchValue
+    * @return array<mixed>
+    */
     public static function searchInArray(array $data, $searchValue): array
     {
         return array_filter($data, function ($item) use ($searchValue) {

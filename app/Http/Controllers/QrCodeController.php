@@ -123,7 +123,7 @@ class QrCodeController extends Controller
 
         $limit = Magic::MAX_QR_PER_PAGE * $req->page_number;
 
-        $checkQRCodes = QrCode::where('export_status', 'none')->where('status', 'unused')->where('entry_type', $req->qrtype)->get()->count();
+        $checkQRCodes = QrCode::where('export_status', 'none')->where('status', 'unused')->where('entry_type', $req->qrtype)->count();
 
         if ($limit > $checkQRCodes) {
             return response()->json(['success' => false, 'message' => 'The QR Codes is not enough for the pages'], 403);
@@ -278,9 +278,9 @@ class QrCodeController extends Controller
     {
 
         if ($req->filter == Magic::QR_ENTRY_SINGLE) {
-            $qrCode = QrCode::where('export_status', Magic::EXPORT_FALSE)->where('status', Magic::QR_UNUSED)->where("entry_type", Magic::QR_ENTRY_SINGLE)->get()->count();
+            $qrCode = QrCode::where('export_status', Magic::EXPORT_FALSE)->where('status', Magic::QR_UNUSED)->where("entry_type", Magic::QR_ENTRY_SINGLE)->count();
         } else {
-            $qrCode = QrCode::where('export_status', Magic::EXPORT_FALSE)->where('status', Magic::QR_UNUSED)->where("entry_type", Magic::QR_ENTRY_DOUBLE)->get()->count();
+            $qrCode = QrCode::where('export_status', Magic::EXPORT_FALSE)->where('status', Magic::QR_UNUSED)->where("entry_type", Magic::QR_ENTRY_DOUBLE)->count();
         }
 
         if ($qrCode == 0) {

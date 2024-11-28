@@ -161,7 +161,7 @@ class RaffleController extends Controller
         return response()->json($data);
     }
 
-    public function validateclusterwinner($id): bool
+    public function validateclusterwinner(string $id): bool
     {
 
         $event = Event::where('event_status', 'Active')->first();
