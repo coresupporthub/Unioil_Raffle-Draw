@@ -6,8 +6,7 @@ use App\Models\RaffleEntries;
 use App\Models\Event;
 use App\Http\Services\Magic;
 use App\Models\ActivityLogs;
-use App\Models\Customers;
-use Clue\Redis\Protocol\Model\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 
 class Tools
@@ -34,7 +33,7 @@ class Tools
         return $randomString;
     }
 
-    public static function CreateEntries(string $customer_id , string $qr_id, string $store_code): string
+    public static function CreateEntries(string $customer_id, string $qr_id, string $store_code): string
     {
         $serialNumber = Tools::genCode();
 
@@ -59,8 +58,13 @@ class Tools
 
         return $serialNumber;
     }
-
-    public static function readCSV($file): array
+    /**
+     * Reads a CSV file and returns its content as an array of rows.
+     *
+     * @param UploadedFile $file The uploaded CSV file.
+     * @return array<int, array<int, string|null>> Each row as an array of column values.
+     */
+    public static function readCSV(UploadedFile $file): array
     {
         $rows = [];
         if (($handle = fopen($file, 'r')) !== false) {
@@ -73,7 +77,8 @@ class Tools
         return $rows;
     }
 
-    public static function Logger($request, array $actions, array $response){
+    public static function Logger($request, array $actions, array $response)
+    {
         $logs = new ActivityLogs();
 
         $logs->user_id = Auth::id();
@@ -89,7 +94,8 @@ class Tools
         $logs->save();
     }
 
-    public static function searchInArray($data, $searchValue) {
+    public static function searchInArray(array $data, $searchValue): array
+    {
         return array_filter($data, function ($item) use ($searchValue) {
             return in_array($searchValue, $item);
         });

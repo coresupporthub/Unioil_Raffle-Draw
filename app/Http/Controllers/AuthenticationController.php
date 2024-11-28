@@ -75,7 +75,7 @@ class AuthenticationController extends Controller
         return response()->json(['auth' => $user]);
     }
 
-    public function verifyuser(Request $req)
+    public function verifyuser(Request $req): JsonResponse
     {
         $code = $req->code1 . $req->code2 . $req->code3 . $req->code4 . $req->code5 . $req->code6;
 

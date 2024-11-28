@@ -14,12 +14,30 @@ class SendEntryCoupon implements ShouldQueue
     use Queueable;
 
     /**
-     * Create a new job instance.
+     * The type of the coupon.
      */
     private string $type;
-    private string $code;
+
+    /**
+     * Array of coupon codes.
+     *
+     * @var array<string>
+     */
+    private array $code;
+
+    /**
+     * The recipient's email address.
+     */
     private string $email;
-    public function __construct(string $type, string $code, string $email)
+
+    /**
+     * Create a new job instance.
+     *
+     * @param string $type The type of the coupon.
+     * @param array<string> $code Array of coupon codes.
+     * @param string $email The recipient's email address.
+     */
+    public function __construct(string $type, array $code, string $email)
     {
         $this->type = $type;
         $this->code = $code;
@@ -31,9 +49,9 @@ class SendEntryCoupon implements ShouldQueue
      */
     public function handle(): void
     {
-        if($this->type == Magic::RAFFLE_ENTRY_SINGLE){
-            Mail::to($this->email)->send(new EntryCouponSingle($this->code));
-        }else{
+        if ($this->type === Magic::RAFFLE_ENTRY_SINGLE) {
+            Mail::to($this->email)->send(new EntryCouponSingle($this->code[0]));
+        } else {
             Mail::to($this->email)->send(new EntryCouponDouble($this->code[0], $this->code[1]));
         }
     }

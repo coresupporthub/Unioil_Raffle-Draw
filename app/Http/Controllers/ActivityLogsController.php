@@ -13,7 +13,7 @@ class ActivityLogsController extends Controller
         return response()->json(['success'=> true, 'logs'=> $logs]);
     }
 
-    public function details($id): JsonResponse{
+    public function details(string $id): JsonResponse{
         $logs = ActivityLogs::where('act_id', $id)->join('users', 'users.id', '=', 'activity_logs.user_id')->select('activity_logs.*', 'users.name')->first();
 
         if(!$logs){

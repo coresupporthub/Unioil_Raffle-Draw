@@ -35,11 +35,10 @@ class CustomerRegistration extends Controller
             return response()->json(['success'=> false, 'message'=> 'Retail Store Code is invalid please confirm the code to the store owner']);
         }
 
-        if($retailStore){
-            $checkClusterId = RegionalCluster::where('cluster_id', $retailStore->cluster_id)->where('cluster_status', 'Disable')->first();
-            if($checkClusterId){
-                return response()->json(['success'=> false, 'message'=>'This store is not participating in the raffle']);
-            }
+        $checkClusterId = RegionalCluster::where('cluster_id', $retailStore->cluster_id)->where('cluster_status', 'Disable')->first();
+
+        if($checkClusterId){
+            return response()->json(['success'=> false, 'message'=>'This store is not participating in the raffle']);
         }
 
         $currentActiveEvent = Event::where('event_status', Magic::ACTIVE_EVENT)->first();
@@ -70,7 +69,7 @@ class CustomerRegistration extends Controller
         if($productEntry->entries == 1){
             $code = Tools::CreateEntries($customer->customer_id, $req->unique_identifier, $req->store_code);
             if(!empty($req->email_address)){
-                SendEntryCoupon::dispatch(Magic::RAFFLE_ENTRY_SINGLE, $code, $req->email_address);
+                SendEntryCoupon::dispatch(Magic::RAFFLE_ENTRY_SINGLE, [$code], $req->email_address);
             }
 
         }else{

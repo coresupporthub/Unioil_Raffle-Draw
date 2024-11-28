@@ -12,7 +12,7 @@ use Illuminate\Http\JsonResponse;
 
 class AnalyticsController extends Controller
 {
-    public function getEventData($eventId): JsonResponse
+    public function getEventData(string $eventId): JsonResponse
     {
         $activeEvent = Event::where('event_status', 'Active')->first();
 
@@ -63,27 +63,27 @@ class AnalyticsController extends Controller
         ]);
     }
 
-    public function entryissuance(Request $req, $filter): JsonResponse
+    public function entryissuance(Request $req, string $filter): JsonResponse
     {
         if ($filter == 'active') {
             $event = Event::where('event_status', 'Active')->first();
         } else {
             $event = Event::where('event_id', $filter)->first();
         }
-    
+
         if (!$event) {
             return response()->json([
                 'success' => false,
                 'message' => 'Event not found.',
             ]);
         }
-    
+
         $customers = Customers::where('event_id', $event->event_id)
             ->get()
             ->groupBy(function ($date) {
                 return $date->created_at->format('Y-m-d');
             });
-    
+
         $groupedByDate = [];
         foreach ($customers as $date => $records) {
             $groupedByDate[] = [
@@ -91,15 +91,15 @@ class AnalyticsController extends Controller
                 'count' => $records->count(),
             ];
         }
-    
+
         return response()->json([
             'success' => true,
             'eventData' => $groupedByDate,
         ]);
     }
-    
 
-    public function entriesbyproducttype(Request $req, $event): JsonResponse
+
+    public function entriesbyproducttype(Request $req, string $event): JsonResponse
     {
         if ($event == 'active') {
             $eventData = Event::where('event_status', 'Active')->first();
@@ -141,48 +141,48 @@ class AnalyticsController extends Controller
         return response()->json($groupedByMonth);
     }
 
-    public function getClusterData($eventId): JsonResponse
+    public function getClusterData(string $eventId): JsonResponse
     {
         if ($eventId == 'active') {
             $activeEvent = Event::where('event_status', 'Active')->first();
-    
+
             if (!$activeEvent) {
                 return response()->json([
                     'success' => false,
                     'message' => 'No active event found.',
                 ]);
             }
-    
-            $eventId = $activeEvent->event_id; 
+
+            $eventId = $activeEvent->event_id;
         }
-    
+
         $clusters = RegionalCluster::all();
         $clusterData = [];
-    
+
         foreach ($clusters as $cluster) {
-            $retails = RetailStore::where('cluster_id', $cluster->cluster_id)->get(); 
-    
-            $totalEntries = 0; 
+            $retails = RetailStore::where('cluster_id', $cluster->cluster_id)->get();
+
+            $totalEntries = 0;
             foreach ($retails as $retail) {
                 $customers = Customers::where('event_id', $eventId)
                     ->where('store_id', $retail->store_id)
                     ->get();
-    
+
                 foreach ($customers as $customer) {
                     $product = ProductList::where('product_id', $customer->product_purchased)->first();
-    
-                    if ($product) { 
+
+                    if ($product) {
                         $totalEntries += $product->entries == 2 ? 2 : 1;
                     }
                 }
             }
-    
+
             $clusterData[] = [
                 'cluster' => $cluster->cluster_name,
                 'entries' => $totalEntries,
             ];
         }
-    
+
         return response()->json([
             'success' => true,
             'message' => 'Cluster data fetched successfully.',
@@ -190,14 +190,14 @@ class AnalyticsController extends Controller
         ]);
     }
 
-    public function entriesByProductTypeAndCluster($eventId): JsonResponse
+    public function entriesByProductTypeAndCluster(string $eventId): JsonResponse
     {
-        
-    
+
+
         $clusters = RegionalCluster::all();
         $clusterData = [];
-       
-    
+
+
         foreach ($clusters as $cluster) {
             $full = 0;
             $semi = 0;
@@ -212,9 +212,9 @@ class AnalyticsController extends Controller
                     }else{
                         $semi += 1;
                     }
-                    
+
                 }
-                
+
             }
             $productData[]=[
                 'Fully Synthetic'=>$full,
@@ -225,12 +225,12 @@ class AnalyticsController extends Controller
                 'product'=>$productData
             ];
         }
-    
+
         return response()->json([
             'success' => true,
             'message' => 'Entries by product type and cluster fetched successfully.',
             'data' => $clusterData,
         ]);
     }
-    
+
 }
