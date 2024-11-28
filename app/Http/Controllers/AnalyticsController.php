@@ -29,6 +29,10 @@ class AnalyticsController extends Controller
         $countSemi = 0;
         foreach ($customers as $customer) {
             $products = ProductList::where('product_id', $customer->product_purchased)->first();
+            if(!$products){
+                continue;
+            }
+
             if ($products->entries == 1) {
                 $countSemi += 1;
             } else {
@@ -81,7 +85,7 @@ class AnalyticsController extends Controller
         $customers = Customers::where('event_id', $event->event_id)
             ->get()
             ->groupBy(function ($date) {
-                return $date->created_at->format('Y-m-d');
+                return $date->created_at ? $date->created_at->format('Y-m-d') : 'undefined';
             });
 
         $groupedByDate = [];
@@ -107,11 +111,14 @@ class AnalyticsController extends Controller
             $eventData = Event::where('event_id', $event)->first();
         }
 
+        if(!$eventData){
+            return response()->json(['success'=> false, 'message'=> 'No Event Found']);
+        }
+
         $customers = Customers::where('event_id', $eventData->event_id)
             ->get()
             ->groupBy(function ($date) {
-
-                return $date->created_at->format('Y-m');
+                return $date->created_at ? $date->created_at->format('Y-m') : 'undefined';
             });
 
         $groupedByMonth = [];
@@ -122,7 +129,9 @@ class AnalyticsController extends Controller
 
             foreach($records as $rec){
                 $product = ProductList::where('product_id', $rec['product_purchased'])->first();
-
+                if(!$product){
+                    continue;
+                }
                 if($product->entries == 1){
                     $s_synthetic++;
                 }else{
@@ -207,6 +216,9 @@ class AnalyticsController extends Controller
                 $customers = Customers::where('store_id',$store->store_id)->where('event_id',$eventId)->get();
                 foreach($customers as $customer){
                     $product = ProductList::where('product_id',$customer->product_purchased)->first();
+                    if(!$product){
+                        continue;
+                    }
                     if($product->entries == 2){
                         $full += 2;
                     }else{

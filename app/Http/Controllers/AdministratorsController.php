@@ -155,6 +155,10 @@ class AdministratorsController extends Controller
 
             $newSuperAdmin = User::where('id', $req->id)->first();
 
+            if(!$newSuperAdmin){
+                return response()->json(['success'=> false, 'message'=> 'No Admin Found']);
+            }
+
             $newSuperAdmin->update([
                 'user_type'=> 'Super Admin',
             ]);

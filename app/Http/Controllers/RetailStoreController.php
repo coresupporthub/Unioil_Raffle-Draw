@@ -45,6 +45,10 @@ class RetailStoreController extends Controller
     public function clusterstatus(Request $request): JsonResponse{
         $data = RegionalCluster::where('cluster_id', $request->id)->first();
 
+        if(!$data){
+            return response()->json(['success'=> false, 'message'=> 'No Regional Cluster Found']);
+        }
+
         $data->update([
             'cluster_status' => 'Disable'
         ]);
@@ -86,6 +90,10 @@ class RetailStoreController extends Controller
     public function removeretailstore(Request $request): JsonResponse{
         $data = RetailStore::where('store_id', $request->id)->first();
 
+        if(!$data){
+            return response()->json(['success'=> false, 'message'=> 'No Retail Store Found']);
+        }
+
         $response = ['success' => true, 'message' => 'Store status successfully delete'];
         $req = [
             'user_agent' => $request->userAgent(),
@@ -104,6 +112,9 @@ class RetailStoreController extends Controller
     public function updatestore(Request $request): JsonResponse
     {
         $data = RetailStore::where('store_id',$request->store_id)->first();
+        if(!$data){
+            return response()->json(['success'=> false, 'message'=> 'No retail store found']);
+        }
         $data->cluster_id = $request->cluster_id;
         $data->area = $request->area;
         $data->address = $request->address;

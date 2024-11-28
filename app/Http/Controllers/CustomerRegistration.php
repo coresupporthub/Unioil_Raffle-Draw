@@ -66,6 +66,10 @@ class CustomerRegistration extends Controller
 
         $productEntry = ProductList::where('product_id', $req->product)->first();
 
+        if(!$productEntry){
+            return response()->json(['success'=> false, 'message' => 'No Product Found']);
+        }
+
         if($productEntry->entries == 1){
             $code = Tools::CreateEntries($customer->customer_id, $req->unique_identifier, $req->store_code);
             if(!empty($req->email_address)){

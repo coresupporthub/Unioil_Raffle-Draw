@@ -48,6 +48,7 @@ class Tools
 
         $currentActiveEvent = Event::where('event_status', Magic::ACTIVE_EVENT)->first();
 
+       if($currentActiveEvent){
         $entry->event_id = $currentActiveEvent->event_id;
 
         $entry->customer_id = $customer_id;
@@ -55,6 +56,7 @@ class Tools
         $entry->qr_id = $qr_id;
         $entry->retail_store_code = $store_code;
         $entry->save();
+       }
 
         return $serialNumber;
     }
@@ -81,7 +83,7 @@ class Tools
          * @param array<string, string|null> $request
          * @param array<string> $actions
          * @param array<string, string|bool> $sent_data
-         * @param array<string, string|bool> $response
+         * @param array<string, mixed> $response
         */
     public static function Logger(array $request, array $sent_data, array $actions, array $response, int $user_id = null): void
     {

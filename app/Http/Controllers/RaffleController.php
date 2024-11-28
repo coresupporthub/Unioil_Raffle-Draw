@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Http\UploadedFile;
+use PDO;
 
 class RaffleController extends Controller
 {
@@ -23,11 +24,17 @@ class RaffleController extends Controller
     {
 
         $event = Event::where('event_status', 'Active')->first();
+
+        if(!$event){
+            return response()->json(['success'=> false, 'No Active Event Found']);
+        }
+
         $retailStores = RetailStore::where('cluster_id', $request->id)->pluck('rto_code');
         $raffleEntries = RaffleEntries::where('winner_status', 'false')->where('winner_record', 'false')
             ->whereIn('retail_store_code', $retailStores)
             ->where('event_id', $event->event_id)
             ->get();
+
 
         return response()->json($raffleEntries);
     }
@@ -36,16 +43,18 @@ class RaffleController extends Controller
     {
 
         $check = $this->validateclusterwinner($request->id);
-
-        if ($check) {
-            $cluster_name = RegionalCluster::where('cluster_id', $request->id)->first()->cluster_name;
+        $cluster_name = RegionalCluster::where('cluster_id', $request->id)->first();
+        if ($check && $cluster_name) {
             return response()->json([
                 'success' => false,
-                'message' => $cluster_name . ' already have a winner',
+                'message' => $cluster_name->cluster_name . ' already have a winner',
             ]);
         }
 
         $event = Event::where('event_status', 'Active')->first();
+        if(!$event){
+            return response()->json(['success'=> false, 'message'=> 'No Active Event Found']);
+        }
         $retailStores = RetailStore::where('cluster_id', $request->id)->pluck('rto_code');
         $raffleEntries = RaffleEntries::where('winner_status', 'false')->where('winner_record', 'false')
             ->whereIn('retail_store_code', $retailStores)
@@ -53,21 +62,34 @@ class RaffleController extends Controller
             ->select('serial_number')
             ->get();
 
+        if(count($raffleEntries) == 0){
+            return response()->json(['success'=> false, 'message'=> 'No Raffle Entries Found']);
+        }
+
         $shuffledSerialNumbers = $raffleEntries->pluck('serial_number')->toArray();
         shuffle($shuffledSerialNumbers);
 
         $winnerSerialNumber = $shuffledSerialNumbers[0];
 
         $winnerRaffleEntry = RaffleEntries::where('serial_number', $winnerSerialNumber)->first();
+
+        if(!$winnerRaffleEntry){
+            return response()->json(['success'=> false, 'message'=> 'No raffle Entry Found']);
+        }
+
         $winnerRaffleEntry->winner_status = 'true';
         $winnerRaffleEntry->winner_record = 'true';
         $winnerRaffleEntry->save();
 
-        $customerWinner = Customers::where('customer_id', $winnerRaffleEntry->customer_id)->first();
-        $store = RetailStore::where('store_id', $customerWinner->store_id)->join('regional_cluster', 'retail_store.cluster_id', '=', 'regional_cluster.cluster_id')
-            ->select('cluster_name', 'retail_station', 'distributor')->first();
+        $customerWinner = Customers::where('customer_id', $winnerRaffleEntry->customer_id ?? null)->first();
+        $store = RetailStore::where('store_id', $customerWinner->store_id ?? null)->join('regional_cluster', 'retail_store.cluster_id', '=', 'regional_cluster.cluster_id')
+            ->select('cluster_name', 'retail_station', 'distributor')->first() ?? null;
 
-        $product = ProductList::where('product_id', $customerWinner->product_purchased)->select('product_name')->first();
+        $product = ProductList::where('product_id', $customerWinner->product_purchased ?? null)->select('product_name')->first();
+
+        if(!$product){
+            return response()->json(['success'=> false, 'message'=> 'No Product Found']);
+        }
 
         $response = [
             'success' => true,
@@ -92,21 +114,26 @@ class RaffleController extends Controller
     {
 
         $event = Event::where('event_status', 'Active')->first();
+
+        if(!$event){
+            return response()->json(['success'=> false, 'message'=> 'No Active Event Found']);
+        }
+
         $raffleEntries = RaffleEntries::where('winner_status', 'true')
             ->where('event_id', $event->event_id)
             ->get();
         $data = [];
         foreach ($raffleEntries as $entry) {
-            $retailStores = RetailStore::where('rto_code', $entry->retail_store_code)->first();
-            $cluster = RegionalCluster::where('cluster_id', $retailStores->cluster_id)->first()->cluster_name;
-            $customer = Customers::where('customer_id', $entry->customer_id)->first();
+            $retailStores = RetailStore::where('rto_code', $entry->retail_store_code ?? null)->first();
+            $cluster = RegionalCluster::where('cluster_id', $retailStores->cluster_id ?? null)->first();
+            $customer = Customers::where('customer_id', $entry->customer_id ?? null)->first();
             $data[] = [
-                'event_prize' => $event->event_prize,
-                'serial_number' => $entry->serial_number,
-                'customer_name' => $customer->full_name,
-                'customer_email' => $customer->email,
-                'customer_number' => $customer->mobile_number,
-                'cluster' => $cluster
+                'event_prize' => $event->event_prize ?? null,
+                'serial_number' => $entry->serial_number ?? null,
+                'customer_name' => $customer->full_name ?? null,
+                'customer_email' => $customer->email ?? null,
+                'customer_number' => $customer->mobile_number ?? null,
+                'cluster' => $cluster->cluster_name ?? null
             ];
         }
         return response()->json($data);
@@ -116,28 +143,33 @@ class RaffleController extends Controller
     {
 
         $event = Event::where('event_id', $request->event_id)->first();
+
+        if(!$event){
+            return response()->json(['success'=> false, 'message'=> 'No Active Event Found']);
+        }
+
         $raffleEntries = RaffleEntries::where('winner_status', 'true')
             ->where('event_id', $event->event_id)
             ->get();
         $data = [];
         foreach ($raffleEntries as $entry) {
-            $retailStores = RetailStore::where('rto_code', $entry->retail_store_code)->first();
-            $cluster = RegionalCluster::where('cluster_id', $retailStores->cluster_id)->first()->cluster_name;
+            $retailStores = RetailStore::where('rto_code', $entry->retail_store_code ?? null)->first();
+            $cluster = RegionalCluster::where('cluster_id', $retailStores->cluster_id ?? null)->first();
 
-            $customer = Customers::where('customer_id', $entry->customer_id)->first();
+            $customer = Customers::where('customer_id', $entry->customer_id ?? null)->first();
             $data[] = [
-                'event_prize' => $event->event_prize,
+                'event_prize' => $event->event_prize ?? null,
                 'serial_number' => $entry->serial_number,
-                'customer_name' => $customer->full_name,
-                'customer_email' => $customer->email,
-                'customer_number' => $customer->mobile_number,
-                'customer_age' => $customer->age,
-                'cluster' => $cluster,
-                'retail_code' => $retailStores->rto_code,
-                'retail_area' => $retailStores->area,
-                'retail_address' => $retailStores->address,
-                'retail_distributor' => $retailStores->distributor,
-                'retail_name' => $retailStores->retail_station
+                'customer_name' => $customer->full_name ?? null,
+                'customer_email' => $customer->email ?? null,
+                'customer_number' => $customer->mobile_number ?? null,
+                'customer_age' => $customer->age ?? null,
+                'cluster' => $cluster->cluster_name ?? null,
+                'retail_code' => $retailStores->rto_code ?? null,
+                'retail_area' => $retailStores->area ?? null,
+                'retail_address' => $retailStores->address ?? null,
+                'retail_distributor' => $retailStores->distributor ?? null,
+                'retail_name' => $retailStores->retail_station ?? null
 
             ];
         }
@@ -148,22 +180,25 @@ class RaffleController extends Controller
     {
 
         $event = Event::where('event_id', $request->event_id)->first();
+        if(!$event){
+            return response()->json(['success'=> false, 'message'=> 'No event Found']);
+        }
         $raffleEntries = RaffleEntries::where('winner_status', 'false')
             ->where('winner_record', 'true')
             ->where('event_id', $event->event_id)
             ->get();
         $data = [];
         foreach ($raffleEntries as $entry) {
-            $retailStores = RetailStore::where('rto_code', $entry->retail_store_code)->first();
-            $cluster = RegionalCluster::where('cluster_id', $retailStores->cluster_id)->first()->cluster_name;
-            $customer = Customers::where('customer_id', $entry->customer_id)->first();
+            $retailStores = RetailStore::where('rto_code', $entry->retail_store_code ?? null)->first();
+            $cluster = RegionalCluster::where('cluster_id', $retailStores->cluster_id ?? null)->first();
+            $customer = Customers::where('customer_id', $entry->customer_id ?? null)->first();
             $data[] = [
-                'event_prize' => $event->event_prize,
+                'event_prize' => $event->event_prize ?? null,
                 'serial_number' => $entry->serial_number,
-                'customer_name' => $customer->full_name,
-                'customer_email' => $customer->email,
-                'customer_number' => $customer->mobile_number,
-                'cluster' => $cluster
+                'customer_name' => $customer->full_name ?? null,
+                'customer_email' => $customer->email ?? null,
+                'customer_number' => $customer->mobile_number ?? null,
+                'cluster' => $cluster->cluster_name ?? null
             ];
         }
         return response()->json($data);
@@ -173,6 +208,9 @@ class RaffleController extends Controller
     {
 
         $event = Event::where('event_status', 'Active')->first();
+        if(!$event){
+            return false;
+        }
         $retailStores = RetailStore::where('cluster_id', $id)->pluck('rto_code');
         $raffleEntries = RaffleEntries::where('winner_status', 'true')->where('winner_record', 'true')
             ->whereIn('retail_store_code', $retailStores)
@@ -279,14 +317,16 @@ class RaffleController extends Controller
 
 
         if (is_array($imageFile)) {
-            $imageFile = $imageFile[0];
+            $imageFile = $imageFile[0] ?? null;
         }
 
         if (is_array($bannerFile)) {
-            $bannerFile = $bannerFile[0];
+            $bannerFile = $bannerFile[0] ?? null;
         }
 
-        if ($imageFile->getSize() > 10485760 || $bannerFile->getSize() > 10485760) {
+        if (
+            ($imageFile instanceof UploadedFile && $imageFile->getSize() > 10485760) ||
+            ($bannerFile instanceof UploadedFile && $bannerFile->getSize() > 10485760)) {
             return response()->json(['message' => 'Image size should not exceed 10MB', 'success' => false]);
         }
 
@@ -319,7 +359,7 @@ class RaffleController extends Controller
         return response()->json($response);
     }
 
-    public function storeFile(UploadedFile $file, string $folder): string
+    public function storeFile(?UploadedFile $file, string $folder): string
     {
 
         $storagePath = storage_path("app/$folder");
@@ -332,18 +372,23 @@ class RaffleController extends Controller
             chgrp($storagePath, 'www-data');
         }
 
-        $randomName = Str::random(10) . '.' . $file->getClientOriginalExtension();
-
-
-        $file->move($storagePath, $randomName);
-
-
+        if ($file instanceof UploadedFile) {
+            $randomName = Str::random(10) . '.' . $file->getClientOriginalExtension();
+            $file->move($storagePath, $randomName);
+        } else {
+            throw new \Exception('No valid file provided to upload.');
+        }
         return $randomName;
     }
 
     public function redraw(Request $request): JsonResponse
     {
         $raffleEntries = RaffleEntries::where('serial_number', $request->serial)->first();
+
+        if(!$raffleEntries){
+            return response()->json(['success'=> false, 'message'=> 'No Raffle Entry Found']);
+        }
+
         $raffleEntries->winner_status = 'false';
         $raffleEntries->save();
 
@@ -407,9 +452,9 @@ class RaffleController extends Controller
         if ($event) {
             $folderPath = 'event_images';
 
-            $image = $request->file('image');
+            $image = $request->file('image') ?? null;
             if(is_array($image)){
-                $image = $image[0];
+                $image = $image[0] ?? null;
             }
             $imageFileName = $this->storeFile($image, $folderPath);
 
@@ -467,11 +512,19 @@ class RaffleController extends Controller
 
         $user = User::where('id', Auth::id())->first();
 
+        if(!$user){
+            return response()->json(['success'=> false, 'message'=> 'No User Found']);
+        }
+
         if (!Hash::check($request->password, $user->password)) {
             return response()->json(['success' => false, 'message' => 'Incorrect Password please try again']);
         }
 
         $event = Event::where('event_id', $request->event_id)->first();
+        if(!$event){
+            return response()->json(['success'=> false, 'message'=> 'No Event Found']);
+        }
+
         $event->event_status = 'Inactive';
         $event->save();
 

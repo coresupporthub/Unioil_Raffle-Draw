@@ -30,6 +30,10 @@ class AuthenticationController extends Controller
 
             $user = User::where('id', Auth::id())->first();
 
+            if(!$user){
+                return response()->json(['success'=> false, 'message'=> 'No User Found']);
+            }
+
             if ($user->authenticated == 'true') {
                 return response()->json(['success' => true, 'message' => 'Authentication is successful', 'redirect' => true]);
             }
@@ -83,6 +87,9 @@ class AuthenticationController extends Controller
         $code = $req->code1 . $req->code2 . $req->code3 . $req->code4 . $req->code5 . $req->code6;
 
         $user = User::where('id', Auth::id())->first();
+        if(!$user){
+            return response()->json(['success'=> false, 'message'=> 'No User Found']);
+        }
         $request = [
             'user_agent' => $req->userAgent(),
             'page_route' => $req->headers->get('referer'),
@@ -125,6 +132,10 @@ class AuthenticationController extends Controller
     {
         $user = User::where('id', Auth::id())->first();
 
+        if(!$user){
+            return response()->json(['success'=> false, 'message'=> 'No User Found']);
+        }
+
         $user->update([
             'verification_code' => null,
             'authenticated' => 'false'
@@ -151,6 +162,10 @@ class AuthenticationController extends Controller
     {
 
         $user = User::where('id', Auth::id())->first();
+
+        if(!$user){
+            return response()->json(['success'=> false, 'message'=> 'No User Found']);
+        }
 
         if (Magic::MAX_VERIFY_RESEND > $user->resend_attempt) {
 
@@ -183,6 +198,11 @@ class AuthenticationController extends Controller
         }
 
         $user = User::where('id', Auth::id())->first();
+
+        if(!$user){
+            return response()->json(['success'=> false, 'message'=> 'No User Found']);
+        }
+
         $request = [
             'user_agent' => $req->userAgent(),
             'page_route' => $req->headers->get('referer'),
@@ -207,11 +227,14 @@ class AuthenticationController extends Controller
     public function updateadmin(Request $req): JsonResponse
     {
         $user = User::where('id', Auth::id())->first();
-
+        if(!$user){
+            return response()->json(['success'=>false, 'message'=> 'No User Found']);
+        }
         $user->update([
             'name' => $req->name,
             'email' => $req->email
         ]);
+
         $request = [
             'user_agent' => $req->userAgent(),
             'page_route' => $req->headers->get('referer'),

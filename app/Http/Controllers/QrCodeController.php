@@ -108,7 +108,7 @@ class QrCodeController extends Controller
      * Get the export data for a given export model.
      *
      * @param ExportFilesModel $export The export model instance.
-     * @return array{exp_id: int, file_name: string, queue_id?: string, created_at?: string, updated_at?: string, base64File: ?string}
+     * @return array{exp_id: int, file_name: string, queue_id?: string, base64File: ?string}
      */
     private function getExportData(ExportFilesModel $export): array
     {
@@ -135,15 +135,19 @@ class QrCodeController extends Controller
         $base64Encoded = base64_encode($fileContent);
         $mimeType = mime_content_type($filePath);
 
-        return [
+        $response = [
             'exp_id' => $export->exp_id,
             'file_name' => $export->file_name,
-            'queue_id' => $export->queue_id,
-            'created_at' => $export->created_at,
-            'updated_at' => $export->updated_at,
             'base64File' => 'data:' . $mimeType . ';base64,' . $base64Encoded,
         ];
+
+        if (!is_null($export->queue_id)) {
+            $response['queue_id'] = $export->queue_id;
+        }
+
+        return $response;
     }
+
 
     public function exportQR(Request $req): Response
     {
@@ -212,10 +216,11 @@ class QrCodeController extends Controller
             foreach ($qrCodesC as $qrCodes) {
                 foreach ($qrCodes as $qr) {
                     $qr = QrCode::where('qr_id', $qr['qr_id'])->first();
-
-                    $qr->update([
-                        'export_status' => 'exported'
-                    ]);
+                    if ($qr) {
+                        $qr->update([
+                            'export_status' => 'exported'
+                        ]);
+                    }
                 }
             }
         }
@@ -278,8 +283,11 @@ class QrCodeController extends Controller
     {
         $customer = Customers::where('qr_id', $req->id)->first();
 
-
         $qrCode = QrCode::where('qr_id', $req->id)->first();
+
+        if (!$qrCode) {
+            return response()->json(['success' => false, 'message' => 'No QR Code Found']);
+        }
 
         $imagePath = storage_path('app/qr-codes/' . $qrCode->image);
 
@@ -289,12 +297,15 @@ class QrCodeController extends Controller
             $qrCode->image_base64 = null;
         }
 
-
         if (!$customer) {
             return response()->json(['success' => false, 'message' => 'No customer found', 'qr' => $qrCode]);
         }
 
         $product = ProductList::where('product_id', $customer->product_purchased)->first();
+
+        if (!$product) {
+            return response()->json(['success' => false, 'message' => 'No Product Found']);
+        }
 
         $entries = RaffleEntries::where('qr_id', $req->id)->join('retail_store', 'retail_store.rto_code', '=', 'raffle_entries.retail_store_code');
         if ($product->entries == 1) {
