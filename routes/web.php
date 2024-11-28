@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\Customers;
 use App\Models\ProductList;
 use App\Models\RaffleEntries;
+use App\Http\Services\Tools;
 use App\Models\Event;
 
 Route::middleware([AuthMiddleware::class])->group(function () {
@@ -50,11 +51,9 @@ Route::middleware([AuthMiddleware::class])->group(function () {
         return view('Admin.accountsettings');
     })->name('accountsettings');
 
-    Route::get('/activity-logs', function (){
+    Route::get('/activity-logs', function () {
         return view('Admin.activitylogs');
     });
-
-    
 });
 
 
@@ -71,40 +70,40 @@ Route::get('/admin/verification-code', function () {
 Route::get('/registration/page/{code}/{uuid}', function ($code, $uuid) {
 
     $checkCode = QrCode::where('qr_id', $uuid)->where('code', $code)->first();
-    if(!$checkCode){
-       abort(402);
+    if (!$checkCode) {
+        abort(402);
     }
 
     $checkUsed = QrCode::where('qr_id', $uuid)->where('code', $code)->where('status', 'used')->first();
 
-    if($checkUsed){
+    if ($checkUsed) {
         abort(402);
     }
 
-    if($checkCode->entry_type == 'Dual Entry QR Code'){
+    if ($checkCode->entry_type == 'Dual Entry QR Code') {
         $product = ProductList::where('entries', 2)->get();
         $productType = 'Dual Entry';
-    }else{
+    } else {
         $product = ProductList::where('entries', 1)->get();
         $productType = 'Single Entry';
     }
 
-    return view('Customer.registration', ['code'=> $code, 'uuid'=> $uuid, 'products'=> $product, 'product_type'=> $productType]);
+    return view('Customer.registration', ['code' => $code, 'uuid' => $uuid, 'products' => $product, 'product_type' => $productType]);
 })->name('customer_registrations');
 
-Route::get('/registration-complete/coupon-serial-number/{customer_id}', function ($customer_id){
+Route::get('/registration-complete/coupon-serial-number/{customer_id}', function ($customer_id) {
 
     $customers = Customers::where('customer_id', $customer_id)->first();
 
-    if(!$customers){
+    if (!$customers) {
         abort(404);
     }
 
     $productPurchased = ProductList::where('product_id', $customers->product_purchased)->first();
 
-    if($productPurchased->entries == 1){
+    if ($productPurchased->entries == 1) {
         $raffleEntries = RaffleEntries::where('customer_id', $customers->customer_id)->first();
-    }else{
+    } else {
         $raffleEntries = RaffleEntries::where('customer_id', $customers->customer_id)->get();
     }
 
@@ -114,10 +113,13 @@ Route::get('/registration-complete/coupon-serial-number/{customer_id}', function
     $bannerImagePath = storage_path('app/event_images/' . $event->event_banner);
     $event->event_banner = base64_encode(file_get_contents($bannerImagePath));
 
-    return view('Customer.coupon', ['entries' => $productPurchased->entries, 'code' => $raffleEntries, 'customers'=> $customers,
-    'banner'=>$event->event_banner,
-    'prize_image'=>$event->event_prize_image,
-    'prize'=> $event->event_prize,
-    'duration'=>$event->event_start.' - '.$event->event_end
-]);
+    return view('Customer.coupon', [
+        'entries' => $productPurchased->entries,
+        'code' => $raffleEntries,
+        'customers' => $customers,
+        'banner' => $event->event_banner,
+        'prize_image' => $event->event_prize_image,
+        'prize' => $event->event_prize,
+        'duration' => Tools::dateFormat($event->event_start) . ' - ' . Tools::dateFormat($event->event_end)
+    ]);
 });

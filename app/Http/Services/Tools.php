@@ -8,7 +8,7 @@ use App\Http\Services\Magic;
 use App\Models\ActivityLogs;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
-
+use Carbon\Carbon;
 class Tools
 {
 
@@ -118,5 +118,12 @@ class Tools
             }
             return false;
         });
+    }
+
+    public static function dateFormat(string $dateString): string
+    {
+        $date = Carbon::parse($dateString);
+
+        return (string)$date->format('F d, Y');
     }
 }
