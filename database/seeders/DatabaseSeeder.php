@@ -16,18 +16,19 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $users = [
-            ['Rheyan' , 'rheyanjohnblancogwapo@gmail.com'],
-            ['JP', 'jpubas@gmail.com'],
-            ['Tisha', 'tishtizon@gmail.com'],
-            ['Hazel', 'santiago.hazel03@gmail.com'],
-            ['Faith Cipriano', 'emfscipriano@unioil.com'],
+            ['Rheyan' , 'rheyanjohnblancogwapo@gmail.com', 'Admin'],
+            ['JP', 'jpubas@gmail.com', 'Admin'],
+            ['Tisha', 'tishtizon@gmail.com', 'Admin'],
+            ['Hazel', 'santiago.hazel03@gmail.com', 'Admin'],
+            ['Faith Cipriano', 'emfscipriano@unioil.com', 'Super Admin'],
         ];
 
         foreach($users as $user){
             User::factory()->create([
                 'name' => $user[0],
                 'email' => $user[1],
-                'password' => '12345678'
+                'password' => '12345678',
+                'user_type' => $user[2]
             ]);
         }
 
