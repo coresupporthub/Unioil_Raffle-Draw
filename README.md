@@ -72,10 +72,10 @@ This system facilitates the efficient management of Unioil’s raffle promotions
 - Core Support Hub: Responsible for providing and maintaining technical support for this system.
 
 ##### Software Engineers
- - @RheyanJohn15
- - @JPUbas
- - @Tshmytzn
- - @03hazel
+ - [@RheyanJohn15](https://github.com/RheyanJohn15) 
+ - [@JpUbas](https://github.com/JpUbas) 
+ - [@Tshmytzn](https://github.com/Tshmytzn) 
+ - [@03hazel](https://github.com/03hazel) 
 
 ### Setup Instructions
 
