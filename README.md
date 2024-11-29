@@ -1,4 +1,4 @@
-<h1 align="center">Partnership</h1>
+
 <p align="center">
   <img src="public/unioil_images/logo1.png" alt="Core Support Logo" width="100"/>
   <img src="public/unioil_images/unioil.png" alt="Unioil Logo" width="100"/>
