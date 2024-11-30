@@ -25,52 +25,60 @@ class AuthenticationController extends Controller
             'method' => $req->method(),
             'session_id' => $req->session()->getId(),
         ];
-        if (Auth::attempt($data)) {
-            $req->session()->regenerate();
 
-            $user = User::where('id', Auth::id())->first();
 
-            if(!$user){
-                return response()->json(['success'=> false, 'message'=> 'No User Found']);
-            }
+        $check = User::where('email', $req->email)->first();
 
-            if ($user->authenticated == 'true') {
-                return response()->json(['success' => true, 'message' => 'Authentication is successful', 'redirect' => true]);
-            }
-
-            $verificationCode = Tools::genCode(6, 'numeric');
-
-            SendVerification::dispatch($user->email, $verificationCode);
-
-            $user->update([
-                'verification_code' => $verificationCode
-            ]);
-
-            $response = ['success' => true, 'message' => 'Authentication is successful', 'redirect' => false];
-
-            Tools::Logger($request,$req->all(), ['Login Attempt', "Successfully logged in to the admin dashboard"], $response);
-
-            return response()->json($response);
-        } else {
-
-            $check = User::where('email', $req->email)->first();
+        if(!$check){
             $response = ['success' => false, 'message' => "Email and password does not match", 'redirect' => false];
-            if ($check) {
-                if (Magic::MAX_LOGIN_ATTEMPT > $check->login_attempt) {
-                    $check->update([
-                        'login_attempt' => $check->login_attempt + 1
-                    ]);
-                } else {
-                    $response = ['success' => false, 'message'=>"You have reached your max login attempt with incorrect password or email", 'redirect' => false];
-                    Tools::Logger($request, $req->all(), ['Login Attempt', "Has Reached Attempt Maximum Limit"], $response);
-
-                    return response()->json($response);
-                }
-                Tools::Logger($request, $req->all(), ['Login Attempt', "Failed to logged in to the admin dashboard"], $response, $check->id);
-            }
-
             return response()->json($response);
         }
+
+        if ($check) {
+            if (Magic::MAX_LOGIN_ATTEMPT > $check->login_attempt) {
+                $check->update([
+                    'login_attempt' => $check->login_attempt + 1
+                ]);
+            } else {
+                $response = ['success' => false, 'message'=>"You have reached your max login attempt with incorrect password or email", 'redirect' => false];
+                Tools::Logger($request, $req->all(), ['Login Attempt', "Has Reached Attempt Maximum Limit"], $response, $check->id);
+
+                return response()->json($response);
+            }
+        }
+
+        if(!Auth::attempt($data)){
+            $response = ['success' => false, 'message' => "Email and password does not match", 'redirect' => false];
+            Tools::Logger($request, $req->all(), ['Login Attempt', "Failed to logged in to the admin dashboard"], $response, $check->id);
+            return response()->json($response);
+        }
+
+        $req->session()->regenerate();
+
+        $user = User::where('id', Auth::id())->first();
+
+        if(!$user){
+            return response()->json(['success'=> false, 'message'=> 'No User Found']);
+        }
+
+        if ($user->authenticated == 'true') {
+            return response()->json(['success' => true, 'message' => 'Authentication is successful', 'redirect' => true]);
+        }
+
+        $verificationCode = Tools::genCode(6, 'numeric');
+
+        SendVerification::dispatch($user->email, $verificationCode);
+
+        $user->update([
+            'verification_code' => $verificationCode
+        ]);
+
+        $response = ['success' => true, 'message' => 'Authentication is successful', 'redirect' => false];
+
+        Tools::Logger($request,$req->all(), ['Login Attempt', "Successfully logged in to the admin dashboard"], $response);
+
+        return response()->json($response);
+
     }
 
     public function getauth(Request $req): JsonResponse
