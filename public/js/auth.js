@@ -16,7 +16,7 @@ document.getElementById('authForm').addEventListener('submit', (e)=> {
             }
 
             if(res.redirect){
-                window.location.href = "/";
+                window.location.href = "/dashboard";
             }
 
         }, error: xhr=> console.log(xhr.responseText)

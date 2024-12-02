@@ -39,7 +39,7 @@ document.getElementById('verifyForm').addEventListener('submit', e => {
             btnLoading('verifySubmit', false);
             dataParser(res);
             if(res.success){
-                window.location.href = '/';
+                window.location.href = '/dashboard';
             }
         }, error: xhr => console.log(xhr.responseText)
     })
