@@ -204,7 +204,6 @@
                             <ul>
                                 <li>To verify your eligibility for the promo;</li>
                                 <li>To notify and contact you if you win;</li>
-                                <li>To deliver prizes to winners;</li>
                                 <li>To respond to any promo-related inquiries;</li>
                                 <li>To comply with legal and regulatory requirements related to raffles and promotions.</li>
                             </ul>
@@ -214,14 +213,14 @@
                             <ul>
                                 <li>Your name;</li>
                                 <li>Your contact details (e.g., phone number and email address);</li>
-                                <li>Your address (for prize delivery purposes);</li>
+                                <li>Your address;</li>
                                 <li>Other information required for promo registration and verification.</li>
                             </ul>
 
                             <h3 class="mt-4">How does UNIOIL collect my Personal Data?</h3>
                             <p>Your Personal Data may be collected through the following means:</p>
                             <ul>
-                                <li>When you register for the promo via our official promo channels (e.g., website or physical forms);</li>
+                                <li>When you register for the promo via our official promo channels (e.g., website);</li>
                                 <li>When you provide your information during prize claiming;</li>
                                 <li>When you contact us for promo-related queries or concerns.</li>
                             </ul>
@@ -235,7 +234,7 @@
                             <h3 class="mt-4">Contact Us</h3>
                             <p>If you have any questions or concerns about this Privacy Notice or your Personal Data, you may contact us at:</p>
                             <p>
-                                <strong>Email:</strong> privacy@unioil.com.ph<br>
+                                <strong>Email:</strong> dpo@unioil.com<br>
                                 <strong>Address:</strong> 38th flr., Exquadra Tower, 1 Jade Dr., Ortigas Center, Pasig City, Metro Manila, Philippines
                             </p>
                         </div>
