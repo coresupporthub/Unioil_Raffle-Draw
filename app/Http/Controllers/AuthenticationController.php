@@ -34,18 +34,17 @@ class AuthenticationController extends Controller
             return response()->json($response);
         }
 
-        if ($check) {
-            if (Magic::MAX_LOGIN_ATTEMPT > $check->login_attempt) {
-                $check->update([
+        if (Magic::MAX_LOGIN_ATTEMPT > $check->login_attempt) {
+            $check->update([
                     'login_attempt' => $check->login_attempt + 1
-                ]);
-            } else {
-                $response = ['success' => false, 'message'=>"You have reached your max login attempt with incorrect password or email", 'redirect' => false];
-                Tools::Logger($request, $req->all(), ['Login Attempt', "Has Reached Attempt Maximum Limit"], $response, $check->id);
+            ]);
+        } else {
+            $response = ['success' => false, 'message'=>"You have reached your max login attempt with incorrect password or email", 'redirect' => false];
+            Tools::Logger($request, $req->all(), ['Login Attempt', "Has Reached Attempt Maximum Limit"], $response, $check->id);
 
-                return response()->json($response);
-            }
+            return response()->json($response);
         }
+
 
         if(!Auth::attempt($data)){
             $response = ['success' => false, 'message' => "Email and password does not match", 'redirect' => false];
@@ -70,7 +69,10 @@ class AuthenticationController extends Controller
         SendVerification::dispatch($user->email, $verificationCode);
 
         $user->update([
-            'verification_code' => $verificationCode
+            'verification_code' => $verificationCode,
+            'login_attempt' => 0,
+            'resend_attempt' => 0,
+            'verification_attempt' => 0
         ]);
 
         $response = ['success' => true, 'message' => 'Authentication is successful', 'redirect' => false];
