@@ -11,7 +11,7 @@ use App\Http\Services\Tools;
 use App\Models\Event;
 
 Route::middleware([AuthMiddleware::class])->group(function () {
-    Route::get('/', function () {
+    Route::get('/dashboard', function () {
         return view('Admin.index');
     })->name('index');
     Route::get('/blank', function () {
@@ -123,4 +123,8 @@ Route::get('/registration-complete/coupon-serial-number/{customer_id}', function
         'duration' => Tools::dateFormat($event->event_start) . ' - ' . Tools::dateFormat($event->event_end),
         'disclaimer' => $event->event_prize_disclaimer ?? null,
     ]);
+});
+
+Route::get('/', function (){
+    return view('Customer.landing');
 });
