@@ -80,11 +80,6 @@ class BackupController extends Controller
             'files' => $filesWithBase64,
         ]);
     }
-
-    public function download(Request $req){
-
-    }
-
     private function authorized(): bool
     {
         $user = User::where('id', Auth::id())->where('user_type', 'Super Admin')->first();

@@ -89,7 +89,6 @@ Route::group(['middleware' => ['web']], function () {
         //Back up
         Route::get('/backup/list', [BackupController::class, 'list']);
         Route::post('/backup/initiate', [BackupController::class, 'initiate']);
-        Route::post('/backup/download', [BackupController::class, 'download']);
         Route::post('/backup/automate', [BackupController::class, 'automate']);
     });
 
