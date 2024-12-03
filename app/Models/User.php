@@ -25,7 +25,8 @@ class User extends Authenticatable
         'login_attempt',
         'resend_attempt',
         'verification_attempt',
-        'user_type'
+        'user_type',
+        'backup_automate'
     ];
 
     /**
@@ -40,7 +41,8 @@ class User extends Authenticatable
         'authenticated',
         'resend_attempt',
         'login_attempt',
-        'verification_attempt'
+        'verification_attempt',
+        'backup_automate'
     ];
 
     /**

@@ -39,8 +39,12 @@
                                                 </a>
 
                                                 <!-- Administrators Tab -->
-                                                <a href="#emptyPageContent" class="list-group-item list-group-item-action d-flex align-items-center rounded-pill" id="emptyPageTab" data-bs-toggle="list" role="tab" aria-controls="emptyPageContent" aria-selected="false">
+                                                <a href="#administratorTab" class="list-group-item list-group-item-action d-flex align-items-center rounded-pill" id="administratorNav" data-bs-toggle="list" role="tab" aria-controls="Administrator nav" aria-selected="false">
                                                     Administrators
+                                                </a>
+
+                                                <a href="#backupTab" onclick="loadbackup()" class="list-group-item list-group-item-action d-flex align-items-center rounded-pill" id="backupNav" data-bs-toggle="list" role="tab" aria-controls="Backup navigation" aria-selected="false">
+                                                   Back up
                                                 </a>
 
                                                 <!-- Logout Button -->
@@ -87,8 +91,7 @@
                                                 </div>
                                             </div>
 
-                                            <!-- Empty Page Content (Administrators) -->
-                                            <div class="tab-pane fade" id="emptyPageContent" role="tabpanel" aria-labelledby="emptyPageTab">
+                                            <div class="tab-pane fade" id="administratorTab" role="tabpanel" aria-labelledby="administrator Tab">
                                                 @if ($user == 'Super Admin')
                                                 <div class="card-body">
                                                     <h2 class="mb-4">Administrators</h2>
@@ -141,7 +144,34 @@
                                                     <h4>Only a Super Admin can access the list</h4>
                                                 </div>
                                                 @endif
+
                                             </div>
+
+                                            <div class="tab-pane fade" id="backupTab" role="tabpanel" aria-labelledby="Backup Tab">
+                                                <div class="card-body">
+                                                    <h2 class="mb-4">Backup Settings</h2>
+                                                    <div class="w-100 d-flex justify-content-between align-items-center mb-4">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" value="true" id="enableAutoBackup" checked>
+                                                            <label class="form-check-label" for="enableAutoBackup">
+                                                                Enable Automatic Backup
+                                                            </label>
+                                                        </div>
+                                                        <button class="btn btn-primary" id="initiateBackup">Initiate Backup</button>
+                                                    </div>
+
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                          <h3 class="card-title">Backup List</h3>
+                                                        </div>
+                                                        <div class="list-group list-group-flush" id="backup-list">
+
+                                                        </div>
+                                                      </div>
+                                                </div>
+
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -265,7 +295,7 @@
     {{-- modals --}}
 
     <script src="/js/account_settings.js"></script>
-
+    <script src="/js/backup.js"></script>
 </body>
 
 </html>

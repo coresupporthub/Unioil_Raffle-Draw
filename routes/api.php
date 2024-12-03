@@ -11,6 +11,7 @@ use App\Http\Controllers\CustomerRegistration;
 use App\Http\Controllers\ActivityLogsController;
 use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\AdministratorsController;
+use App\Http\Controllers\BackupController;
 
 Route::group(['middleware' => ['web']], function () {
 
@@ -84,6 +85,12 @@ Route::group(['middleware' => ['web']], function () {
         Route::post('/changepass-admin', [AdministratorsController::class, 'changepass']);
         Route::get('/list-admin', [AdministratorsController::class, 'list']);
         Route::post('/admin-transfer-status', [AdministratorsController::class, 'transferstatus']);
+
+        //Back up
+        Route::get('/backup/list', [BackupController::class, 'list']);
+        Route::post('/backup/initiate', [BackupController::class, 'initiate']);
+        Route::post('/backup/download', [BackupController::class, 'download']);
+        Route::post('/backup/automate', [BackupController::class, 'automate']);
     });
 
     //Authentication
