@@ -33,7 +33,7 @@ class BackupController extends Controller
         return response()->json(['success'=> true, 'message'=> 'Automatic Back up Updated']);
     }
 
-    public function initiate(Request $req){
+    public function initiate(Request $req): JsonResponse{
         $authorized = $this->authorized();
         if(!$authorized){
             return response()->json(['success'=> false, 'message' => 'You have not enough access to proceed with the request']);
@@ -57,12 +57,12 @@ class BackupController extends Controller
 
     public function list(Request $req): JsonResponse
     {
-        $directory = env('APP_NAME');
+        $directory = (string) config('APP_NAME');
         $files = Storage::allFiles($directory);
 
         $filesWithBase64 = array_map(function ($file) {
 
-            $fileContent = Storage::get($file);
+            $fileContent = (string) Storage::get($file);
 
 
             $mimeType = 'application/zip';
