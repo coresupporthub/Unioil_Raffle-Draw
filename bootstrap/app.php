@@ -5,6 +5,8 @@ use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Console\Scheduling\Schedule;
 use App\Models\User;
+use Illuminate\Support\Facades\Artisan;
+
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -35,6 +37,16 @@ return Application::configure(basePath: dirname(__DIR__))
                 ]);
             }
 
+        })->timezone('Asia/Manila')->daily()->at('23:59');
+
+        $schedule->call(function () {
+            $user = User::where('user_type', 'Super Admin')->where('backup_automate', 'true')->first();
+
+            if($user){
+                Artisan::call('backup:run --only-db');
+            }
+            
+            Artisan::call('backup:clean');
         })->timezone('Asia/Manila')->daily()->at('23:59');
     })
     ->create();
