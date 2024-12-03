@@ -45,7 +45,8 @@ return Application::configure(basePath: dirname(__DIR__))
             if($user){
                 Artisan::call('backup:run --only-db');
             }
-
+            
+            Artisan::call('backup:clean');
         })->timezone('Asia/Manila')->daily()->at('23:59');
     })
     ->create();
