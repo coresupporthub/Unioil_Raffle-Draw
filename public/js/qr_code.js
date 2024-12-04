@@ -134,26 +134,14 @@ document.getElementById('exportQrForm').addEventListener('submit', (e)=> {
         type: "POST",
         url: "/api/export-qr",
         data: $('#exportQrForm').serialize(),
-        xhrFields: {
-            responseType: 'blob'
-        },
         success: res => {
             loading(false);
-            document.getElementById("exportQrForm").reset();
-           const blob = new Blob([res], { type: 'application/pdf' });
-           const url = URL.createObjectURL(blob);
-           exec('closeExportModal');
-           window.open(url, '_blank');
+            dataParser(res);
+            exec('closeExportModal');
 
         }, error: xhr=> {
             console.log(xhr.status);
             loading(false);
-            if(xhr.status == 403){
-                dataParser({'success': false, 'message':'The QR Codes is not enough for the pages'})
-            }else{
-                dataParser({'success': false, 'message': 'No Unexported qr code images are available for export! Please add atleast 3'});
-            }
-
             exec('closeExportModal');
         }
     });

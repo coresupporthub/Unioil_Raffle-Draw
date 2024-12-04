@@ -8,12 +8,12 @@ use Illuminate\Http\Request;
 use App\Jobs\GenerateQr;
 use App\Models\QrCode;
 use App\Models\QueueingStatusModel;
-use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\ExportFilesModel;
 use App\Models\Customers;
 use App\Models\ProductList;
 use App\Models\RaffleEntries;
 use App\Http\Services\Tools;
+use App\Jobs\ExportQrCoupon;
 use Illuminate\Http\JsonResponse;
 
 class QrCodeController extends Controller
@@ -149,89 +149,41 @@ class QrCodeController extends Controller
     }
 
 
-    public function exportQR(Request $req): Response
+    public function exportQR(Request $req): JsonResponse
     {
-        $latestQueue = QueueingStatusModel::latest()->first();
-        $queue = new QueueingStatusModel();
-
         $limit = Magic::MAX_QR_PER_PAGE * $req->page_number;
 
         $checkQRCodes = QrCode::where('export_status', 'none')->where('status', 'unused')->where('entry_type', $req->qrtype)->count();
 
         if ($limit > $checkQRCodes) {
-            return response()->json(['success' => false, 'message' => 'The QR Codes is not enough for the pages'], 403);
+            return response()->json(['success' => false, 'message' => 'The QR Codes is not enough for the pages']);
         }
 
         $qrCodes = QrCode::where('export_status', 'none')->where('status', 'unused')->where('entry_type', $req->qrtype)->take($limit)->select('image', 'qr_id')->get();
 
         if ($qrCodes->count() < Magic::MINIMUM_COUNT_FOR_EXPORT) {
-            return response()->json(['success' => false, 'message' => 'No Unexported qr code images are available for export! Please add atleast 3 codes'], 404);
+            return response()->json(['success' => false, 'message' => 'No Unexported qr code images are available for export! Please add atleast 3 codes']);
         }
+
+        $latestQueue = QueueingStatusModel::latest()->first();
+        $queue = new QueueingStatusModel();
 
         if ($latestQueue) {
-            $queue->queue_number = $latestQueue->queue_number + 1;
+            $queueNum = $latestQueue->queue_number + 1;
         } else {
-            $queue->queue_number = 1;
+            $queueNum  = 1;
         }
 
-        $queue->items = $req->page_number;
+        $queue->queue_number = $queueNum;
+        $queue->items = 0;
         $queue->total_items = $req->page_number;
         $queue->status = 'inprogress';
         $queue->entry_type = $req->qrtype;
         $queue->type = 'PDF Export';
         $queue->save();
 
+        ExportQrCoupon::dispatch($req->qrtype, (int) $req->page_number, $queue->queue_id, (string) $queueNum);
 
-        $qrCodes->transform(function ($qrCode) {
-            $qrCode->image_base64 = 'data:image/png;base64,' . base64_encode((string)file_get_contents(storage_path('app/qr-codes/' . $qrCode->image)));
-            return $qrCode;
-        });
-
-        $chunkedQrCodes = $qrCodes->chunk(Magic::MAX_QR_PER_PAGE)->map(function ($chunk) {
-            return $chunk->chunk(4);
-        });
-
-        $chunkedQrCodesArray = $chunkedQrCodes->toArray();
-
-        $checkExport = ExportFilesModel::latest()->first();
-        $export = new ExportFilesModel();
-        if (!$checkExport) {
-            $fileName = "qr_codes_export_1.pdf";
-        } else {
-            $inc = $checkExport->exp_id + 1;
-            $fileName = "qr_codes_export_$inc.pdf";
-        }
-        $export->file_name = $fileName;
-        $export->queue_id = $queue->queue_id;
-        $export->save();
-
-        $pdf = Pdf::loadView('Admin.pdf.export_qr', ['qrCodeChunkBy24' => $chunkedQrCodesArray, 'file_title' => $fileName, 'entry' => $req->qrtype]);
-
-        foreach ($chunkedQrCodes as $qrCodesC) {
-            foreach ($qrCodesC as $qrCodes) {
-                foreach ($qrCodes as $qr) {
-                    $qr = QrCode::where('qr_id', $qr['qr_id'])->first();
-                    if ($qr) {
-                        $qr->update([
-                            'export_status' => 'exported'
-                        ]);
-                    }
-                }
-            }
-        }
-
-
-
-        $pdfFilePath = storage_path("app/pdf_files/$fileName");
-
-        if (!file_exists(storage_path('app/pdf_files'))) {
-            mkdir(storage_path('app/pdf_files'), 0777, true);
-
-            chown(storage_path('app/pdf_files'), 'www-data');
-            chgrp(storage_path('app/pdf_files'), 'www-data');
-        }
-
-        $pdf->save($pdfFilePath);
         $request = [
             'user_agent' => $req->userAgent(),
             'page_route' => $req->headers->get('referer'),
@@ -239,9 +191,11 @@ class QrCodeController extends Controller
             'method' => $req->method(),
             'session_id' => $req->session()->getId(),
         ];
-        Tools::Logger($request, $req->all(), ['Export QR Code', 'Successfully Exported QR Coupons in the PDF File'], ['open_pdf_file' => $fileName]);
 
-        return $pdf->stream('qr_codes.pdf');
+
+        Tools::Logger($request, $req->all(), ['Export QR Code', 'Successfully Exported QR Coupons in the PDF File'], ['open_pdf_file' => 'Test']);
+
+        return response()->json(['success'=> true, 'message'=> 'Export Qr Coupons is in progress please wait...']);
     }
 
     public function filterqr(Request $request): JsonResponse
