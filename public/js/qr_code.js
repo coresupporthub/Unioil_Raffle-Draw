@@ -254,7 +254,7 @@ document.getElementById('openExportBtn').addEventListener('click', async ()=> {
 
     const result = await response.json();
 
-    suggestExport(result.page);
+    suggestExport(result.page > 1000 ? 1000 : result.page);
 });
 
 document.getElementById('selectExportQRType').addEventListener('change', async (e)=> {
@@ -264,7 +264,7 @@ document.getElementById('selectExportQRType').addEventListener('change', async (
 
     const result = await response.json();
 
-    suggestExport(result.page);
+    suggestExport(result.page > 1000 ? 1000 : result.page);
 });
 
 function suggestExport(data){
