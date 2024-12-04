@@ -101,18 +101,22 @@ class ExportQrCoupon implements ShouldQueue
 
         $queueStatus = QueueingStatusModel::where('queue_id', $this->queue_id)->first();
 
+        if($queueStatus){
 
-        if($queueStatus->items + $page == $queueStatus->total_items){
-            $queueStatus->update([
-                'items' => $queueStatus->items += $page,
-                'status' => 'done'
-            ]);
-        }else{
-            $queueStatus->update([
-                'items' => $queueStatus->items += $page,
-            ]);
+            if($queueStatus->items + $page == $queueStatus->total_items){
+                $queueStatus->update([
+                    'items' => $queueStatus->items += $page,
+                    'status' => 'done'
+                ]);
+            }else{
+                $queueStatus->update([
+                    'items' => $queueStatus->items += $page,
+                ]);
+
+            }
 
         }
+
 
 
         return $pdfFilePath;
@@ -162,11 +166,11 @@ class ExportQrCoupon implements ShouldQueue
         $directory = storage_path('app/pdf_files');
 
         if (file_exists($directory)) {
-            $files = glob($directory . '/*.pdf');
+            $files = (array) glob($directory . '/*.pdf');
 
             foreach ($files as $file) {
-                if (is_file($file)) {
-                    unlink($file);
+                if (is_file((string) $file)) {
+                    unlink((string) $file);
                 }
             }
         }

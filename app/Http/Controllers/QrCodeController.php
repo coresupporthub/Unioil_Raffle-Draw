@@ -15,6 +15,7 @@ use App\Models\RaffleEntries;
 use App\Http\Services\Tools;
 use App\Jobs\ExportQrCoupon;
 use Illuminate\Http\JsonResponse;
+use App\Jobs\PackQueue;
 
 class QrCodeController extends Controller
 {
@@ -36,9 +37,7 @@ class QrCodeController extends Controller
         $queue->type = 'QR Generation';
         $queue->save();
 
-        for ($i = 0; $i < $req->numberofqr; $i++) {
-            GenerateQr::dispatch($req->qrtype);
-        }
+        PackQueue::dispatch((int) $req->numberofqr, $req->qrtype);
 
         $response = ['success' => true];
         $request = [
