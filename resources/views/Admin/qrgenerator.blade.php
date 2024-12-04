@@ -171,8 +171,9 @@
                                         <div class="form-group">
                                             <label for="numberofqr">Number of QR</label>
                                             <input type="number" class="form-control" name="numberofqr"
-                                                id="numberofqr" min="1" max="15000" value="1"
+                                                id="numberofqr" min="1" max="25000" required value="1" placeholder="# of QR"
                                                 oninput="enforceLimit(this)">
+                                            <small class="d-none text-danger" id="numberofqr_e">You need to specify how many qr you want to generate</small>
                                         </div>
                                     </div>
                                     <div class="col-6">
@@ -190,7 +191,7 @@
                         <div class="modal-footer">
                             <button type="button" id="closeQrCodeGenerator" class="btn btn-outline-dark me-auto" data-bs-dismiss="modal">Close</button>
                             <button type="button" class="btn btn-primary"
-                                onclick="GenerateQrCode()" data-bs-dismiss="modal">Generate</button>
+                                onclick="GenerateQrCode()">Generate</button>
                         </div>
                     </div>
                 </div>
@@ -264,7 +265,7 @@
 
                                 <label class="form-label">How many pages?</label>
                                 <input type="number" class="form-control" id="export_pages" required name="page_number"
-                                    value="1" placeholder="# of pages">
+                                    value="1" min="1" max="1000" oninput="enforceLimitForPdf(this)" placeholder="# of pages">
                             </div>
                             <div class="mb-3">
 
@@ -301,10 +302,14 @@
     <script src="{{ asset('/js/qr_code.js') }}"></script>
     <script>
         function enforceLimit(input) {
-            if (input.value > 15000) {
-                input.value = 15000;
-            } else if (input.value < 1) {
-                input.value = 1;
+            if (input.value > 25000) {
+                input.value = 25000;
+            }
+        }
+
+        function enforceLimitForPdf(input) {
+            if (input.value > 1000) {
+                input.value = 1000;
             }
         }
     </script>

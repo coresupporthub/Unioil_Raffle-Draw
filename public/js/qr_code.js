@@ -1,29 +1,38 @@
 function GenerateQrCode() {
-    const form = document.getElementById("generateform");
-    const formData = new FormData(form);
-    loading(true);
-    const numberofqr = document.getElementById("numberofqr").value;
 
-    $.ajax({
-        url: "/api/generate-qr-code", // Replace with your endpoint URL
-        type: "POST",
-        data: formData,
-        processData: false, // Prevent jQuery from processing the data
-        contentType: false, // Let FormData handle the content type (especially for file uploads)
-        success: function (response) {
-                alertify.success(`${numberofqr} QR Code(s) generation is now in progress.`);
-                form.reset();
-                GetGeneratedQr();
-                setTimeout(function () {
+    const inputs = [
+        ['numberofqr', 'numberofqr_e']
+    ];
+
+    if(checkValidity(inputs)){
+        const form = document.getElementById("generateform");
+        const formData = new FormData(form);
+        loading(true);
+        const numberofqr = document.getElementById("numberofqr").value;
+
+        $.ajax({
+            url: "/api/generate-qr-code",
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                    alertify.success(`${numberofqr} QR Code(s) generation is now in progress.`);
+                    form.reset();
                     GetGeneratedQr();
-                }, 2000);
+                    setTimeout(function () {
+                        GetGeneratedQr();
+                    }, 2000);
+                    loading(false);
+                    exec('closeQrCodeGenerator');
+            },
+            error: function (xhr, status, error) {
                 loading(false);
-        },
-        error: function (xhr, status, error) {
-            // Handle error
-            console.error("Error posting data:", error);
-        },
-    });
+                dataParser(JSON.parse(xhr.responseText));
+            },
+        });
+    }
+
 }
 
 
