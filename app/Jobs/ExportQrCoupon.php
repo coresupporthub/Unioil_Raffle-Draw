@@ -7,6 +7,7 @@ use Illuminate\Foundation\Queue\Queueable;
 use App\Http\Services\Magic;
 use App\Jobs\GeneratePdf;
 use App\Jobs\CompressFiles;
+use Illuminate\Support\Facades\Log;
 class ExportQrCoupon implements ShouldQueue
 {
     use Queueable;
@@ -40,11 +41,12 @@ class ExportQrCoupon implements ShouldQueue
 
         foreach($pageChunks as $chunk){
             $fileName = "qrCode{$pageNum}.pdf";
-            $fileNames[] = $fileName;
+            $fileNames[] = storage_path("app/pdf_files/$fileName");
             GeneratePdf::dispatch($chunk, $fileName, $this->qrType, $this->queue_id);
             $pageNum++;
         }
 
+        Log::info('Files List', ['fileNames' => $fileNames]);
         CompressFiles::dispatch($fileNames, $this->queue_number, $this->queue_id);
     }
 
@@ -72,5 +74,5 @@ class ExportQrCoupon implements ShouldQueue
         return $chunks;
     }
 
-   
+
 }

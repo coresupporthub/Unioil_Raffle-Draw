@@ -30,11 +30,11 @@ class ResetExport extends Command
      */
     public function handle()
     {
-        $this->info("Resetting Expoirt");
+        $this->info("Resetting Export");
 
         $qrCode = QrCode::where('export_status', Magic::EXPORT_TRUE)->get();
 
-        
+
         foreach($qrCode as $code){
             $code->update([
                 'export_status' => Magic::EXPORT_FALSE
