@@ -42,11 +42,11 @@
                                                 <a href="#administratorTab" class="list-group-item list-group-item-action d-flex align-items-center rounded-pill" id="administratorNav" data-bs-toggle="list" role="tab" aria-controls="Administrator nav" aria-selected="false">
                                                     Administrators
                                                 </a>
-
+                                                @if ($user == 'Super Admin')
                                                 <a href="#backupTab" onclick="loadbackup()" class="list-group-item list-group-item-action d-flex align-items-center rounded-pill" id="backupNav" data-bs-toggle="list" role="tab" aria-controls="Backup navigation" aria-selected="false">
                                                    Back up
                                                 </a>
-
+                                                @endif
                                                 <!-- Logout Button -->
                                                 <button onclick="adminLogout()" class="list-group-item list-group-item-action d-flex align-items-center">
                                                     Logout
@@ -147,6 +147,7 @@
 
                                             </div>
 
+                                            @if ($user == 'Super Admin')
                                             <div class="tab-pane fade" id="backupTab" role="tabpanel" aria-labelledby="Backup Tab">
                                                 <div class="card-body">
                                                     <h2 class="mb-4">Backup Settings</h2>
@@ -171,6 +172,7 @@
                                                 </div>
 
                                             </div>
+                                            @endif
 
                                         </div>
                                     </div>
@@ -295,7 +297,9 @@
     {{-- modals --}}
 
     <script src="/js/account_settings.js"></script>
+    @if ($user == 'Super Admin')
     <script src="/js/backup.js"></script>
+    @endif
 </body>
 
 </html>
