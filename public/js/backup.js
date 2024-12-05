@@ -30,6 +30,7 @@ document.getElementById('initiateBackup').addEventListener('click', ()=> {
     success: res=> {
         loading(false);
         dataParser(res);
+        loadbackup();
     }, error: xhr=> console.log(xhr.responseText)
  })
 });
