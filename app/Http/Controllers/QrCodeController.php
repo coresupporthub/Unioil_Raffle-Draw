@@ -14,6 +14,7 @@ use App\Http\Services\Tools;
 use App\Jobs\ExportQrCoupon;
 use Illuminate\Http\JsonResponse;
 use App\Jobs\PackQueue;
+use Symfony\Component\HttpFoundation\Response;
 
 class QrCodeController extends Controller
 {
@@ -125,7 +126,8 @@ class QrCodeController extends Controller
         ]);
     }
 
-    public function zipdownload($path){
+    public function zipdownload(string $path) : Response
+    {
         $filePath = storage_path("app/pdf_files/$path");
 
         if (!file_exists($filePath)) {
