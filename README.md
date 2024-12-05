@@ -61,6 +61,20 @@ This system facilitates the efficient management of Unioil’s raffle promotions
 - Cloud Platform: AWS EC2.
 - Setup:
     - Nginx server for high performance.
+    - App Path
+        ```
+        /var/www/laravel-app
+        ```
+    - Nginx Configuration Path
+        ```
+        /etc/nginx/sites-enabled
+        ```
+    - Cron Jobs that runs `php artisan schedule:run`
+    - Supervisor that runs `php artisan queue:work`
+    - Alway optimize the app after pulling changes from the repo, just run:
+        ```
+        php artisan optimize
+        ```
 
 ##### Code Quality Tools:
 - Larastan / PHPStan (Level 8 strictness).
@@ -88,7 +102,7 @@ This system facilitates the efficient management of Unioil’s raffle promotions
 ##### Installation
 1. Clone the repository:
 ```
-git clone https://github.com/Tshmytzn/Unioil_Raffle-Draw
+git clone https://github.com/coresupporthub/Unioil_Raffle-Draw
 cd Unioil_Raffle-Draw
 ```
 2. Install dependencies:
@@ -108,3 +122,31 @@ php artisan serve
 ```
 
 ---
+
+##### Utility Commands
+
+1. Reset The Whole App
+    - This Custom artisan Command will delete all the files created in the system including all event_images, pdf files/zip and qr codes
+    - Then Reset the db by running `php artisan migrate:fresh --seed` in the background of the command;
+
+Command:
+```
+php artisan app:reset
+```
+
+2. Reset the Export Status
+    - This Custom Artisan command will removed all the exported pdf/zip files and reset the statuses of all qr code to none export
+    - This enables a fresh start in exporting the qr codes
+
+Command:
+```
+php artisan app:reset-export
+```
+
+3. Run Larastan Code Quality Analyzer
+    - Check your code quality regularly
+
+Command:
+```
+./vendor/bin/phpstan analyse
+```
