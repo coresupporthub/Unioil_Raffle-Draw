@@ -81,12 +81,24 @@ document.getElementById('resetTable').addEventListener('click', ()=> {
     QueueStatus();
 });
 function QueueStatus() {
-    $("#queue-progress").DataTable({
+
+    const tableId = "#queue-progress";
+
+    if ($.fn.DataTable.isDataTable(tableId)) {
+        $(tableId).DataTable().clear().destroy();
+    }
+    $(tableId).DataTable({
+        processing: true,
+        serverSide: true,
         ajax: {
             url: '/api/get-queue-status',
-            dataSrc: 'queue'
+            dataSrc: 'data',
+            type: 'GET',
         },
         destroy: true,
+        paging: true,
+        lengthChange: true,
+        pageLength: 10,
         columns: [
             {
                 data: null,
