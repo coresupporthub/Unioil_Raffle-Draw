@@ -149,10 +149,6 @@ class AdministratorsController extends Controller
             'session_id' => $req->session()->getId(),
         ];
         if(Hash::check($req->password, $user->password)){
-            $user->update([
-                'user_type' => 'Admin',
-            ]);
-
             $newSuperAdmin = User::where('id', $req->id)->first();
 
             if(!$newSuperAdmin){
@@ -161,6 +157,12 @@ class AdministratorsController extends Controller
 
             $newSuperAdmin->update([
                 'user_type'=> 'Super Admin',
+                'backup_automate' => $user->backup_automate
+            ]);
+
+            $user->update([
+                'user_type' => 'Admin',
+                'backup_automate' => null
             ]);
 
             $response = ['success'=> true, 'message'=> 'Super Admin Status is successfully transferred'];
