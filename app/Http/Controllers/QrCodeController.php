@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Symfony\Component\HttpFoundation\Response;
 use App\Http\Services\Magic;
 use Illuminate\Http\Request;
-use App\Jobs\GenerateQr;
 use App\Models\QrCode;
 use App\Models\QueueingStatusModel;
 use App\Models\ExportFilesModel;
@@ -57,7 +55,6 @@ class QrCodeController extends Controller
         $length = $request->input('length', 10);
         $search = $request->input('search')['value'];
 
-
         $query = QrCode::select('code', 'entry_type', 'status', 'export_status', 'qr_id');
 
 
@@ -86,21 +83,45 @@ class QrCodeController extends Controller
 
     public function queueProgress(Request $req): JsonResponse
     {
-        $queue = QueueingStatusModel::all();
-        $queueWithExportData = []; // Array to hold data
 
-        foreach ($queue as $q) {
+        $start = $req->input('start', 0);
+        $length = $req->input('length', 10);
+        $search = $req->input('search')['value'];
+
+        $query = QueueingStatusModel::select('queue_number', 'total_items', 'items', 'status', 'entry_type', 'type');
+
+        if (!empty($search)) {
+            $query->where('queue_number', 'like', "%$search%")
+                ->orWhere('type', 'like', "%$search%")
+                ->orWhere('status', 'like', "%$search%")
+                ->orWhere('items', 'like', "%$search%")
+                ->orWhere('total_items', 'like', "%$search%");
+        }
+
+        $totalRecords = QueueingStatusModel::count();
+        $filteredRecords = $query->count();
+
+        $queueWithExportData = [];
+
+        $data = $query->skip($start)->take($length)->get();
+
+        foreach ($data as $q) {
             $export = ExportFilesModel::where('queue_id', $q->queue_id)->first();
 
             $queueItem = [
                 'queue' => $q,
-                'export' => $export ? $this->getExportData($export) : null, // Add export data
+                'export' => $export ? $this->getExportData($export) : null,
             ];
 
             $queueWithExportData[] = $queueItem;
         }
 
-        return response()->json(['queue' => $queueWithExportData]);
+        return response()->json([
+            'draw' => intval($req->input('draw')),
+            'recordsTotal' => $totalRecords,
+            'recordsFiltered' => $filteredRecords,
+            'data' => $queueWithExportData
+        ]);
     }
 
     /**
