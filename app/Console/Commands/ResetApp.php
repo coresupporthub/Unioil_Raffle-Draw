@@ -25,7 +25,7 @@ class ResetApp extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): void
     {
         $eventImages = storage_path('app/event_images'); // Replace with your directory path
         $qrCodes = storage_path('app/qr-codes');
