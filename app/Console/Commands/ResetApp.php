@@ -47,9 +47,9 @@ class ResetApp extends Command
         if (File::exists($directory)) {
             File::deleteDirectory($directory);
             $this->info("Directory '$directory' has been deleted.");
+        }else{
+            $this->warn("Directory '$directory' does not exist.");
         }
-
-        $this->warn("Directory '$directory' does not exist.");
 
     }
 }
