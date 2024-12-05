@@ -88,7 +88,7 @@ class QrCodeController extends Controller
         $length = $req->input('length', 10);
         $search = $req->input('search')['value'];
 
-        $query = QueueingStatusModel::select('queue_number', 'total_items', 'items', 'status', 'entry_type', 'type');
+        $query = QueueingStatusModel::select('queue_number', 'total_items', 'items', 'status', 'entry_type', 'type', 'queue_id');
 
         if (!empty($search)) {
             $query->where('queue_number', 'like', "%$search%")
