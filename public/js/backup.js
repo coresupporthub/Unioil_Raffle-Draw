@@ -42,6 +42,7 @@ function loadbackup(){
         dataType: "json",
         success: res=> {
             const list = document.getElementById('backup-list');
+            list.replaceChildren();
 
             const filterFiles = res.files.filter(x => x.path != '.gitignore');
 
