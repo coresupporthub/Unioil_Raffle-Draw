@@ -129,24 +129,24 @@ php artisan serve
     - This Custom artisan Command will delete all the files created in the system including all event_images, pdf files/zip and qr codes
     - Then Reset the db by running `php artisan migrate:fresh --seed` in the background of the command;
 
-Command:
-```
-php artisan app:reset
-```
+    Command:
+    ```
+    php artisan app:reset
+    ```
 
 2. Reset the Export Status
     - This Custom Artisan command will removed all the exported pdf/zip files and reset the statuses of all qr code to none export
     - This enables a fresh start in exporting the qr codes
 
-Command:
-```
-php artisan app:reset-export
-```
+    Command:
+    ```
+    php artisan app:reset-export
+    ```
 
 3. Run Larastan Code Quality Analyzer
     - Check your code quality regularly
 
-Command:
-```
-./vendor/bin/phpstan analyse
-```
+    Command:
+    ```
+    ./vendor/bin/phpstan analyse
+    ```
