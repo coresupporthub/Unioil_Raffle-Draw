@@ -110,7 +110,8 @@ class QrCodeController extends Controller
 
             $queueItem = [
                 'queue' => $q,
-                'export' => $export ? $this->getExportData($export) : null,
+                'file_name' => $export ? $export->file_name : null,
+                'export' => $export ? $export->file_name : null,
             ];
 
             $queueWithExportData[] = $queueItem;
@@ -124,48 +125,17 @@ class QrCodeController extends Controller
         ]);
     }
 
-    /**
-     * Get the export data for a given export model.
-     *
-     * @param ExportFilesModel $export The export model instance.
-     * @return array{exp_id: int, file_name: string, queue_id?: string, base64File: ?string}
-     */
-    private function getExportData(ExportFilesModel $export): array
-    {
-        $filePath = storage_path('app/pdf_files/' . $export->file_name);
+    public function zipdownload($path){
+        $filePath = storage_path("app/pdf_files/$path");
 
         if (!file_exists($filePath)) {
-            return [
-                'exp_id' => $export->exp_id,
-                'file_name' => $export->file_name,
-                'base64File' => null,
-            ];
+            return response()->json(['error' => 'File not found'], 404);
         }
 
-        $fileContent = file_get_contents($filePath);
+        return response()->download($filePath, $path, [
+            'Content-Type' => mime_content_type($filePath),
+        ]);
 
-        if ($fileContent === false) {
-            return [
-                'exp_id' => $export->exp_id,
-                'file_name' => $export->file_name,
-                'base64File' => null,
-            ];
-        }
-
-        $base64Encoded = base64_encode($fileContent);
-        $mimeType = mime_content_type($filePath);
-
-        $response = [
-            'exp_id' => $export->exp_id,
-            'file_name' => $export->file_name,
-            'base64File' => 'data:' . $mimeType . ';base64,' . $base64Encoded,
-        ];
-
-        if (!is_null($export->queue_id)) {
-            $response['queue_id'] = $export->queue_id;
-        }
-
-        return $response;
     }
 
 

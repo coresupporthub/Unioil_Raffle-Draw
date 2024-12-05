@@ -127,16 +127,7 @@ function QueueStatus() {
             {
                 data: null,
                 render: data => {
-                    if (data.export && data.export.base64File) {
-                        let base64File = data.export.base64File;
-                        if (base64File.startsWith('data:')) {
-                            return `<a download="${data.export.file_name}" href="${base64File}">${data.export.file_name}</a>`;
-                        } else {
-                            return 'Invalid file data';
-                        }
-                    } else {
-                        return 'N/A';
-                    }
+                    return data.export ? `<a download="${data.file_name}" href="/api/file-download/${data.export}">${data.file_name}</a>` : 'N/A';
                 }
             }
         ],

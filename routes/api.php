@@ -25,6 +25,7 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('/filter-qrcodes', [QrCodeController::class, 'filterqr']);
         Route::get('/view-qrcodes', [QrCodeController::class, 'viewqrdetails']);
         Route::get('/get-export-page-num', [QrCodeController::class, 'checkexportnum']);
+        Route::get('/file-download/{path}', [QrCodeController::class, 'zipdownload']);
 
         // Retail Store Controller
         Route::post('/add-retail-store', [RetailStoreController::class, 'addcluster']);
