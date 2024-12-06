@@ -230,7 +230,7 @@ class RaffleController extends Controller
 
         $start = $request->input('start', 0);
         $length =  $request->input('length', 10);
-        $search =  $request->input('search')['value'];
+        $search =  $request->input('search')['value'] ?? null;
         $events = !empty($request->event_id)
             ? Event::where('event_id', $request->event_id)->get()
             : Event::all();
