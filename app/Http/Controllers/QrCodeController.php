@@ -36,7 +36,9 @@ class QrCodeController extends Controller
         $queue->type = 'QR Generation';
         $queue->save();
 
-        PackQueue::dispatch((int) $req->numberofqr, $req->qrtype);
+        $numberOfQr = (int) $req->numberofqr;
+        
+        PackQueue::dispatch($numberOfQr, $req->qrtype);
 
         $response = ['success' => true];
         $request = [
@@ -46,6 +48,7 @@ class QrCodeController extends Controller
             'method' => $req->method(),
             'session_id' => $req->session()->getId(),
         ];
+
         Tools::Logger($request, $req->all(), ['Generate QR Code', 'QR Code generation is successfully in progress'], $response);
         return response()->json($response);
     }

@@ -6,8 +6,8 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use App\Models\ExportFilesModel;
 use ZipArchive;
-
-class CompressFiles implements ShouldQueue
+use Illuminate\Contracts\Queue\ShouldBeUnique;
+class CompressFiles implements ShouldQueue, ShouldBeUnique
 {
     use Queueable;
 

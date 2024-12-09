@@ -5,8 +5,9 @@ namespace App\Jobs;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use App\Jobs\GenerateQr;
+use Illuminate\Contracts\Queue\ShouldBeUnique;
 
-class PackQueue implements ShouldQueue
+class PackQueue implements ShouldQueue, ShouldBeUnique
 {
     use Queueable;
 

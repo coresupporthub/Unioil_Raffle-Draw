@@ -8,7 +8,8 @@ use App\Http\Services\Magic;
 use App\Models\QueueingStatusModel;
 use App\Models\QrCode;
 use Barryvdh\DomPDF\Facade\Pdf;
-class GeneratePdf implements ShouldQueue
+use Illuminate\Contracts\Queue\ShouldBeUnique;
+class GeneratePdf implements ShouldQueue, ShouldBeUnique
 {
     use Queueable;
 
