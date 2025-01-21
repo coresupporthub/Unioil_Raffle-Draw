@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\QrCodeController;
 use App\Http\Controllers\AuthenticationController;
@@ -12,8 +11,9 @@ use App\Http\Controllers\ActivityLogsController;
 use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\AdministratorsController;
 use App\Http\Controllers\BackupController;
+use App\Http\Middleware\SecurityHeadersMiddleware;
 
-Route::group(['middleware' => ['web']], function () {
+Route::group(['middleware' => ['web', SecurityHeadersMiddleware::class]], function () {
 
 
     Route::middleware([ApiAuthentication::class])->group(function () {
