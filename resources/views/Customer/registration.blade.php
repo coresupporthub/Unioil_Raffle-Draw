@@ -284,15 +284,7 @@
 
     <script src="/js/registration.js"></script>
 
-    <script>
-        const agreeButton = document.getElementById('agreeButton');
-        const privacyConsent = document.getElementById('privacyConsent');
-
-        agreeButton.addEventListener('click', function () {
-
-            privacyConsent.checked = true;
-        });
-    </script>
+    <script src="/js/misc/registration.js"></script>
 
 </body>
 

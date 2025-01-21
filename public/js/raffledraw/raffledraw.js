@@ -197,12 +197,12 @@ function GetAllWinner() {
                 "#FF4500", // Orange Red (Vibrant and striking)
                 "#4682B4", // Steel Blue (Muted yet clear)
             ];
-            
+
             const randomizer = array => {
                 return Math.floor(Math.random() * array.length);
             };
 
-            response.forEach((element) => {
+            response.data.forEach((element) => {
 
                 var newRow = document.createElement("tr");
 

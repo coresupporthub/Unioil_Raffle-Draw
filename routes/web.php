@@ -3,14 +3,15 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\AuthMiddleware;
 use App\Models\QrCode;
-use Illuminate\Support\Facades\Storage;
 use App\Models\Customers;
 use App\Models\ProductList;
 use App\Models\RaffleEntries;
 use App\Http\Services\Tools;
 use App\Models\Event;
+use Illuminate\Http\Request;
+use App\Http\Middleware\SecurityHeadersMiddleware;
 
-Route::middleware([AuthMiddleware::class])->group(function () {
+Route::middleware([AuthMiddleware::class, SecurityHeadersMiddleware::class])->group(function () {
     Route::get('/dashboard', function () {
         return view('Admin.index');
     })->name('index');

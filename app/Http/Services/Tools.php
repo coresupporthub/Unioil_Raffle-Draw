@@ -9,6 +9,7 @@ use App\Models\ActivityLogs;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+
 class Tools
 {
 
@@ -48,15 +49,15 @@ class Tools
 
         $currentActiveEvent = Event::where('event_status', Magic::ACTIVE_EVENT)->first();
 
-       if($currentActiveEvent){
-        $entry->event_id = $currentActiveEvent->event_id;
+        if ($currentActiveEvent) {
+            $entry->event_id = $currentActiveEvent->event_id;
 
-        $entry->customer_id = $customer_id;
-        $entry->serial_number = $serialNumber;
-        $entry->qr_id = $qr_id;
-        $entry->retail_store_code = $store_code;
-        $entry->save();
-       }
+            $entry->customer_id = $customer_id;
+            $entry->serial_number = $serialNumber;
+            $entry->qr_id = $qr_id;
+            $entry->retail_store_code = $store_code;
+            $entry->save();
+        }
 
         return $serialNumber;
     }
@@ -79,12 +80,12 @@ class Tools
         return $rows;
     }
 
-        /**
-         * @param array<string, string|null> $request
-         * @param array<string> $actions
-         * @param array<string, string|bool> $sent_data
-         * @param array<string, mixed> $response
-        */
+    /**
+     * @param array<string, string|null> $request
+     * @param array<string> $actions
+     * @param array<string, string|bool> $sent_data
+     * @param array<string, mixed> $response
+     */
     public static function Logger(array $request, array $sent_data, array $actions, array $response, int $user_id = null): void
     {
 
@@ -104,10 +105,10 @@ class Tools
     }
 
     /**
-    * @param array<mixed> $data
-    * @param string $searchValue
-    * @return array<mixed>
-    */
+     * @param array<mixed> $data
+     * @param string $searchValue
+     * @return array<mixed>
+     */
     public static function searchInArray(array $data, string $searchValue): array
     {
         return array_filter($data, function ($item) use ($searchValue) {
@@ -127,5 +128,16 @@ class Tools
         $date = Carbon::parse($dateString);
 
         return (string)$date->format('F d, Y');
+    }
+
+    public static function getNonceFromCSP(string $csp): ?string
+    {
+        $pattern = "/'nonce-([a-f0-9]+)'/";
+
+        if (preg_match($pattern, $csp, $matches)) {
+            return $matches[1];
+        }
+
+        return null;
     }
 }

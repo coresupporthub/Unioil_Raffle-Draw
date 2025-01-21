@@ -116,7 +116,7 @@ class RaffleController extends Controller
         $event = Event::where('event_status', 'Active')->first();
 
         if(!$event){
-            return response()->json(['success'=> false, 'message'=> 'No Active Event Found']);
+            return response()->json(['success'=> false, 'message'=> 'No Active Event Found', 'data' => []]);
         }
 
         $raffleEntries = RaffleEntries::where('winner_status', 'true')
@@ -136,7 +136,7 @@ class RaffleController extends Controller
                 'cluster' => $cluster->cluster_name ?? null
             ];
         }
-        return response()->json($data);
+        return response()->json(['data'=> $data]);
     }
 
     public function geteventwinner(Request $request): JsonResponse

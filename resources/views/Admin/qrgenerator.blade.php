@@ -14,7 +14,6 @@
 <body>
     <script src="{{ asset('./dist/js/demo-theme.min.js?1692870487') }}"></script>
     <div class="page">
-
         @include('Admin.components.header', ['active' => 'qrgenerator'])
         @include('Admin.components.loader')
         <div class="page-wrapper">
@@ -300,19 +299,7 @@
     <input type="hidden" id="pdfFiles" value="{{ Storage::url('pdf_files') }}/qr_codes_export_1.pdf">
     @include('Admin.components.scripts', ['loc'=> 'admin'])
     <script src="{{ asset('/js/qr_code.js') }}"></script>
-    <script>
-        function enforceLimit(input) {
-            if (input.value > 25000) {
-                input.value = 25000;
-            }
-        }
-
-        function enforceLimitForPdf(input) {
-            if (input.value > 1000) {
-                input.value = 1000;
-            }
-        }
-    </script>
+    <script src="/js/misc/qrgenerator.js"></script>
 
 </body>
 

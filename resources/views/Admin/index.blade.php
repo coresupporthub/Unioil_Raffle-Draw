@@ -24,7 +24,7 @@
     <script src="{{ asset('./dist/js/demo-theme.min.js?1692870487') }}"></script>
 
     <div class="page">
-
+        
         @include('Admin.components.header', ['active' => 'dashboard'])
         @include('Admin.components.loader')
         <div class="page-wrapper">
