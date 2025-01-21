@@ -27,7 +27,7 @@ class ResetApp extends Command
      */
     public function handle(): void
     {
-        $eventImages = storage_path('app/event_images'); 
+        $eventImages = storage_path('app/event_images');
         $qrCodes = storage_path('app/qr-codes');
         $pdf_files = storage_path('app/pdf_files');
 
@@ -38,6 +38,9 @@ class ResetApp extends Command
         $this->info('Running migrations and seeding the database...');
         Artisan::call('migrate:fresh', ['--seed' => true]);
 
+        $this->info(Artisan::output());
+
+        Artisan::call('optimize');
         $this->info(Artisan::output());
     }
 

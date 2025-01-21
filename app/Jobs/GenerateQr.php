@@ -16,7 +16,7 @@ use App\Http\Services\Tools;
 use App\Models\QueueingStatusModel;
 use App\Http\Services\Magic;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
-class GenerateQr implements ShouldQueue, ShouldBeUnique
+class GenerateQr implements ShouldQueue
 {
     use Queueable;
 
