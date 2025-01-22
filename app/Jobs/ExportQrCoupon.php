@@ -8,8 +8,7 @@ use App\Http\Services\Magic;
 use App\Jobs\GeneratePdf;
 use App\Jobs\CompressFiles;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
-class ExportQrCoupon implements ShouldQueue, ShouldQueue
+class ExportQrCoupon implements ShouldQueue
 {
     use Queueable;
 

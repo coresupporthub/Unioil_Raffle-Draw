@@ -1,6 +1,51 @@
 @include('Customer.components.head', ['title' => 'UniOil Raffle Draw'])
+<style nonce="{{ csp_nonce() }}">
+    .padding{
+        padding: 0.5rem;
+    }
+    .text-align{
+        text-align: center;
+    }
 
-<body style=" padding: 0.5rem;">
+    .sizeHeight{
+        width: 70%;
+        height: auto;
+        max-height: 200px;
+    }
+
+    .codeClass{
+        font-size: 1rem;
+        font-weight: 700;
+        color: #4CAF50;
+        background-color: #e8f5e9;
+        padding: 5px 10px;
+        border-radius: 5px;
+    }
+    .codeHeader{
+        font-size: 1.2rem;
+        font-weight: 500;
+        color: #ff5722;
+    }
+
+    .hidden{
+        display: none;
+    }
+
+    .privacyPolicy{
+        max-height: 500px;
+        overflow-y: auto;
+        background-image: url('/unioil_images/successbg.jpg');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+    }
+
+    .agreeBtn{
+        background-color: #005f03;
+        border-radius: 10px
+    }
+</style>
+<body class="padding">
     <script src="{{ asset('./dist/js/demo-theme.min.js?1692870487') }}"></script>
     @include('Admin.components.loader')
     <div class="page">
@@ -9,15 +54,13 @@
             <!-- Page body -->
             <div class="page-body">
                 <div class="container-xl d-flex flex-column justify-content-center">
-                    <div class="row w-100 justify-content-center align-items-center" style="text-align: center;">
-                        <img src="/unioil_images/unioil_bg.png" alt="unioil logo" style="width: 70%; height: auto; max-height: 200px;" class="mb-4">
+                    <div class="row w-100 justify-content-center align-items-center text-align">
+                        <img src="/unioil_images/unioil_bg.png" alt="unioil logo" class="sizeHeight" class="mb-4">
                     </div>
-                    {{-- <div class="row w-100">
-                            <h1 class="col-12 text-center" style="color: #ff5722; font-size: 2rem; font-weight: 600;">Your Raffle Entry</h1>
-                        </div> --}}
+
                     <div class="row w-100 justify-content-center align-items-center">
-                        <h1 class="col-12 text-center" style="font-size: 1.2rem; font-weight: 500; color: #ff5722;">Raffle Entry Code:</h1>
-                        <h1 class="col-6 text-center" style="font-size: 1rem; font-weight: 700; color: #4CAF50; background-color: #e8f5e9; padding: 5px 10px; border-radius: 5px;">
+                        <h1 class="col-12 text-center codeHeader" >Raffle Entry Code:</h1>
+                        <h1 class="col-6 text-center codeClass">
                             {{ $code }}
                         </h1>
                     </div>
@@ -32,7 +75,7 @@
 
                         <div class="col-md-6">
                             <label for="validationCustom01" class="form-label">FULL NAME <span class="text-danger">*</span> </label>
-                            <input type="text" name="fullname" placeholder="Full Name Indicated on Valid ID" class="form-control" id="validationCustom01" value="" required oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');">
+                            <input type="text" name="fullname" placeholder="Full Name Indicated on Valid ID" class="form-control" id="validationCustom01" value="" required>
                             <span>
                                 <small class="text-warning">
                                     The name on the raffle entry must match the valid ID presented when claiming the prize.
@@ -44,7 +87,7 @@
                         </div>
                         <div class="col-md-3">
                             <label for="validationCustom02" class="form-label">AGE <span class="text-danger">*</span></label>
-                            <input type="text" name="age" class="form-control" id="validationCustom02" value="" maxlength="3" placeholder="Enter Age" required oninput="this.value = this.value.replace(/[^0-9]/g, '');" />
+                            <input type="text" name="age" class="form-control" id="validationCustom02" value="" maxlength="3" placeholder="Enter Age" required />
                             <div class="valid-feedback">
                                 Looks good!
                             </div>
@@ -114,9 +157,9 @@
                             <label for="validationCustomUsername" class="form-label">MOBILE NUMBER <span class="text-danger">*</span></label>
                             <div class="input-group has-validation">
                                 <span class="input-group-text" id="inputGroupPrepend">+63</span>
-                                <input name="mobile_number" type="text" class="form-control" id="validationCustomUsername" maxlength="10" aria-describedby="inputGroupPrepend" required oninput="validatePhoneNumber(this)" placeholder="Enter your phone number">
+                                <input name="mobile_number" type="text" class="form-control" id="validationCustomUsername" maxlength="10" aria-describedby="inputGroupPrepend" required  placeholder="Enter your phone number">
 
-                                <div class="invalid-feedback" id="phoneError" style="display: none;">Please enter a
+                                <div class="invalid-feedback hidden" id="phoneError" >Please enter a
                                     valid phone
                                     number starting with 9.</div>
 
@@ -187,7 +230,7 @@
     <div class="modal" tabindex="-1" id="privacypolicy" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <div class="modal-body" style="max-height: 500px; overflow-y: auto; background-image: url('/unioil_images/successbg.jpg'); background-size: cover; background-position: center; background-attachment: fixed;">
+                <div class="modal-body privacyPolicy">
                     <div class="container">
                         <div class="col-12">
                             <h1 class="text-center mb-4">Privacy Policy</h1>
@@ -240,7 +283,7 @@
                         </div>
 
                     </div>
-                    <button class="btn col-12 text-light" style="background-color: #005f03; border-radius: 10px" id="agreeButton" data-bs-dismiss="modal">I Agree to the Data Privacy Policy</button>
+                    <button class="btn col-12 text-light agreeBtn" id="agreeButton" data-bs-dismiss="modal">I Agree to the Data Privacy Policy</button>
                 </div>
             </div>
         </div>

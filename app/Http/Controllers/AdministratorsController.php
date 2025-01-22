@@ -16,6 +16,12 @@ class AdministratorsController extends Controller
             return response()->json(['success'=> false, 'message'=> 'You are not eligible for this action']);
         }
 
+        $check= User::where('email', $req->email)->first();
+
+        if($check){
+            return response()->json(['success'=> false, 'message' => "$req->email is already used by another user please provide different one"]);
+        }
+
         $user = new User();
 
         $user->name = $req->name;

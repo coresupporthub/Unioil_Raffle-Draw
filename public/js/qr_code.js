@@ -1,4 +1,4 @@
-function GenerateQrCode() {
+document.getElementById('generateQRCode').addEventListener('click',() => {
 
     const inputs = [
         ['numberofqr', 'numberofqr_e']
@@ -33,7 +33,7 @@ function GenerateQrCode() {
         });
     }
 
-}
+});
 
 
 function GetGeneratedQr() {
@@ -59,7 +59,7 @@ function GetGeneratedQr() {
             {
                 data: null,
                 render: data => {
-                    return `<button class="btn unioil-info" data-bs-toggle="modal" data-bs-target="#viewQR" onclick="viewQR('${data.qr_id}')">View</button>`;
+                    return `<button class="btn unioil-info" data-bs-toggle="modal" data-bs-target="#viewQR" data-qr-id="${data.qr_id}">View</button>`;
                 }
             }
         ],
@@ -67,6 +67,11 @@ function GetGeneratedQr() {
         lengthChange: true,
         pageLength: 10,
         destroy: true
+    });
+
+    $(tableId).on('click', '.unioil-info', function() {
+        const qrId = $(this).data('qr-id');
+        viewQR(qrId);
     });
 }
 
@@ -185,7 +190,7 @@ function GetGenerateQRFilter(filter) {
             {
                 data: null,
                 render: data => {
-                    return `<button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#viewQR" onclick="viewQR('${data.qr_id}')">View</button>`;
+                    return `<button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#viewQR" data-qr-id="${data.qr_id}">View</button>`;
                 }
             }
         ],
@@ -193,6 +198,11 @@ function GetGenerateQRFilter(filter) {
         lengthChange: true,
         pageLength: 10,
         destroy: true,
+    });
+
+    $(tableId).on('click', '.unioil-info', function() {
+        const qrId = $(this).data('qr-id');
+        viewQR(qrId);
     });
 }
 
@@ -211,6 +221,7 @@ function viewQR(id){
         type: "GET",
         url: `/api/view-qrcodes?id=${id}`,
         dataType: "json",
+        contentType: "application/json",
         success: res=> {
             setImage('qrCodeImage', res.qr.image_base64);
             setText('viewCode', res.qr.code);

@@ -1,10 +1,59 @@
 @include('Admin.components.head', ['title' => 'Raffle Entries'])
-<style>
+<style  nonce="{{ csp_nonce() }}">
     #entryTable tbody tr:hover {
         cursor: pointer;
         /* Change the cursor to a pointer */
         background-color: #fcbc9e;
         /* Highlight the row with a light gray color */
+    }
+
+    .btn-attri{
+        background-color: #34bfa3;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-size: 14px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        transition: background-color 0.3s ease,
+        transform 0.3s ease;
+    }
+
+    .btn-attri2{
+        background-color: #ffc107;
+        color: black; border: none;
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-size: 14px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .btn-attri3{
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-size: 14px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .tableSize{
+        width: 100%; border-collapse: collapse;
+    }
+
+    .imageSize{
+        max-height: 50px; width: auto; margin-bottom: 2px;
+    }
+
+    .font-12{
+        font-size: 12px
+    }
+
+    .gray{
+        color: gray;
     }
 
 </style>
@@ -50,7 +99,7 @@
                                             <div class="row p-2 Unioil-header">
                                                 <div class="col-6 mb-3">
                                                     <h4 class="mb-2 ms-2 text-white" for="">Raffle Events </h4>
-                                                    <select class="form-select" name="event_id" id="event_id" onchange=" GetAllEntry()">
+                                                    <select class="form-select" name="event_id" id="event_id">
                                                         <option value="" selected> All Raffle Event </option>
                                                         @php
                                                         $events = App\Models\Event::all();
@@ -218,6 +267,9 @@
         </div>
     </div>
     @include('Admin.components.scripts', ['loc'=> 'admin'])
+    <script nonce="{{ csp_nonce() }}">
+        let nonceValue = "{{ csp_nonce() }}";
+    </script>
     <script src="{{ asset('js/raffleentry/raffleentry.js') }}"></script>
 </body>
 </html>

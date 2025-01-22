@@ -271,6 +271,18 @@ function validateForm(formID) {
     return !emptyField;
 }
 
+document.getElementById('updateEventBanner').addEventListener('click', ()=> {
+    SubmitData('update-event-banner-form', '/api/update-event-banner')
+});
+
+document.getElementById('updateEventRaffleImage').addEventListener('click', ()=> {
+    SubmitData('update-event-image-form', '/api/update-event-images')
+});
+
+document.getElementById('updateEvent').addEventListener('click', ()=> {
+    SubmitData('update-event-form', '/api/update-event');
+});
+
 function SubmitData(formID, route) {
     if (!validateForm(formID)) {
         alertify.error("Please fill in all required fields.");
@@ -294,6 +306,7 @@ function SubmitData(formID, route) {
                 dynamicCall(response.reload);
                 addWinnerRow();
                 alertify.success(response.message);
+                exec('openUpdateModal');
             } else {
                 alertify.alert("Warning", response.message, function () {});
             }

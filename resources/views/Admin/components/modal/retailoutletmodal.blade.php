@@ -1,6 +1,11 @@
         @php
             $cluster = App\Models\RegionalCluster::where('cluster_status', 'Enable')->get();
         @endphp
+        <style nonce="{{ csp_nonce() }}">
+            .action{
+               width:10%;
+            }
+        </style>
         <div class="modal modal-blur fade" id="addClusterModal" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
                 <div class="modal-content">
@@ -16,10 +21,10 @@
                         <div class="col-12 col-md-6 mb-3">
                             <label for="regionalCluster">Regional Cluster  <small id="cluster_nameE" class="text-danger d-none"> (Please add a cluster name)</small> </label>
                             <input type="text" name="cluster_name" id="cluster_name" class="form-control">
-                            
+
                         </div>
                         <div class="col-12 col-md-6 mb-3 d-flex align-items-end">
-                            <button class="btn btn-primary w-100" type="button" onclick="SubmitData('clusterForm','/api/add-retail-store')">Submit</button>
+                            <button class="btn btn-primary w-100" type="button"  id="addCluster">Submit</button>
                         </div>
                     </div>
                     </form>
@@ -47,7 +52,7 @@
                                             <tr>
                                                 <th>Cluster</th>
                                                 <th>Status</th>
-                                                <th style="width:10%">Action</th>
+                                                <th class="action">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody class="table-tbody">
@@ -114,7 +119,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" id="closeRetail" class="btn btn-outline-dark me-auto" data-bs-dismiss="modal">Close</button>
-                    <button class="btn btn-primary " type="button" onclick="SubmitData('updateregionForm','/api/update-store')">Update</button>
+                    <button class="btn btn-primary " type="button" id="updateCluster">Update</button>
                 </div>
                 </div>
             </div>
@@ -154,53 +159,6 @@
                 </div>
                 </div>
 
-
-                <div class="modal modal-blur fade" id="modal-update-retail" tabindex="-1" role="dialog" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header Unioil-header">
-                            <h5 class="modal-title">Update Retail Outlet</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="" method="post" id="updateregionForm">
-                                @csrf
-                            <div class="row">
-                                <div class="col-12 col-md-4 mb-3">
-                                    <input type="text" name="store_id" id="store_id" hidden>
-                                    <label for="regionalCluster">Regional Cluster</label>
-                                    <select name="cluster_id" id="cluster_id2" class="form-control"></select>
-                                </div>
-                                <div class="col-12 col-md-4 mb-3">
-                                    <label for="regionalCluster">Region</label>
-                                    <select name="region_id" id="region_id2" class="form-control" oninput="loadCity2(this)"></select>
-                                    <input type="text" id="region_name2" name="region_name" hidden>
-                                </div>
-                                <div class="col-12 col-md-4 mb-3">
-                                    <label for="regionalCluster">City</label>
-                                    <select name="city_name" id="city_id2" class="form-control"></select>
-                                </div>
-                                <div class="col-12 col-md-4 mb-3">
-                                    <label for="regionalCluster">Retail Store</label>
-                                    <input type="text" name="store_name" id="store_name" class="form-control">
-                                </div>
-                                <div class="col-12 col-md-4 mb-3">
-                                    <label for="regionalCluster">Store Code</label>
-                                    <input type="text" name="store_code" id="store_code" class="form-control">
-                                </div>
-                                <div class="col-12 col-md-4 mb-3 d-flex align-items-end">
-                                    <button class="btn btn-primary w-100" type="button" onclick="SubmitData('updateregionForm','/api/update-store')">Update</button>
-                                </div>
-                            </div>
-                            </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-dark me-auto" data-bs-dismiss="modal">Close</button>
-
-                    </div>
-                    </div>
-                </div>
-                </div>
 
                 <div class="modal modal-blur fade" id="addRetailStore" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">

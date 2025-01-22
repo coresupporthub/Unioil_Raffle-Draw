@@ -17,19 +17,19 @@ function GetAllCluster() {
                         data: null,
                         render: function (data, type, row) {
                             return data.cluster_status == 'Enable' ? `<div class="d-flex gap-1">
-                            <button class="btn btn-success activeEdit" id="updateCluster${data.cluster_id}" onclick="UpdateCluster('${row.cluster_id}', this, '${data.cluster_name}')">
+                            <button class="btn btn-success activeEdit" id="updateCluster${data.cluster_id}" data-cluster-name="${data.cluster_name}" data-cluster-id="${row.cluster_id}">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-pencil">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                             <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
                             <path d="M13.5 6.5l4 4" />
                             </svg> Update</button>
-                            <button onclick="CancelUpdate(this)" class="btn btn-warning d-none cancelEdit">
+                            <button class="btn btn-warning d-none cancelEdit">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-x">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                             <path d="M18 6l-12 12" />
                             <path d="M6 6l12 12" />
                             </svg> Cancel </button>
-                            <button class="btn btn-danger" onclick="DisableCluster('${row.cluster_id}','/api/cluster-status')">
+                            <button class="btn btn-danger disableCluster" data-cluster-id="${row.cluster_id}">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                             <path d="M4 7l16 0" />
@@ -38,7 +38,7 @@ function GetAllCluster() {
                             <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
                             <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
                             </svg> Disable</button>
-                            </div>` :  `<button class="btn btn-info" onclick="EnableCluster('${data.cluster_id}')">
+                            </div>` :  `<button class="btn btn-info enableCluster" data-cluster-id="${data.cluster_id}" >
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-checks">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                             <path d="M7 12l5 5l10 -10" />
@@ -54,6 +54,26 @@ function GetAllCluster() {
             console.error("Error fetching data:", error);
         },
     });
+
+    $("#clusterTable").on('click', '.activeEdit', function() {
+        const clusterId = $(this).data('cluster-id');
+        const clusterName = $(this).data('cluster-name');
+        UpdateCluster(clusterId, $(this), clusterName);
+    });
+
+    $("#clusterTable").on('click', '.cancelEdit', function() {
+        CancelUpdate($(this));
+    });
+
+    $("#clusterTable").on('click', '.disableCluster', function() {
+        const clusterId = $(this).data('cluster-id');
+        DisableCluster(clusterId, '/api/cluster-status');
+    });
+
+    $("#clusterTable").on('click', '.enableCluster', function() {
+        const clusterId = $(this).data('cluster-id');
+        EnableCluster(clusterId);
+    });
 }
 
 let updateClusterId;
@@ -61,33 +81,28 @@ let updateClusterId;
 function UpdateCluster(id, btn, name) {
     hide('clusterForm');
     show('clusterFormUpdate');
-    const allCancel = document.querySelectorAll('.cancelEdit');
 
-    allCancel.forEach(d => {
-        d.classList.add('d-none');
-    });
+    $('.cancelEdit').addClass('d-none');
 
-    const allEdit = document.querySelectorAll('.activeEdit');
+    $('.activeEdit').removeClass('d-none');
 
-    allEdit.forEach(e => {
-        e.classList.remove('d-none');
-    });
 
-    const cancelBtn = btn.nextElementSibling;
-    btn.classList.add('d-none');
-    cancelBtn.classList.remove('d-none');
+    const cancelBtn = btn.next();
+
+    btn.addClass('d-none');
+    cancelBtn.removeClass('d-none');
 
     updateClusterId = `updateCluster${id}`;
-
     setValue('editRegionalCluster', name);
     setValue('updateClusterId', id);
 }
+
 
 function CancelUpdate(btn){
     show('clusterForm');
     hide('clusterFormUpdate');
 
-    btn.classList.add('d-none');
+    btn.addClass('d-none');
 
     const updateBtn = document.getElementById(updateClusterId);
 
@@ -182,9 +197,10 @@ function LoadAllRetailStore() {
                 data: null,
                 render: function (data, type, row) {
                     return (
-                        `<div class="d-flex gap-1"><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal-update-retail" onclick="updateRetail('${row.store_id}','${row.cluster_id}','${row.address}','${row.area}','${row.distributor}','${row.retail_station}', '${row.rto_code}')">Update</button>` +
+                        `<div class="d-flex gap-1"><button class="btn btn-success updateRetail" data-bs-toggle="modal" data-bs-target="#modal-update-retail"
+                        data-store-id="${row.store_id}" data-area="${row.area}" data-cluster-id="${row.cluster_id}" data-address="${row.address}" data-distributor="${row.distributor}" data-retail-station="${row.retail_station}" data-rto-code="${row.rto_code}">Update</button>` +
                         ` ` +
-                        `<button class="btn btn-danger" onclick="DeleteRetail('${row.store_id}')">Delete</button></div>`
+                        `<button class="btn btn-danger deleteRetail" data-store-id="${row.store_id}">Delete</button></div>`
                     );
                 },
             },
@@ -193,6 +209,22 @@ function LoadAllRetailStore() {
         lengthChange: true,
         pageLength: 10,
         destroy: true
+    });
+
+    $(tableId).on('click', '.updateRetail', function() {
+        const storeId = $(this).data('store-id');
+        const clusterId = $(this).data('cluster-id');
+        const address = $(this).data('address') ?? '';
+        const area = $(this).data('area') ?? '';
+        const distributor = $(this).data('distributor') ?? '';
+        const retailStation = $(this).data('retail-station') ?? '';
+        const rtocode = $(this).data('rto-code') ?? '';
+        updateRetail(storeId, clusterId, address, area, distributor, retailStation, rtocode);
+    });
+
+    $(tableId).on('click', '.deleteRetail', function() {
+        const storeId = $(this).data('store-id');
+        DeleteRetail(storeId);
     });
 }
 
@@ -267,9 +299,15 @@ function dynamicCall(functionName, ...args) {
     }
 }
 
+document.getElementById('addCluster').addEventListener('click', ()=> {
+    SubmitData('clusterForm', '/api/add-retail-store');
+});
 
+document.getElementById('updateCluster').addEventListener('click', ()=> {
+    SubmitData('updateregionForm', '/api/update-store');
+})
 
-function SubmitData(formID, route) {
+function SubmitData(formId, route) {
 
     const inputs = [
         ['cluster_id2', 'cluster_id2E'],
@@ -281,7 +319,7 @@ function SubmitData(formID, route) {
     if(checkValidity(inputs)){
         loading(true);
 
-        const form = document.getElementById(formID);
+        const form = document.getElementById(formId);
         const csrfToken = $('meta[name="csrf-token"]').attr("content");
         const formData = new FormData(form);
         formData.append("_token", csrfToken);
@@ -294,7 +332,7 @@ function SubmitData(formID, route) {
             contentType: false,
             success: function (response) {
                 alertify.success(response.message);
-                document.getElementById(formID).reset();
+                document.getElementById(formId).reset();
                 dynamicCall(response.reload);
                 loading(false);
                 exec('closeRetail');
@@ -439,9 +477,10 @@ function FilterRetailStore(filter) {
                 data: null,
                 render: function (data, type, row) {
                     return (
-                        `<div class="d-flex gap-1"><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal-update-retail" onclick="updateRetail('${row.store_id}','${row.cluster_id}','${row.address}','${row.area}','${row.distributor}','${row.retail_station}', '${row.rto_code}')">Update</button>` +
+                        `<div class="d-flex gap-1"><button class="btn btn-success updateRetail" data-bs-toggle="modal" data-bs-target="#modal-update-retail"
+                         data-store-id="${row.store_id}" data-area="${row.area}" data-cluster-id="${row.cluster_id}" data-address="${row.address}" data-distributor="${row.distributor}" data-retail-station="${row.retail_station}" data-rto-code="${row.rto_code}">Update</button>` +
                         ` ` +
-                        `<button class="btn btn-danger" onclick="DeleteRetail('${row.store_id}')">Delete</button></div>`
+                        `<button class="btn btn-danger deleteRetail" data-store-id="${row.store_id}">Delete</button></div>`
                     );
                 },
             },
@@ -450,6 +489,22 @@ function FilterRetailStore(filter) {
         lengthChange: true,
         pageLength: 10,
         destroy: true
+    });
+
+    $(tableId).on('click', '.updateRetail', function() {
+        const storeId = $(this).data('store-id');
+        const clusterId = $(this).data('cluster-id');
+        const address = $(this).data('address') ?? '';
+        const area = $(this).data('area') ?? '';
+        const distributor = $(this).data('distributor') ?? '';
+        const retailStation = $(this).data('retail-station') ?? '';
+        const rtocode = $(this).data('rto-code') ?? '';
+        updateRetail(storeId, clusterId, address, area, distributor, retailStation, rtocode);
+    });
+
+    $(tableId).on('click', '.deleteRetail', function() {
+        const storeId = $(this).data('store-id');
+        DeleteRetail(storeId);
     });
 }
 

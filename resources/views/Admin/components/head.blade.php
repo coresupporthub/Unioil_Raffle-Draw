@@ -15,9 +15,9 @@
     <link href="{{ asset('./dist/css/tabler-payments.min.css?1692870487') }}" rel="stylesheet" />
     <link href="{{ asset('./dist/css/tabler-vendors.min.css?1692870487') }}" rel="stylesheet" />
     <link href="{{ asset('./dist/css/demo.min.css?1692870487') }}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/4.3.0/apexcharts.min.css">
     <link rel="stylesheet" href="/css/app.css">
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/2.3.1/list.min.js"></script>
 
@@ -47,7 +47,7 @@
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-    <style>
+    <style nonce="{{ csp_nonce() }}">
         @import url('https://rsms.me/inter/inter.css');
 
         :root {
@@ -149,6 +149,9 @@
 
         .nav-item:nth-child(5) {
             --nav-index: 4;
+        }
+        .bg-unioil{
+            background-image: url('/unioil_images/unioil.png');
         }
     </style>
 </head>

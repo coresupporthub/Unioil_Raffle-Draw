@@ -158,7 +158,13 @@ function checkInp(inp, textErr){
     const inputElement = document.getElementById(inp);
     const text = document.getElementById(textErr);
 
-    if(inputElement.value == '' && (inputElement.type == 'text' || inputElement.type == 'password' || inputElement.type == 'number' || inputElement.tagName.toLowerCase() == 'textarea')){
+    if(inputElement.value == '' &&
+        (inputElement.type == 'text'
+            || inputElement.type == 'password'
+            || inputElement.type == 'number'
+            || inputElement.tagName.toLowerCase() == 'textarea'
+            || inputElement.tagName.toLowerCase() == 'select'
+        )){
         text.classList.remove('d-none');
         inputElement.classList.add('border', 'border-danger');
 

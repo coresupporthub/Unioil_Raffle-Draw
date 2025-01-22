@@ -24,6 +24,14 @@ function hasRequiredCharacters(str) {
     return hasUppercase && hasLowercase && hasNumber;
 }
 
+document.getElementById('newPassword').addEventListener('input', (event)=> {
+    checkPass(event.target, 'confirmPassword');
+});
+
+document.getElementById('confirmPassword').addEventListener('input', (event)=> {
+    checkPass(event.target, 'newPassword');
+});
+
 function checkPass(input, opposite) {
     const oppositeInput = document.getElementById(opposite).value;
     const btn = document.getElementById('changePasswordBtn');
@@ -33,14 +41,14 @@ function checkPass(input, opposite) {
     const showError = (message) => {
         newError.textContent = message;
         confirmError.textContent = message;
-        newError.style.display = '';
-        confirmError.style.display = '';
+        newError.classList.remove('hidden');
+        confirmError.classList.remove('hidden');
         btn.disabled = true;
     };
 
     const hideError = () => {
-        newError.style.display = 'none';
-        confirmError.style.display = 'none';
+        newError.classList.add('hidden');
+        confirmError.classList.add('hidden');
         btn.disabled = false;
     };
 
@@ -129,7 +137,12 @@ if(addAdminBtn){
                 success: res=> {
                     loading(false);
                     dataParser(res);
-                    loadAdmins();
+                    if(res.success){
+                        loadAdmins();
+                        clearVal('m_name');
+                        clearVal('m_email');
+                    }
+
                 },error: xhr=> console.log(xhr.responseText)
             })
         }
@@ -312,6 +325,14 @@ if(changePassAdminBtn){
 
 }
 
+const transferAdminBtn = document.getElementById('transferAdminBtn');
+
+if(transferAdminBtn){
+    transferAdminBtn.addEventListener('click', ()=> {
+        loadTransferAdmin();
+    });
+}
+
 function loadTransferAdmin(){
     const tableId = "#admin-transfer";
 
@@ -333,7 +354,7 @@ function loadTransferAdmin(){
                 data: null,
                 render: data => {
                     return `
-                    <button data-bs-toggle="modal" data-bs-target="#need-password" onclick="SelectTransfer('${data.id}')" class="btn btn-success updBtn">Transfer Status</button>
+                    <button data-bs-toggle="modal" data-bs-target="#need-password" data-id="${data.id}" class="btn btn-success updBtn">Transfer Status</button>
                    `;
                 },
                 width: '5%'
@@ -344,6 +365,12 @@ function loadTransferAdmin(){
         pageLength: 10,
         destroy: true
     });
+
+    $(tableId).on('click', '.updBtn', function() {
+        const id = $(this).data('id');
+        SelectTransfer(id);
+    });
+
 }
 
 function SelectTransfer(id){

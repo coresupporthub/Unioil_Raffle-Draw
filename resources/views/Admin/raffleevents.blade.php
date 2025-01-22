@@ -1,7 +1,7 @@
 @include('Admin.components.head', ['title' => 'Raffle Events'])
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
-<style>
+<style  nonce="{{ csp_nonce() }}">
     .card-link-rotate:hover {
     transform: scale(1.05);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);

@@ -1,7 +1,7 @@
 @include('Admin.components.head', ['title' => 'Raffle Draw'])
 <link rel="stylesheet" href="{{ asset('car_animation/car.css') }}">
 <link rel="stylesheet" href="/css/winner.css">
-<style>
+<style nonce="{{ csp_nonce() }}">
     .border-right {
         border-right: 1px solid #ccc;
     }
@@ -23,10 +23,34 @@
     transition: all 0.3s ease-in-out;
 }
 
-
-
     body {
         background-color: #f8f9fa;
+    }
+
+    .cardBg{
+        background: linear-gradient(to right, #FF7F00, #FFFFFF);
+    }
+
+    .opac{
+        opacity: 0.6;
+    }
+
+    .maxWidth{
+        max-width: 100px;
+    }
+    .maxHeight{
+        height: 100%; max-height: 35rem;
+    }
+    .fontSize{
+        font-size: 1.5rem; padding: 1rem;
+    }
+
+    .overHeight{
+        height: 35rem; overflow-y: auto;
+    }
+
+    .devs{
+        font-size: 3px; padding-left: 5px; display: flex; justify-content:space-between
     }
 </style>
 
@@ -63,10 +87,9 @@
                     <div class="page-body">
                         <div class="container-xl">
                             <div class="card">
-                                <div class="card-body" id="cardbg"
-                                    style="background: linear-gradient(to right, #FF7F00, #FFFFFF);">
+                                <div class="card-body cardBg" id="cardbg">
                                     @include('Admin.components.winnermodal')
-                                    <div id="colorOverlay" class="position-fixed w-100 h-100 d-none left-0 top-0" style="opacity: 0.6; left: 0"></div>
+                                    <div id="colorOverlay" class="position-fixed w-100 h-100 d-none left-0 top-0 opac" ></div>
 
                                     <div class="row g-0 p-5 w-100">
 
@@ -74,23 +97,21 @@
 
                                             <div class="ms-3">
                                                 <img src="{{ asset('unioil_images/unioil.png') }}" alt="Raffle Logo"
-                                                    class="img-fluid rounded-circle" style="max-width: 100px;">
+                                                    class="img-fluid rounded-circle maxWidth">
                                             </div>
-                                            <div class="card-body p-0 d-flex justify-content-center align-items-center"
-                                                style="height: 100%; max-height: 35rem;">
+                                            <div class="card-body p-0 d-flex justify-content-center align-items-center maxHeight">
                                                 <div class="text-center m-4">
                                                     <h1>Grand Raffle</h1>
                                                     <h1 class="display-1"></h1>
 
                                                     <div class="form-group mb-4">
                                                         <input type="text"
-                                                            class="form-control form-control-lg text-center"
+                                                            class="form-control form-control-lg text-center fontSize"
                                                             id="raffleInput" readonly
-                                                            style="font-size: 1.5rem; padding: 1rem;" />
+                                                             />
                                                     </div>
 
-                                                    <button class="btn btn-primary btn-lg w-100" id="drawButton"
-                                                        style="font-size: 1.5rem; padding: 1rem;">Start Raffle</button>
+                                                    <button class="btn btn-primary btn-lg w-100 fontSize" id="drawButton"">Start Raffle</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -117,8 +138,7 @@
                                             <div class="ms-4 me-4 mb-4 mt-6">
                                                 <label for="selectCluster" class="form-label"> <strong> Regional Clusters </strong></label>
                                                 <select name="selectCluster" id="selectCluster"
-                                                    class="form-select form-select-sm rounded shadow"
-                                                    onchange="SelectEntry(this)"></select>
+                                                    class="form-select form-select-sm rounded shadow"></select>
 
                                             </div>
 
@@ -126,7 +146,7 @@
                                                 <h2>Winners List</h2>
                                             </div>
 
-                                            <div class="card-body scrollable" style="height: 35rem; overflow-y: auto;">
+                                            <div class="card-body scrollable overHeight">
                                                 <table class="table table-hover">
                                                     <thead>
                                                         <tr>
@@ -153,7 +173,7 @@
                                                             <div></div>
                                                         </div>
                                                         <div class="decos">
-                                                            <div class="line-bot" style="font-size: 3px; padding-left: 5px; display: flex; justify-content:space-between"><span>coresupporthub</span><span>JPRheyanTishaHazel</span></div>
+                                                            <div class="line-bot devs" ><span>coresupporthub</span><span>JPRheyanTishaHazel</span></div>
                                                             <div class="door">
                                                                 <div class="handle"></div>
                                                                 <div class="bottom"></div>

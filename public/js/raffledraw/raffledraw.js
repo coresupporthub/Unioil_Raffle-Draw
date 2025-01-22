@@ -28,6 +28,12 @@ function GetAllClusterSelect() {
 }
 let serial_number = [];
 let cluster_id = '';
+
+document.getElementById('selectCluster').addEventListener('change', (event) => {
+    const select = event.target;
+    SelectEntry(select);
+})
+
 function SelectEntry(id){
     cluster_id = id.value;
     const csrfToken = $('meta[name="csrf-token"]').attr("content");
@@ -42,13 +48,13 @@ function SelectEntry(id){
         processData: false,
         contentType: false,
         success: function (response) {
-            if(response.length == 0){
+            if(response.data.length == 0){
                 document.getElementById("drawButton").disabled=true;
             }else{
                 document.getElementById("drawButton").disabled=false;
             }
             serial_number.length=0;
-            response.forEach((element) => {
+            response.data.forEach((element) => {
                 serial_number.push(element.serial_number);
             });
         },

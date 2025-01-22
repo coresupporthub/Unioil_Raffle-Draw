@@ -35,6 +35,10 @@ document.getElementById('initiateBackup').addEventListener('click', ()=> {
  })
 });
 
+document.getElementById('backuptab').addEventListener('click', ()=> {
+    loadbackup()
+});
+
 function loadbackup(){
     $.ajax({
         type: "GET",

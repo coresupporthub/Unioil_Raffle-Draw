@@ -1,6 +1,6 @@
 @include('Admin.components.head', ['title' => 'UniOil Raffle Draw'])
 
-<style>
+<style nonce="{{ csp_nonce() }}">
     .banner {
         height: 50vh;
         background: url('./unioil_images/unioil_bg.png') no-repeat center;
@@ -57,6 +57,10 @@
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
     }
+
+    .success{
+        background-image: url('/unioil_images/successbg.jpg'); background-size: cover;
+    }
 </style>
 
 <body>
@@ -66,7 +70,7 @@
         <div class="page-wrapper">
             <!-- Page body -->
 
-            <div class="banner" style="background-image: url('/unioil_images/successbg.jpg'); background-size: cover;">
+            <div class="banner success">
 
                 <img src="{{ asset('./unioil_images/unioil_bg.png') }}" alt="">
 

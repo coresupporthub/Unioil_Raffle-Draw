@@ -1,4 +1,4 @@
-<style>
+<style nonce="{{ csp_nonce() }}">
     #systemLoader{
         background-color: rgba(0,0,0,0.5);
         position: fixed;

@@ -1,5 +1,5 @@
 @include('Admin.components.head', ['title' => 'QR Generator'])
-<style>
+<style nonce="{{ csp_nonce() }}">
     #queue-progress tbody tr:hover {
         cursor: pointer;
         background-color: #fcbc9e;
@@ -170,8 +170,7 @@
                                         <div class="form-group">
                                             <label for="numberofqr">Number of QR</label>
                                             <input type="number" class="form-control" name="numberofqr"
-                                                id="numberofqr" min="1" max="25000" required value="1" placeholder="# of QR"
-                                                oninput="enforceLimit(this)">
+                                                id="numberofqr" min="1" max="25000" required value="1" placeholder="# of QR">
                                             <small class="d-none text-danger" id="numberofqr_e">You need to specify how many qr you want to generate</small>
                                         </div>
                                     </div>
@@ -189,8 +188,7 @@
                         </form>
                         <div class="modal-footer">
                             <button type="button" id="closeQrCodeGenerator" class="btn btn-outline-dark me-auto" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary" nonce="{{ csp_nonce() }}"
-                                onclick="GenerateQrCode()">Generate</button>
+                            <button type="button" class="btn btn-primary" id="generateQRCode" >Generate</button>
                         </div>
                     </div>
                 </div>
@@ -264,7 +262,7 @@
 
                                 <label class="form-label">How many pages?</label>
                                 <input type="number" class="form-control" id="export_pages" required name="page_number"
-                                    value="1" min="1" max="1000" oninput="enforceLimitForPdf(this)" placeholder="# of pages">
+                                    value="1" min="1" max="1000" placeholder="# of pages">
                             </div>
                             <div class="mb-3">
 

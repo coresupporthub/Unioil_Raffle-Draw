@@ -230,3 +230,20 @@ document.getElementById('baranggay').addEventListener('change', e => {
 document.getElementById('confirmRegistrationBtn').addEventListener('click', ()=> {
     saveRegistration();
 });
+
+
+document.getElementById('validationCustom01').addEventListener('input', event => {
+    const element = event.target;
+
+    element.value = element.value.replace(/[^a-zA-Z\s]/g, '');
+});
+
+document.getElementById('validationCustom02').addEventListener('input', event => {
+    const element = event.target;
+    element.value = element.value.replace(/[^0-9]/g, '');
+});
+
+
+document.getElementById('validationCustomUsername').addEventListener('input', event => {
+    validatePhoneNumber(event.target);
+});

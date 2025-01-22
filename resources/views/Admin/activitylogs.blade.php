@@ -1,5 +1,5 @@
 @include('Admin.components.head', ['title' => 'Activity Logs'])
-<style>
+<style  nonce="{{ csp_nonce() }}">
   #activityLogsTable tbody tr:hover {
       cursor: pointer;
       background-color: #fcbc9e;

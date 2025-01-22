@@ -17,8 +17,7 @@
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown"
                         aria-label="Open user menu">
-                        <span class="avatar avatar-sm"
-                            style="background-image: url({{ asset('unioil_images/unioil.png') }})"></span>
+                        <span class="avatar avatar-sm bg-unioil"></span>
                         <div class="d-none d-xl-block ps-2">
                             <div id="administrator_name">Loading.....</div>
                             <div class="mt-1 small text-secondary">Administrator</div>
@@ -28,7 +27,7 @@
                     <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                         <a href="/activity-logs" class="dropdown-item"> Activity Log</a>
                         <a href="{{ route('accountsettings') }}" class="dropdown-item"> Settings</a>
-                        <button onclick="adminLogout()" class="dropdown-item">Logout</button>
+                        <button id="logoutBtn" class="dropdown-item">Logout</button>
 
                     </div>
                 </div>

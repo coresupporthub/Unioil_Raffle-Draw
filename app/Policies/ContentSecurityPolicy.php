@@ -10,26 +10,35 @@ class ContentSecurityPolicy extends Basic
     public function configure()
     {
         parent::configure();
-        $this->addDirective(Directive::SCRIPT, 'https://ajax.googleapis.com')
-             ->addDirective(Directive::SCRIPT, 'https://cdnjs.cloudflare.com')
-             ->addDirective(Directive::SCRIPT, 'https://cdn.jsdelivr.net')
-             ->addDirective(Directive::SCRIPT, 'https://cdn.datatables.net')
+        $this->addDirective(Directive::SCRIPT, [
+                Keyword::SELF,
+                'https://ajax.googleapis.com',
+                'https://cdnjs.cloudflare.com',
+                'https://cdn.datatables.net',
+                'https://cdn.jsdelivr.net',
+                'https://fonts.googleapis.com',
+                'https://rsms.me'
+            ])
 
-             ->addDirective(Directive::STYLE, 'https://cdnjs.cloudflare.com')
-             ->addDirective(Directive::STYLE, 'https://cdn.jsdelivr.net')
-             ->addDirective(Directive::STYLE, 'https://cdn.datatables.net')
-             ->addDirective(Directive::STYLE, 'https://rsms.me')
+             ->addDirective(Directive::STYLE, [
+                Keyword::SELF,
+                'https://cdnjs.cloudflare.com',
+                'https://cdn.jsdelivr.net',
+                'https://cdn.datatables.net',
+                'https://rsms.me',
+             ])
 
-             ->addDirective(Directive::IMG, 'https://cdn.jsdelivr.net')
-             ->addDirective(Directive::IMG, 'data:')
+             ->addDirective(Directive::IMG, [
+                Keyword::SELF,
+                'https://cdn.jsdelivr.net',
+                'data:'
+             ])
 
-             ->addDirective(Directive::SCRIPT, 'https://cdnjs.cloudflare.com')
-             ->addDirective(Directive::SCRIPT, 'https://fonts.googleapis.com')
-             ->addDirective(Directive::SCRIPT, 'https://rsms.me')
-             ->addDirective(Directive::SCRIPT, 'https://cdn.jsdelivr.net')
              ->addDirective(Directive::FONT, [
                 Keyword::SELF,
                 'https://cdnjs.cloudflare.com',
+                'https://rsms.me',
+                'https://cdn.jsdelivr.net'
             ])
              ->addNonceForDirective(Directive::SCRIPT)
              ->addNonceForDirective(Directive::STYLE);

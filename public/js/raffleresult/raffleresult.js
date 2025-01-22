@@ -83,6 +83,10 @@ function loadCard() {
     });
 }
 
+document.getElementById('addEvent').addEventListener('click', ()=> {
+    submitdata('add-event-form',`/api/add-event`);
+});
+
 function submitdata(formID, route) {
 
     const inputs = [
@@ -114,6 +118,7 @@ function submitdata(formID, route) {
                     alertify.success(response.message);
                     document.getElementById(formID).reset();
                     dynamicCall(response.reload);
+                    exec('closeAddEventModal');
                 } else {
                     alertify.alert("Warning", response.message, function () {});
                 }
@@ -128,7 +133,7 @@ function submitdata(formID, route) {
 
 function dynamicCall(functionName, ...args) {
     if (typeof window[functionName] === "function") {
-        window[functionName](...args); 
+        window[functionName](...args);
     } else {
         console.error("Function not found:", functionName);
     }

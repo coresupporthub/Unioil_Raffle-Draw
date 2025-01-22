@@ -2,10 +2,74 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
-<style>
+<style  nonce="{{ csp_nonce() }}">
     #product-table tbody tr:hover {
         cursor: pointer;
         background-color: #fcbc9e;
+    }
+
+    .btnCopy{
+        background-color: #34bfa3;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-size: 14px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .btnCsv{
+        background-color: #ffc107;
+        color: black;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-size: 14px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .btnPdf{
+        background-color: #dc3545;
+        color: white; border: none;
+        padding: 5px 10px; border-radius: 4px;
+        font-size: 14px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .btnExcel{
+        background-color: #28a745;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-size: 14px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .btnPrint{
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-size: 14px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .headerImage{
+        text-align: center; padding: 20px
+    }
+
+    .imageClass{
+        max-height: 50px; width: auto; margin-bottom: 10px;
+    }
+
+    .text-color{
+        font-size: 14px; color: gray;
     }
   </style>
 <body>
@@ -54,24 +118,24 @@
                                 <div class="row p-2 Unioil-header">
                                     <div class="col-3 mb-3">
                                     <h4 class="mb-2 ms-2 text-white" for="">Raffle Events </h4>
-                                    <select class="form-select" name="event_id" id="event_id" onchange="GetAllEntry()">
+                                    <select class="form-select" name="event_id" id="event_id">
                                         {{-- <option value="" selected> Select Event </option> --}}
                                         @php
                                             $events = App\Models\Event::all();
                                         @endphp
                                         @foreach ($events as $event)
-                                            <option value="{{ $event->event_id }}" 
+                                            <option value="{{ $event->event_id }}"
                                                 @if($event->event_status === 'Active') selected @endif>
                                                 {{ $event->event_name }}
                                             </option>
                                         @endforeach
                                     </select>
-                                    
+
                                 </div>
 
                                 <div class="col-3 mb-3">
                                     <h4 class="mb-2 ms-2 text-white" for=""> Regional Cluster </h4>
-                                    <select class="form-select" name="region" id="region" onchange=" GetAllEntry()">
+                                    <select class="form-select" name="region" id="region">
                                          <option value="" selected> All Clusters </option>
                                          @php
                                             $regions = App\Models\RegionalCluster::all();
@@ -84,7 +148,7 @@
 
                                 <div class="col-3 mb-3">
                                     <h4 class="mb-2 ms-2 text-white" for=""> Product Type </h4>
-                                    <select class="form-select" name="ptype" id="ptype" onchange=" GetAllEntry()">
+                                    <select class="form-select" name="ptype" id="ptype">
                                        <option value="">All Type</option>
                                        <option value="1">Fully Synthetic</option>
                                        <option value="2">Semi Synthetic</option>

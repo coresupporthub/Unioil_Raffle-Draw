@@ -238,6 +238,10 @@ function validateForm(formID) {
     return !emptyField;
 }
 
+document.getElementById('triggerPrint').addEventListener('click', ()=> {
+    triggerPrint();
+});
+
 function triggerPrint() {
     window.print();
 }

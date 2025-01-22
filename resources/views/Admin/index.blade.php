@@ -1,6 +1,6 @@
 @include('Admin.components.head', ['title' => 'UniOil Raffle Draw'])
 
-<style>
+<style nonce="{{ csp_nonce() }}">
     .form-select:focus {
         border-color: #ffffff;
         box-shadow: 0 0 0 0.25rem rgba(255, 136, 38, 0.25);
@@ -18,13 +18,21 @@
     .form-select option:hover {
         background-color: #ffffff;
     }
+
+    .maxWidth{
+        max-width: 400px;
+    }
+
+    .border-orange{
+        border-color:#fd7e14;
+    }
 </style>
 
 <body>
     <script src="{{ asset('./dist/js/demo-theme.min.js?1692870487') }}"></script>
 
     <div class="page">
-        
+
         @include('Admin.components.header', ['active' => 'dashboard'])
         @include('Admin.components.loader')
         <div class="page-wrapper">
@@ -48,8 +56,8 @@
                                     use App\Models\Event;
                                     $events = Event::all();
                                 @endphp
-                                <div class="form-group mx-auto" style="max-width: 400px;">
-                                    <select class="form-select fw-semibold" style="border-color:#fd7e14; #fd7e14;"
+                                <div class="form-group mx-auto maxWidth">
+                                    <select class="form-select fw-semibold border-orange"
                                         id="event-dropdown">
                                         <option selected disabled value="">Choose an Event</option>
                                         @if ($events->isEmpty())
@@ -138,7 +146,9 @@
     </div>
     </div>
     @include('Admin.components.scripts', ['loc'=> 'admin'])
-
+    <script nonce="{{ csp_nonce() }}">
+        let cspNonce = "{{ csp_nonce() }}";
+    </script>
     <script src="/js/analytics.js"></script>
 
 </body>

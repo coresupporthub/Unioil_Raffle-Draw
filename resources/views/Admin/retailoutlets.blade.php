@@ -1,5 +1,5 @@
 @include('Admin.components.head', ['title' => 'Retail Outlet Management'])
-<style>
+<style  nonce="{{ csp_nonce() }}">
   #ratailOutletTable tbody tr:hover {
       cursor: pointer;
       background-color: #fcbc9e;

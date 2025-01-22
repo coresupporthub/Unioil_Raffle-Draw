@@ -26,7 +26,7 @@ class RaffleController extends Controller
         $event = Event::where('event_status', 'Active')->first();
 
         if(!$event){
-            return response()->json(['success'=> false, 'No Active Event Found']);
+            return response()->json(['success'=> false, 'No Active Event Found', 'data'=> []]);
         }
 
         $retailStores = RetailStore::where('cluster_id', $request->id)->pluck('rto_code');
@@ -36,7 +36,7 @@ class RaffleController extends Controller
             ->get();
 
 
-        return response()->json($raffleEntries);
+        return response()->json(['data'=> $raffleEntries]);
     }
 
     public function raffledraw(Request $request): JsonResponse

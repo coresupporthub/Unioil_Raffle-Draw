@@ -1,3 +1,14 @@
+document.getElementById('event_id').addEventListener('change', ()=> {
+    GetAllEntry();
+});
+
+document.getElementById('region').addEventListener('change', ()=> {
+    GetAllEntry();
+});
+document.getElementById('ptype').addEventListener('change', ()=> {
+    GetAllEntry();
+});
+
 function GetAllEntry() {
     const form = document.getElementById("searchEntry");
     const csrfToken = $('meta[name="csrf-token"]').attr("content");
@@ -44,19 +55,13 @@ function GetAllEntry() {
                 buttons: [
                     {
                         extend: "copy",
-                        className: "dt-button copy-btn",
+                        className: "dt-button copy-btn btnCopy",
                         text: '<i class="fas fa-clipboard"></i> Copy',
-                        attr: {
-                            style: "background-color: #34bfa3; color: white; border: none; padding: 5px 10px; border-radius: 4px; font-size: 14px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: background-color 0.3s ease, transform 0.3s ease;",
-                        },
                     },
                     {
                         extend: "csv",
-                        className: "dt-button csv-btn",
+                        className: "dt-button csv-btn btnCsv",
                         text: '<i class="fas fa-file-csv"></i> CSV',
-                        attr: {
-                            style: "background-color: #ffc107; color: black; border: none; padding: 5px 10px; border-radius: 4px; font-size: 14px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: background-color 0.3s ease, transform 0.3s ease;",
-                        },
                         exportOptions: {
                             modifier: {
                                 page: 'all',
@@ -76,11 +81,8 @@ function GetAllEntry() {
                     },
                     {
                         extend: "excel",
-                        className: "dt-button excel-btn",
+                        className: "dt-button excel-btn btnExcel",
                         text: '<i class="fas fa-file-excel"></i> Excel',
-                        attr: {
-                            style: "background-color: #28a745; color: white; border: none; padding: 5px 10px; border-radius: 4px; font-size: 14px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: background-color 0.3s ease, transform 0.3s ease;",
-                        },
                         footerCallback: function (row, data, start, end, display) {
                             const totalRows = data.length;
                             // Set up the footer row
@@ -90,22 +92,17 @@ function GetAllEntry() {
                     },
                     {
                         text: "PDF",
-                        className: "dt-button pdf-btn",
+                        className: "dt-button pdf-btn btnPdf",
                         action: function () {
                             const totalRows = data.length; // Get total rows
                             generatePDF(data, totalRows); // Pass data and totalRows
                         },
-                        attr: {
-                            style: "background-color: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 4px; font-size: 14px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: background-color 0.3s ease, transform 0.3s ease;",
-                        },
+
                     },
                     {
                         extend: "print",
-                        className: "dt-button print-btn",
+                        className: "dt-button print-btn btnPrint",
                         text: '<i class="fas fa-print"></i> Print',
-                        attr: {
-                            style: "background-color: #007bff; color: white; border: none; padding: 5px 10px; border-radius: 4px; font-size: 14px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: background-color 0.3s ease, transform 0.3s ease;",
-                        },
                         customize: function (win) {
                             // Custom header for print view
                             $(win.document.body).css(
@@ -117,9 +114,9 @@ function GetAllEntry() {
 
                             // Add header image and text
                             $(win.document.body).prepend(`
-                                <div style="text-align: center; padding: 20px;">
-                                    <img src="/unioil_images/unioil_logo.png" alt="Unioil Logo" style="max-height: 50px; width: auto; margin-bottom: 10px;">
-                                    <div style="font-size: 14px; color: gray;">Printed on: ${new Date().toLocaleString()}</div>
+                                <div class="headerImage">
+                                    <img src="/unioil_images/unioil_logo.png" alt="Unioil Logo" class="imageClass">
+                                    <div class="text-color">Printed on: ${new Date().toLocaleString()}</div>
                                 </div>
                             `);
 
@@ -167,19 +164,26 @@ function GetAllEntry() {
 }
 
 function generatePDF(data, totalRows) {
+
+    alertify.set('notifier','position', 'top-right');
+    if(data.length == 0){
+        alertify.warning("No Data to Print! Please try again later");
+        return;
+    }
+
     const { jsPDF } = window.jspdf;
 
     const headers = Object.keys(data[0]);
     const doc = new jsPDF();
-    
+
     // Set the page size to a smaller value to simulate zooming out
     const scale = 0.8; // 80% scale
-    
+
     // Calculate center position for logo (based on page width)
     const pageWidth = doc.internal.pageSize.width;
     const logoWidth = 50 * scale; // Width of the logo
     const logoX = (pageWidth - logoWidth) / 2;
-    
+
     // Add the logo centered on the page
     doc.setFontSize(16);
     doc.addImage(
@@ -190,14 +194,14 @@ function generatePDF(data, totalRows) {
         logoWidth,
         15 * scale
     ); // Adjust image size based on scale
-    
+
     // Adjust the "Printed on" text size and position (centered)
     doc.setFontSize(8); // Smaller font size for "Printed on"
     const printedText = "Printed on: " + new Date().toLocaleString();
     const textWidth = doc.getStringUnitWidth(printedText) * doc.internal.getFontSize() / doc.internal.scaleFactor;
     const textX = (pageWidth - textWidth) / 2;
     doc.text(printedText, textX, 30 * scale + 2); // Adjust Y position (2 units lower)
-    
+
 
     // Adding Table Content
     const tableStartY = 40 * scale + 2; // Start Y position for the table

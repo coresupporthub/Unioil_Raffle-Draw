@@ -1,5 +1,5 @@
 @include('Admin.components.head', ['title' => 'Raffle Event Results'])
-<style>
+<style  nonce="{{ csp_nonce() }}">
     tbody tr:hover {
         cursor: pointer;
         background-color: #fcbc9e;
@@ -8,6 +8,21 @@
         width: 100%;   /* Set a fixed width */
         height: 250px;  /* Set a fixed height */
         object-fit: contain; /* Ensures images cover the set size while maintaining aspect ratio */
+    }
+
+    .maxWidth{
+        max-width: 40%; height: auto;
+    }
+
+    .colors{
+        color: #f75a04; padding-left: 20px; font-family: 'Poppins', sans-serif;
+    }
+
+    .margPad{
+        margin-right: 10px; padding-left: 10px;
+    }
+    .bg-red{
+        background-color: #f75a04;
     }
   </style>
 
@@ -51,7 +66,7 @@
                                     </svg> Generate Report
                                 </a>
                                 <div class=" hide-me">
-                                <button class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal"
+                                <button class="btn btn-primary d-none d-sm-inline-block" id="openUpdateModal" data-bs-toggle="modal"
                                     data-bs-target="#update-event-modal">
                                     <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -84,25 +99,23 @@
                     <div class="page-body">
                         <div class="container-xl">
                             <div class="d-flex justify-content-center">
-                                <img src="" id="event-banner" alt="Event Banner" class="img-fluid" style="max-width: 40%; height: auto;">
+                                <img src="" id="event-banner" alt="Event Banner" class="img-fluid maxWidth">
                             </div>
                             <!-- Raffle Draw Details -->
                             <div class="text-center mb-5">
 
-                                <h1 class="fw-bold display-6 position-relative"
-                                    style="color: #f75a04; padding-left: 20px; font-family: 'Poppins', sans-serif;">
-                                    <span
-                                        style=" margin-right: 10px; padding-left: 10px;" id="title_event_name">
+                                <h1 class="fw-bold display-6 position-relative colors">
+                                    <span class="margPad"
+                                         id="title_event_name">
 
                                     </span>
                                 </h1>
                                 <p class="text-secondary fs-5">Start Date: <strong id="title_start"> </strong> - End Date: <strong id="title_end"> </strong></p>
                             </div>
-                           
+
                             <!-- Winners Table -->
                             <div class="card shadow mb-4">
-                                <div class="card-header text-white d-flex justify-content-center align-items-center"
-                                    style="background-color: #f75a04;">
+                                <div class="card-header text-white d-flex justify-content-center align-items-center bg-red">
                                     <h2 class="mb-0">🎉 Winners List 🎉</h2>
                                 </div>
 
@@ -130,13 +143,12 @@
 
                             <div class="d-flex flex-column justify-content-center align-items-center text-center">
                                 <h1>Grand Prize ( <span id="prize_label"></span> )</h1>
-                                <img src="" id="event-image" alt="Event Image" class="img-fluid" style="max-width: 40%; height: auto;">
+                                <img src="" id="event-image" alt="Event Image" class="img-fluid maxWidth">
                             </div>
 
 
                             <div class="card shadow">
-                                <div class="card-header text-white d-flex justify-content-center align-items-center"
-                                    style="background-color: #f70404;">
+                                <div class="card-header text-white d-flex justify-content-center align-items-center bg-red">
                                     <h2 class="mb-0">Redrawn Winners (Unconfirmed Prizes)</h2>
                                 </div>
 
@@ -214,7 +226,7 @@
                                 Update Event Banner Image
                             </button>
                         </div>
-                        
+
                         <!-- Event Prize -->
                         <div class="text-center w-50">
                             <label for="event-prize-modal" class="form-label d-block">Event Prize</label>
@@ -236,7 +248,7 @@
           <div class="modal-footer">
             <button type="button" class="btn btn-outline-dark me-auto" data-bs-dismiss="modal">Close</button>
             <button type="button" class="btn btn-danger" data-bs-toggle="modal" id="inactiveBtn" data-bs-target="#confirmInactive">Set Inactive</button>
-            <button type="button" class="btn btn-primary" onclick=" SubmitData('update-event-form', '/api/update-event')">Save changes</button>
+            <button type="button" class="btn btn-primary" id="updateEvent">Save changes</button>
           </div>
         </div>
       </div>
@@ -258,12 +270,12 @@
                     <label for="event_end" class="form-label">Event Prize Image</label>
                     <input type="file" class="form-control" name="image" id="image" placeholder="Enter event end">
                 </div>
-                </form>  
+                </form>
 
             </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-outline-dark me-auto" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick=" SubmitData('update-event-image-form', '/api/update-event-images')">Save changes</button>
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="updateEventRaffleImage">Save changes</button>
           </div>
         </div>
       </div>
@@ -284,12 +296,12 @@
                     <label for="event_end" class="form-label">Event Banner</label>
                     <input type="file" class="form-control" name="banner" id="banner" placeholder="Enter event end">
                 </div>
-                </form>  
+                </form>
 
             </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-outline-dark me-auto" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick=" SubmitData('update-event-banner-form', '/api/update-event-banner')">Save changes</button>
+            <button type="button" class="btn btn-primary" id="updateEventBanner" data-bs-dismiss="modal">Save changes</button>
           </div>
         </div>
       </div>

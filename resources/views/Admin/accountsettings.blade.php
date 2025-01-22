@@ -2,12 +2,23 @@
 @php
     $user = auth()->user()->user_type;
 @endphp
-<style>
+<style nonce="{{ csp_nonce() }}">
     .list-group-item.active {
         background-image: linear-gradient(45deg, #F75A04, #ffffff) !important;
         color: white !important;
     }
 
+.card-prop{
+    max-height: 500px; overflow-y: auto;
+}
+
+.action{
+    width: 10%;
+}
+
+.hidden{
+    display: none;
+}
 </style>
 
 <body>
@@ -43,12 +54,12 @@
                                                     Administrators
                                                 </a>
                                                 @if ($user == 'Super Admin')
-                                                <a href="#backupTab" onclick="loadbackup()" class="list-group-item list-group-item-action d-flex align-items-center rounded-pill" id="backupNav" data-bs-toggle="list" role="tab" aria-controls="Backup navigation" aria-selected="false">
+                                                <a href="#backupTab" id="backuptab" class="list-group-item list-group-item-action d-flex align-items-center rounded-pill" id="backupNav" data-bs-toggle="list" role="tab" aria-controls="Backup navigation" aria-selected="false">
                                                    Back up
                                                 </a>
                                                 @endif
                                                 <!-- Logout Button -->
-                                                <button onclick="adminLogout()" class="list-group-item list-group-item-action d-flex align-items-center">
+                                                <button id="adminLogoutBtn" class="list-group-item list-group-item-action d-flex align-items-center">
                                                     Logout
                                                 </button>
                                             </div>
@@ -61,7 +72,7 @@
                                         <div class="tab-content">
                                             <!-- Account Content (Active by default) -->
                                             <div class="tab-pane fade show active" id="accountContent" role="tabpanel" aria-labelledby="accountTab">
-                                                <div class="card-body" style="max-height: 500px; overflow-y: auto;">
+                                                <div class="card-body card-prop" >
                                                     <h2 class="mb-4">My Account @if($user == 'Super Admin') (Super Admin) @endif</h2>
                                                     <h3 class="card-title">Profile Details</h3>
                                                     <form id="adminDetailsForm" class="row g-3">
@@ -80,7 +91,7 @@
                                                     <div class="w-100 d-flex justify-content-between">
                                                         <a href="" data-bs-toggle="modal" data-bs-target="#changepasswordModal" class="btn">Set new password</a>
                                                         @if ($user == 'Super Admin')
-                                                        <a href="" onclick="loadTransferAdmin()" data-bs-toggle="modal" data-bs-target="#transfer-status" class="btn btn-success">Transfer Super Admin Status</a>
+                                                        <a href="" id="transferAdminBtn" data-bs-toggle="modal" data-bs-target="#transfer-status" class="btn btn-success">Transfer Super Admin Status</a>
                                                         @endif
                                                     </div>
                                                 </div>
@@ -129,7 +140,7 @@
                                                                 <tr>
                                                                     <th>Name</th>
                                                                     <th>Email</th>
-                                                                    <th style="width: 10%">Action</th>
+                                                                    <th class="action">Action</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody class="table-tbody">
@@ -205,19 +216,19 @@
                     <div class="mb-3">
                         <label for="currentPassword" class="form-label">Current Password</label>
                         <input type="password" required name="currentPassword" class="form-control" id="currentPassword" placeholder="Enter current password">
-                        <div id="currentPasswordError" class="text-danger mt-2" style="display: none;">Current
+                        <div id="currentPasswordError" class="text-danger mt-2 hidden">Current
                             password is required.</div>
                     </div>
                     <div class="mb-3">
                         <label for="newPassword" class="form-label">New Password</label>
-                        <input type="password" required oninput="checkPass(this, 'confirmPassword')" name="newPassword" class="form-control" id="newPassword" placeholder="Enter new password">
-                        <div id="newPasswordError" class="text-danger mt-2" style="display: none;">New password
+                        <input type="password" required name="newPassword" class="form-control" id="newPassword" placeholder="Enter new password">
+                        <div id="newPasswordError" class="text-danger mt-2 hidden">New password
                             is required.</div>
                     </div>
                     <div class="mb-3">
                         <label for="confirmPassword" class="form-label">Confirm New Password</label>
-                        <input type="password" required oninput="checkPass(this, 'newPassword')" name="confirmPassword" class="form-control" id="confirmPassword" placeholder="Confirm new password">
-                        <div id="confirmPasswordError" class="text-danger mt-2" style="display: none;">Passwords
+                        <input type="password" required name="confirmPassword" class="form-control" id="confirmPassword" placeholder="Confirm new password">
+                        <div id="confirmPasswordError" class="text-danger mt-2 hidden" >Passwords
                             do not match.</div>
                     </div>
                 </form>
@@ -244,7 +255,7 @@
                             <tr>
                                 <th>Name</th>
                                 <th>Email</th>
-                                <th style="width: 10%">Action</th>
+                                <th class="action">Action</th>
                             </tr>
                         </thead>
                         <tbody class="table-tbody">

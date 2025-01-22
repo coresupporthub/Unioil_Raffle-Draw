@@ -1,11 +1,11 @@
-function enforceLimit(input) {
-    if (input.value > 25000) {
-        input.value = 25000;
+document.getElementById('export_pages').addEventListener('input',(event) => {
+    if (event.target.value > 25000) {
+        event.target.value = 25000;
     }
-}
+});
 
-function enforceLimitForPdf(input) {
-    if (input.value > 1000) {
-        input.value = 1000;
+document.getElementById('numberofqr').addEventListener('input',(event) => {
+    if (event.target.value > 25000) {
+        event.target.value = 25000;
     }
-}
+});

@@ -1,5 +1,11 @@
 @include('Admin.components.head', ['title' => 'UniOil Raffle Draw'])
 
+<style nonce="{{ csp_nonce() }}">
+    .log{
+        width: 150px; height: auto;
+    }
+</style>
+
 <body>
     <script src="{{ asset('./dist/js/demo-theme.min.js?1692870487') }}"></script>
     <div class="page">
@@ -14,7 +20,7 @@
                             <div class="text-center mb-4">
                                 <a href="#" class="navbar-brand navbar-brand-autodark">
                                     <img src="{{ asset('unioil_images/unioil_logo.png') }}" alt="Tabler"
-                                        class="navbar-brand-image" style="width: 150px; height: auto;">
+                                        class="navbar-brand-image logo" >
                                 </a>
                             </div>
                             <form class="card card-md" id="verifyForm" autocomplete="off" >

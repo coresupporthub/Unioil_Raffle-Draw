@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 height: 354,
                 sparkline: { enabled: true },
                 animations: { enabled: false },
+                nonce: cspNonce
             },
             fill: {
                 type: "gradient",
@@ -25,26 +26,26 @@ document.addEventListener("DOMContentLoaded", function () {
                     stops: [0, 100],
                 },
             },
-            series: [0, 0], 
-            labels: ["No Event Data", ""], 
-            tooltip: { theme: "dark", enabled: false }, 
+            series: [0, 0],
+            labels: ["No Event Data", ""],
+            tooltip: { theme: "dark", enabled: false },
             grid: { strokeDashArray: 4 },
-            colors: ["#B0B0B0", "#B0B0B0"], 
+            colors: ["#B0B0B0", "#B0B0B0"],
             legend: { show: true, position: "bottom", offsetY: 8 },
         });
 
         chartInstance.render();
-        
+
         fetchActiveEventData();
 
         document.getElementById('event-dropdown').addEventListener('change', function () {
             const eventId = this.value;
             loadbarchart(eventId)
-            fetchEventData(eventId); 
-            fetchEntriesData(eventId); 
-            fetchClusterData(eventId); 
+            fetchEventData(eventId);
+            fetchEntriesData(eventId);
+            fetchClusterData(eventId);
             fetchEventDataarea(eventId);
-            
+
         });
 
         barChart = new ApexCharts(document.getElementById('chart-tasks-overview1'), {
@@ -54,6 +55,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 height: 302,
                 toolbar: { show: false },
                 animations: { enabled: false },
+                nonce: cspNonce
             },
             plotOptions: { bar: { columnWidth: '50%' } },
             dataLabels: { enabled: false },
@@ -106,7 +108,7 @@ function updateCharts(semiSynthetic, fullySynthetic, noData = false) {
     }
 }
 
-function fetchEntriesData(eventId) { 
+function fetchEntriesData(eventId) {
     if (!eventId) return;
 
     $.ajax({
@@ -148,12 +150,12 @@ function fetchEntriesData(eventId) {
 
 function fetchActiveEventData() {
     $.ajax({
-        url: '/api/events/datas/active', 
+        url: '/api/events/datas/active',
         method: 'GET',
         dataType: 'json',
         success: function (data) {
             if (data.success && data.eventData) {
-                const activeEventId = data.eventData.event_id; 
+                const activeEventId = data.eventData.event_id;
                 const activeEventName = data.eventData.event_name;
 
                 const dropdown = document.getElementById('event-dropdown');
@@ -167,11 +169,11 @@ function fetchActiveEventData() {
                     dropdown.add(newOption);
                 }
                 loadbarchart(activeEventId)
-                fetchEventData(activeEventId); 
-                fetchEntriesData(activeEventId); 
-                fetchClusterData(activeEventId); 
+                fetchEventData(activeEventId);
+                fetchEntriesData(activeEventId);
+                fetchClusterData(activeEventId);
                 fetchEventDataarea(activeEventId);
-                
+
             } else {
                 console.warn('No active event found.');
                 updateCharts(0, 0, true);
@@ -202,8 +204,9 @@ function fetchClusterData(eventId) {
                         fontFamily: 'inherit',
                         height: 314,
                         parentHeightOffset: 0,
-                        toolbar: { show: true }, 
+                        toolbar: { show: true },
                         animations: { enabled: false },
+                        nonce: cspNonce
                     },
                     plotOptions: { bar: { columnWidth: '70%' } },
                     dataLabels: { enabled: false },
@@ -249,8 +252,8 @@ function fetchEventDataarea(eventId) {
         method: 'GET',
         success: function (data) {
             const chartElement = document.getElementById('chart-completion-tasks-10');
-            chartElement.innerHTML = ""; 
-            
+            chartElement.innerHTML = "";
+
             if (data.success && data.eventData.length > 0) {
                 data.eventData.sort((a, b) => new Date(a.date) - new Date(b.date));
 
@@ -270,6 +273,7 @@ function fetchEventDataarea(eventId) {
                     chart: {
                         type: 'area',
                         height: 302,
+                        nonce: cspNonce
                     },
                     series: [{
                         name: 'Raffle Entries',
@@ -306,7 +310,7 @@ function fetchEventDataarea(eventId) {
                     dataLabels: { enabled: false },
                     tooltip: {
                         x: {
-                            format: 'dd MMM yyyy' 
+                            format: 'dd MMM yyyy'
                         }
                     },
                     grid: {
@@ -319,10 +323,11 @@ function fetchEventDataarea(eventId) {
                     chart: {
                         type: 'area',
                         height: 302,
+                        nonce: cspNonce
                     },
                     series: [{
                         name: 'Raffle Entries',
-                        data: [] 
+                        data: []
                     }],
                     xaxis: {
                         categories: [],
@@ -355,7 +360,7 @@ function fetchEventDataarea(eventId) {
                     dataLabels: { enabled: false },
                     tooltip: {
                         x: {
-                            format: 'dd MMM yyyy' 
+                            format: 'dd MMM yyyy'
                         }
                     },
                     grid: {
@@ -367,16 +372,17 @@ function fetchEventDataarea(eventId) {
         },
         error: function () {
             const chartElement = document.getElementById('chart-completion-tasks-10');
-            chartElement.innerHTML = ""; 
+            chartElement.innerHTML = "";
 
             new ApexCharts(chartElement, {
                 chart: {
                     type: 'area',
                     height: 302,
+                    nonce: cspNonce
                 },
                 series: [{
                     name: 'Raffle Entries',
-                    data: [] 
+                    data: []
                 }],
                 xaxis: {
                     categories: [],
@@ -409,7 +415,7 @@ function fetchEventDataarea(eventId) {
                 dataLabels: { enabled: false },
                 tooltip: {
                     x: {
-                        format: 'dd MMM yyyy' 
+                        format: 'dd MMM yyyy'
                     }
                 },
                 grid: {
@@ -422,14 +428,13 @@ function fetchEventDataarea(eventId) {
 }
 
 
-var chart; 
+var chart;
 
 function loadbarchart(id) {
     $.ajax({
         url: `/api/entries/productcluster/${id}`,
         method: 'GET',
         success: function (data) {
-            console.log(data)
             if (data.success) {
                 let seriesData = [];
                 let categories = [];
@@ -459,6 +464,7 @@ function loadbarchart(id) {
                         fontFamily: 'inherit',
                         height: 302,
                         parentHeightOffset: 0,
+                        nonce: cspNonce,
                         toolbar: {
                             show: false,
                         },
