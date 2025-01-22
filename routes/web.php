@@ -8,7 +8,6 @@ use App\Models\ProductList;
 use App\Models\RaffleEntries;
 use App\Http\Services\Tools;
 use App\Models\Event;
-use Illuminate\Http\Request;
 use App\Http\Middleware\SecurityHeadersMiddleware;
 
 Route::middleware([AuthMiddleware::class, SecurityHeadersMiddleware::class])->group(function () {

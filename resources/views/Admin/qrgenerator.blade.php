@@ -189,7 +189,7 @@
                         </form>
                         <div class="modal-footer">
                             <button type="button" id="closeQrCodeGenerator" class="btn btn-outline-dark me-auto" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary"
+                            <button type="button" class="btn btn-primary" nonce="{{ csp_nonce() }}"
                                 onclick="GenerateQrCode()">Generate</button>
                         </div>
                     </div>
@@ -288,14 +288,7 @@
 
         </div>
     </div>
-    {{-- @vite('resources/js/app.js')
-    <script>
-        setTimeout(() => {
-            window.Echo.channel('queueingstatus').listen('QueueingStatus', (e) => {
-                console.log(e);
-            });
-        }, 200);
-    </script> --}}
+
     <input type="hidden" id="pdfFiles" value="{{ Storage::url('pdf_files') }}/qr_codes_export_1.pdf">
     @include('Admin.components.scripts', ['loc'=> 'admin'])
     <script src="{{ asset('/js/qr_code.js') }}"></script>

@@ -6,7 +6,6 @@ use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Console\Scheduling\Schedule;
 use App\Models\User;
 use Illuminate\Support\Facades\Artisan;
-use App\Http\Middleware\SecurityHeadersMiddleware;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -17,7 +16,7 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        // $middleware->append(SecurityHeadersMiddleware::class);
+        $middleware->append(Spatie\Csp\AddCspHeaders::class);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
