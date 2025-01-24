@@ -40,14 +40,14 @@ class ExportQrCoupon implements ShouldQueue
         $pageNum = 1;
 
         foreach($pageChunks as $chunk){
-            $fileName = "qrCode{$pageNum}.pdf";
+            $fileName = "{$this->qrType}_qrCode{$pageNum}.pdf";
             $fileNames[] = storage_path("app/pdf_files/$fileName");
             GeneratePdf::dispatch($chunk, $fileName, $this->qrType, $this->queue_id);
             $pageNum++;
         }
 
         Log::info('Files List', ['fileNames' => $fileNames]);
-        CompressFiles::dispatch($fileNames, $this->queue_number, $this->queue_id);
+        CompressFiles::dispatch($fileNames, $this->queue_number, $this->queue_id, $this->qrType);
     }
 
 

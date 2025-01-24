@@ -28,7 +28,7 @@
     }
 
     .cardBg{
-        background: linear-gradient(to right, #FF7F00, #FFFFFF);
+        background: linear-gradient(to right, #FF7F00, #FFFFFF) !important;
     }
 
     .opac{
@@ -120,7 +120,7 @@
                                             <div id="fullscreenButton"
                                                 class=" text-center position-absolute top-0 end-0 me-2 mt-2 ">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0" fill="none" stroke="currentColor" stroke-width="2"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                                     stroke-linecap="round" stroke-linejoin="round"
                                                     class="icon icon-tabler icons-tabler-outline icon-tabler-arrows-maximize">
                                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />

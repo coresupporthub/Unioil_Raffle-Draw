@@ -22,3 +22,7 @@ document.getElementById('authForm').addEventListener('submit', (e)=> {
         }, error: xhr=> console.log(xhr.responseText)
     })
 });
+
+document.getElementById('showPass').addEventListener('click', ()=> {
+    showPass('password');
+});

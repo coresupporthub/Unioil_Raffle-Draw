@@ -11,7 +11,7 @@
   margin: 0;
     }
 </style>
-<div id="confetti" class="left-0 top-0 d-none position-fixed w-100 h-100 justify-content-center align-items-center">
+<div id="confetti" class="left-0 top-0 d-none position-fixed w-100 h-100 justify-content-center align-items-center winner">
 <canvas id="canvas"></canvas>
 
 <div class="winner-container">

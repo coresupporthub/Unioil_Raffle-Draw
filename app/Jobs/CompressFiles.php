@@ -18,17 +18,19 @@ class CompressFiles implements ShouldQueue, ShouldBeUnique
     private array $fileNames;
     private string $queue_number;
     private string $queue_id;
+    private string $qrType;
 
     /**
      * Create a new job instance.
      * @param string[] $fileNames Array of file paths to include in the ZIP.
      */
 
-    public function __construct(array $fileNames, string $queue_number, string $queue_id)
+    public function __construct(array $fileNames, string $queue_number, string $queue_id, string $qrType)
     {
         $this->fileNames = $fileNames;
         $this->queue_number = $queue_number;
         $this->queue_id = $queue_id;
+        $this->qrType = $qrType;
     }
 
     /**
@@ -37,7 +39,7 @@ class CompressFiles implements ShouldQueue, ShouldBeUnique
     public function handle(): void
     {
         $filePaths = $this->fileNames;
-        $zipFileName = "qr_codes_export". $this->queue_number . ".zip";
+        $zipFileName = $this->qrType . "_qr_codes_export". $this->queue_number . ".zip";
         $zipFilePath = storage_path("app/pdf_files/$zipFileName");
 
         $zip = new ZipArchive();

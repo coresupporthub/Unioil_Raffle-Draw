@@ -43,7 +43,7 @@
                                             <div class="input-group input-group-flat">
                                                 <input type="password" required name="password" id="password" class="form-control" placeholder="Your password"
                                                     autocomplete="off">
-                                                <span onclick="showPass('password')" class="input-group-text">
+                                                <span id="showPass" class="input-group-text">
                                                     <a href="#" class="link-secondary" title="Show password"
                                                         data-bs-toggle="tooltip">
                                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon"
