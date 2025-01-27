@@ -21,6 +21,7 @@ class SecurityHeadersMiddleware
         $response->headers->set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
         $response->headers->set('Referrer-Policy', 'no-referrer-when-downgrade');
         $response->headers->set('Permissions-Policy', 'geolocation=(), microphone=(), camera=()');
+        $response->headers->set('Server', 'Secure-Server');
 
         return $response;
     }
