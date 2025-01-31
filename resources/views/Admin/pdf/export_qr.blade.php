@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ $file_title }}</title>
-    <style>
+    <style  nonce="{{ csp_nonce() }}">
          @page {
             margin: 1mm;
         }
@@ -31,6 +31,7 @@
             position: relative;
             width:2in;
             height: 1.5in;
+            text-align: center;
         }
         td img {
             position: absolute;
@@ -39,6 +40,7 @@
             width: 18mm;
             height: 18mm;
         }
+
 
     </style>
 </head>
@@ -49,7 +51,7 @@
         @foreach ($qrCodeBy8 as $qrCodeBy3)
         <tr>
             @foreach ($qrCodeBy3 as $qrCode)
-            <td style="text-align: center;">
+            <td>
                 <img src="{{ $qrCode['image_base64'] }}">
             </td>
             @endforeach
