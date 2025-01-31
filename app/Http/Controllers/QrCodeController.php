@@ -37,7 +37,7 @@ class QrCodeController extends Controller
         $queue->save();
 
         $numberOfQr = (int) $req->numberofqr;
-        
+
         PackQueue::dispatch($numberOfQr, $req->qrtype);
 
         $response = ['success' => true];
@@ -131,7 +131,7 @@ class QrCodeController extends Controller
 
     public function zipdownload(string $path) : Response
     {
-        $filePath = storage_path("app/pdf_files/$path");
+        $filePath = storage_path("app/public/pdf_files/$path");
 
         if (!file_exists($filePath)) {
             return response()->json(['error' => 'File not found'], 404);
@@ -233,7 +233,7 @@ class QrCodeController extends Controller
             return response()->json(['success' => false, 'message' => 'No QR Code Found']);
         }
 
-        $imagePath = storage_path('app/qr-codes/' . $qrCode->image);
+        $imagePath = storage_path('app/public/qr-codes/' . $qrCode->image);
 
         if (file_exists($imagePath)) {
             $qrCode->image_base64 = 'data:image/png;base64,' . base64_encode((string)file_get_contents($imagePath));

@@ -43,7 +43,7 @@ class ResetExport extends Command
 
         $this->info("Clear all QR Codes Status");
 
-        $pdf_files = storage_path('app/pdf_files');
+        $pdf_files = storage_path('app/public/pdf_files');
 
         if (File::exists($pdf_files)) {
             File::deleteDirectory($pdf_files);

@@ -52,7 +52,7 @@
         <tr>
             @foreach ($qrCodeBy3 as $qrCode)
             <td>
-                <img src="{{ $qrCode['image_base64'] }}">
+                <img src="{{ public_path('storage/qr-codes/'. $qrCode['image_file']) }}">
             </td>
             @endforeach
 

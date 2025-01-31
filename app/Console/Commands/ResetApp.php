@@ -28,8 +28,8 @@ class ResetApp extends Command
     public function handle(): void
     {
         $eventImages = storage_path('app/event_images');
-        $qrCodes = storage_path('app/qr-codes');
-        $pdf_files = storage_path('app/pdf_files');
+        $qrCodes = storage_path('app/public/qr-codes');
+        $pdf_files = storage_path('app/public/pdf_files');
 
         $this->RemoveDirectory($eventImages);
         $this->RemoveDirectory($qrCodes);

@@ -43,7 +43,7 @@ class GeneratePdf implements ShouldQueue, ShouldBeUnique
         $qrCodes = QrCode::where('export_status', 'none')->where('status', 'unused')->where('entry_type', $this->qrType)->take($limit)->select('image', 'qr_id')->get();
 
         $qrCodes->transform(function ($qrCode) {
-            $qrCode->image_base64 = 'data:image/png;base64,' . base64_encode((string)file_get_contents(storage_path('app/qr-codes/' . $qrCode->image)));
+            $qrCode->image_file = $qrCode->image;
             return $qrCode;
         });
 
@@ -56,13 +56,13 @@ class GeneratePdf implements ShouldQueue, ShouldBeUnique
         $pdf = Pdf::loadView('Admin.pdf.export_qr', ['qrCodeChunkBy24' => $chunkedQrCodesArray, 'file_title' => $fileName, 'entry' => $this->qrType]);
 
 
-        $pdfFilePath = storage_path("app/pdf_files/$fileName");
+        $pdfFilePath = storage_path("app/public/pdf_files/$fileName");
 
-        if (!file_exists(storage_path('app/pdf_files'))) {
-            mkdir(storage_path('app/pdf_files'), 0777, true);
+        if (!file_exists(storage_path('app/public/pdf_files'))) {
+            mkdir(storage_path('app/public/pdf_files'), 0777, true);
 
-            chown(storage_path('app/pdf_files'), 'www-data');
-            chgrp(storage_path('app/pdf_files'), 'www-data');
+            chown(storage_path('app/public/pdf_files'), 'www-data');
+            chgrp(storage_path('app/public/pdf_files'), 'www-data');
         }
 
         $pdf->save($pdfFilePath);

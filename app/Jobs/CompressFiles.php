@@ -40,7 +40,7 @@ class CompressFiles implements ShouldQueue, ShouldBeUnique
     {
         $filePaths = $this->fileNames;
         $zipFileName = $this->qrType . "_qr_codes_export". $this->queue_number . ".zip";
-        $zipFilePath = storage_path("app/pdf_files/$zipFileName");
+        $zipFilePath = storage_path("app/public/pdf_files/$zipFileName");
 
         $zip = new ZipArchive();
 
@@ -50,7 +50,7 @@ class CompressFiles implements ShouldQueue, ShouldBeUnique
             }
             $zip->close();
         }
-        $directory = storage_path('app/pdf_files');
+        $directory = storage_path('app/public/pdf_files/');
 
         if (file_exists($directory)) {
             $files = (array) glob($directory . '/*.pdf');

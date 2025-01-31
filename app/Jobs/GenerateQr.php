@@ -76,13 +76,13 @@ class GenerateQr implements ShouldQueue
 
         $result = $builder->build();
 
-        $qrCodePath = storage_path("app/qr-codes/{$fileName}");
+        $qrCodePath = storage_path("app/public/qr-codes/{$fileName}");
 
-        if (!file_exists(storage_path('app/qr-codes'))) {
-            mkdir(storage_path('app/qr-codes'), 0777, true);
+        if (!file_exists(storage_path('app/public/qr-codes'))) {
+            mkdir(storage_path('app/public/qr-codes'), 0777, true);
 
-            chown(storage_path('app/qr-codes'), 'www-data');
-            chgrp(storage_path('app/qr-codes'), 'www-data');
+            chown(storage_path('app/public/qr-codes'), 'www-data');
+            chgrp(storage_path('app/public/qr-codes'), 'www-data');
         }
 
         $result->saveToFile($qrCodePath);
