@@ -31,7 +31,8 @@ class ContentSecurityPolicy extends Basic
              ->addDirective(Directive::IMG, [
                 Keyword::SELF,
                 'https://cdn.jsdelivr.net',
-                'data:'
+                'data:',
+                'blob:'
              ])
 
              ->addDirective(Directive::FONT, [
