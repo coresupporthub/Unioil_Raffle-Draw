@@ -20,7 +20,7 @@ class Magic{
     const QR_USED = 'used';
     const QR_UNUSED = 'unused';
 
-    const MAX_QR_PER_PAGE = 36;
+    const MAX_QR_PER_PAGE = 32;
     const MINIMUM_COUNT_FOR_EXPORT = 3;
 
     const MAX_PAGE_PER_PDF = 50;
