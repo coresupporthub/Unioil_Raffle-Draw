@@ -34,11 +34,16 @@ class ResetExport extends Command
 
         $qrCode = QrCode::where('export_status', Magic::EXPORT_TRUE)->get();
 
-
+        $qrNumber = 1;
+        $totalQr = count($qrCode);
+        $this->info("Total to QR Reset: $totalQr" );
         foreach($qrCode as $code){
             $code->update([
                 'export_status' => Magic::EXPORT_FALSE
             ]);
+
+            $this->info("QR $qrNumber status reset");
+            $qrNumber++;
         }
 
         $this->info("Clear all QR Codes Status");
@@ -56,8 +61,13 @@ class ResetExport extends Command
         $this->info("Truncate Export Files");
         $queue = QueueingStatusModel::where('type', 'PDF Export')->get();
 
+        $queueNumber = 1;
+        $totalQueue = count($queue);
+        $this->info("Total Queue to clear: $totalQueue");
         foreach($queue as $q){
             $q->delete();
+            $this->info("Queue $queueNumber Deleted");
+            $queueNumber++;
         }
         $this->info("Clear all Queues");
 
