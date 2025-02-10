@@ -4,7 +4,9 @@ document.getElementById('event_id').addEventListener('change', ()=> {
 
 document.getElementById('region').addEventListener('change', ()=> {
     GetAllEntry();
-})
+});
+
+let entryId;
 
 function GetAllEntry() {
     const csrfToken = $('meta[name="csrf-token"]').attr("content");
@@ -92,12 +94,45 @@ function GetAllEntry() {
             $("#email").text(rowData.customer_email || "N/A");
             $("#phone").text(rowData.customer_phone || "N/A");
              $("#age").text(rowData.customer_age || "N/A");
-
+            entryId = rowData.entry_id;
             // Show the modal
             $("#viewModal").modal("show");
         } else {
             console.warn("No data available for the clicked row.");
         }
+    });
+}
+
+const deleteEntryBtn = document.getElementById('deleteEntry');
+
+if(deleteEntryBtn){
+    deleteEntryBtn.addEventListener('click', ()=> {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+          }).then((result) => {
+            if (result.isConfirmed) {
+              loading(true);
+
+              const csrf = getCsrf();
+              $.ajax({
+                type: "DELETE",
+                url: "/api/remove/entry",
+                data: {"_token": csrf, "id": entryId},
+                success: res=> {
+                    loading(false);
+                    dataParser(res);
+                    GetAllEntry();
+                    exec('closeEntryModal');
+                }, error: xhr=> console.log(xhr.responseText)
+              })
+            }
+          });
     });
 }
 

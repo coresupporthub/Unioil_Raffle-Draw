@@ -10,13 +10,14 @@ use App\Models\RegionalCluster;
 use App\Models\RetailStore;
 use App\Models\Customers;
 use App\Models\ProductList;
+use App\Models\QrCode;
 use App\Http\Services\Tools;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Http\UploadedFile;
-use PDO;
+use App\Http\Services\Magic;
 
 class RaffleController extends Controller
 {
@@ -271,6 +272,7 @@ class RaffleController extends Controller
                         'customer_email' => $customer->email,
                         'customer_age' => $customer->age,
                         'customer_phone' => $customer->mobile_number,
+                        'entry_id' => $raffle->entries_id
                     ];
                 }
             }
@@ -595,5 +597,19 @@ class RaffleController extends Controller
         }
 
         return response()->json($data);
+    }
+
+    public function removeentry(Request $req){
+        $entry = RaffleEntries::find($req->id);
+
+        $qr = QrCode::find($entry->qr_id);
+
+        $qr->update([
+            'status' => Magic::QR_UNUSED
+        ]);
+
+        $entry->delete();
+
+        return response()->json(['success'=> true, 'message'=> 'Raffle Entry has been successfully deleted']);
     }
 }

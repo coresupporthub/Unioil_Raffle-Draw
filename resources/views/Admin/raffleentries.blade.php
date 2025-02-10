@@ -1,4 +1,7 @@
 @include('Admin.components.head', ['title' => 'Raffle Entries'])
+@php
+    $user = auth()->user()->user_type;
+@endphp
 <style  nonce="{{ csp_nonce() }}">
     #entryTable tbody tr:hover {
         cursor: pointer;
@@ -255,7 +258,10 @@
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+                            @if ($user === 'Super Admin')
+                            <button id="deleteEntry" type="button" class="btn btn-danger">Delete Entry</button>
+                            @endif
+                            <button id="closeEntryModal" type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
                         </div>
                     </div>
                 </div>

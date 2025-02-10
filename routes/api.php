@@ -53,6 +53,7 @@ Route::group(['middleware' => ['web', SecurityHeadersMiddleware::class]], functi
         Route::post('/update-event-banner', [RaffleController::class, 'updateeventbanner']);
         Route::post('/inactive-event', [RaffleController::class, 'inactiveevent']);
         Route::post('/event-selected', [RaffleController::class, 'getaselectedevent']);
+        Route::delete('/remove/entry', [RaffleController::class, 'removeentry']);
 
         //Raffle Draw Report
         Route::post('/event-winner', [RaffleController::class, 'geteventwinner']);
