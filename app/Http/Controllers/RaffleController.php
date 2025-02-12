@@ -276,7 +276,8 @@ class RaffleController extends Controller
                         'customer_phone' => $customer->mobile_number,
                         'entry_id' => $raffle->entries_id,
                         'created_at' => $raffle->created_at,
-                        'qr_code' => $qrCode->code
+                        'qr_code' => $qrCode->code,
+                        'entry_type' => $qrCode->entry_type
                     ];
                 }
             }

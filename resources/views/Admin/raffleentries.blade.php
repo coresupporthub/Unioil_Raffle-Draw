@@ -268,6 +268,13 @@
                                         <p id="qr_code"></p>
                                     </div>
                                 </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="fw-bold" for="product">Entry Type</label>
+                                        <p id="entry_type"></p>
+                                    </div>
+                                </div>
                             </div>
 
                         </div>

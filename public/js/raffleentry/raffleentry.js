@@ -96,6 +96,7 @@ function GetAllEntry() {
              $("#age").text(rowData.customer_age || "N/A");
              $("#created_at").text(formatDateTime(rowData.created_at));
              $("#qr_code").text(rowData.qr_code);
+             $("#entry_type").text(rowData.entry_type);
             entryId = rowData.entry_id;
             // Show the modal
             $("#viewModal").modal("show");
