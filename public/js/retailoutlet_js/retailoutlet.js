@@ -331,12 +331,15 @@ function SubmitData(formId, route) {
             processData: false,
             contentType: false,
             success: function (response) {
-                alertify.success(response.message);
-                document.getElementById(formId).reset();
-                dynamicCall(response.reload);
                 loading(false);
-                exec('closeRetail');
-                setValue('clusterFilter', 'all');
+                dataParser(response);
+                if(response.success){
+                    document.getElementById(formId).reset();
+                    dynamicCall(response.reload);
+                    exec('closeRetail');
+                    setValue('clusterFilter', 'all');
+                }
+
             },
             error: function (xhr, status, error) {
                 console.error("Error posting data:", error);
@@ -572,9 +575,12 @@ document.getElementById('addRetailStationForm').addEventListener('submit', e => 
             success: res => {
                 loading(false);
                 dataParser(res);
-                exec('closeAddRetailStation');
-                LoadAllRetailStore();
-                clearForm('addRetailStationForm');
+                if(res.success){
+                    exec('closeAddRetailStation');
+                    LoadAllRetailStore();
+                    clearForm('addRetailStationForm');
+                }
+
             }, error: xhr => console.log(xhr.responseText)
         })
     }

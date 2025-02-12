@@ -112,9 +112,18 @@ class RetailStoreController extends Controller
     public function updatestore(Request $request): JsonResponse
     {
         $data = RetailStore::where('store_id',$request->store_id)->first();
+
         if(!$data){
             return response()->json(['success'=> false, 'message'=> 'No retail store found']);
         }
+
+        $checkRtoAndID = RetailStore::where('rto_code', $request->rto_code)->where('store_id',$request->store_id)->first();
+        $checkRto = RetailStore::where('rto_code', $request->rto_code)->first();
+
+        if(!$checkRtoAndID && $checkRto){
+            return response()->json(['success'=>false, 'message'=> 'RTO Code already exist please try another one']);
+        }
+
         $data->cluster_id = $request->cluster_id;
         $data->area = $request->area;
         $data->address = $request->address;
@@ -221,6 +230,13 @@ class RetailStoreController extends Controller
     }
 
     public function addretailstore(Request $req): JsonResponse{
+
+        $checkRto = RetailStore::where('rto_code', $req->rto_code)->first();
+
+        if($checkRto){
+            return response()->json(['success'=>false, 'message'=> 'RTO Code already exist please try another one']);
+        }
+
         $store = new RetailStore();
 
         $store->cluster_id = $req->cluster;

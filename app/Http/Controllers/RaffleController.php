@@ -258,6 +258,8 @@ class RaffleController extends Controller
                     ->select('customers.*', 'product_lists.product_name as product_name')
                     ->first();
 
+                $qrCode = QrCode::find($raffle->qr_id);
+
                 if ($retailStores && $cluster && $customer) {
                     $allData[] = [
                         'cluster' => $cluster,
@@ -272,7 +274,9 @@ class RaffleController extends Controller
                         'customer_email' => $customer->email,
                         'customer_age' => $customer->age,
                         'customer_phone' => $customer->mobile_number,
-                        'entry_id' => $raffle->entries_id
+                        'entry_id' => $raffle->entries_id,
+                        'created_at' => $raffle->created_at,
+                        'qr_code' => $qrCode->code
                     ];
                 }
             }
@@ -604,11 +608,17 @@ class RaffleController extends Controller
 
         $qr = QrCode::find($entry->qr_id);
 
+        $customerId = $entry->customer_id;
+
+        $customer = Customers::find($customerId);
+
         $qr->update([
             'status' => Magic::QR_UNUSED
         ]);
 
         $entry->delete();
+
+        $customer->delete();
 
         return response()->json(['success'=> true, 'message'=> 'Raffle Entry has been successfully deleted']);
     }

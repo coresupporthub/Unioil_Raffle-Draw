@@ -254,6 +254,20 @@
                                         <p id="product"></p>
                                     </div>
                                 </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="fw-bold" for="product">Created at</label>
+                                        <p id="created_at"></p>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="fw-bold" for="product">Qr Code</label>
+                                        <p id="qr_code"></p>
+                                    </div>
+                                </div>
                             </div>
 
                         </div>
