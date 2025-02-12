@@ -190,7 +190,7 @@ function GetGenerateQRFilter(filter) {
             {
                 data: null,
                 render: data => {
-                    return `<button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#viewQR" data-qr-id="${data.qr_id}">View</button>`;
+                    return `<button class="btn btn-info unioil-info" data-bs-toggle="modal" data-bs-target="#viewQR" data-qr-id="${data.qr_id}">View</button>`;
                 }
             }
         ],

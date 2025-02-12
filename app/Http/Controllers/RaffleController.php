@@ -607,18 +607,27 @@ class RaffleController extends Controller
         $entry = RaffleEntries::find($req->id);
 
         $qr = QrCode::find($entry->qr_id);
+        $getAllentry = RaffleEntries::where('qr_id', $qr->qr_id)->count();
 
-        $customerId = $entry->customer_id;
+        if($qr->entry_type == Magic::QR_ENTRY_DOUBLE && $getAllentry > 1){
 
-        $customer = Customers::find($customerId);
+            $entry->delete();
 
-        $qr->update([
-            'status' => Magic::QR_UNUSED
-        ]);
+        }else{
+            $customerId = $entry->customer_id;
 
-        $entry->delete();
+            $customer = Customers::find($customerId);
 
-        $customer->delete();
+            $qr->update([
+                'status' => Magic::QR_UNUSED
+            ]);
+
+            $entry->delete();
+
+            $customer->delete();
+        }
+
+
 
         return response()->json(['success'=> true, 'message'=> 'Raffle Entry has been successfully deleted']);
     }
