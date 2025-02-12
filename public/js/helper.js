@@ -295,3 +295,19 @@ function clearVal(id){
         element.value = '';
     }
 }
+
+
+/**
+ * Todo! Add csrf token validator to check  if the csrf is valid
+ * if false then prompt the user to refresh the page
+ */
+// document.addEventListener("visibilitychange", function () {
+//     if (document.visibilityState === "visible") {
+//         checkCsrfToken();
+//     }
+// });
+
+
+// function checkCsrfToken(){
+
+// }
