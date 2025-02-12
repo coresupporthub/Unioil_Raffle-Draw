@@ -108,7 +108,7 @@ body{
     <img src="data:image/png;base64,{{ $prize_image }}" alt="hondaclick">
 
     @if($disclaimer)
-        <p class="disclaimer">{{ $disclaimer }}</p>
+        <p class="disclaimer">Disclaimer: {{ $disclaimer }}</p>
     @endif
 
     @include('Customer.components.scripts')
