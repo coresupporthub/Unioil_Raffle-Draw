@@ -150,3 +150,21 @@ php artisan serve
     ```
     ./vendor/bin/phpstan analyse
     ```
+
+4. Run the reset user command
+    - This is for forcibly updating the admin users of the system internally if its necessary
+    - This is not designed to by dynamic it needs to modify the commands code to achieved the desired result
+    - For devs only to avoid unauthorized update
+
+    Command:
+    ```
+    php artisan app:reset-users
+    ```
+
+5. Run the add product command
+    - Product does not have a management page yet in the system so for the meantime this command is created to add a product through commands
+
+    Command:
+    ```
+    php artisan app:add-product --name="<required|string>" --type="<required|string>" --quantity=<required|integer|1 or 2 only>
+    ```
