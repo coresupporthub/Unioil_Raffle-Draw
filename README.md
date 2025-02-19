@@ -124,6 +124,7 @@ php artisan serve
 ---
 
 ##### Utility Commands
+Created to modify system data forcibly if necessary in the system and can only be done by devs and not by the end users
 
 1. Reset The Whole App
     - This Custom artisan Command will delete all the files created in the system including all event_images, pdf files/zip and qr codes
