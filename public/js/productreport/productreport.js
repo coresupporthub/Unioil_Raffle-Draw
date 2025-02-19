@@ -9,6 +9,10 @@ document.getElementById('ptype').addEventListener('change', ()=> {
     GetAllEntry();
 });
 
+document.getElementById('producttype').addEventListener('change', ()=> {
+    GetAllEntry();
+});
+
 function GetAllEntry() {
     const form = document.getElementById("searchEntry");
     const csrfToken = $('meta[name="csrf-token"]').attr("content");

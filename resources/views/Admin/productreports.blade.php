@@ -157,7 +157,7 @@
 
                                 <div class="col-3 mb-3">
                                     <h4 class="mb-2 ms-2 text-white" for=""> Products </h4>
-                                    <select class="form-select" name="producttype" id="producttype" onchange=" GetAllEntry()">
+                                    <select class="form-select" name="producttype" id="producttype">
                                          <option value="" selected> All Products </option>
                                          @php
                                             $products = App\Models\ProductList::all();
