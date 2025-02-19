@@ -169,3 +169,11 @@ Created to modify system data forcibly if necessary in the system and can only b
     ```
     php artisan app:add-product --name="<required|string>" --type="<required|string>" --quantity=<required|integer|1 or 2 only>
     ```
+
+6. Run the product List command
+    - Display all the product from the database
+
+    Command:
+    ```
+    php artisan app:product-list
+    ```
