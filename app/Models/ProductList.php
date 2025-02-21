@@ -15,7 +15,8 @@ class ProductList extends Model
     protected $fillable = [
         'product_name',
         'product_type',
-        'entries'
+        'entries',
+        'is_archived'
     ];
 
     protected static function boot()
