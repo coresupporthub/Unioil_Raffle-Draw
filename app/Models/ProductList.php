@@ -16,7 +16,8 @@ class ProductList extends Model
         'product_name',
         'product_type',
         'entries',
-        'is_archived'
+        'is_archived',
+        'product_image'
     ];
 
     protected static function boot()

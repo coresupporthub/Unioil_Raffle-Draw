@@ -3,74 +3,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
 <style  nonce="{{ csp_nonce() }}">
-    #product-table tbody tr:hover {
-        cursor: pointer;
-        background-color: #fcbc9e;
-    }
-
-    .btnCopy{
-        background-color: #34bfa3;
-        color: white;
-        border: none;
-        padding: 5px 10px;
-        border-radius: 4px;
-        font-size: 14px;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        transition: background-color 0.3s ease, transform 0.3s ease;
-    }
-
-    .btnCsv{
-        background-color: #ffc107;
-        color: black;
-        border: none;
-        padding: 5px 10px;
-        border-radius: 4px;
-        font-size: 14px;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        transition: background-color 0.3s ease, transform 0.3s ease;
-    }
-
-    .btnPdf{
-        background-color: #dc3545;
-        color: white; border: none;
-        padding: 5px 10px; border-radius: 4px;
-        font-size: 14px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        transition: background-color 0.3s ease, transform 0.3s ease;
-    }
-
-    .btnExcel{
-        background-color: #28a745;
-        color: white;
-        border: none;
-        padding: 5px 10px;
-        border-radius: 4px;
-        font-size: 14px;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        transition: background-color 0.3s ease, transform 0.3s ease;
-    }
-
-    .btnPrint{
-        background-color: #007bff;
-        color: white;
-        border: none;
-        padding: 5px 10px;
-        border-radius: 4px;
-        font-size: 14px;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        transition: background-color 0.3s ease, transform 0.3s ease;
-    }
-
-    .headerImage{
-        text-align: center; padding: 20px
-    }
-
-    .imageClass{
-        max-height: 50px; width: auto; margin-bottom: 10px;
-    }
-
-    .text-color{
-        font-size: 14px; color: gray;
-    }
+  .avatar{
+    background-image: url('/unioil_images/unioil.png');
+  }
   </style>
 <body>
     <script src="{{ asset('./dist/js/demo-theme.min.js?1692870487') }}"></script>
@@ -92,118 +27,107 @@
                       </h2>
                     </div>
                     <!-- Page title actions -->
-                    {{-- <div class="col-auto ms-auto d-print-none">
+                    <div class="col-auto ms-auto d-print-none">
                       <div class="btn-list">
-                        <button class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-simple">
+                        <button class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#add-product">
                           <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
-                          <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-report"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h5.697" /><path d="M18 14v4h4" /><path d="M18 11v-4a2 2 0 0 0 -2 -2h-2" /><path d="M8 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /><path d="M18 18m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" /><path d="M8 11h4" /><path d="M8 15h3" /></svg>                          Generate Report
+                          <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-plus"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
+                          Add Product
                         </button>
                       </div>
-                    </div> --}}
+                    </div>
                   </div>
                 </div>
               </div>
             <!-- Page body -->
             <div class="page-body">
-                <div class="container-xl d-flex flex-column justify-content-center">
-
-                    <div class="page-body">
-                        <div class="container-xl">
-
-                            <div class="card">
-                                <div class="card-body">
-                                  <form action="" id="searchEntry" method="post">
-                                    @csrf
-                            <div class="card mb-2">
-                                <div class="row p-2 Unioil-header">
-                                    <div class="col-3 mb-3">
-                                    <h4 class="mb-2 ms-2 text-white" for="">Raffle Events </h4>
-                                    <select class="form-select" name="event_id" id="event_id">
-                                        {{-- <option value="" selected> Select Event </option> --}}
-                                        @php
-                                            $events = App\Models\Event::all();
-                                        @endphp
-                                        @foreach ($events as $event)
-                                            <option value="{{ $event->event_id }}"
-                                                @if($event->event_status === 'Active') selected @endif>
-                                                {{ $event->event_name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-
-                                </div>
-
-                                <div class="col-3 mb-3">
-                                    <h4 class="mb-2 ms-2 text-white" for=""> Regional Cluster </h4>
-                                    <select class="form-select" name="region" id="region">
-                                         <option value="" selected> All Clusters </option>
-                                         @php
-                                            $regions = App\Models\RegionalCluster::all();
-                                        @endphp
-                                         @foreach ($regions as $region)
-                                             <option value="{{$region->cluster_id}}"> {{$region->cluster_name}} </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                                <div class="col-3 mb-3">
-                                    <h4 class="mb-2 ms-2 text-white" for=""> Product Type </h4>
-                                    <select class="form-select" name="ptype" id="ptype">
-                                       <option value="">All Type</option>
-                                       <option value="1">Fully Synthetic</option>
-                                       <option value="2">Semi Synthetic</option>
-                                    </select>
-                                </div>
-
-                                <div class="col-3 mb-3">
-                                    <h4 class="mb-2 ms-2 text-white" for=""> Products </h4>
-                                    <select class="form-select" name="producttype" id="producttype">
-                                         <option value="" selected> All Products </option>
-                                         @php
-                                            $products = App\Models\ProductList::all();
-                                        @endphp
-                                         @foreach ($products as $product)
-                                             <option value="{{$product->product_id}}"> {{$product->product_name}} </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                            </div>
-                        </div>
-                         </form>
-                                    <div id="table-default" class="table-responsive">
-                                        <table class="table table-hover" id="product-table">
-                                            <thead>
-                                                <tr>
-                                                    <th>Regional Cluster</th>
-                                                    <th>Area</th>
-                                                    <th>Address</th>
-                                                    <th>Distributor</th>
-                                                    <th>Retail Store</th>
-                                                    <th>Purchase Date</th>
-                                                    <th>Product Purchased</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody class="table-tbody">
-                                                <!-- Table rows will be dynamically inserted here -->
-                                            </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <th colspan="6"></th> <!-- Leave empty for first 6 columns -->
-                                                    <th id="total-rows"></th> <!-- Footer for Total Rows in the 7th column -->
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
+                <div class="container-xl">
+                <div class="card">
+                    <div class="card-header">
+                      <h3 class="card-title">Product List</h3>
                     </div>
+                    <div class="list-group list-group-flush list-group-hoverable">
+                        <div class="list-group-item">
+                          <div class="row align-items-center">
 
+                            <div class="col-auto">
+                              <a href="#">
+                                <span class="avatar" ></span>
+                              </a>
+                            </div>
+                            <div class="col text-truncate">
+                              <a href="#" class="text-reset d-block">Paweł Kuna</a>
+                              <div class="d-block text-muted text-truncate mt-n1">Change deprecated html tags to text decoration classes (#29604)</div>
+                            </div>
+                            <div class="col-auto">
+                              <button href="#" class="list-group-item-actions btn btn-info"><!-- Download SVG icon from http://tabler-icons.io/i/star -->
+                                    View Reports
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="row align-items-center">
+
+                              <div class="col-auto">
+                                <a href="#">
+                                  <span class="avatar" style="background-image: url(./static/avatars/000m.jpg)"></span>
+                                </a>
+                              </div>
+                              <div class="col text-truncate">
+                                <a href="#" class="text-reset d-block">Paweł Kuna</a>
+                                <div class="d-block text-muted text-truncate mt-n1">Change deprecated html tags to text decoration classes (#29604)</div>
+                              </div>
+                              <div class="col-auto">
+                                <button data-bs-toggle="modal" data-bs-target="#product-reports" class="list-group-item-actions btn btn-info"><!-- Download SVG icon from http://tabler-icons.io/i/star -->
+                                    View Reports
+                              </button>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="list-group-item">
+                            <div class="row align-items-center">
+
+                              <div class="col-auto">
+                                <a href="#">
+                                  <span class="avatar" style="background-image: url(./static/avatars/000m.jpg)"></span>
+                                </a>
+                              </div>
+                              <div class="col text-truncate">
+                                <a href="#" class="text-reset d-block">Paweł Kuna</a>
+                                <div class="d-block text-muted text-truncate mt-n1">Change deprecated html tags to text decoration classes (#29604)</div>
+                              </div>
+                              <div class="col-auto">
+                                <button data-bs-toggle="modal" data-bs-target="#product-reports" class="list-group-item-actions btn btn-info"><!-- Download SVG icon from http://tabler-icons.io/i/star -->
+                                    View Reports
+                              </button>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="list-group-item">
+                            <div class="row align-items-center">
+
+                              <div class="col-auto">
+                                <a href="#">
+                                  <span class="avatar" style="background-image: url(./static/avatars/000m.jpg)"></span>
+                                </a>
+                              </div>
+                              <div class="col text-truncate">
+                                <a href="#" class="text-reset d-block">Paweł Kuna</a>
+                                <div class="d-block text-muted text-truncate mt-n1">Change deprecated html tags to text decoration classes (#29604)</div>
+                              </div>
+                              <div class="col-auto">
+                                <button data-bs-toggle="modal" data-bs-target="#product-reports" class="list-group-item-actions btn btn-info"><!-- Download SVG icon from http://tabler-icons.io/i/star -->
+                                    View Reports
+                              </button>
+                              </div>
+                            </div>
+                          </div>
+                    </div>
+                </div>
                 </div>
             </div>
-
+            @include('Admin.components.modal.productmodal')
             @include('Admin.components.footer')
 
         </div>
