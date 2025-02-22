@@ -20,6 +20,9 @@ class Magic{
     const QR_USED = 'used';
     const QR_UNUSED = 'unused';
 
+    const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
+    const ACCEPTED_IMAGE_TYPE =  ['jpg', 'jpeg', 'png'];
+
     const MAX_QR_PER_PAGE = 32;
     const MINIMUM_COUNT_FOR_EXPORT = 3;
 

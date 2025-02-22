@@ -4,7 +4,7 @@
 <!-- JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.7.12/sweetalert2.min.js"></script>
     <!-- Libs JS -->
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/4.3.0/apexcharts.min.js"></script>
     <script src="{{ asset('./dist/libs/jsvectormap/dist/js/jsvectormap.min.js?1692870487') }}" defer></script>
     <script src="{{ asset('./dist/libs/jsvectormap/dist/maps/world.js?1692870487') }}" defer></script>

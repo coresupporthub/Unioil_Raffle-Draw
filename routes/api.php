@@ -12,6 +12,7 @@ use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\AdministratorsController;
 use App\Http\Controllers\BackupController;
 use App\Http\Middleware\SecurityHeadersMiddleware;
+use App\Http\Controllers\ProductController;
 
 Route::group(['middleware' => ['web', SecurityHeadersMiddleware::class]], function () {
 
@@ -59,9 +60,18 @@ Route::group(['middleware' => ['web', SecurityHeadersMiddleware::class]], functi
         Route::post('/event-winner', [RaffleController::class, 'geteventwinner']);
         Route::post('/event-unclaim', [RaffleController::class, 'geteventunclaim']);
 
-        // Product Report
-        Route::post( '/product-report', [RaffleController::class, 'productreport']);
-
+        // Product management and reports
+        Route::prefix('/products')->controller(ProductController::class)->group( function(){
+            Route::post('/add', 'add');
+            Route::get('/list', 'list');
+            Route::get('/search', 'search');
+            Route::get('/details/{prod_id}', 'details');
+            Route::delete('/delete', 'remove');
+            Route::get('/archivelist', 'archivelist');
+            Route::patch('/restore', 'restore');
+            Route::get('/report', 'reports');
+            Route::get('/searcharchived', 'searcharchived');
+        });
 
         //Admin Details
         Route::get('/get-admin-details', [AuthenticationController::class, 'getadmindetails']);
