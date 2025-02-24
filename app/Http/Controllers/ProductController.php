@@ -7,9 +7,9 @@ use App\Models\ProductList;
 use App\Http\Services\Magic;
 use App\Models\Customers;
 use Illuminate\Validation\ValidationException;
-use App\Models\RetailStore;
 use App\Models\Event;
 use App\Models\RegionalCluster;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -47,12 +47,19 @@ class ProductController extends Controller
             $product->product_name = $req->name;
             $product->product_type = $req->type;
             $product->entries = $req->entry;
-            $product->product_image = $image;
             $product->save();
 
-            $fileName = 'Product-' . $product->product_id . "." . $image->getClientOriginalExtension();
+            if($image){
+                $fileName = 'Product-' . $product->product_id . "." . $image->getClientOriginalExtension();
 
-            $image->storeAs(self::PRODUCT_PATH,  $fileName);
+                $updateImage = ProductList::find($product->product_id);
+
+                $updateImage->update([
+                    'product_image' => $fileName
+                ]);
+
+                $image->storeAs(self::PRODUCT_PATH,  $fileName);
+            }
 
             return response()->json(['success'=> true, 'message'=> 'Product has been successfully added']);
 
@@ -138,6 +145,24 @@ class ProductController extends Controller
 
     public function list(){
         $products = ProductList::where('is_archived', false)->get();
+
+        foreach($products as $product){
+
+            if(!$product->product_image) continue;
+
+            $filePath = "product_logo/$product->product_image";
+
+            if (!Storage::exists($filePath)) {
+                return response()->json(['success'=> false, 'message' => 'Image not found'], 404);
+            }
+
+            $fileContents = Storage::get($filePath);
+
+            $mimeType = Storage::mimeType($filePath);
+            $base64Image = 'data:' . $mimeType . ';base64,' . base64_encode($fileContents);
+
+            $product->imagebase64 = $base64Image;
+        }
 
         return response()->json(['success'=> true, 'products'=> $products]);
     }

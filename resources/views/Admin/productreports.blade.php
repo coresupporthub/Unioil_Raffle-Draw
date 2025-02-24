@@ -4,7 +4,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
 <style nonce="{{ csp_nonce() }}">
     .avatar {
-        background-image: url('/unioil_images/unioil.png');
+       width:100%;
     }
 
     .min-height {
