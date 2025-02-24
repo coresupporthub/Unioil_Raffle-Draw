@@ -163,6 +163,8 @@ class ProductController extends Controller
             $mimeType = Storage::mimeType($filePath);
             $base64Image = 'data:' . $mimeType . ';base64,' . base64_encode($fileContents);
 
+            $product->purchased = Customers::where('product_purchased', $product->product_id)->count();
+
             $product->imagebase64 = $base64Image;
         }
 
@@ -192,6 +194,8 @@ class ProductController extends Controller
                 }
 
                 $fileContents = Storage::get($filePath);
+
+                $product->purchased = Customers::where('product_purchased', $product->product_id)->count();
 
                 $mimeType = Storage::mimeType($filePath);
                 $base64Image = 'data:' . $mimeType . ';base64,' . base64_encode($fileContents);
