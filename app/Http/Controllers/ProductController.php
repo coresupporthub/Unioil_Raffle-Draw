@@ -351,5 +351,38 @@ class ProductController extends Controller
         return [$data, $allRecords];
     }
 
+    public function uploadlogo(Request $req){
+
+        if(!$req->id){
+            return response()->json(['success'=> false, 'message'=> 'Product ID is required']);
+        }
+
+        $image = $req->file('image');
+
+        if(!$image){
+            return response()->json(['success'=> false, 'message'=> 'Image is not found']);
+        }
+
+        if($image->getSize() > Magic::MAX_IMAGE_SIZE){
+            return response()->json(['success'=> false, 'message' => 'Image is too big please choose below 5 mb image']);
+        }
+
+        if(!in_array($image->getClientOriginalExtension(), Magic::ACCEPTED_IMAGE_TYPE)){
+            return response()->json(['success'=> false, 'message' => 'Image type is invalid we only accepts jpg, jpeg and png']);
+        }
+
+
+        $fileName = 'Product-' . $req->id . "." . $image->getClientOriginalExtension();
+
+        $updateImage = ProductList::find($req->id);
+
+        $updateImage->update([
+            'product_image' => $fileName
+        ]);
+
+        $image->storeAs(self::PRODUCT_PATH,  $fileName);
+
+        return response()->json(['success'=> true, 'message'=> 'Product image has been successfully updated']);
+    }
 
 }
