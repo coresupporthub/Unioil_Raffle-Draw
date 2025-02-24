@@ -1,44 +1,55 @@
 window.onload = () => {
-    $.ajax({
-        type: "GET",
-        url: "/api/activitylogs/list",
-        dataType: "json",
-        success: res => {
-            if (res.success) {
-                $("#activityLogsTable").DataTable({
-                    data: res.logs,
-                    columns: [
-                        { data: "name" },
-                        { data: "action" },
-                        { data: "result" },
-                        { data: null,
-                            render: data=> {
-                                return formatDateTime(data.created_at);
-                            }
-                         },
-                        { data: "device" },
-                        {
-                            data: null,
-                            render: data => {
-                                return `<button class="btn unioil-info" data-bs-toggle="modal" data-bs-target="#logDetails" data-act-id="${data.act_id}" >
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-exclamation-circle">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
-                                <path d="M12 9v4" />
-                                <path d="M12 16v.01" />
-                                </svg> View More Info
-                                </button>`
-                            },
-                        }
-                    ],
-                });
 
-                $("#activityLogsTable").on('click', '.unioil-info', function() {
-                    const actId = $(this).data('act-id');
-                    viewLogDetails(actId);
-                });
+    const tableId = "#activityLogsTable";
+
+
+    if ($.fn.DataTable.isDataTable(tableId)) {
+
+        $(tableId).DataTable().destroy();
+    }
+
+
+    $(tableId).DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: `/api/activitylogs/list`,
+            type: 'GET',
+            dataSrc: 'data'
+        },
+        columns: [
+            { data: "name" },
+            { data: "action" },
+            { data: "result" },
+            { data: null,
+                render: data=> {
+                    return formatDateTime(data.created_at);
+                }
+             },
+            { data: "device" },
+            {
+                data: null,
+                render: data => {
+                    return `<button class="btn unioil-info" data-bs-toggle="modal" data-bs-target="#logDetails" data-act-id="${data.act_id}" >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-exclamation-circle">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+                    <path d="M12 9v4" />
+                    <path d="M12 16v.01" />
+                    </svg> View More Info
+                    </button>`
+                },
             }
-        }, error: xhr => console.log(xhr.responseText)
+        ],
+        paging: true,
+        lengthChange: true,
+        pageLength: 10,
+        destroy: true,
+    });
+
+    $(tableId).on('click', '.unioil-info', function() {
+        const actId = $(this).data('act-id');
+        viewLogDetails(actId);
     });
 
     adminDetails();

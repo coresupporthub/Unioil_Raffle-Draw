@@ -13,16 +13,8 @@ return new class extends Migration
     {
         Schema::table('product_lists', function (Blueprint $table) {
             $table->boolean('is_archived')->default(false);
+            $table->string('product_image')->nullable();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::table('product_lists', function (Blueprint $table) {
-            //
-        });
-    }
 };
