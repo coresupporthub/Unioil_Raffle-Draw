@@ -50,6 +50,10 @@ class ProductController extends Controller
             $product->product_image = $image;
             $product->save();
 
+            $fileName = 'Product-' . $product->product_id . "." . $image->getClientOriginalExtension();
+
+            $image->storeAs(self::PRODUCT_PATH,  $fileName);
+
             return response()->json(['success'=> true, 'message'=> 'Product has been successfully added']);
 
         }catch(ValidationException $e){
@@ -230,7 +234,6 @@ class ProductController extends Controller
             $reports = $this->getReports('event', $getEvent,  $start, $length, $regionalCluster, $productId, $search);
         }
 
-        
 
         return response()->json([
              'draw' => intval($req->input('draw')),
@@ -256,7 +259,7 @@ class ProductController extends Controller
                     $query = Customers::where('event_id', $event->event_id)->where('product_purchased', $productId)
                     ->join('retail_store', 'customers.store_id', '=', 'retail_store.store_id')->where('retail_store.cluster_id', $regionalCluster);
                 }
-            
+
 
                 if (!empty($search)) {
                     $query->where('retail_store.address', 'like', "%$search%")
@@ -303,7 +306,7 @@ class ProductController extends Controller
             }
 
             $customers = $query->skip($start)->take($length)->get();
-        
+
             foreach ($customers as $customer) {
 
                 $cluster = RegionalCluster::where('cluster_id', $customer->cluster_id)->first()->cluster_name;

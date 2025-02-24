@@ -548,62 +548,6 @@ class RaffleController extends Controller
         return response()->json($response);
     }
 
-
-    public function productreport(Request $request): JsonResponse
-    {
-        // Fetch all events or filter by event_id
-        $events = !empty($request->event_id)
-            ? Event::where('event_id', $request->event_id)->get()
-            : Event::all();
-
-        $data = [];
-
-        foreach ($events as $event) {
-
-            $customers = Customers::where('event_id', $event->event_id)->get();
-
-            foreach ($customers as $customer) {
-
-                $retailStoreQuery = RetailStore::where('store_id', $customer->store_id);
-                if (!empty($request->region)) {
-                    $retailStoreQuery->where('cluster_id', $request->region);
-                }
-                $retailStore = $retailStoreQuery->first();
-
-                if (!$retailStore) continue;
-
-
-                $cluster = RegionalCluster::where('cluster_id', $retailStore->cluster_id)->first()?->cluster_name;
-
-
-                $product = ProductList::where('product_id', $customer->product_purchased)
-                    ->when(!empty($request->ptype), function ($query) use ($request) {
-                        $query->where('entries', $request->ptype);
-                    })
-                    ->when(!empty($request->producttype), function ($query) use ($request) {
-                        $query->where('product_id', $request->producttype);
-                    })
-                    ->first();
-
-
-                if (!$product) continue;
-
-
-                $data[] = [
-                    'cluster' => $cluster,
-                    'area' => $retailStore->area ?? 'N/A',
-                    'address' => $retailStore->address ?? 'N/A',
-                    'distributor' => $retailStore->distributor ?? 'N/A',
-                    'retail_name' => $retailStore->retail_station ?? 'N/A',
-                    'purchase_date' => $customer->created_at ?? 'N/A',
-                    'product' => $product->product_name ?? 'N/A',
-                ];
-            }
-        }
-
-        return response()->json($data);
-    }
-
     public function removeentry(Request $req){
         $entry = RaffleEntries::find($req->id);
 

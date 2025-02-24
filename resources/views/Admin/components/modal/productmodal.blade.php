@@ -103,7 +103,7 @@
                 </div>
             </div>
 
-            <div class="card-body">
+            <div class="card-body px-4">
                 <form action="" id="searchEntry" method="post">
                     @csrf
                     <div class="card mb-2">
@@ -137,7 +137,7 @@
                         </div>
                     </div>
                 </form>
-                <div id="table-default container" class="table-responsive">
+                <div id="table-default" class="table-responsive">
                     <table class="table" id="productReports">
                         <thead>
                             <tr>
