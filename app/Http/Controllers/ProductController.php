@@ -149,6 +149,7 @@ class ProductController extends Controller
         $totalPurchased = Customers::count();
 
         foreach($products as $product){
+            $product->purchased = Customers::where('product_purchased', $product->product_id)->count();
 
             if(!$product->product_image) continue;
 
@@ -163,7 +164,6 @@ class ProductController extends Controller
             $mimeType = Storage::mimeType($filePath);
             $base64Image = 'data:' . $mimeType . ';base64,' . base64_encode($fileContents);
 
-            $product->purchased = Customers::where('product_purchased', $product->product_id)->count();
 
             $product->imagebase64 = $base64Image;
         }
