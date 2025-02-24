@@ -168,7 +168,9 @@ class ProductController extends Controller
             $product->imagebase64 = $base64Image;
         }
 
-        return response()->json(['success'=> true, 'products'=> $products, 'total_products'=> $totalPurchased]);
+        $sortedProducts = $products->sortByDesc('purchased')->values();
+
+        return response()->json(['success'=> true, 'products'=> $sortedProducts, 'total_products'=> $totalPurchased]);
     }
 
     public function search(Request $req){
