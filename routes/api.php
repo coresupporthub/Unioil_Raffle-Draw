@@ -71,7 +71,7 @@ Route::group(['middleware' => ['web', SecurityHeadersMiddleware::class]], functi
             Route::patch('/restore', 'restore');
             Route::get('/report', 'reports');
             Route::get('/searcharchived', 'searcharchived');
-            Route::get('/uploadlogo', 'uploadlogo');
+            Route::post('/uploadlogo', 'uploadlogo');
         });
 
         //Admin Details

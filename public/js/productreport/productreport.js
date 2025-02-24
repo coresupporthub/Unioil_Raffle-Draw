@@ -127,6 +127,8 @@ function fetchProductDetails(id){
     loadProductDetails(true);
     optionsEditStatus(false);
     loadReports(id, getValue('region'), getValue('event_id'));
+    enable('updateLogo', true);
+    document.getElementById('updateLogo').value = '';
     productId = id;
     $.ajax({
         url: `/api/products/details/${id}`,
@@ -136,10 +138,11 @@ function fetchProductDetails(id){
             loadProductDetails(false);
             const product = res.product;
             productDetails = product;
+            enable('updateLogo', false);
             setText('info_prod_name', product.product_name);
             setText('info_prod_type', product.product_type);
             setText('info_prod_entry', product.entries == 1 ? 'Single Entry' : 'Dual Entry');
-
+            setImage('prod_logo_info', product.imagebase64 ?? "/unioil_images/unioil.png");
         }, error: xhr=> console.log(xhr.responseText)
     });
 }
@@ -539,6 +542,79 @@ function loadReports(productId, region, event){
     });
 }
 
+
+document.getElementById('updateLogo').addEventListener('change', function (event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            const image = document.getElementById('updateImage');
+            image.src = e.target.result;
+
+            exec('closeProductInfo');
+            setText('updateLogoHeader', "Upload Logo (" + productDetails.product_name + ")");
+            const cropperModal = new bootstrap.Modal(document.getElementById('uploadLogo'));
+            cropperModal.show();
+
+            document.getElementById('uploadLogo').addEventListener('shown.bs.modal', function () {
+                if (cropper) cropper.destroy();
+
+                cropper = new Cropper(image, {
+                    aspectRatio: 1,
+                    viewMode: 2,
+                    autoCropArea: 1,
+                    responsive: true,
+                    scalable: true,
+                    zoomable: true,
+                    movable: true,
+                    minCanvasWidth: image.parentElement.clientWidth,
+                    minCanvasHeight: image.parentElement.clientHeight,
+                    minContainerWidth: image.parentElement.clientWidth,
+                    minContainerHeight: image.parentElement.clientHeight,
+                    background: true
+                });
+            }, { once: true });
+        };
+        reader.readAsDataURL(file);
+    }
+});
+
+document.getElementById('upload-logo').addEventListener('click', ()=> {
+
+
+    if (cropper) {
+        const canvas = cropper.getCroppedCanvas();
+        if (canvas) {
+            canvas.toBlob(blob => {
+                const formData = new FormData();
+                formData.append('id', productId);
+                formData.append('image', blob, 'cropped-image.png');
+                loading(true);
+
+                $.ajax({
+                    url: "/api/products/uploadlogo",
+                    type: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    headers: {
+                        'X-CSRF-TOKEN': getCsrf()
+                    },
+                    success: res=> {
+                        loading(false);
+                        dataParser(res);
+                        if(res.success){
+                             displayProductList();
+                             document.getElementById('updateLogo').value = "";
+                             exec('closeLogoUploader');
+                        }
+                    }, error: xhr=> console.log(xhr.responseText)
+                })
+
+            }, 'image/png');
+        }
+    }
+});
 
 document.getElementById('event_id').addEventListener('change', ()=> {
     loadReports(productId, getValue('region'), getValue('event_id'));

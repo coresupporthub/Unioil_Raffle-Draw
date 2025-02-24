@@ -192,6 +192,21 @@ class ProductController extends Controller
             return response()->json(['success'=> false, 'message'=> 'Product is not found in the database']);
         }
 
+        if($product->product_image){
+            $filePath = "product_logo/$product->product_image";
+
+            if (!Storage::exists($filePath)) {
+                return response()->json(['success'=> false, 'message' => 'Image not found'], 404);
+            }
+
+            $fileContents = Storage::get($filePath);
+
+            $mimeType = Storage::mimeType($filePath);
+            $base64Image = 'data:' . $mimeType . ';base64,' . base64_encode($fileContents);
+
+            $product->imagebase64 = $base64Image;
+        }
+
         return response()->json(['success'=> true, 'product'=> $product]);
     }
 

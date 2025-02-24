@@ -59,6 +59,28 @@
     </div>
   </div>
 
+
+
+  <div class="modal modal-blur fade" id="uploadLogo" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="updateLogoHeader">Update Logo</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="w-100 min-height-40 border border-danger">
+                <img id="updateImage" class="w-100 h-100" >
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn me-auto" id="closeLogoUploader" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="upload-logo">Update Logo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="modal modal-blur fade" id="product-reports" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-full-width modal-dialog-centered" role="document">
       <div class="modal-content">
@@ -68,8 +90,11 @@
         </div>
         <div class="modal-body">
             <div class="row">
-                <div class="col-2 p-4 d-flex justify-content-center align-items-center">
-                    <img src="/unioil_images/unioil.png" class="w-50" alt="Product Logo">
+                <div class="col-2 p-4 d-flex justify-content-center align-items-center flex-column gap-2">
+                    <img src="/unioil_images/unioil.png" id="prod_logo_info" class="w-50 rounded-full" alt="Product Logo">
+                    <div class="mb-3">
+                        <input type="file" class="form-control" id="updateLogo" />
+                      </div>
                 </div>
                 <div class="col-9">
                     <div class="row p-4">
