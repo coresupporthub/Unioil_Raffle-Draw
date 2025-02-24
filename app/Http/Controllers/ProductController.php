@@ -146,6 +146,8 @@ class ProductController extends Controller
     public function list(){
         $products = ProductList::where('is_archived', false)->get();
 
+        $totalPurchased = Customers::count();
+
         foreach($products as $product){
 
             if(!$product->product_image) continue;
@@ -164,7 +166,7 @@ class ProductController extends Controller
             $product->imagebase64 = $base64Image;
         }
 
-        return response()->json(['success'=> true, 'products'=> $products]);
+        return response()->json(['success'=> true, 'products'=> $products, 'total_products'=> $totalPurchased]);
     }
 
     public function search(Request $req){
@@ -176,7 +178,29 @@ class ProductController extends Controller
 
             $products = ProductList::where('product_name', 'like', "%$req->search%")->get();
 
-            return response()->json(['success'=> true, 'products'=> $products]);
+            $totalPurchased = 0;
+
+            foreach($products as $product){
+                $totalPurchased += Customers::where('product_purchased', $product->product_id)->count();
+
+                if(!$product->product_image) continue;
+
+                $filePath = "product_logo/$product->product_image";
+
+                if (!Storage::exists($filePath)) {
+                    return response()->json(['success'=> false, 'message' => 'Image not found'], 404);
+                }
+
+                $fileContents = Storage::get($filePath);
+
+                $mimeType = Storage::mimeType($filePath);
+                $base64Image = 'data:' . $mimeType . ';base64,' . base64_encode($fileContents);
+
+                $product->imagebase64 = $base64Image;
+            }
+
+
+            return response()->json(['success'=> true, 'products'=> $products, 'total_products'=> $totalPurchased]);
 
         }catch(ValidationException $e){
 

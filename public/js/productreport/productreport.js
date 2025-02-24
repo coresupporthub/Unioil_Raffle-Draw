@@ -2,7 +2,7 @@
 
 //-----------------------------------------------------------------------------------------------
 
-function createListItem(name, description, containerId, prod_id, type = 'product', image) {
+function createListItem(name, description, containerId, prod_id, type = 'product', image, purchased) {
     const listItem = document.createElement("div");
     listItem.className = `list-group-item ${type === 'product' ? 'product-list-items' : 'archive-list-items'}`;
 
@@ -48,7 +48,7 @@ function createListItem(name, description, containerId, prod_id, type = 'product
         nameLink.setAttribute("data-bs-target", "#product-reports");
     }
 
-    nameLink.textContent = name;
+    nameLink.innerHTML = `${name} <strong>(Total Purchased: ${purchased})</strong>`;
     nameLink.addEventListener("click", () => {
         if(type == 'product'){
             fetchProductDetails(prod_id);
@@ -192,8 +192,10 @@ function searchProduct(search){
 
             res.products.forEach(data => {
                 const description = `${data.product_type} ${data.entries === 1 ? '(Single Entry)' : '(Dual Entry)'}`;
-                createListItem(data.product_name, description, 'prod_list', data.product_id, data.product_id, 'product', data.imagebase64);
+                createListItem(data.product_name, description, 'prod_list', data.product_id, 'product', data.imagebase64, data.purchased);
             });
+
+            setText('totalPurchased', res.total_products);
         }, error: xhr=> console.log(xhr.responseText)
     });
 }
@@ -209,8 +211,9 @@ function displayProductList(){
             loadingProduct(false);
             res.products.forEach(data => {
                 const description = `${data.product_type} ${data.entries === 1 ? '(Single Entry)' : '(Dual Entry)'}`;
-                createListItem(data.product_name, description, 'prod_list', data.product_id, 'product', data.imagebase64);
+                createListItem(data.product_name, description, 'prod_list', data.product_id, 'product', data.imagebase64, data.purchased);
             });
+            setText('totalPurchased', res.total_products);
             document.getElementById('searchProduct').value = '';
         }, error: xhr=> console.log(xhr.responseText)
     });
