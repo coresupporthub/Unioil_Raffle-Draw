@@ -10,7 +10,7 @@ use Illuminate\Validation\ValidationException;
 use App\Models\Event;
 use App\Models\RegionalCluster;
 use Illuminate\Support\Facades\Storage;
-
+use App\Http\Services\Tools;
 class ProductController extends Controller
 {
     public function add(Request $req){
@@ -61,7 +61,19 @@ class ProductController extends Controller
                 $image->storeAs(self::PRODUCT_PATH,  $fileName);
             }
 
-            return response()->json(['success'=> true, 'message'=> 'Product has been successfully added']);
+            $response = ['success'=> true, 'message'=> 'Product has been successfully added'];
+
+            $request = [
+                'user_agent' => $req->userAgent(),
+                'page_route' => $req->headers->get('referer'),
+                'api_path' => $req->path(),
+                'method' => $req->method(),
+                'session_id' => $req->session()->getId(),
+            ];
+
+            Tools::Logger($request, $req->all(), ['Add New Products', "Successfully added $req->name in the product list"], $response);
+
+            return response()->json($response);
 
         }catch(ValidationException $e){
 
@@ -99,7 +111,20 @@ class ProductController extends Controller
                 'entries' => $req->entry
             ]);
 
-            return response()->json(['success'=> true, 'message'=> 'Product has been successfully update']);
+            $response = ['success'=> true, 'message'=> 'Product has been successfully update'];
+
+            $request = [
+                'user_agent' => $req->userAgent(),
+                'page_route' => $req->headers->get('referer'),
+                'api_path' => $req->path(),
+                'method' => $req->method(),
+                'session_id' => $req->session()->getId(),
+            ];
+
+            Tools::Logger($request, $req->all(), ['Update Product', "Successfully updated $req->name in the product list"], $response);
+
+            return response()->json($response);
+
 
         }catch(ValidationException $e){
 
@@ -134,7 +159,19 @@ class ProductController extends Controller
                 $product->delete();
             }
 
-            return response()->json(['success'=> true, 'message'=> $message]);
+            $response = ['success'=> true, 'message'=> $message];
+
+            $request = [
+                'user_agent' => $req->userAgent(),
+                'page_route' => $req->headers->get('referer'),
+                'api_path' => $req->path(),
+                'method' => $req->method(),
+                'session_id' => $req->session()->getId(),
+            ];
+
+            Tools::Logger($request, $req->all(), ['Remove Product', $message], $response);
+
+            return response()->json($response);
 
         }catch(ValidationException $e){
 
@@ -285,7 +322,19 @@ class ProductController extends Controller
                 'is_archived' => false
             ]);
 
-            return response()->json(['success'=> true, 'message'=> 'Product successfully restore']);
+            $response =['success'=> true, 'message'=> 'Product successfully restore'];
+
+            $request = [
+                'user_agent' => $req->userAgent(),
+                'page_route' => $req->headers->get('referer'),
+                'api_path' => $req->path(),
+                'method' => $req->method(),
+                'session_id' => $req->session()->getId(),
+            ];
+
+            Tools::Logger($request, $req->all(), ['Remove Product', "Archived Product has been successfully restored"], $response);
+
+            return response()->json($response);
 
         }catch(ValidationException $e){
 
@@ -472,7 +521,19 @@ class ProductController extends Controller
 
         $image->storeAs(self::PRODUCT_PATH,  $fileName);
 
-        return response()->json(['success'=> true, 'message'=> 'Product image has been successfully updated']);
+        $response =['success'=> true, 'message'=> 'Product image has been successfully updated'];
+
+            $request = [
+                'user_agent' => $req->userAgent(),
+                'page_route' => $req->headers->get('referer'),
+                'api_path' => $req->path(),
+                'method' => $req->method(),
+                'session_id' => $req->session()->getId(),
+        ];
+
+        Tools::Logger($request, $req->all(), ['Update Logo', "Products Logo has been successfully updated"], $response);
+
+        return response()->json($response);
     }
 
 }
