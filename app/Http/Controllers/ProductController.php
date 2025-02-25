@@ -243,7 +243,30 @@ class ProductController extends Controller
     public function archivelist(){
         $products = ProductList::where('is_archived', true)->get();
 
-        return response()->json(['success'=> true, 'product'=> $products]);
+        $totalPurchased = 0;
+        foreach($products as $product){
+            $totalPurchased += Customers::where('product_purchased', $product->product_id)->count();
+
+            if(!$product->product_image) continue;
+
+            $filePath = "product_logo/$product->product_image";
+
+            if (!Storage::exists($filePath)) {
+                return response()->json(['success'=> false, 'message' => 'Image not found'], 404);
+            }
+
+            $fileContents = Storage::get($filePath);
+
+            $product->purchased = Customers::where('product_purchased', $product->product_id)->count();
+
+            $mimeType = Storage::mimeType($filePath);
+            $base64Image = 'data:' . $mimeType . ';base64,' . base64_encode($fileContents);
+
+            $product->imagebase64 = $base64Image;
+        }
+
+
+        return response()->json(['success'=> true, 'product'=> $products, 'total_products' => $totalPurchased]);
     }
 
     public function restore(Request $req){
@@ -279,7 +302,29 @@ class ProductController extends Controller
 
             $products = ProductList::where('is_archived', true)->where('product_name', 'like', "%$req->search%")->get();
 
-            return response()->json(['success'=> true, 'products'=> $products]);
+            $totalPurchased = 0;
+            foreach($products as $product){
+                $totalPurchased += Customers::where('product_purchased', $product->product_id)->count();
+
+                if(!$product->product_image) continue;
+
+                $filePath = "product_logo/$product->product_image";
+
+                if (!Storage::exists($filePath)) {
+                    return response()->json(['success'=> false, 'message' => 'Image not found'], 404);
+                }
+
+                $fileContents = Storage::get($filePath);
+
+                $product->purchased = Customers::where('product_purchased', $product->product_id)->count();
+
+                $mimeType = Storage::mimeType($filePath);
+                $base64Image = 'data:' . $mimeType . ';base64,' . base64_encode($fileContents);
+
+                $product->imagebase64 = $base64Image;
+            }
+
+            return response()->json(['success'=> true, 'products'=> $products, 'total_products'=> $totalPurchased]);
 
         }catch(ValidationException $e){
 

@@ -450,7 +450,7 @@ function loadArchive(){
             loadingProduct(false, 'archive');
             res.product.forEach(data => {
                 const description = `${data.product_type} ${data.entries === 1 ? '(Single Entry)' : '(Dual Entry)'}`;
-                createListItem(data.product_name, description, 'archived-list', data.product_id, 'archive');
+                createListItem(data.product_name, description, 'archived-list', data.product_id, 'archive', data.imagebase64, data.purchased);
             });
             document.getElementById('searchProductArchived').value = '';
         }, error: xhr => console.log(xhr.responseText)
@@ -472,7 +472,7 @@ function searchArchive(search){
             loadingProduct(false, 'archive');
             res.products.forEach(data => {
                 const description = `${data.product_type} ${data.entries === 1 ? '(Single Entry)' : '(Dual Entry)'}`;
-                createListItem(data.product_name, description, 'archived-list', data.product_id, 'archive');
+                createListItem(data.product_name, description, 'archived-list', data.product_id, 'archive', data.imagebase64, data.purchased);
             });
         }, error: xhr=> console.log(xhr.responseText)
     });
