@@ -16,7 +16,9 @@
         height: 40vh;
     }
 
-
+    .charts{
+        height: 40vh;
+    }
     .productLoader {
         width: 50px;
         aspect-ratio: 1;
@@ -149,24 +151,62 @@
             <!-- Page body -->
             <div class="page-body">
                 <div class="container-xl">
-                    <div class="card">
-                        <div class="card-header justify-content-between">
-                            <h3 class="card-title">Product List (Total Purchased: <strong id="totalPurchased"></strong>)</h3>
-                            <div class="w-25">
-                                <input id="searchProduct" type="text" class="form-control"
-                                    placeholder="Search for products">
-                            </div>
-                        </div>
-                        <div class="list-group list-group-flush list-group-hoverable min-height" id="prod_list">
-                            <!--All Products-->
-                            <div id="productLoader"
-                                class="w-100 h-100 d-flex flex-column gap-2 justify-content-center align-items-center">
-                                <p>Loading Products</p>
-                                <div class="productLoader"></div>
-                            </div>
-                        </div>
 
-                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                          <ul class="nav nav-tabs card-header-tabs nav-fill" data-bs-toggle="tabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                              <a href="#tab-product-list" class="nav-link active" data-bs-toggle="tab" aria-selected="false" role="tab" tabindex="-1"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
+                                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-list"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 6l11 0" /><path d="M9 12l11 0" /><path d="M9 18l11 0" /><path d="M5 6l0 .01" /><path d="M5 12l0 .01" /><path d="M5 18l0 .01" /></svg>
+                                All Products</a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                              <a href="#tab-chart" class="nav-link" data-bs-toggle="tab" aria-selected="false" role="tab" tabindex="-1"><!-- Download SVG icon from http://tabler-icons.io/i/user -->
+                                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-chart-bar-popular"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 13a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /><path d="M9 9a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /><path d="M15 5a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /><path d="M4 20h14" /></svg>
+                                Chart Reports</a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                              <a href="#tab-purchased-list" class="nav-link " data-bs-toggle="tab" aria-selected="true" role="tab"><!-- Download SVG icon from http://tabler-icons.io/i/activity -->
+                                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-border-all"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" /><path d="M4 12l16 0" /><path d="M12 4l0 16" /></svg>
+                                Purchase List</a>
+                            </li>
+                          </ul>
+                        </div>
+                        <div class="card-body">
+                          <div class="tab-content">
+                            <div class="tab-pane active" id="tab-product-list" role="tabpanel">
+                                <div class="card">
+                                    <div class="card-header justify-content-between">
+                                        <h3 class="card-title">Product List (Total Purchased: <strong id="totalPurchased"></strong>)</h3>
+                                        <div class="w-25">
+                                            <input id="searchProduct" type="text" class="form-control"
+                                                placeholder="Search for products">
+                                        </div>
+                                    </div>
+                                    <div class="list-group list-group-flush list-group-hoverable min-height" id="prod_list">
+                                        <!--All Products-->
+                                        <div id="productLoader"
+                                            class="w-100 h-100 d-flex flex-column gap-2 justify-content-center align-items-center">
+                                            <p>Loading Products</p>
+                                            <div class="productLoader"></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="tab-chart" role="tabpanel">
+                                @include('Admin.components.products.chart')
+                            </div>
+                            <div class="tab-pane show" id="tab-purchased-list" role="tabpanel">
+                                @include('Admin.components.products.table')
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+
+
+
                 </div>
             </div>
         </div>
@@ -176,6 +216,9 @@
     </div>
     </div>
     @include('Admin.components.scripts', ['loc' => 'admin'])
+     <script nonce="{{ csp_nonce() }}">
+        let cspNonce = "{{ csp_nonce() }}";
+    </script>
     <script src="{{ asset('js/productreport/productreport.js') }}"></script>
 </body>
 

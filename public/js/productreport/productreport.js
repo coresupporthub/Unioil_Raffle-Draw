@@ -627,6 +627,228 @@ document.getElementById('region').addEventListener('change', () => {
     loadReports(productId, getValue('region'), getValue('event_id'));
 });
 
-$(document).ready(function () {
+document.getElementById('chart-filter').addEventListener('change', e => {
+    switch(e.target.value){
+        case "pie":
+            show('pie-div');
+            hide('bar-div');
+            hide('line-div');
+            break;
+        case 'bar':
+            hide('pie-div');
+            show('bar-div');
+            hide('line-div');
+            break;
+        case 'line':
+            hide('pie-div');
+            hide('bar-div');
+            show('line-div');
+            break;
+    }
+});
+
+
+async function loadCharts(){
+    const data = await $.ajax({
+        url: "/api/products/chartreports",
+        type: "GET",
+        dataType: "json",
+    });
+
+    console.log(data);
+
+    const barChart = data.barchart;
+    const pieChart = data.piechart;
+    const lineChart = data.linechart;
+    //Bar Chart
+    window.ApexCharts && (new ApexCharts(document.getElementById('bar-charts'), {
+        chart: {
+            type: "bar",
+            fontFamily: 'inherit',
+            height: 240,
+            parentHeightOffset: 0,
+            toolbar: {
+                show: false,
+            },
+            animations: {
+                enabled: false
+            },
+            nonce: cspNonce
+        },
+        plotOptions: {
+            bar: {
+                columnWidth: '50%',
+            }
+        },
+        dataLabels: {
+            enabled: false,
+        },
+        fill: {
+            opacity: 1,
+        },
+        series: [{
+            name: "Tasks completion",
+            data: barChart.data
+        }],
+        tooltip: {
+            theme: 'dark'
+        },
+        grid: {
+            padding: {
+                top: -20,
+                right: 0,
+                left: -4,
+                bottom: -4
+            },
+            strokeDashArray: 4,
+        },
+        xaxis: {
+            labels: {
+                padding: 0,
+            },
+            tooltip: {
+                enabled: false
+            },
+            axisBorder: {
+                show: false,
+            },
+        },
+        yaxis: {
+            labels: {
+                padding: 4
+            },
+        },
+        labels: barChart.products,
+        colors: [tabler.getColor("primary")],
+        legend: {
+            show: false,
+        },
+    })).render();
+
+
+    window.ApexCharts && (new ApexCharts(document.getElementById('pie-charts'), {
+        chart: {
+            type: "donut",
+            fontFamily: 'inherit',
+            height: 240,
+            sparkline: {
+                enabled: true
+            },
+            animations: {
+                enabled: false
+            },
+            nonce: cspNonce
+        },
+        fill: {
+            opacity: 1,
+        },
+        series: pieChart.data,
+        labels: pieChart.products,
+        tooltip: {
+            theme: 'dark'
+        },
+        grid: {
+            strokeDashArray: 4,
+        },
+        colors: [tabler.getColor("primary"), tabler.getColor("primary", 0.8), tabler.getColor("primary", 0.6), tabler.getColor("gray-300")],
+        legend: {
+            show: true,
+            position: 'bottom',
+            offsetY: 12,
+            markers: {
+                width: 10,
+                height: 10,
+                radius: 100,
+            },
+            itemMargin: {
+                horizontal: 8,
+                vertical: 8
+            },
+        },
+        tooltip: {
+            fillSeriesColor: false
+        },
+    })).render();
+
+
+    window.ApexCharts && (new ApexCharts(document.getElementById('line-charts'), {
+        chart: {
+            type: "line",
+            fontFamily: 'inherit',
+            height: 288,
+            parentHeightOffset: 0,
+            toolbar: {
+                show: false,
+            },
+            animations: {
+                enabled: false
+            },
+            nonce: cspNonce
+        },
+        fill: {
+            opacity: 1,
+        },
+        stroke: {
+            width: 2,
+            lineCap: "round",
+            curve: "smooth",
+        },
+        series: lineChart.data,
+        tooltip: {
+            theme: 'dark'
+        },
+        grid: {
+            padding: {
+                top: -20,
+                right: 0,
+                left: -4,
+                bottom: -4
+            },
+            strokeDashArray: 4,
+            xaxis: {
+                lines: {
+                    show: true
+                }
+            },
+        },
+        xaxis: {
+            labels: {
+                padding: 0,
+            },
+            tooltip: {
+                enabled: false
+            },
+            type: 'datetime',
+        },
+        yaxis: {
+            labels: {
+                padding: 4
+            },
+        },
+        labels: lineChart.dates,
+        colors: [tabler.getColor("facebook"), tabler.getColor("twitter"), tabler.getColor("dribbble")],
+        legend: {
+            show: true,
+            position: 'bottom',
+            offsetY: 12,
+            markers: {
+                width: 10,
+                height: 10,
+                radius: 100,
+            },
+            itemMargin: {
+                horizontal: 8,
+                vertical: 8
+            },
+        },
+    })).render();
+
+}
+
+
+
+
+$(document).ready(async function () {
     displayProductList();
+    loadCharts();
 });

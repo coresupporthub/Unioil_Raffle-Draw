@@ -536,4 +536,56 @@ class ProductController extends Controller
         return response()->json($response);
     }
 
+    public function chartreports(){
+        $products = ProductList::all();
+
+        $productArray = [];
+        $productData = [];
+        $dates = Customers::all()
+        ->pluck('created_at')
+        ->map(fn($date) => $date->format('Y-m-d'))
+        ->unique()
+        ->sort()
+        ->values();
+
+        $lineData = [];
+
+        foreach($products as $product){
+            $customerCount = Customers::where('product_purchased', $product->product_id)->count();
+            $productArray[] = $product->product_name;
+            $productData[] = $customerCount;
+
+            $initialLineData = [];
+            foreach($dates as $date){
+                $customerData = Customers::where('product_purchased', $product->product_id)->whereDate('created_at', $date)->count();
+                $initialLineData[] = $customerData;
+            }
+
+            $data['name'] = $product->product_name;
+            $data['data'] = $initialLineData;
+
+            $lineData[] = $data;
+        }
+
+        return response()->json([
+            'status' => true,
+            'barchart' => [
+                'products' => $productArray,
+                'data' => $productData
+            ],
+            'piechart' => [
+                'products' => $productArray,
+                'data' => $productData
+            ],
+            'linechart' => [
+                'dates' => $dates,
+                'data' => $lineData
+            ]
+
+            ]);
+    }
+
+    public function productreports(){
+
+    }
 }
