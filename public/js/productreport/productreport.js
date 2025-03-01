@@ -536,6 +536,7 @@ function loadReports(productId, region, event){
             { data: "address" },
             { data: "distributor" },
             { data: "retail_name" },
+            { data: "customer_name" },
             { data: "purchase_date" },
         ],
         paging: true,
@@ -654,8 +655,6 @@ async function loadCharts(){
         type: "GET",
         dataType: "json",
     });
-
-    console.log(data);
 
     const barChart = data.barchart;
     const pieChart = data.piechart;
@@ -846,9 +845,58 @@ async function loadCharts(){
 }
 
 
+function loadProductReports(event = 'all', cluster = 'all', product = 'all'){
+    const tableId = "#productReportsTable";
+
+    if ($.fn.DataTable.isDataTable(tableId)) {
+        $(tableId).DataTable().clear().destroy();
+    }
+
+    $(tableId).DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: `/api/products/productreports?event=${event}&cluster=${cluster}&product=${product}`,
+            type: 'GET',
+            dataSrc: 'data'
+        },
+        columns: [
+            { data: "area" },
+            { data: "address" },
+            { data: "distributor" },
+            { data: "retail_station" },
+            { data: null,
+                render: data => {
+                    return formatDateTime(data.created_at)
+                }
+             },
+            { data: "full_name"},
+            { data: "product_name" },
+            { data: "cluster_name" },
+        ],
+        paging: true,
+        lengthChange: true,
+        pageLength: 10,
+        destroy: true
+    });
+
+}
+
+document.getElementById('event_id_table').addEventListener('change', ()=> {
+    loadProductReports(getValue('events_id_table'), getValue('region_table'), getValue('products_table'));
+});
+
+document.getElementById('region_table').addEventListener('change', ()=> {
+    loadProductReports(getValue('events_id_table'), getValue('region_table'), getValue('products_table'));
+});
+
+document.getElementById('products_table').addEventListener('change', ()=> {
+    loadProductReports(getValue('events_id_table'), getValue('region_table'), getValue('products_table'));
+});
 
 
 $(document).ready(async function () {
     displayProductList();
     loadCharts();
+    loadProductReports(getValue('events_id_table'), getValue('region_table'), getValue('products_table'));
 });

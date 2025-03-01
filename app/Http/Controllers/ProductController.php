@@ -476,6 +476,7 @@ class ProductController extends Controller
                 $cluster = RegionalCluster::where('cluster_id', $customer->cluster_id)->first()->cluster_name;
 
                 $data[] = [
+                    'customer_name' => $customer->full_name,
                     'cluster' => $cluster,
                     'area' => $customer->area ?? 'N/A',
                     'address' => $customer->address ?? 'N/A',
@@ -585,7 +586,67 @@ class ProductController extends Controller
             ]);
     }
 
-    public function productreports(){
 
+    public function productreports(Request $req){
+        $start = $req->input('start', 0);
+        $length = $req->input('length', 10);
+        $regionalCluster = $req->cluster;
+        $event = $req->event;
+        $product = $req->product;
+        $search = $req->input('search')['value'];
+
+        $data = [];
+
+        if($event === 'all'){
+            $query = Customers::query();
+            $totalRecords = Customers::count();
+        }else{
+            $query = Customers::where('event_id', $event);
+            $totalRecords = Customers::where('event_id', $event)->count();
+        }
+
+
+        if($product !== "all"){
+            $query->where('product_purchased', $product);
+        }
+
+        $query->join('retail_store', 'customers.store_id', '=', 'retail_store.store_id');
+
+        if($regionalCluster != 'all'){
+            $query->where('retail_store.cluster_id', $regionalCluster);
+        }
+
+        $query->join('product_lists', 'customers.product_purchased', '=', 'product_lists.product_id')
+        ->join('regional_cluster', 'regional_cluster.cluster_id', '=', 'retail_store.cluster_id');
+
+        if (!empty($search)) {
+            $query->where('retail_store.address', 'like', "%$search%")
+                ->orWhere('retail_store.area', 'like', "%$search%")
+                ->orWhere('retail_store.distributor', 'like', "%$search%")
+                ->orWhere('retail_store.retail_station', 'like', "%$search%")
+                ->orWhere('product_lists.product_name', 'like', "%$search%");
+        }
+
+
+        $filter = $query->count();
+        $query->select(
+            'retail_store.address',
+            'retail_store.area',
+            'retail_store.distributor',
+            'retail_store.retail_station',
+            'product_lists.product_name',
+            'customers.full_name',
+            'customers.created_at',
+            'regional_cluster.cluster_name',
+        );
+        $data = $query->skip($start)->take($length)->get();
+
+        return response()->json([
+             'draw' => intval($req->input('draw')),
+             'recordsTotal' => $totalRecords,
+             'recordsFiltered' => $filter,
+             'data' => $data
+        ]);
     }
+
 }

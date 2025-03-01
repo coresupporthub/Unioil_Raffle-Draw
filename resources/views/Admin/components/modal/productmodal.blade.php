@@ -171,6 +171,7 @@
                                 <th>Address</th>
                                 <th>Distributor</th>
                                 <th>Retail Store</th>
+                                <th>Customer Name</th>
                                 <th>Purchase Date</th>
                             </tr>
                         </thead>
