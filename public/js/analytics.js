@@ -98,7 +98,7 @@ function updateCharts(semiSynthetic, fullySynthetic, noData = false) {
 
         chartInstance.updateSeries(chartData);
         chartInstance.updateOptions({
-            labels: noData ? ["No Event Data", ""] : ["Semi Synthetic", "Fully Synthetic"],
+            labels: noData ? ["No Event Data", ""] : ["Semi-Syn/Mineral", "Fully Synthetic"],
             tooltip: { enabled: !noData },
             colors: chartColors,
             plotOptions: { pie: { donut: { size: "70%" } } }
@@ -134,7 +134,7 @@ function fetchEntriesData(eventId) {
                         xaxis: { categories: months },
                         series: [
                             { name: "Fully Synthetic", data: fullySynthetic },
-                            { name: "Semi Synthetic", data: semiSynthetic },
+                            { name: "Semi-Syn/Mineral", data: semiSynthetic },
                         ],
                     });
                 }

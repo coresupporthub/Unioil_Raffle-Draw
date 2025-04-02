@@ -49,7 +49,6 @@ class AnalyticsController extends Controller
         ]);
     }
 
-
     public function getActiveEvent(): JsonResponse
     {
         $activeEvent = Event::where('event_status', 'Active')->first();
@@ -101,7 +100,6 @@ class AnalyticsController extends Controller
             'eventData' => $groupedByDate,
         ]);
     }
-
 
     public function entriesbyproducttype(Request $req, string $event): JsonResponse
     {
@@ -201,11 +199,8 @@ class AnalyticsController extends Controller
 
     public function entriesByProductTypeAndCluster(string $eventId): JsonResponse
     {
-
-
         $clusters = RegionalCluster::all();
         $clusterData = [];
-
 
         foreach ($clusters as $cluster) {
             $full = 0;
@@ -226,13 +221,12 @@ class AnalyticsController extends Controller
                     }
 
                 }
-
             }
-            $productData[]=[
+            $productData[]=[ 
                 'Fully Synthetic'=>$full,
-                'Semi Synthetic'=>$semi,
+                'Semi-Syn/Mineral'=>$semi,
             ];
-            $clusterData[]=[
+            $clusterData[]=[ 
                 'cluster'=>$cluster->cluster_name,
                 'product'=>$productData
             ];
@@ -244,5 +238,4 @@ class AnalyticsController extends Controller
             'data' => $clusterData,
         ]);
     }
-
 }
